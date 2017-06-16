@@ -1,0 +1,28 @@
+#include "stdafx.h"
+#include "Leader_State.h"
+
+
+
+void Leader_State_Melee_Idle::OnBegin(cLeader * pLeader)
+{
+	for (int i = 0; i < pLeader->GetUnits().size(); i++)
+	{
+		if (pLeader->GetUnits()[i]->IsDeath() != true)pLeader->GetUnits()[i]->SetIdleState();
+	}
+}
+
+void Leader_State_Melee_Idle::OnUpdate(cLeader * pLeader, float deltaTime)
+{
+	if (pLeader->GetTargetObject()!=NULL)
+	{
+		pLeader->FSM()->Play(LEADER_STATE_PURSUIT);
+	}
+	else if (pLeader->GetPath().size() > 0)
+	{
+		pLeader->FSM()->Play(LEADER_STATE_WALK);
+	}
+}
+
+void Leader_State_Melee_Idle::OnEnd(cLeader * pUnit)
+{
+}
