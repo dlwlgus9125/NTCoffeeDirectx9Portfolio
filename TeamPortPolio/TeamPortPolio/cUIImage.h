@@ -2,7 +2,7 @@
 
 #include "cUIObject.h"
 
-class cUIImage : cUIObject
+class cUIImage : public cUIObject
 {
 	LPDIRECT3DTEXTURE9 m_pTexture;
 public:

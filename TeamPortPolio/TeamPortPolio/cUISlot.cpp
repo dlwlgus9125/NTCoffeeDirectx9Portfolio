@@ -45,7 +45,7 @@ void cUISlot::Render(LPD3DXSPRITE pSprite)
 			m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
 
 		string text = m_vecShownData[i]->name + "\n" + m_vecShownData[i]->info;
-		pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
+ 		pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
 	}
 	// << 
 
@@ -61,28 +61,26 @@ void cUISlot::Destroy()
 	cUIObject::Destroy();
 }
 
-void cUISlot::Setup_Slot(int col, int slotCount, D3DXVECTOR3 imagePos_first, ST_SIZEN imageSize, D3DXVECTOR3 textPos_first, ST_SIZEN textSize, FONT_TAG eFont)
+void cUISlot::Setup_Slot(int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize, 
+	D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont)
 {
 	for (int i = 0; i < slotCount / col; i++)
 	{
 		for (int k = 0; k < col; k++)
 		{
-			D3DXVECTOR3 imagePos = D3DXVECTOR3(imagePos_first.x * (k + 1) + imageSize.nWidth * k + textSize.nWidth * k,
-				imagePos_first.y * (i + 1) + imageSize.nHeight * i,
-				imagePos_first.z);
-			D3DXVECTOR3 textPos = D3DXVECTOR3(textPos_first.x * (k + 1) + textSize.nWidth * k, 
-				textPos_first.y * (i + 1) + textSize.nHeight * i,
-				textPos_first.z);
-			ST_SLOT slot = ST_SLOT(imagePos, imageSize, textPos, textSize);
+			D3DXVECTOR3 currentRect = D3DXVECTOR3(rectSize.nWidth * k, rectSize.nHeight * i, rectPos.z);
+			D3DXVECTOR3 currentImagePos = currentRect + imagePos;
+			D3DXVECTOR3 currentTextPos = m_vPosition + currentRect+ textPos;
+			ST_SLOT slot = ST_SLOT(currentRect, rectSize, currentImagePos, imageSize, currentTextPos, textSize);
 			m_vecSlotInfo.push_back(slot);
 		}
 	}	
 	m_eFont = eFont;
 }
 
-void cUISlot::AddSlotData(string name, LPDIRECT3DTEXTURE9 texture, string info)
+void cUISlot::AddSlotData(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info)
 {
-	ST_SLOTDATA* data = new ST_SLOTDATA(name, texture, info);
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, texture, info);
 	m_vecSlotData.push_back(data);
 }
 
@@ -95,4 +93,21 @@ void cUISlot::SetShownData(int startIndex)
 
 		m_vecShownData.push_back(m_vecSlotData[i]);
 	}
+}
+
+int cUISlot::GetClickedItemID()
+{
+	if (m_isHidden) return -1;
+
+	if (INPUT->IsMouseDown(MOUSE_RIGHT))		
+	{
+		for (int i = 0; i < m_vecShownData.size(); i++)
+		{
+			if (MATH->IsCollided(INPUT->GetMousePosVector2(), m_vecSlotInfo[i].LeftTop(), m_vecSlotInfo[i].RightBottom()))
+			{
+				return m_vecShownData[i]->itemID;
+			}
+		}		
+	}
+	return -1;
 }

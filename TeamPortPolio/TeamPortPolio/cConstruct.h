@@ -1,6 +1,7 @@
 #pragma once
 
-class cObject;
+#include "cObject.h"
+
 class cMtlTex;
 class cObjLoader;
 
