@@ -2,7 +2,7 @@
 #include "cSceneManager.h"
 
 class cLoginScene : public cIScene
-{
+{  
 public:
 	cLoginScene();
 	~cLoginScene();
