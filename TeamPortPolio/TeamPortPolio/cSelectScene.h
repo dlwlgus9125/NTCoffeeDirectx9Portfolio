@@ -4,7 +4,6 @@
 class cSelectScene : public cIScene
 {
 	cUIImage*			m_pImage;
-	D3DXIMAGE_INFO*		m_pImageInfo;
 	LPD3DXSPRITE		m_pSprite;
 
 public:

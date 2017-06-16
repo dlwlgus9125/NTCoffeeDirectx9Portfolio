@@ -20,7 +20,7 @@ void cLoginScene::OnEnter()
 	m_pImage = new cUIImage();
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
 	m_pImage->Setup_Image("Image/UI/LoginScene/Login1.png");
-	m_pImage->SetSize(ST_SIZEN(m_pImageInfo->Width, m_pImageInfo->Height + 30));
+	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);

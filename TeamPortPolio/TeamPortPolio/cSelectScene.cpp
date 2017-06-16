@@ -3,7 +3,7 @@
 
 
 cSelectScene::cSelectScene()
-	: m_pImage(NULL), m_pSprite(NULL), m_pImageInfo(NULL)
+	: m_pImage(NULL), m_pSprite(NULL)
 {
 }
 
@@ -12,23 +12,21 @@ cSelectScene::~cSelectScene()
 {
 	SAFE_DELETE(m_pImage);
 	SAFE_DELETE(m_pSprite);
-	SAFE_DELETE(m_pImageInfo);
 }
 
 void cSelectScene::OnEnter()
 {
 	m_pImage = new cUIImage();
-	m_pImageInfo = new D3DXIMAGE_INFO;
-	m_pImage->Setup_Image(TEXTURE->GetTexture("Image/UI/SelectScene/Select1.png", m_pImageInfo));
+	m_pImage->Setup_Image("Image/UI/SelectScene/Select1.png");
 
 	RECT rc;
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage->SetSize(ST_SIZEN(m_pImageInfo->Width, m_pImageInfo->Height + 30));
+	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
-	UI->Change(SCENE_LOGIN);
+	UI->Change(SCENE_SELECT);
 }
 
 void cSelectScene::OnUpdate()
