@@ -128,32 +128,14 @@
     <Filter Include="01. cObject\01. cGroup">
       <UniqueIdentifier>{4d387467-6525-4c51-b99b-b40e3a9e8538}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Manager\07. cUIManager\00. cUIObject">
-      <UniqueIdentifier>{68342aad-ac20-4c08-bc1e-7c53a712919e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Manager\07. cUIManager\01. cUIImage">
-      <UniqueIdentifier>{6884dbb3-27ca-4b65-b5e7-3408c15782a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Manager\07. cUIManager\02. cUIText">
-      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Manager\07. cUIManager\03. cUIButton">
-      <UniqueIdentifier>{5fcd1a10-77ee-4001-9081-5dbfb58f3f4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Manager\11. cFontManager">
       <UniqueIdentifier>{889df18f-b33d-47a4-8fe1-2ee7850a9708}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00. Manager\07. cUIManager\04. cUIMiniMap">
-      <UniqueIdentifier>{3ef3e8bc-2305-46f2-8364-1f156be2026e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. cCharacter\04.cArrow">
       <UniqueIdentifier>{8c23d38d-ab02-486d-8e22-e802df61f874}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\13. cShadowManager">
       <UniqueIdentifier>{1afa07c7-2a27-485a-9ee9-6e95be22fd79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Database\02 cItemDB">
-      <UniqueIdentifier>{6582bded-10a2-45ff-aaa8-e746164a3987}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\12. cEffectManager">
       <UniqueIdentifier>{ad96410e-1558-4b33-a1ac-a9916b9c6d2e}</UniqueIdentifier>
@@ -187,6 +169,33 @@
     </Filter>
     <Filter Include="02. cCharacter\02. cUnit\00. cMeleeUnit\00. MeleeState">
       <UniqueIdentifier>{4ebcf18c-c55e-4dc4-aa76-b4fc3a742e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Database\02. cItemDB">
+      <UniqueIdentifier>{6582bded-10a2-45ff-aaa8-e746164a3987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI">
+      <UniqueIdentifier>{3544bf0a-7913-44f6-ac32-4c3f78d8cbfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\00. cUIObject">
+      <UniqueIdentifier>{68342aad-ac20-4c08-bc1e-7c53a712919e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\01. cUIImage">
+      <UniqueIdentifier>{6884dbb3-27ca-4b65-b5e7-3408c15782a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\02. cUIText">
+      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\03. cUIButton">
+      <UniqueIdentifier>{5fcd1a10-77ee-4001-9081-5dbfb58f3f4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\04. cUIMiniMap">
+      <UniqueIdentifier>{3ef3e8bc-2305-46f2-8364-1f156be2026e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\05. cUITab">
+      <UniqueIdentifier>{a3e8de75-48bc-4574-bddc-19c16a545c71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\06. cUISlot">
+      <UniqueIdentifier>{49945783-18a5-471a-81e8-8711a0c68d27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -334,31 +343,31 @@
       <Filter>00. Manager\07. cUIManager</Filter>
     </ClInclude>
     <ClInclude Include="cUIObject.h">
-      <Filter>00. Manager\07. cUIManager\00. cUIObject</Filter>
+      <Filter>07. UI\00. cUIObject</Filter>
     </ClInclude>
     <ClInclude Include="cUIImage.h">
-      <Filter>00. Manager\07. cUIManager\01. cUIImage</Filter>
+      <Filter>07. UI\01. cUIImage</Filter>
     </ClInclude>
     <ClInclude Include="cFontManager.h">
       <Filter>00. Manager\11. cFontManager</Filter>
     </ClInclude>
     <ClInclude Include="cUIText.h">
-      <Filter>00. Manager\07. cUIManager\02. cUIText</Filter>
+      <Filter>07. UI\02. cUIText</Filter>
     </ClInclude>
     <ClInclude Include="SteeringBehavior.h">
       <Filter>02. cCharacter\00. Entity</Filter>
     </ClInclude>
     <ClInclude Include="cUIMiniMap.h">
-      <Filter>00. Manager\07. cUIManager\04. cUIMiniMap</Filter>
+      <Filter>07. UI\04. cUIMiniMap</Filter>
     </ClInclude>
     <ClInclude Include="cUIButton.h">
-      <Filter>00. Manager\07. cUIManager\03. cUIButton</Filter>
+      <Filter>07. UI\03. cUIButton</Filter>
     </ClInclude>
     <ClInclude Include="cBallisticArrow.h">
       <Filter>02. cCharacter\04.cArrow</Filter>
     </ClInclude>
     <ClInclude Include="cItemDB.h">
-      <Filter>06. Database\02 cItemDB</Filter>
+      <Filter>06. Database\02. cItemDB</Filter>
     </ClInclude>
     <ClInclude Include="Player_State.h" />
     <ClInclude Include="cEffectManager.h">
@@ -385,8 +394,6 @@
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
-    <ClInclude Include="cUISlot.h" />
-    <ClInclude Include="cUITab.h" />
     <ClInclude Include="Player_State.h">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClInclude>
@@ -395,6 +402,12 @@
     </ClInclude>
     <ClInclude Include="Melee_State.h">
       <Filter>02. cCharacter\02. cUnit\00. cMeleeUnit\00. MeleeState</Filter>
+    </ClInclude>
+    <ClInclude Include="cUITab.h">
+      <Filter>07. UI\05. cUITab</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISlot.h">
+      <Filter>07. UI\06. cUISlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -523,19 +536,19 @@
       <Filter>00. Manager\07. cUIManager</Filter>
     </ClCompile>
     <ClCompile Include="cUIObject.cpp">
-      <Filter>00. Manager\07. cUIManager\00. cUIObject</Filter>
+      <Filter>07. UI\00. cUIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIImage.cpp">
-      <Filter>00. Manager\07. cUIManager\01. cUIImage</Filter>
+      <Filter>07. UI\01. cUIImage</Filter>
     </ClCompile>
     <ClCompile Include="cFontManager.cpp">
       <Filter>00. Manager\11. cFontManager</Filter>
     </ClCompile>
     <ClCompile Include="cUIText.cpp">
-      <Filter>00. Manager\07. cUIManager\02. cUIText</Filter>
+      <Filter>07. UI\02. cUIText</Filter>
     </ClCompile>
     <ClCompile Include="cUIMiniMap.cpp">
-      <Filter>00. Manager\07. cUIManager\04. cUIMiniMap</Filter>
+      <Filter>07. UI\04. cUIMiniMap</Filter>
     </ClCompile>
     <ClCompile Include="Leader_State_Battle.cpp">
       <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
@@ -547,7 +560,7 @@
       <Filter>02. cCharacter\04.cArrow</Filter>
     </ClCompile>
     <ClCompile Include="cItemDB.cpp">
-      <Filter>06. Database\02 cItemDB</Filter>
+      <Filter>06. Database\02. cItemDB</Filter>
     </ClCompile>
     <ClCompile Include="Player_Attack.cpp" />
     <ClCompile Include="Player_Defence.cpp" />
@@ -583,9 +596,6 @@
     <ClCompile Include="Leader_State_Defence.cpp">
       <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
     </ClCompile>
-    <ClCompile Include="cUIButton.cpp" />
-    <ClCompile Include="cUISlot.cpp" />
-    <ClCompile Include="cUITab.cpp" />
     <ClCompile Include="Player_Walk.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
@@ -615,6 +625,15 @@
     </ClCompile>
     <ClCompile Include="Melee_Idle.cpp">
       <Filter>02. cCharacter\02. cUnit\00. cMeleeUnit\00. MeleeState</Filter>
+    </ClCompile>
+    <ClCompile Include="cUITab.cpp">
+      <Filter>07. UI\05. cUITab</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIButton.cpp">
+      <Filter>07. UI\03. cUIButton</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISlot.cpp">
+      <Filter>07. UI\06. cUISlot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
