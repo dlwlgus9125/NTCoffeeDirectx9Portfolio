@@ -5,7 +5,6 @@ class cUIButton :
 {
 	UI_STATE m_eCurrentState;
 	map<int, LPDIRECT3DTEXTURE9> m_mapTexture;
-	SYNTHESIZE(int,	m_eEventID, EventID);
 public:
 	cUIButton();
 	~cUIButton();

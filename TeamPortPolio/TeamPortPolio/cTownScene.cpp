@@ -65,6 +65,18 @@ void cTownScene::OnUpdate()
 	EFFECT->Update();
 
 	// >> 테스트용
+
+	int indexInMiniMap;
+	int buttonIndex;
+	int eventIDTap;
+	int itemID;
+
+	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
+
+	if (eventIDTap > -1)
+	{
+		int check = itemID;
+	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)

@@ -16,7 +16,6 @@ class cUIManager : public Singleton<cUIManager>
 	vector<cUIText*>			m_vecText;
 	vector<cUIButton*>			m_vecBtn;
 	vector<cUITab*>				m_vecTab;
-	vector<cUISlot*>			m_vecSlot;
 	cUIMiniMap*					m_pMiniMap;
 
 	void Setup_TitleScene();
@@ -32,7 +31,7 @@ public:
 	void Change(int sceneID);
 	void PressKey();
 	void SetEvent(int order);
-	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex);
+	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& eventID, OUT int& itemID);
 
 
 };

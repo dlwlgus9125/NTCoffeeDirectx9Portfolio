@@ -261,33 +261,36 @@ struct ST_TAB
 
 struct ST_SLOT
 {
+	D3DXVECTOR3 rectPos;
+	ST_SIZEN rectSize;
 	D3DXVECTOR3 imagePos;
 	ST_SIZEN imageSize;
 	D3DXVECTOR3 textPos;
 	ST_SIZEN textSize;
-	D3DXVECTOR2 LeftTop;
-	D3DXVECTOR2 RightBottom;
 
-	ST_SLOT(D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize)
+	ST_SLOT(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize)
 	{
-		this->imagePos=	imagePos;
-		this->imageSize=imageSize;
-		this->textPos=textPos;
-		this->textSize=textSize;
-
-		LeftTop = D3DXVECTOR2(imagePos.x, imagePos.y);
-		RightBottom = D3DXVECTOR2(textPos.x + textSize.nWidth, textPos.y + textSize.nHeight);
+		this->rectPos = rectPos;
+		this->rectSize = rectSize;
+		this->imagePos = imagePos;
+		this->imageSize = imageSize;
+		this->textPos = textPos;
+		this->textSize = textSize;
 	}
+	D3DXVECTOR2 LeftTop() {return D3DXVECTOR2(rectPos.x, rectPos.y);}
+	D3DXVECTOR2 RightBottom() { return D3DXVECTOR2(rectPos.x + rectSize.nWidth, rectPos.y + rectSize.nHeight); }
 };
 
 struct ST_SLOTDATA
 {
+	int itemID;
 	LPDIRECT3DTEXTURE9 texture;
 	string info;
 	string name;
 
-	ST_SLOTDATA(string name, LPDIRECT3DTEXTURE9 texture, string info)
+	ST_SLOTDATA(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info)
 	{
+		this->itemID = itemID;
 		this->name = name;
 		this->texture = texture;
 		this->info = info;
@@ -394,6 +397,8 @@ enum ITEM_TAG
 enum EVENTID_TITLESCENE
 {
 	TITLE_BTN_FMT_RECT = 0, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
+
+	TOWN_TAB_SHOP_ATT = 100, 
 };
 
 enum EVENTID_TOWNSCENE
