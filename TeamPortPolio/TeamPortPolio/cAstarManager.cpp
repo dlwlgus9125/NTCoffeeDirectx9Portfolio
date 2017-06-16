@@ -169,6 +169,7 @@ void cAstarManager::SetTargetOfLeader()
 							if (OBJECT->GetLeader()[thisLeader]->GetTargetObject() != OBJECT->GetLeader()[anotherLeader])
 								OBJECT->GetLeader()[thisLeader]->SetTargetObject(OBJECT->GetLeader()[anotherLeader]);
 						}
+						
 					}
 				}
 			}

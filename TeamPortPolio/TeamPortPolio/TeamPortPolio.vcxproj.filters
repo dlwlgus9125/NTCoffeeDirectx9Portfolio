@@ -197,6 +197,18 @@
     <Filter Include="07. UI\06. cUISlot">
       <UniqueIdentifier>{49945783-18a5-471a-81e8-8711a0c68d27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. cCharacter\03. cLeader\00. Leader_State\00. MeleeState">
+      <UniqueIdentifier>{dbfa8917-7c4e-43d8-9769-a80449283bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. cCharacter\03. cLeader\00. Leader_State\01. BowState">
+      <UniqueIdentifier>{2d89dce5-1ea3-4912-b9b2-ed03afbf918f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. cCharacter\02. cUnit\01. cBowUnit">
+      <UniqueIdentifier>{7018d9a0-b9fb-4c83-b1d5-cd7483766c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. cCharacter\02. cUnit\01. cBowUnit\00. BowState">
+      <UniqueIdentifier>{486f33c6-e8cf-4981-a719-79812d48910b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -411,6 +423,12 @@
     <ClInclude Include="Player_State.h">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="cBowUnit.h">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow_State.h">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -516,17 +534,11 @@
     <ClCompile Include="cItem.cpp">
       <Filter>01. cObject</Filter>
     </ClCompile>
-    <ClCompile Include="Leader_State_Idle.cpp">
-      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
-    </ClCompile>
     <ClCompile Include="cRay.cpp">
       <Filter>98. UTIL\04. cRay</Filter>
     </ClCompile>
     <ClCompile Include="cMapManager.cpp">
       <Filter>00. Manager\10. cMapManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Leader_State_Walk.cpp">
-      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
     </ClCompile>
     <ClCompile Include="cTitleScene.cpp">
       <Filter>03. cScene\00. cTitleScene</Filter>
@@ -551,9 +563,6 @@
     </ClCompile>
     <ClCompile Include="cUIMiniMap.cpp">
       <Filter>07. UI\04. cUIMiniMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Leader_State_Battle.cpp">
-      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
     </ClCompile>
     <ClCompile Include="BallisticMotion.cpp">
       <Filter>02. cCharacter\04.cArrow</Filter>
@@ -587,12 +596,6 @@
     </ClCompile>
     <ClCompile Include="cShadowManager.cpp">
       <Filter>00. Manager\13. cShadowManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Leader_State_Defeat.cpp">
-      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
-    </ClCompile>
-    <ClCompile Include="Leader_State_Defence.cpp">
-      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
     </ClCompile>
     <ClCompile Include="Player_Walk.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
@@ -644,6 +647,45 @@
     </ClCompile>
     <ClCompile Include="Player_Idle.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Melee_Battle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\00. MeleeState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Melee_Defence.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\00. MeleeState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Melee_Idle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\00. MeleeState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Defeat.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Melee_Walk.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\00. MeleeState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Bowman_Idle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\01. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Bowman_Walk.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\01. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Bowman_Battle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\01. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="cBowUnit.cpp">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow_Idle.cpp">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow_Walk.cpp">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow_Death.cpp">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow_Battle.cpp">
+      <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

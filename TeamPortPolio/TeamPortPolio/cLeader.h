@@ -4,10 +4,16 @@
 
 enum LEADER_STATE
 {
-	LEADER_STATE_IDLE,
-	LEADER_STATE_WALK,
-	LEADER_STATE_PURSUIT,
-	LEADER_STATE_DEFENCE,
+	LEADER_STATE_MELEE_IDLE,
+	LEADER_STATE_MELEE_WALK,
+	LEADER_STATE_MELEE_BATTLE,
+	LEADER_STATE_MELEE_DEFENCE,
+
+	LEADER_STATE_BOW_IDLE,
+	LEADER_STATE_BOW_WALK,
+	LEADER_STATE_BOW_BATTLE,
+
+
 	LEADER_STATE_DEFEAT,
 };
 enum CAMP_STATE
@@ -17,8 +23,16 @@ enum CAMP_STATE
 	CAMP_NONE,
 };
 
+enum LEADER_TYPE
+{
+	LEADER_MELEE,
+	LEADER_BOW,
+	LEADER_CAVALRY,
+};
+
 class cUnit;
 class cMeleeUnit;
+class cBowUnit;
 
 class cLeader :
 	public cCharacter
@@ -33,7 +47,8 @@ class cLeader :
 	vector<int>    m_path;
 	MeshSpere      m_meshSphere;
 	CAMP_STATE     m_camp;
-
+	LEADER_TYPE    m_type;
+	LEADER_STATE   m_TypeStart;
 public:
 	cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cLeader();
@@ -63,5 +78,12 @@ public:
 	int              GetTargetIndex() { return m_targetIndex; }
 
 	void             SetMeleeType();
+	void             SetBowType();
+	void             SetCavalryType();
+
+	void             SetType();
+
+	void             ClickedButtonOne();
+	void             ClickedButtonTwo();
 };
 
