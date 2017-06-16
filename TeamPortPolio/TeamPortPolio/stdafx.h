@@ -451,6 +451,7 @@ public: virtual void Set##funName(varType var){\
 #include "cUIManager.h"
 #include "cFontManager.h"
 #include "cItemDB.h"
+#include "cEffectManager.h"
 //<<
 #include "cRay.h"
 

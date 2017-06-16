@@ -67,7 +67,7 @@ void cGameManager::Init()
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_TOWN, new cTownScene());
-	SCENE->ChangeScene(SCENE_TITLE);
+	SCENE->ChangeScene(SCENE_TOWN);
 	CAMERA->Setup();
 
 
