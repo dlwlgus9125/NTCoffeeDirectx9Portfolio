@@ -13,10 +13,12 @@ cUIButton::~cUIButton()
 
 void cUIButton::Setup_Button(string sPath_idle, string sPath_mouseover, string sPath_clicked, int eEventID)
 {
-	m_mapTexture[UI_IDLE] = TEXTURE->GetTexture(sPath_idle);
-	m_mapTexture[UI_MOUSEOVER] = TEXTURE->GetTexture(sPath_mouseover);
-	m_mapTexture[UI_PRESSED] = TEXTURE->GetTexture(sPath_clicked);
-	m_mapTexture[UI_CLICKED] = TEXTURE->GetTexture(sPath_clicked);
+	D3DXIMAGE_INFO info;
+	m_mapTexture[UI_IDLE] = TEXTURE->GetTexture(sPath_idle, info);
+	SetSize(ST_SIZEN(info.Width, info.Height));
+	m_mapTexture[UI_MOUSEOVER] = TEXTURE->GetTexture(sPath_mouseover, info);
+	m_mapTexture[UI_PRESSED] = TEXTURE->GetTexture(sPath_clicked, info);
+	m_mapTexture[UI_CLICKED] = TEXTURE->GetTexture(sPath_clicked, info);
 	m_eEventID = eEventID;
 	m_eCurrentState = UI_IDLE;
 }
@@ -57,6 +59,7 @@ void cUIButton::Render(LPD3DXSPRITE pSprite)
 	pSprite->SetTransform(&m_matWorld);
 
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
+
 	pSprite->Draw(m_mapTexture[m_eCurrentState], &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 
 	pSprite->End();

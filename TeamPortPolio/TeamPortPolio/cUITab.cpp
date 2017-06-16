@@ -11,15 +11,16 @@ cUITab::~cUITab()
 {
 }
 
-void cUITab::Setup_Tap(string sPath_idle_title, string sPath_selected_title, ST_SIZEN titleSize, string sPath_body, D3DXVECTOR3 pos_body, ST_SIZEN bodySize, FONT_TAG eFont)
+void cUITab::Setup_Tap(string sPath_idle_title, string sPath_selected_title, string sPath_body, D3DXVECTOR3 pos_body, FONT_TAG eFont)
 {
-	m_mapTexture_Title[UI_IDLE] = TEXTURE->GetTexture(sPath_idle_title);
-	m_mapTexture_Title[UI_SELECTED] = TEXTURE->GetTexture(sPath_selected_title);
-	m_stTitleSize = titleSize;
+	D3DXIMAGE_INFO imageInfo;
+	m_mapTexture_Title[UI_IDLE] = TEXTURE->GetTexture(sPath_idle_title, imageInfo);
+	m_mapTexture_Title[UI_SELECTED] = TEXTURE->GetTexture(sPath_selected_title, imageInfo);
+	m_stTitleSize = ST_SIZEN(imageInfo.Width, imageInfo.Height);
 
-	m_pTexture_Body = TEXTURE->GetTexture(sPath_body);
+	m_pTexture_Body = TEXTURE->GetTexture(sPath_body, imageInfo);
 	m_vPos_Body = pos_body;
-	m_stBodySize = bodySize;
+	m_stBodySize = ST_SIZEN(imageInfo.Width, imageInfo.Height);;
 
 	m_eFont_Tab = eFont;
 }
@@ -90,8 +91,12 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	// >> 슬롯 이미지
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
-		SetRect(&rc, 0, 0, m_vecSlotInfo[i].imageSize.nWidth, m_vecSlotInfo[i].imageSize.nHeight);
-		pSprite->Draw(m_vecShownData[i]->texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
+		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		D3DXIMAGE_INFO imageInfo;
+		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo, true);
+		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	}
 	// << 
 
@@ -151,9 +156,9 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 	{
 		for (int k = 0; k < col; k++)
 		{
-			D3DXVECTOR3 currentRect = vSlotStartPos + D3DXVECTOR3(rectSize.nWidth * k, rectSize.nHeight * i, rectPos.z);
-			D3DXVECTOR3 currentImagePos = vSlotStartPos + currentRect + imagePos;
-			D3DXVECTOR3 currentTextPos = m_vPosition + vSlotStartPos + currentRect + textPos;
+			D3DXVECTOR3 currentRect = D3DXVECTOR3(rectSize.nWidth * k, rectSize.nHeight * i, rectPos.z);
+			D3DXVECTOR3 currentImagePos = currentRect + imagePos;
+			D3DXVECTOR3 currentTextPos = m_vPosition + currentRect + textPos;
 			ST_SLOT slot = ST_SLOT(currentRect, rectSize, currentImagePos, imageSize, currentTextPos, textSize);
 			m_vecSlotInfo.push_back(slot);
 		}
@@ -161,9 +166,12 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 	m_eFont_Slot = eFont;
 }
 
-void cUITab::AddSlotData(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info)
+void cUITab::AddSlotData(int itemID, string name, string imagePath, string info)
 {
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, texture, info);
+	D3DXIMAGE_INFO imageinfo;
+	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo, true);
+
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
 	m_vecSlotData.push_back(data);
 }
 

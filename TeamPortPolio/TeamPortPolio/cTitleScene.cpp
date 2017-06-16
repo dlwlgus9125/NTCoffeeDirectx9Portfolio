@@ -92,9 +92,8 @@ void cTitleScene::OnExit()
 void cTitleScene::OnRender()
 {
 	MAP->Render();
-	UI->Render(m_pSprite);
 	OBJECT->Render();
-	
+	UI->Render(m_pSprite);	
 }
 
 void cTitleScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

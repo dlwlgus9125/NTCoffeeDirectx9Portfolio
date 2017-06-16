@@ -14,7 +14,8 @@ class cUIManager : public Singleton<cUIManager>
 {
 	vector<cUIImage*>			m_vecImage;
 	vector<cUIText*>			m_vecText;
-	vector<cUIButton*>			m_vecBtn;
+	vector<cUIButton*>			m_vecShownBtn;
+	vector<cUIButton*>			m_vecEventBtn;
 	vector<cUITab*>				m_vecTab;
 	cUIMiniMap*					m_pMiniMap;
 

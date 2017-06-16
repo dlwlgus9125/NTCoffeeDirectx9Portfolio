@@ -284,20 +284,16 @@ struct ST_SLOT
 struct ST_SLOTDATA
 {
 	int itemID;
-	LPDIRECT3DTEXTURE9 texture;
+	string imagePath;
 	string info;
 	string name;
 
-	ST_SLOTDATA(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info)
+	ST_SLOTDATA(int itemID, string name, string imagePath, string info)
 	{
 		this->itemID = itemID;
 		this->name = name;
-		this->texture = texture;
+		this->imagePath = imagePath;
 		this->info = info;
-	}
-	~ST_SLOTDATA()
-	{
-		SAFE_RELEASE(texture);
 	}
 };
 
@@ -396,9 +392,11 @@ enum ITEM_TAG
 
 enum EVENTID_TITLESCENE
 {
-	TITLE_BTN_FMT_RECT = 0, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
+	LOGIN_BTN_START = 1, LOGIN_BTN_HELP, LOGIN_BTN_EXIT,
 
-	TOWN_TAB_SHOP_ATT = 100, 
+	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
+
+	TOWN_TAB_SHOP_ATT = 200, 
 };
 
 enum EVENTID_TOWNSCENE

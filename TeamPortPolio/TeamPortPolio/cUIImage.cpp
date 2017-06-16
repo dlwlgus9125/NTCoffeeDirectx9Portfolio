@@ -40,7 +40,10 @@ void cUIImage::Destroy()
 	cUIObject::Destroy();
 }
 
-void cUIImage::Setup_Image(LPDIRECT3DTEXTURE9 texture)
+void cUIImage::Setup_Image(string imagePath)
 {
-	m_pTexture = texture;
+	D3DXIMAGE_INFO info;
+
+	m_pTexture = TEXTURE->GetTexture(imagePath, info);
+	SetSize(ST_SIZEN(info.Width, info.Height));
 }

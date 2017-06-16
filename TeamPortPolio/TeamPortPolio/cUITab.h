@@ -26,7 +26,7 @@ public:
 	~cUITab();
 
 	// >> ег
-	void Setup_Tap(string sPath_idle_title, string sPath_selected_title, ST_SIZEN titleSize, string sPath_body, D3DXVECTOR3 pos_body, ST_SIZEN bodySize, FONT_TAG eFont = FONT_DEF);
+	void Setup_Tap(string sPath_idle_title, string sPath_selected_title,  string sPath_body, D3DXVECTOR3 pos_body, FONT_TAG eFont = FONT_DEF);
 	void AddTitle(string title, D3DXVECTOR3 pos_title);
 	// << 
 	virtual void Update(float deltaTime);
@@ -34,9 +34,9 @@ public:
 	virtual void Destroy();
 
 	// >> ╫╫╥т
-	void Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
+	void Setup_Slot(D3DXVECTOR3	vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
 		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
-	void AddSlotData(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info);
+	void AddSlotData(int itemID, string name, string imagePath, string info);
 	void SetShownData(int startIndex);
 	void GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	// << 

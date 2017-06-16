@@ -30,8 +30,10 @@ void cUISlot::Render(LPD3DXSPRITE pSprite)
 	// >> ¿ÃπÃ¡ˆ
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
-		SetRect(&rc, 0, 0, m_vecSlotInfo[i].imageSize.nWidth, m_vecSlotInfo[i].imageSize.nHeight);
-		pSprite->Draw(m_vecShownData[i]->texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		D3DXIMAGE_INFO imageInfo;
+		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo, true);
+		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	}
 	// << 
 
@@ -78,9 +80,12 @@ void cUISlot::Setup_Slot(int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN r
 	m_eFont = eFont;
 }
 
-void cUISlot::AddSlotData(int itemID, string name, LPDIRECT3DTEXTURE9 texture, string info)
+void cUISlot::AddSlotData(int itemID, string name, string imagePath, string info)
 {
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, texture, info);
+	D3DXIMAGE_INFO imageinfo;
+	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo, true);
+	
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
 	m_vecSlotData.push_back(data);
 }
 
