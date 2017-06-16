@@ -21,6 +21,8 @@ class cUIManager : public Singleton<cUIManager>
 
 	void Setup_TitleScene();
 	void Setup_TownScene();
+	void Setup_LoginScene();
+	void Setup_SelectScene();
 
 public:
 	void Setup();

@@ -77,6 +77,16 @@ void cUIManager::Setup_TownScene()
 	// <<
 }
 
+void cUIManager::Setup_LoginScene()
+{
+
+}
+
+void cUIManager::Setup_SelectScene()
+{
+
+}
+
 void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;

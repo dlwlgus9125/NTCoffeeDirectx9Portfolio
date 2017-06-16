@@ -5,6 +5,8 @@
 #include "cSceneManager.h"
 #include "cTitleScene.h"
 #include "cTownScene.h"
+#include "cLoginScene.h"
+#include "cSelectScene.h"
 
 void cGameManager::Init()
 {
@@ -67,7 +69,9 @@ void cGameManager::Init()
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_TOWN, new cTownScene());
-	SCENE->ChangeScene(SCENE_TOWN);
+	SCENE->Register(SCENE_LOGIN, new cLoginScene());
+	SCENE->Register(SCENE_SELECT, new cSelectScene());
+	SCENE->ChangeScene(SCENE_LOGIN);
 	CAMERA->Setup();
 
 

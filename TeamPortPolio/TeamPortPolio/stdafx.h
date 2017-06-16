@@ -104,7 +104,7 @@ using namespace std;
 
 enum SCENE_TAG
 {
-	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN,
+	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN, SCENE_SELECT,
 };
 
 enum UI_TAG
@@ -434,24 +434,26 @@ public: virtual void Set##funName(varType var){\
 
 
 //>>include
-#include "Singleton.h"
-#include "cCamera.h"
+#include "cEffectManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"
 #include "cTimeManager.h"
-#include "Math.h"
 #include "cTextureManager.h"
-#include "cStateMachine.h"
 #include "cAstarManager.h"
-#include "cObjectDB.h"
-#include "cCharacterDB.h"
-#include "cObject.h"
 #include "cMapManager.h"
 #include "cUIManager.h"
 #include "cFontManager.h"
+
+#include "Singleton.h"
+#include "cCamera.h"
+#include "Math.h"
+#include "cStateMachine.h"
+#include "cObjectDB.h"
+#include "cCharacterDB.h"
+#include "cObject.h"
 #include "cItemDB.h"
-#include "cEffectManager.h"
+
 //<<
 #include "cRay.h"
 

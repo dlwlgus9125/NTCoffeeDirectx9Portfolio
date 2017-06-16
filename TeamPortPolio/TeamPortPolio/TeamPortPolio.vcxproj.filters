@@ -197,6 +197,12 @@
     <Filter Include="07. UI\06. cUISlot">
       <UniqueIdentifier>{49945783-18a5-471a-81e8-8711a0c68d27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. cObject\03. cParticle\Fog">
+      <UniqueIdentifier>{bc6adb7b-0771-49ca-b03e-fe50a9400278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. cObject\03. cParticle\Weather">
+      <UniqueIdentifier>{02d50ff7-19ae-435e-b774-7c40f02c9dc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -373,12 +379,6 @@
     <ClInclude Include="cEffectManager.h">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClInclude>
-    <ClInclude Include="cWeather.h">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="cFog.h">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClInclude>
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
@@ -408,6 +408,12 @@
     </ClInclude>
     <ClInclude Include="cUISlot.h">
       <Filter>07. UI\06. cUISlot</Filter>
+    </ClInclude>
+    <ClInclude Include="cFog.h">
+      <Filter>01. cObject\03. cParticle\Fog</Filter>
+    </ClInclude>
+    <ClInclude Include="cWeather.h">
+      <Filter>01. cObject\03. cParticle\Weather</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -569,12 +575,6 @@
     <ClCompile Include="cEffectManager.cpp">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClCompile>
-    <ClCompile Include="cWeather.cpp">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClCompile>
-    <ClCompile Include="cFog.cpp">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClCompile>
     <ClCompile Include="cShadowManager.cpp">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClCompile>
@@ -634,6 +634,12 @@
     </ClCompile>
     <ClCompile Include="cUISlot.cpp">
       <Filter>07. UI\06. cUISlot</Filter>
+    </ClCompile>
+    <ClCompile Include="cFog.cpp">
+      <Filter>01. cObject\03. cParticle\Fog</Filter>
+    </ClCompile>
+    <ClCompile Include="cWeather.cpp">
+      <Filter>01. cObject\03. cParticle\Weather</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
