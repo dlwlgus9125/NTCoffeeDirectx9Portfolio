@@ -369,7 +369,6 @@
     <ClInclude Include="cItemDB.h">
       <Filter>06. Database\02. cItemDB</Filter>
     </ClInclude>
-    <ClInclude Include="Player_State.h" />
     <ClInclude Include="cEffectManager.h">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClInclude>
@@ -408,6 +407,9 @@
     </ClInclude>
     <ClInclude Include="cUISlot.h">
       <Filter>07. UI\06. cUISlot</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_State.h">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -562,10 +564,6 @@
     <ClCompile Include="cItemDB.cpp">
       <Filter>06. Database\02. cItemDB</Filter>
     </ClCompile>
-    <ClCompile Include="Player_Attack.cpp" />
-    <ClCompile Include="Player_Defence.cpp" />
-    <ClCompile Include="Player_Idle.cpp" />
-    <ClCompile Include="Player_Walk.cpp" />
     <ClCompile Include="cEffectManager.cpp">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClCompile>
@@ -634,6 +632,18 @@
     </ClCompile>
     <ClCompile Include="cUISlot.cpp">
       <Filter>07. UI\06. cUISlot</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Walk.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Attack.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Defence.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Idle.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
