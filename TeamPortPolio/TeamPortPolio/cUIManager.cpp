@@ -83,9 +83,9 @@ void cUIManager::Setup_LoginScene()
 	// 시작버튼
 	cUIButton* pBtn_start = new cUIButton;
 	pBtn_start->Setup(D3DXVECTOR3(550, 320, 0), UI_BUTTON);
-	pBtn_start->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
-		"Image/UI/loginscene/StartButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/StartButton/BT_SELECT.png", LOGIN_BTN_START);
+	pBtn_start->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
+		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_START);
 	m_vecShownBtn.push_back(pBtn_start);
 	m_vecEventBtn.push_back(pBtn_start);
 	pBtn_start->SetHidden(false);
@@ -93,9 +93,9 @@ void cUIManager::Setup_LoginScene()
 	// 도움말버튼
 	cUIButton* pBtn_Help = new cUIButton;
 	pBtn_Help->Setup(D3DXVECTOR3(550, 400, 0), UI_BUTTON);
-	pBtn_Help->Setup_Button("Image/UI/loginscene/HelpButton/BT_STAND.png",
-		"Image/UI/loginscene/HelpButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/HelpButton/BT_SELECT.png", LOGIN_BTN_HELP);
+	pBtn_Help->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
+		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_HELP);
 	m_vecShownBtn.push_back(pBtn_Help);
 	m_vecEventBtn.push_back(pBtn_Help);
 	pBtn_Help->SetHidden(false);
@@ -103,9 +103,9 @@ void cUIManager::Setup_LoginScene()
 	// 종료버튼
 	cUIButton* pBtn_Exit = new cUIButton;
 	pBtn_Exit->Setup(D3DXVECTOR3(550, 480, 0), UI_BUTTON);
-	pBtn_Exit->Setup_Button("Image/UI/loginscene/ExitButton/BT_STAND.png",
-		"Image/UI/loginscene/ExitButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/ExitButton/BT_SELECT.png", LOGIN_BTN_EXIT);
+	pBtn_Exit->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
+		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_EXIT);
 	m_vecShownBtn.push_back(pBtn_Exit);
 	m_vecEventBtn.push_back(pBtn_Exit);
 	pBtn_Exit->SetHidden(false);
@@ -118,43 +118,43 @@ void cUIManager::Setup_SelectScene()
 
 	// 오크
 	cUIButton* pBtn_Orc = new cUIButton;
-	pBtn_Orc->Setup(D3DXVECTOR3(550, 240, 0), UI_BUTTON);
-	pBtn_Orc->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
-		"Image/UI/loginscene/StartButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/StartButton/BT_SELECT.png", SELECT_BTN_ORC);
+	pBtn_Orc->Setup(D3DXVECTOR3(650, 545, 0), UI_BUTTON);
+	pBtn_Orc->Setup_Button("Image/UI/SelectScene/Icon/Horde.png",
+		"Image/UI/SelectScene/Icon/Horde.png",
+		"Image/UI/SelectScene/Icon/Horde.png", SELECT_BTN_ORC);
 	m_vecShownBtn.push_back(pBtn_Orc);
 	m_vecEventBtn.push_back(pBtn_Orc);
 	pBtn_Orc->SetHidden(false);
 
 	// 휴먼
-	cUIButton* pBtn_start = new cUIButton;
-	pBtn_start->Setup(D3DXVECTOR3(550, 320, 0), UI_BUTTON);
-	pBtn_start->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
-		"Image/UI/loginscene/StartButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/StartButton/BT_SELECT.png", SELECT_BTN_HUMAN);
-	m_vecShownBtn.push_back(pBtn_start);
-	m_vecEventBtn.push_back(pBtn_start);
-	pBtn_start->SetHidden(false);
+	cUIButton* pBtn_Human = new cUIButton;
+	pBtn_Human->Setup(D3DXVECTOR3(500, 550, 0), UI_BUTTON);
+	pBtn_Human->Setup_Button("Image/UI/SelectScene/Icon/Alliance.png",
+		"Image/UI/SelectScene/Icon/Alliance.png",
+		"Image/UI/SelectScene/Icon/Alliance.png", SELECT_BTN_HUMAN);
+	m_vecShownBtn.push_back(pBtn_Human);
+	m_vecEventBtn.push_back(pBtn_Human);
+	pBtn_Human->SetHidden(false);
 
-	// 케릭터 생성
-	cUIButton* pBtn_Help = new cUIButton;
-	pBtn_Help->Setup(D3DXVECTOR3(550, 400, 0), UI_BUTTON);
-	pBtn_Help->Setup_Button("Image/UI/loginscene/HelpButton/BT_STAND.png",
-		"Image/UI/loginscene/HelpButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/HelpButton/BT_SELECT.png", SELECT_BTN_CREATE);
-	m_vecShownBtn.push_back(pBtn_Help);
-	m_vecEventBtn.push_back(pBtn_Help);
-	pBtn_Help->SetHidden(false);
+	// 게임 시작
+	cUIButton* pBtn_Start = new cUIButton;
+	pBtn_Start->Setup(D3DXVECTOR3(950, 630, 0), UI_BUTTON);
+	pBtn_Start->Setup_Button("Image/UI/SelectScene/Button/BT_SMALL_STAND.png",
+		"Image/UI/SelectScene/Button/BT_SMALL_MOUSE_OVER.png",
+		"Image/UI/SelectScene/Button/BT_SMALL_SELECT.png", SELECT_BTN_CREATE);
+	m_vecShownBtn.push_back(pBtn_Start);
+	m_vecEventBtn.push_back(pBtn_Start);
+	pBtn_Start->SetHidden(false);
 
 	// 돌아가기
-	cUIButton* pBtn_Exit = new cUIButton;
-	pBtn_Exit->Setup(D3DXVECTOR3(550, 480, 0), UI_BUTTON);
-	pBtn_Exit->Setup_Button("Image/UI/loginscene/ExitButton/BT_STAND.png",
-		"Image/UI/loginscene/ExitButton/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/ExitButton/BT_SELECT.png", SELECT_BTN_BACK);
-	m_vecShownBtn.push_back(pBtn_Exit);
-	m_vecEventBtn.push_back(pBtn_Exit);
-	pBtn_Exit->SetHidden(false);
+	cUIButton* pBtn_Back = new cUIButton;
+	pBtn_Back->Setup(D3DXVECTOR3(1100, 630, 0), UI_BUTTON);
+	pBtn_Back->Setup_Button("Image/UI/SelectScene/Button/BT_SMALL_STAND.png",
+		"Image/UI/SelectScene/Button/BT_SMALL_MOUSE_OVER.png",
+		"Image/UI/SelectScene/Button/BT_SMALL_SELECT.png", SELECT_BTN_BACK);
+	m_vecShownBtn.push_back(pBtn_Back);
+	m_vecEventBtn.push_back(pBtn_Back);
+	pBtn_Back->SetHidden(false);
 }
 
 void cUIManager::Setup()

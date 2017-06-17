@@ -17,7 +17,7 @@ cSelectScene::~cSelectScene()
 void cSelectScene::OnEnter()
 {
 	m_pImage = new cUIImage();
-	m_pImage->Setup_Image("Image/UI/SelectScene/Select1.png");
+	m_pImage->Setup_Image("Image/UI/SelectScene/Bg/Select1.png");
 
 	RECT rc;
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
