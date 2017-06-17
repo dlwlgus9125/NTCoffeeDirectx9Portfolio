@@ -129,22 +129,7 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 
 void cUITab::Destroy()
 {
-	// >> ег
-	SAFE_RELEASE(m_pTexture_Body);
-	for each(auto p in m_mapTexture_Title)
-	{
-		SAFE_RELEASE(p.second);
-	}
-	// << 
-
-	// >> ╫╫╥т
-	for each(auto p in m_vecSlotData)
-	{
-		SAFE_DELETE(p);
-	}
-	// << 
-
-	delete this;
+	cUIObject::Destroy();
 }
 
 void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,

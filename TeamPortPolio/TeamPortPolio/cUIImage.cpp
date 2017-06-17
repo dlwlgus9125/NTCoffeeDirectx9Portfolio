@@ -41,8 +41,6 @@ void cUIImage::Render(LPD3DXSPRITE pSprite)
 
 void cUIImage::Destroy()
 {
-	SAFE_RELEASE(m_pTexture);
-
 	cUIObject::Destroy();
 }
 
