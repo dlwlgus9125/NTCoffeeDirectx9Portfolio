@@ -31,7 +31,7 @@ void cUISlot::Render(LPD3DXSPRITE pSprite)
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
 		D3DXIMAGE_INFO imageInfo;
-		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo, true);
+		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
 		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	}
@@ -60,6 +60,7 @@ void cUISlot::Destroy()
 	{
 		SAFE_DELETE(p);
 	}
+
 	cUIObject::Destroy();
 }
 
@@ -83,7 +84,7 @@ void cUISlot::Setup_Slot(int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN r
 void cUISlot::AddSlotData(int itemID, string name, string imagePath, string info)
 {
 	D3DXIMAGE_INFO imageinfo;
-	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo, true);
+	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 	
 	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
 	m_vecSlotData.push_back(data);

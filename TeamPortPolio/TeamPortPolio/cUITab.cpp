@@ -94,7 +94,7 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
 		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 		D3DXIMAGE_INFO imageInfo;
-		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo, true);
+		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
 		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	}
@@ -129,22 +129,7 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 
 void cUITab::Destroy()
 {
-	// >> ег
-	SAFE_RELEASE(m_pTexture_Body);
-	for each(auto p in m_mapTexture_Title)
-	{
-		SAFE_RELEASE(p.second);
-	}
-	// << 
-
-	// >> ╫╫╥т
-	for each(auto p in m_vecSlotData)
-	{
-		SAFE_DELETE(p);
-	}
-	// << 
-
-	delete this;
+	cUIObject::Destroy();
 }
 
 void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
@@ -169,7 +154,7 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 void cUITab::AddSlotData(int itemID, string name, string imagePath, string info)
 {
 	D3DXIMAGE_INFO imageinfo;
-	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo, true);
+	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 
 	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
 	m_vecSlotData.push_back(data);

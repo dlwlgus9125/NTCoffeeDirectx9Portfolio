@@ -64,6 +64,7 @@ void cGameManager::Init()
 	UI->Setup();
 	INPUT->Init();
 	OBJECT->Init();
+	SOUND->Setup();
 	ITEMDB->Setup();
 	OBJECTDB->Setup();
 	CHARACTERDB->Setup();
@@ -117,6 +118,7 @@ void cGameManager::Update()
 			INPUT->Update();
 			CAMERA->Update();
 			SCENE->Update();
+			SOUND->Update();
 			//if (OBJECT->GetPlayer() != NULL)ASTAR->Update();	
 		}
 	}
@@ -142,13 +144,13 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
-	//m_pUIManager->OnExit();
+	SOUND->Release();
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	CAMERA->WndProc(hwnd, message, wParam, lParam);
-
+	SCENE->WndProc(hwnd, message, wParam, lParam);
 
 	//switch (message)
 	//{

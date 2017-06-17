@@ -48,9 +48,7 @@
 #include <Windows.h>
 #include <mmsystem.h >
 #pragma comment(lib, "winmm.lib")
-
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
-
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 using namespace std;
 //<<
 
@@ -109,7 +107,7 @@ enum SCENE_TAG
 
 enum UI_TAG
 {
-	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT,
+	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT, UI_MSGBOX,
 };
 
 enum UI_STATE
@@ -390,13 +388,15 @@ enum ITEM_TAG
 	ITEM_RANGE,
 };
 
-enum EVENTID_TITLESCENE
+enum EVENTID
 {
 	LOGIN_BTN_START = 1, LOGIN_BTN_HELP, LOGIN_BTN_EXIT,
 
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
-	TOWN_TAB_SHOP_ATT = 200, 
+	TOWN_TAB_SHOP_ATT = 200,
+
+	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 };
 
 enum EVENTID_TOWNSCENE
@@ -447,6 +447,7 @@ public: virtual void Set##funName(varType var){\
 #include "cMapManager.h"
 #include "cUIManager.h"
 #include "cFontManager.h"
+#include "cSoundManager.h"
 
 #include "Singleton.h"
 #include "cCamera.h"

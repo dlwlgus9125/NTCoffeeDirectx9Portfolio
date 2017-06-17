@@ -37,8 +37,6 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 
 void cUIMiniMap::Destroy()
 {
-	SAFE_RELEASE(m_pTexture);
-
 	cUIObject::Destroy();
 }
 

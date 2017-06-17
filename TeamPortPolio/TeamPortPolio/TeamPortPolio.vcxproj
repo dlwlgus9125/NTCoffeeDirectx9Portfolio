@@ -183,6 +183,7 @@
     <ClInclude Include="cShadowManager.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkyBox.h" />
+    <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="cStateMachine.h" />
     <ClInclude Include="cTextureManager.h" />
     <ClInclude Include="cTimeManager.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="cUIImage.h" />
     <ClInclude Include="cUIManager.h" />
     <ClInclude Include="cUIMiniMap.h" />
+    <ClInclude Include="cUIMsgBox.h" />
     <ClInclude Include="cUIObject.h" />
     <ClInclude Include="cUISlot.h" />
     <ClInclude Include="cUITab.h" />
@@ -250,6 +252,7 @@
     <ClCompile Include="cShadowManager.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkyBox.cpp" />
+    <ClCompile Include="cSoundManager.cpp" />
     <ClCompile Include="cTextureManager.cpp" />
     <ClCompile Include="BallisticMotion.cpp" />
     <ClCompile Include="cTimeManager.cpp" />
@@ -259,6 +262,7 @@
     <ClCompile Include="cUIImage.cpp" />
     <ClCompile Include="cUIManager.cpp" />
     <ClCompile Include="cUIMiniMap.cpp" />
+    <ClCompile Include="cUIMsgBox.cpp" />
     <ClCompile Include="cUIObject.cpp" />
     <ClCompile Include="cUISlot.cpp" />
     <ClCompile Include="cUITab.cpp" />

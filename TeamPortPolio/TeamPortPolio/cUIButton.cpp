@@ -60,7 +60,8 @@ void cUIButton::Render(LPD3DXSPRITE pSprite)
 
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
 
-	pSprite->Draw(m_mapTexture[m_eCurrentState], &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	LPDIRECT3DTEXTURE9 tex = m_mapTexture[m_eCurrentState];
+	pSprite->Draw(tex, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 
 	pSprite->End();
 
@@ -69,10 +70,5 @@ void cUIButton::Render(LPD3DXSPRITE pSprite)
 
 void cUIButton::Destroy()
 {
-	for each(auto p in m_mapTexture)
-	{
-		SAFE_RELEASE(p.second);
-	}
-
-	delete this;
+	cUIObject::Destroy();
 }
