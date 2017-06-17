@@ -1,6 +1,6 @@
 #pragma once
 #include "cSceneManager.h"
-
+ 
 class cUIImage;
 
 class cLoginScene : public cIScene

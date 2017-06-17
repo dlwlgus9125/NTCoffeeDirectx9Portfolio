@@ -415,6 +415,9 @@
     <ClInclude Include="cWeather.h">
       <Filter>01. cObject\03. cParticle\Weather</Filter>
     </ClInclude>
+    <ClInclude Include="cSoundManager.h">
+      <Filter>00. Manager\05. cSoundManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -640,6 +643,9 @@
     </ClCompile>
     <ClCompile Include="cWeather.cpp">
       <Filter>01. cObject\03. cParticle\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="cSoundManager.cpp">
+      <Filter>00. Manager\05. cSoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
