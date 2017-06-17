@@ -12,7 +12,7 @@ private:
 	std::vector<cPyramid*>		m_vecPyramid;
 
 public:
-	void Setup();
+	void Setup(); 
 	void Render();
 	void Set_Light();
 	//>>grid
