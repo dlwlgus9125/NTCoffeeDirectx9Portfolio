@@ -651,6 +651,9 @@
     <ClCompile Include="cSoundManager.cpp">
       <Filter>00. Manager\05. cSoundManager</Filter>
     </ClCompile>
+    <ClCompile Include="Player_Walk.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
     <ClCompile Include="Player_Attack.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
@@ -658,9 +661,6 @@
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Player_Idle.cpp">
-      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_Walk.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="cUIMsgBox.cpp">
