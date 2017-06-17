@@ -61,6 +61,8 @@ void cSceneManager::Render()
 
 void cSceneManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (m_current < 0) return;
+
 	cIScene* currentScene = GetScene(m_current);
 	if (currentScene != NULL)
 		currentScene->WndProc(hWnd, message, wParam, lParam);

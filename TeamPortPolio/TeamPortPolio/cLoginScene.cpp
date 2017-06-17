@@ -4,7 +4,7 @@
 
 
 cLoginScene::cLoginScene()
-	:	m_pImage(NULL), m_pSprite(NULL)
+	:	m_pImage(NULL), m_pSprite(NULL), m_isClosed(false)
 {
 }
 
@@ -50,7 +50,7 @@ void cLoginScene::OnUpdate()
 		
 		break;
 	case LOGIN_BTN_EXIT:
-
+		m_isClosed = true;
 		break;
 
 	}
@@ -72,5 +72,5 @@ void cLoginScene::OnRender()
 
 void cLoginScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
+	if (m_isClosed == true) PostQuitMessage(0);
 }
