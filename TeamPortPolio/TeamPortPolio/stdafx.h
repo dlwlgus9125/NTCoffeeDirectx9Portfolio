@@ -48,9 +48,7 @@
 #include <Windows.h>
 #include <mmsystem.h >
 #pragma comment(lib, "winmm.lib")
-
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
-
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 using namespace std;
 //<<
 
@@ -449,6 +447,7 @@ public: virtual void Set##funName(varType var){\
 #include "cMapManager.h"
 #include "cUIManager.h"
 #include "cFontManager.h"
+#include "cSoundManager.h"
 
 #include "Singleton.h"
 #include "cCamera.h"

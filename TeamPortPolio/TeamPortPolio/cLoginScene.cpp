@@ -6,6 +6,7 @@
 cLoginScene::cLoginScene()
 	:	m_pImage(NULL), m_pSprite(NULL), m_isClosed(false)
 {
+	SOUND->LoadFile("LoginBGM", "Sound/009 ½ÎÀÌ (PSY)-02-New Face.mp3", true);
 }
 
 
@@ -24,6 +25,8 @@ void cLoginScene::OnEnter()
 	m_pImage->SetHidden(false);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
+
+	SOUND->Play("LoginBGM", 1.0f);
 
 	UI->Change(SCENE_LOGIN);
 }
@@ -45,6 +48,7 @@ void cLoginScene::OnUpdate()
 	{
 	case LOGIN_BTN_START:
 		SCENE->ChangeScene(SCENE_SELECT);
+		SOUND->Stop("LoginBGM");
 		break;
 	case LOGIN_BTN_HELP:
 		
