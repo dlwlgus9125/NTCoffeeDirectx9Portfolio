@@ -34,6 +34,28 @@ void cSelectScene::OnUpdate()
 	m_pImage->Update(TIME->DeltaTime());
 
 	UI->Update(TIME->DeltaTime());
+
+	int indexInMiniMap;
+	int buttonIndex;
+	int eventIDTap;
+	int itemID;
+
+	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
+	
+	switch (buttonIndex)
+	{
+	case SELECT_BTN_ORC:
+		break;
+	case SELECT_BTN_HUMAN:
+
+		break;
+	case SELECT_BTN_CREATE:
+
+		break;
+	case SELECT_BTN_BACK:
+
+		break;
+	}
 }
 
 void cSelectScene::OnExit()
