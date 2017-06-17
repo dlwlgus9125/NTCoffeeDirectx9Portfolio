@@ -2,12 +2,14 @@
 class cObject;
 class cMtlTex;
 class cConstruct;
+class cPlayer;
 #define SHADOW cShadowManager::GetInstance()
 
 class cShadowManager
 {
 protected:
 	vector<cConstruct*>      m_vecConstruct;
+
 	D3DLIGHT9				 m_light;
 	D3DXMATRIXA16            m_matWorld;
 
@@ -16,6 +18,7 @@ public:
 	SINGLETONE(cShadowManager);
 
 	void Setup(std::vector<cConstruct*> vecList);
+
 	void Render();
 	void Destroy();
 	void SetLight();
