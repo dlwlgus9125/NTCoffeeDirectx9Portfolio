@@ -62,7 +62,7 @@ LPDIRECT3DTEXTURE9	cTextureManager::GetTexture(char* szFullPath, D3DXIMAGE_INFO*
 	if (m_mapTexture.find(szFullPath) == m_mapTexture.end() ||
 		m_mapImageInfo.find(szFullPath) == m_mapImageInfo.end())
 	{
-		//SAFE_RELEASE(m_mapTexture[szFullPath]);
+		SAFE_RELEASE(m_mapTexture[szFullPath]);
 
 		D3DXCreateTextureFromFileEx(D3DDevice, szFullPath, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT,
 			0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT, 0, &m_mapImageInfo[szFullPath], NULL, &m_mapTexture[szFullPath]);
@@ -78,7 +78,7 @@ LPDIRECT3DTEXTURE9	cTextureManager::GetTexture(string szFullPath, OUT D3DXIMAGE_
 	if (m_mapTexture.find(szFullPath) == m_mapTexture.end() ||
 		m_mapImageInfo.find(szFullPath) == m_mapImageInfo.end())
 	{
-		//SAFE_RELEASE(m_mapTexture[szFullPath]);
+		SAFE_RELEASE(m_mapTexture[szFullPath]);
 
 		D3DXCreateTextureFromFileEx(D3DDevice, szFullPath.c_str(), D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT,
 			0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT, 0, &m_mapImageInfo[szFullPath], NULL, &m_mapTexture[szFullPath]);
