@@ -41,13 +41,16 @@ void cSelectScene::OnUpdate()
 	int itemID;
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
-	
+
 	switch (buttonIndex)
 	{
 	case SELECT_BTN_ORC:
+		UI->SetEvent(SELECT_MSGBOX_ORC, true);
+		UI->SetEvent(SELECT_MSGBOX_HUMAN, false);
 		break;
 	case SELECT_BTN_HUMAN:
-
+		UI->SetEvent(SELECT_MSGBOX_ORC, false);
+		UI->SetEvent(SELECT_MSGBOX_HUMAN, true);
 		break;
 	case SELECT_BTN_CREATE:
 
