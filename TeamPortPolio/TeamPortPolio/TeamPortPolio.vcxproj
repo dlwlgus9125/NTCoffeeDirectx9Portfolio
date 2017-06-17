@@ -193,6 +193,7 @@
     <ClInclude Include="cUIImage.h" />
     <ClInclude Include="cUIManager.h" />
     <ClInclude Include="cUIMiniMap.h" />
+    <ClInclude Include="cUIMsgBox.h" />
     <ClInclude Include="cUIObject.h" />
     <ClInclude Include="cUISlot.h" />
     <ClInclude Include="cUITab.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="cUIImage.cpp" />
     <ClCompile Include="cUIManager.cpp" />
     <ClCompile Include="cUIMiniMap.cpp" />
+    <ClCompile Include="cUIMsgBox.cpp" />
     <ClCompile Include="cUIObject.cpp" />
     <ClCompile Include="cUISlot.cpp" />
     <ClCompile Include="cUITab.cpp" />
