@@ -148,7 +148,7 @@ void cGameManager::Release()
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	CAMERA->WndProc(hwnd, message, wParam, lParam);
-
+	SCENE->WndProc(hwnd, message, wParam, lParam);
 
 	//switch (message)
 	//{
