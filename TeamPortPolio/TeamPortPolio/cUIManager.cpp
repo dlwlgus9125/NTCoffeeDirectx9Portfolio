@@ -118,18 +118,22 @@ void cUIManager::Release()
 	{
 		p->Destroy();
 	}
+	m_vecImage.clear();
 	for each(auto p in m_vecText)
 	{
 		p->Destroy();
 	}
+	m_vecText.clear();
 	for each(auto p in m_vecShownBtn)
 	{
 		p->Destroy();
 	}	
+	m_vecShownBtn.clear();
 	for each(auto p in m_vecTab)
 	{
 		p->Destroy();
 	}
+	m_vecTab.clear();
 	
 	SAFE_DELETE(m_pMiniMap);
 }
