@@ -142,7 +142,7 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
-	//m_pUIManager->OnExit();
+
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
