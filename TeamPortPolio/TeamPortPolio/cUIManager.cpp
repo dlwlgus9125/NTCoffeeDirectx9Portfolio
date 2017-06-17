@@ -57,7 +57,7 @@ void cUIManager::Setup_TownScene()
 	pTab_Weapon->AddTitle("µµ³¢", D3DXVECTOR3(170, 600, 0));
 
 	// »óÁ¡ 1 ½½·Ô Å×½ºÆ®¿ë
-	pTab_Weapon->Setup_Slot(D3DXVECTOR3(5, 20, 0), 2, 10, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
+	pTab_Weapon->Setup_Slot(D3DXVECTOR3(20, 20, 0), 2, 10, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
 		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
 	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_SHORTSWORD)->eSmallID, ITEMDB->GetItem(I_S_SHORTSWORD)->name, ITEMDB->GetItem(I_S_SHORTSWORD)->szImagePath, ITEMDB->GetItem(I_S_SHORTSWORD)->info);
 	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_LONGSWORD )->eSmallID, ITEMDB->GetItem(I_S_LONGSWORD)->name,ITEMDB->GetItem(I_S_LONGSWORD)->szImagePath, ITEMDB->GetItem(I_S_LONGSWORD)->info);
