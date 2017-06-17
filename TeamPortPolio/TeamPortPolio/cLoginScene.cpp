@@ -19,7 +19,7 @@ void cLoginScene::OnEnter()
 {
 	m_pImage = new cUIImage();
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage->Setup_Image("Image/UI/LoginScene/Login1.png");
+	m_pImage->Setup_Image("Image/UI/LoginScene/Bg/Login1.png");
 	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
 
@@ -34,7 +34,6 @@ void cLoginScene::OnUpdate()
 
 	UI->Update(TIME->DeltaTime());
 
-
 	int indexInMiniMap;
 	int buttonIndex;
 	int eventIDTap;
@@ -45,7 +44,7 @@ void cLoginScene::OnUpdate()
 	switch (buttonIndex)
 	{
 	case LOGIN_BTN_START:
-	
+		SCENE->ChangeScene(SCENE_SELECT);
 		break;
 	case LOGIN_BTN_HELP:
 		
