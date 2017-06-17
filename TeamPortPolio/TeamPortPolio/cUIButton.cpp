@@ -70,10 +70,5 @@ void cUIButton::Render(LPD3DXSPRITE pSprite)
 
 void cUIButton::Destroy()
 {
-	for each(auto p in m_mapTexture)
-	{
-		SAFE_RELEASE(p.second);
-	}
-
 	delete this;
 }
