@@ -50,7 +50,7 @@ void cShadowManager::Render()
 		D3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
 		D3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
 
-		D3DXPLANE groundPlane(0.0f, -1.0f, 0.0f, 0.0f);
+		D3DXPLANE groundPlane(0.0f, -1.0f, 0.0f, m_vecConstruct[i]->GetPosition().y + 0.001f);
 
 		D3DXVECTOR4 lightTest(-m_light.Direction.x, -m_light.Direction.y, -m_light.Direction.z, 0.0f);
 
@@ -83,7 +83,7 @@ void cShadowManager::Render()
 							   // render the shadow on top of the floor.
 
 
-		D3DDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 		for (int j = 0; j < m_vecConstruct[i]->GetVecObjMtlTex().size(); j++)
 		{
@@ -103,6 +103,8 @@ void cShadowManager::Render()
 	}
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
+
+
 
 void cShadowManager::Destroy()
 {

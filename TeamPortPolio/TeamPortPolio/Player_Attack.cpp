@@ -31,12 +31,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		{
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
 
-			//'17-06-16 Ãß°¡ ÇÏ°Ú½À´Ï´Ù. feat ±èÀ±Áß
-			//if (MATH->IsCollided(pPlayer->GetAttackCollider(), ((cUnit*)BattleTarget)->GetSphere()))
-			//{
-
-			//}
-		}
+			}
 
 	}
 

@@ -43,6 +43,7 @@ void cUITab::Update(float deltaTime)
 		if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
 	}
 	// << 
+
 	// >> 탭의 타이틀 클릭 시 모든 탭 타이틀의 상태 바꿔주는 부분
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -93,6 +94,7 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	{
 		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
 		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		
 		D3DXIMAGE_INFO imageInfo;
 		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
@@ -135,13 +137,13 @@ void cUITab::Destroy()
 void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
 	D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont)
 {
-	m_vSlotStartPos = vSlotStartPos;
+	m_vSlotStartPos = vSlotStartPos + m_vPosition;
 
 	for (int i = 0; i < slotCount / col; i++)
 	{
 		for (int k = 0; k < col; k++)
 		{
-			D3DXVECTOR3 currentRect = D3DXVECTOR3(rectSize.nWidth * k, rectSize.nHeight * i, rectPos.z);
+			D3DXVECTOR3 currentRect = m_vSlotStartPos+ D3DXVECTOR3(rectSize.nWidth * k, rectSize.nHeight * i, rectPos.z);
 			D3DXVECTOR3 currentImagePos = currentRect + imagePos;
 			D3DXVECTOR3 currentTextPos = m_vPosition + currentRect + textPos;
 			ST_SLOT slot = ST_SLOT(currentRect, rectSize, currentImagePos, imageSize, currentTextPos, textSize);
