@@ -10,6 +10,9 @@ void cUIManager::Setup_TitleScene()
 	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
 	m_pMiniMap->SetAlpha(150);
 
+	m_vecShownBtn.clear();
+	m_vecEventBtn.clear();
+
 	// 미니맵버튼 1
 	cUIButton* pBtn_start = new cUIButton;
 	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
@@ -49,6 +52,9 @@ void cUIManager::Setup_TitleScene()
 
 void cUIManager::Setup_TownScene()
 {
+	m_vecShownBtn.clear();
+	m_vecEventBtn.clear();
+
 	// >> 상점 1 탭 테스트용
 	cUITab* pTab_Weapon = new cUITab();
 	pTab_Weapon->Setup(D3DXVECTOR3(0, 0, 0), UI_TAB);
@@ -71,6 +77,9 @@ void cUIManager::Setup_TownScene()
 
 void cUIManager::Setup_LoginScene()
 {
+	m_vecShownBtn.clear();
+	m_vecEventBtn.clear();
+
 	// 시작버튼
 	cUIButton* pBtn_start = new cUIButton;
 	pBtn_start->Setup(D3DXVECTOR3(550, 320, 0), UI_BUTTON);
@@ -104,15 +113,18 @@ void cUIManager::Setup_LoginScene()
 
 void cUIManager::Setup_SelectScene()
 {
+	m_vecShownBtn.clear();
+	m_vecEventBtn.clear();
+
 	// 오크
-	cUIButton* pBtn_start = new cUIButton;
-	pBtn_start->Setup(D3DXVECTOR3(550, 240, 0), UI_BUTTON);
-	pBtn_start->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
+	cUIButton* pBtn_Orc = new cUIButton;
+	pBtn_Orc->Setup(D3DXVECTOR3(550, 240, 0), UI_BUTTON);
+	pBtn_Orc->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
 		"Image/UI/loginscene/StartButton/BT_MOUSE_OVER.png",
 		"Image/UI/loginscene/StartButton/BT_SELECT.png", SELECT_BTN_ORC);
-	m_vecShownBtn.push_back(pBtn_start);
-	m_vecEventBtn.push_back(pBtn_start);
-	pBtn_start->SetHidden(false);
+	m_vecShownBtn.push_back(pBtn_Orc);
+	m_vecEventBtn.push_back(pBtn_Orc);
+	pBtn_Orc->SetHidden(false);
 
 	// 휴먼
 	cUIButton* pBtn_start = new cUIButton;
@@ -223,6 +235,9 @@ void cUIManager::Change(int sceneID)
 		break;
 	case SCENE_LOGIN:
 		Setup_LoginScene();
+		break;
+	case SCENE_SELECT:
+		Setup_SelectScene();
 		break;
 	}
 }
