@@ -56,10 +56,6 @@ void cUISlot::Render(LPD3DXSPRITE pSprite)
 
 void cUISlot::Destroy()
 {
-	for each(auto p in m_vecSlotData)
-	{
-		SAFE_DELETE(p);
-	}
 	cUIObject::Destroy();
 }
 

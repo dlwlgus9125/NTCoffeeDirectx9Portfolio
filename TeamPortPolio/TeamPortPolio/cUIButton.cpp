@@ -70,5 +70,5 @@ void cUIButton::Render(LPD3DXSPRITE pSprite)
 
 void cUIButton::Destroy()
 {
-	delete this;
+	cUIObject::Destroy();
 }
