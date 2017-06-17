@@ -6,7 +6,7 @@
 cLoginScene::cLoginScene()
 	:	m_pImage(NULL), m_pSprite(NULL), m_isClosed(false)
 {
-	SOUND->LoadFile("LoginBGM", "Sound/009 ½ÎÀÌ (PSY)-02-New Face.mp3", true);
+	SOUND->LoadFile("LoginBGM", "Sound/BGM/LoginScene/01. A Siege of Worlds.mp3", true);
 }
 
 

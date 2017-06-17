@@ -119,6 +119,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CloseHandle(hThread[0]);
 	CloseHandle(hThread[1]);
 
+	GAMEMAIN->Release();
+
 	return (int)msg.wParam;
 }
 
