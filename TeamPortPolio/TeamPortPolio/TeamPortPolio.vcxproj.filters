@@ -203,6 +203,9 @@
     <Filter Include="01. cObject\03. cParticle\Weather">
       <UniqueIdentifier>{02d50ff7-19ae-435e-b774-7c40f02c9dc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. UI\07. cUIMsgBox">
+      <UniqueIdentifier>{02aed0ac-5f29-40c5-a47f-fa787b2ae7d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="cSoundManager.h">
       <Filter>00. Manager\05. cSoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMsgBox.h">
+      <Filter>07. UI\07. cUIMsgBox</Filter>
     </ClInclude>
     <ClInclude Include="Player_State.h">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
@@ -656,6 +662,9 @@
     </ClCompile>
     <ClCompile Include="Player_Walk.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMsgBox.cpp">
+      <Filter>07. UI\07. cUIMsgBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

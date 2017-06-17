@@ -10,9 +10,6 @@ void cUIManager::Setup_TitleScene()
 	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
 	m_pMiniMap->SetAlpha(150);
 
-	m_vecShownBtn.clear();
-	m_vecEventBtn.clear();
-
 	// 미니맵버튼 1
 	cUIButton* pBtn_start = new cUIButton;
 	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
@@ -52,9 +49,6 @@ void cUIManager::Setup_TitleScene()
 
 void cUIManager::Setup_TownScene()
 {
-	m_vecShownBtn.clear();
-	m_vecEventBtn.clear();
-
 	// >> 상점 1 탭 테스트용
 	cUITab* pTab_Weapon = new cUITab();
 	pTab_Weapon->Setup(D3DXVECTOR3(0, 0, 0), UI_TAB);
@@ -77,15 +71,12 @@ void cUIManager::Setup_TownScene()
 
 void cUIManager::Setup_LoginScene()
 {
-	m_vecShownBtn.clear();
-	m_vecEventBtn.clear();
-
 	// 시작버튼
 	cUIButton* pBtn_start = new cUIButton;
 	pBtn_start->Setup(D3DXVECTOR3(550, 320, 0), UI_BUTTON);
-	pBtn_start->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
-		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_START);
+	pBtn_start->Setup_Button("Image/UI/loginscene/StartButton/BT_STAND.png",
+		"Image/UI/loginscene/StartButton/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/StartButton/BT_SELECT.png", LOGIN_BTN_START);
 	m_vecShownBtn.push_back(pBtn_start);
 	m_vecEventBtn.push_back(pBtn_start);
 	pBtn_start->SetHidden(false);
@@ -93,9 +84,9 @@ void cUIManager::Setup_LoginScene()
 	// 도움말버튼
 	cUIButton* pBtn_Help = new cUIButton;
 	pBtn_Help->Setup(D3DXVECTOR3(550, 400, 0), UI_BUTTON);
-	pBtn_Help->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
-		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_HELP);
+	pBtn_Help->Setup_Button("Image/UI/loginscene/HelpButton/BT_STAND.png",
+		"Image/UI/loginscene/HelpButton/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/HelpButton/BT_SELECT.png", LOGIN_BTN_HELP);
 	m_vecShownBtn.push_back(pBtn_Help);
 	m_vecEventBtn.push_back(pBtn_Help);
 	pBtn_Help->SetHidden(false);
@@ -103,9 +94,9 @@ void cUIManager::Setup_LoginScene()
 	// 종료버튼
 	cUIButton* pBtn_Exit = new cUIButton;
 	pBtn_Exit->Setup(D3DXVECTOR3(550, 480, 0), UI_BUTTON);
-	pBtn_Exit->Setup_Button("Image/UI/loginscene/Button/BT_STAND.png",
-		"Image/UI/loginscene/Button/BT_MOUSE_OVER.png",
-		"Image/UI/loginscene/Button/BT_SELECT.png", LOGIN_BTN_EXIT);
+	pBtn_Exit->Setup_Button("Image/UI/loginscene/ExitButton/BT_STAND.png",
+		"Image/UI/loginscene/ExitButton/BT_MOUSE_OVER.png",
+		"Image/UI/loginscene/ExitButton/BT_SELECT.png", LOGIN_BTN_EXIT);
 	m_vecShownBtn.push_back(pBtn_Exit);
 	m_vecEventBtn.push_back(pBtn_Exit);
 	pBtn_Exit->SetHidden(false);
@@ -113,9 +104,6 @@ void cUIManager::Setup_LoginScene()
 
 void cUIManager::Setup_SelectScene()
 {
-	m_vecShownBtn.clear();
-	m_vecEventBtn.clear();
-
 	// 오크
 	cUIButton* pBtn_Orc = new cUIButton;
 	pBtn_Orc->Setup(D3DXVECTOR3(650, 545, 0), UI_BUTTON);
@@ -155,6 +143,20 @@ void cUIManager::Setup_SelectScene()
 	m_vecShownBtn.push_back(pBtn_Back);
 	m_vecEventBtn.push_back(pBtn_Back);
 	pBtn_Back->SetHidden(false);
+
+	// 오크 설명 창
+	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
+	pMsgBox_Orc->Setup(D3DXVECTOR3(900, 50, 0), UI_MSGBOX);
+	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
+	pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
+	m_vecMsg.push_back(pMsgBox_Orc);
+
+	// 휴먼 설명 창
+	cUIMsgBox* pMsgBox_Human = new cUIMsgBox;
+	pMsgBox_Human->Setup(D3DXVECTOR3(900, 50, 0), UI_MSGBOX);
+	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
+	pMsgBox_Human->Setup_Text("인간이다\n얼굴이 잘생겼는지는\n근데 힘이 세냐 이놈도?");
+	m_vecMsg.push_back(pMsgBox_Human);
 }
 
 void cUIManager::Setup()
@@ -163,27 +165,23 @@ void cUIManager::Setup()
 }
 
 void cUIManager::Release()
-{
-	for each(auto p in m_vecImage)
-	{
-		p->Destroy();
-	}
-	m_vecImage.clear();
-	for each(auto p in m_vecText)
-	{
-		p->Destroy();
-	}
-	m_vecText.clear();
-	for each(auto p in m_vecShownBtn)
-	{
-		p->Destroy();
-	}	
+{	
 	m_vecShownBtn.clear();
+	for each(auto p in m_vecEventBtn)
+	{
+		p->Destroy();
+	}
+	m_vecEventBtn.clear();
 	for each(auto p in m_vecTab)
 	{
 		p->Destroy();
 	}
 	m_vecTab.clear();
+	for each(auto p in m_vecMsg)
+	{
+		p->Destroy();
+	}
+	m_vecMsg.clear();
 	
 	SAFE_DELETE(m_pMiniMap);
 }
@@ -203,6 +201,11 @@ void cUIManager::Update(float deltaTime)
 	{
 		m_vecShownBtn[i]->Update(deltaTime);
 	}
+
+	for (int i = 0; i < m_vecMsg.size(); i++)
+	{
+		m_vecMsg[i]->Update(deltaTime);
+	}
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
@@ -217,6 +220,11 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	for (int i = 0; i < m_vecShownBtn.size(); i++)
 	{
 		m_vecShownBtn[i]->Render(pSprite);
+	}
+
+	for (int i = 0; i < m_vecMsg.size(); i++)
+	{
+		m_vecMsg[i]->Render(pSprite);
 	}
 }
 
@@ -249,12 +257,18 @@ void cUIManager::PressKey()
 	if (INPUT->IsKeyDown(VK_F3)) m_vecTab[0]->SetHiddenAll(!(m_vecTab[0]->GetHidden()));
 }
 
-void cUIManager::SetEvent(int order)
+void cUIManager::SetEvent(int uiID, int order)
 {
-	switch (order)
+	switch (uiID)
 	{
-	case 0:
-		m_vecTab[0]->SetHidden(false);
+	case TOWN_TAB_SHOP_ATT:
+		m_vecTab[0]->SetHidden(order);
+		break;
+	case SELECT_MSGBOX_ORC:
+		m_vecMsg[0]->SetHidden(order);
+		break;
+	case SELECT_MSGBOX_HUMAN:
+		m_vecMsg[1]->SetHidden(order);
 		break;
 	}
 
