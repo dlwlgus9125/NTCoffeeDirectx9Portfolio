@@ -55,7 +55,7 @@ void cCharacter::Render()
 		{
 			m_pSkinnedMesh->UpdateAndRender(m_isDeath);
 
-			SetAttackColliderPos();
+			//SetAttackColliderPos();
 			D3DXMATRIXA16 matT;
 			D3DXMatrixIdentity(&matT);
 

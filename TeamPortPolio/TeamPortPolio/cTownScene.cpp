@@ -19,12 +19,8 @@ void cTownScene::OnEnter()
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 
-	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8, 0, 30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
-	pPlayer->SetID(C_C_ORC_MELEE);
-	pPlayer->Init();
-	OBJECT->AddCharacter(pPlayer);
-	OBJECT->AddObject(pPlayer);
-	OBJECT->SetPlayer(pPlayer);
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	EFFECT->Init(false, 0, true, true);
 
