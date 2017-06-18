@@ -42,7 +42,7 @@ void Melee_Battle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
 				FindNearTarget(pUnit);
 				if(TIME->UpdateOneSecond())FindTarget(pUnit);
 			}
-			else if (((cCharacter*)BattleTarget)->GetMesh()->GetIndex() != FG_DEATH)
+			else if(((cCharacter*)BattleTarget)->IsDeath() == false)
 			{
 				BattleWithTarget(pUnit);
 			}

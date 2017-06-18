@@ -118,3 +118,19 @@ float Math::Angle(D3DXVECTOR3 from, D3DXVECTOR3 to)
 	if (SinAngle(from, to) < 0) angle = 360 - angle;
 	return angle;
 }
+
+void Math::BubbleSort(IN OUT vector<int>& vecInven)
+{
+	for (int i = 1; i < vecInven.size(); i++)
+	{
+		for (int k = 0; k < vecInven.size() - 1; k++)
+		{
+			if (vecInven[k] > vecInven[i])
+			{
+				int temp = vecInven[k];
+				vecInven[k] = vecInven[i];
+				vecInven[i] = temp;
+			}
+		}
+	}
+}

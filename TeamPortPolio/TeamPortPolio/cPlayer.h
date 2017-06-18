@@ -30,6 +30,10 @@ private:
 	cBallisticArrow* m_pBalisticArrow;
 	LPD3DXMESH				m_pMeshSphere;
 	D3DMATERIAL9			m_stMtlSphere;
+
+	// >> 케릭터 아이템 저장 (인벤토리)
+	SYNTHESIZE(vector<int>, m_vecInventory, Inventory);
+	// << 
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cPlayer();
@@ -45,6 +49,11 @@ public:
 	// 추가
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }
 	void SetUnitLeaderTargetIndex(int index);
+
+	// >> 인벤토리용 함수
+	void SellItem(int itemSID);
+	void ByuItem(int itemSID);
+	// <<
 
 	D3DXVECTOR3 SetUpAim() {
 		D3DXVECTOR3 vAim = CAMERA->GetLookAt() - CAMERA->GetEye();

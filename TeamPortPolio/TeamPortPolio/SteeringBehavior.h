@@ -36,9 +36,15 @@ public:
 
 	// 도착 : 부대가 목표점으로 
 	void LeaderArrive(D3DXVECTOR3 targetPos);
+	
+	// 도착 : 기병부대가 목표점으로 
+	void CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity);
 
 	// 도착 : 유닛이 목표점으로 
 	void UnitArrive(D3DXVECTOR3 targetPos);
+
+	// 도착 : 기병유닛이 목표점으로 
+	void CavalryUnitArrive(D3DXVECTOR3 targetPos, float velocity);
 	// 추격
 	void Pursuit(IEntity* pTarget);
 
@@ -62,6 +68,8 @@ public:
 	void ConstrainOverlap(vector<IEntity*> targets);
 
 	void OffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset);
+
+	void CavalryOffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset);
 
 	// 길 이동
 	/*void FollowPath(Grid& grid, vector<int>& path, float seekDistance)

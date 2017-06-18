@@ -3,7 +3,7 @@
 
 void Melee_Idle::OnBegin(cMeleeUnit * pUnit)
 {
-
+	pUnit->GetMesh()->SetAnimationIndexBlend(FG_READYATTACK);
 }
 
 void Melee_Idle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)

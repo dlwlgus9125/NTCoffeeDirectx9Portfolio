@@ -12,7 +12,7 @@ cSkyBox::~cSkyBox()
 {
 }
 
-void cSkyBox::Setup(float sizeX, float sizeY, float sizeZ)
+void cSkyBox::Setup(float sizeX, float sizeY, float sizeZ, char* szFolder, char* szExtension)
 {
 	// Vertex 처리
 
@@ -130,27 +130,19 @@ void cSkyBox::Setup(float sizeX, float sizeY, float sizeZ)
 	}
 	
 	// map의 typename으로 텍스쳐 설정
-	Setup_Texture();
+	Setup_Texture(szFolder, szExtension);
 }
 
-void cSkyBox::Setup_Texture()
+void cSkyBox::Setup_Texture(char* szFolder, char* szExtension)
 {
 	map<SKYBOX_FACE, LPDIRECT3DTEXTURE9> mapTexture;
-
-	/**/
-	mapTexture[SKYBOX_FACE_FRONT] = TEXTURE->GetTexture("map/SkyBox1/Front.bmp");
-	mapTexture[SKYBOX_FACE_BACK] = TEXTURE->GetTexture("map/SkyBox1/Back.bmp");
-	mapTexture[SKYBOX_FACE_LEFT] = TEXTURE->GetTexture("map/SkyBox1/Left.bmp");
-	mapTexture[SKYBOX_FACE_RIGHT] = TEXTURE->GetTexture("map/SkyBox1/Right.bmp");
-	mapTexture[SKYBOX_FACE_TOP] = TEXTURE->GetTexture("map/SkyBox1/Top.bmp");
-	mapTexture[SKYBOX_FACE_BOTTOM] = TEXTURE->GetTexture("map/SkyBox1/Bottom.bmp");
-	/*/
-	mapTexture[SKYBOX_FACE_FRONT] = TEXTURE->GetTexture("map/test/Front.png");
-	mapTexture[SKYBOX_FACE_BACK] = TEXTURE->GetTexture("map/test/Back.png");
-	mapTexture[SKYBOX_FACE_LEFT] = TEXTURE->GetTexture("map/test/right.png");
-	mapTexture[SKYBOX_FACE_RIGHT] = TEXTURE->GetTexture("map/test/Left.png");
-	mapTexture[SKYBOX_FACE_TOP] = TEXTURE->GetTexture("map/test/Top.png");
-	mapTexture[SKYBOX_FACE_BOTTOM] = TEXTURE->GetTexture("map/test/Bottom.png");/**/
+	
+	mapTexture[SKYBOX_FACE_FRONT] = TEXTURE->GetTexture(szFolder + (string)"/Front." + (string)szExtension);
+	mapTexture[SKYBOX_FACE_BACK] = TEXTURE->GetTexture(szFolder + (string)"/Back." + (string)szExtension);
+	mapTexture[SKYBOX_FACE_LEFT] = TEXTURE->GetTexture(szFolder + (string)"/Left." + (string)szExtension);
+	mapTexture[SKYBOX_FACE_RIGHT] = TEXTURE->GetTexture(szFolder + (string)"/Right." + (string)szExtension);
+	mapTexture[SKYBOX_FACE_TOP] = TEXTURE->GetTexture(szFolder + (string)"/Top." + (string)szExtension);
+	mapTexture[SKYBOX_FACE_BOTTOM] = TEXTURE->GetTexture(szFolder + (string)"/Bottom." + (string)szExtension);
 
 	m_mapWholeTexture[SKYBOX_TYPE_A] = mapTexture;
 
@@ -225,12 +217,13 @@ void cSkyBox::Render()
 		sizeof(ST_PT_VERTEX));
 
 	//texture = m_mapCurrentTexture[SKYBOX_FACE_BOTTOM];
-	//D3DDevice->SetTexture(0, texture);
-	//D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST,
+	//DEVICE->SetTexture(0, texture);
+	//DEVICE->DrawPrimitiveUP(D3DPT_TRIANGLELIST,
 	//	2,
 	//	&m_vecVertex[30],
 	//	sizeof(ST_PT_VERTEX));
 
+	D3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	D3DDevice->EndScene();
 }
 

@@ -11,20 +11,46 @@ cMapManager::~cMapManager()
 {
 }
 
-void cMapManager::Init(string fileName)
+void cMapManager::Init(int sceneID)
 {
-	// >> 맵 로드
-	char* folderPath = "map";
-	//string temp = "TESTMAP.txt";
-	char* filePath = strdup(fileName.c_str());
+	char* folderPath = NULL;
+	char* filePath = NULL;
+	int nCellPerRow = 0;
+	float fCellSpace = 0.0f;
+
+	m_pSkyBox = new cSkyBox();
+	switch (sceneID)
+	{
+	case SCENE_TITLE:
+		folderPath = "map";
+		filePath = strdup("TESTMAP3.txt");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox1", "bmp");
+		break;
+
+	case SCENE_TOWN:
+		folderPath = "map";
+		filePath = strdup("TESTTOWN.txt");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox1", "bmp");
+		break;
+
+	case SCENE_BATTLE_HUMAN:
+		folderPath = "map";
+		filePath = strdup("BATTLE.txt");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox2", "png");
+		break;
+
+	case SCENE_BATTLE_ORC:
+		folderPath = "map";
+		filePath = strdup("BATTLE2.txt");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox3", "png");
+		break;
+	}
 
 	m_pMap = new cHeightMap();
 	cObjLoader loader;
 	vector<cMtlTex*> vecMtlTex;
 	vector<ST_PNT_VERTEX> vecVertex;
 	vector<DWORD> vecIndex;
-	int nCellPerRow = 0;
-	float fCellSpace = 0.0f;
 	LPD3DXMESH pMesh = loader.LoadMesh_Map(vecMtlTex, vecVertex, vecIndex, nCellPerRow, fCellSpace, m_vecConstruct, folderPath, filePath, false);
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
@@ -53,10 +79,6 @@ void cMapManager::Init(string fileName)
 	}
 	// << 
 
-	// >> 스카이박스 생성
-	m_pSkyBox = new cSkyBox();
-	m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2);
-	// << 
 	ASTAR->Setup(m_vecPosOfNode);
 
 	// >> : 그림자 세팅
@@ -76,11 +98,11 @@ void cMapManager::Render()
 	{
 		if (test == false)
 		{
-			//test = true;
+			test = true;
 		}
 		else
 		{
-			//test = false;
+			test = false;
 		}
 	}
 

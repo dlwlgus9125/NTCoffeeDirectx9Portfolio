@@ -33,6 +33,8 @@ protected:
 	int              m_currentIndex;
 	CAMP_STATE       m_camp;
 	MeshSpere        m_MeshSphere;
+
+	bool             m_isAnimDeath;
 public:
 	cCharacter();
 	virtual ~cCharacter();
@@ -76,5 +78,7 @@ public:
 	void SetID(C_C_ID id) { m_ID = id; }
 	MeshSpere GetMeshSphere() { return m_MeshSphere; }
 
+
+	bool isAnimDeath() {};
 };
 

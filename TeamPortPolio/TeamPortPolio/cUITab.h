@@ -17,11 +17,12 @@ class cUITab :
 	// <<
 
 	// >> 슬롯
-	D3DXVECTOR3					m_vSlotStartPos;
-	vector<ST_SLOT>				m_vecSlotInfo;
-	vector<ST_SLOTDATA*>		m_vecSlotData;
-	vector<ST_SLOTDATA*>		m_vecShownData;
-	FONT_TAG m_eFont_Slot;
+	D3DXVECTOR3							m_vSlotStartPos;
+	vector<ST_SLOT>						m_vecSlotInfo;
+	map<int, vector<ST_SLOTDATA*>>		m_mapVecSlotData;
+	vector<ST_SLOTDATA*>				m_vecShownData;
+	FONT_TAG							m_eFont_Slot;
+	int									m_nFirstKeyInMap;		// m_mapVecSlotData의 첫번째 키값
 	// << 
 
 	// >>  끄는 버튼					버튼 수정해야 함
@@ -35,6 +36,7 @@ public:
 	// >> 탭
 	void Setup_Tap(string sPath_idle_title, string sPath_selected_title,  string sPath_body, D3DXVECTOR3 pos_body, FONT_TAG eFont = FONT_DEF);
 	void AddTitle(string title, D3DXVECTOR3 pos_title);
+	void SetDef();
 	// << 
 	virtual void Update(float deltaTime);
 	virtual void Render(LPD3DXSPRITE pSprite);
@@ -43,11 +45,13 @@ public:
 	// >> 슬롯
 	void Setup_Slot(D3DXVECTOR3	vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
 		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
-	void AddSlotData(int itemID, string name, string imagePath, string info);
-	void SetShownData(int startIndex);
+	void AddSlotData(int itemMId, int itemSID, string name, string imagePath, string info);
+	void SetShownData(int itemMID, int startIndex);
 	void GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	// << 
 
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
+
+	void ClearShownData();
 };
 
