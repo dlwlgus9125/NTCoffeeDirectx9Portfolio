@@ -6,7 +6,7 @@ class cUnit;
 class cPlayer;
 class cLeader;
 class cSkinnedMesh;
-
+class cBallisticArrow;
 
 class IEntity;
 #define OBJECT  cObjectManager::Instance()
@@ -19,6 +19,9 @@ class cObjectManager : public Singleton<cObjectManager>
 	vector<IEntity*>    m_vecEntity;
 	vector<cLeader*>    m_vecLeader;
 	vector<cCharacter*> m_vecCharacter;
+	vector<cBallisticArrow*> m_vecArrow;
+	list<cBallisticArrow*> m_UnitArrow;
+	list<cBallisticArrow*> m_PlayerArrow;
 	cPlayer*        m_player;
 	
 	queue<cSkinnedMesh*> m_queFootman;
@@ -44,6 +47,9 @@ public:
 
 	cPlayer* GetPlayer() { return m_player; }
 
-	
+	void AddArrowByPlayer(cBallisticArrow* pArrow);
+	void AddArrowByUnit(cBallisticArrow* pArrow, CAMP_STATE camp);
+
+	void DeleteArrows();
 };
 

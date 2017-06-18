@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "cGameManager.h"
-#include "cObjectManager.h"
-#include "TestMap.h"
 #include "cSceneManager.h"
+#include "TestMap.h"
 #include "cTitleScene.h"
 #include "cTownScene.h"
 #include "cLoginScene.h"
 #include "cSelectScene.h"
+#include "cSceneCamera.h"
 
 void cGameManager::Init()
 {
@@ -63,18 +63,17 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();
 	ITEMDB->Setup();
-	OBJECTDB->Setup();
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
-	SCENE->ChangeScene(SCENE_LOGIN);
+	SCENE->ChangeScene(SCENE_TITLE);
 	CAMERA->Setup();
-
 
 	srand((unsigned)time(NULL));
 
@@ -116,7 +115,8 @@ void cGameManager::Update()
 
 			m_prevTime = m_currentTime;
 			INPUT->Update();
-			CAMERA->Update();
+			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
+			else CAMERA->Update();
 			SCENE->Update();
 			SOUND->Update();
 			//if (OBJECT->GetPlayer() != NULL)ASTAR->Update();	

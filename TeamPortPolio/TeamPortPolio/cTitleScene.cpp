@@ -23,7 +23,7 @@ void cTitleScene::OnEnter()
 	MAP->Init("TESTMAP3.txt");
 	UI->Change(SCENE_TITLE);
 	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8,0,30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pPlayer->SetID(C_C_ORC_MELEE);
+	pPlayer->SetID(C_C_HUMAN_MALE);
 	pPlayer->Init();
 	OBJECT->AddCharacter(pPlayer);
 
@@ -71,10 +71,10 @@ void cTitleScene::OnUpdate()
 		OBJECT->GetPlayer()->GetUnitLeader()->SetTriOffset();
 		break;
 	case TITLE_BTN_ATTSTATE:
-		OBJECT->GetPlayer()->GetUnitLeader()->FSM()->Play(LEADER_STATE_IDLE);
+		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonOne();
 		break;
 	case TITLE_BTN_DEFSTATE:
-		OBJECT->GetPlayer()->GetUnitLeader()->FSM()->Play(LEADER_STATE_DEFENCE);
+		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonTwo();
 		break;
 	}
 	// <<

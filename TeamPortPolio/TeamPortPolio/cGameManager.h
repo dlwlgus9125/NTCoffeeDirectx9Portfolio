@@ -10,6 +10,8 @@ private:
 	float m_currentTime;
 	float m_prevTime;
 
+	bool  m_isSelectScene;
+
 public:
 	void Init();
 	void Update();
