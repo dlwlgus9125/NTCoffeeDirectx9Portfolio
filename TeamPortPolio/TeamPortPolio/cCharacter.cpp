@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "cCharacter.h"
 
-
 cCharacter::cCharacter()
 {
 	m_targetObject = NULL;
@@ -15,6 +14,7 @@ cCharacter::~cCharacter()
 
 void cCharacter::Init()
 {
+	m_isAnimDeath = false;
 	m_currentMode = DEFENDING_MODE;
 	m_AttackCollideSphere.fRadius = 0.5f;
 	m_CollideSphere.fRadius = 0.5f;
@@ -130,9 +130,6 @@ void cCharacter::Render()
 	}
 
 	RenderSphere();		
-
-
-
 }
 
 void cCharacter::RenderSphere()

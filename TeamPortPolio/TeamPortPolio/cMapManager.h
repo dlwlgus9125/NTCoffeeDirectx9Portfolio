@@ -23,7 +23,7 @@ public:
 	cMapManager();
 	~cMapManager();
 
-	void Init(string fileName);
+	void Init(int sceneID);
 	void Update();
 	void Render();
 

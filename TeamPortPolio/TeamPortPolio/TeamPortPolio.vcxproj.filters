@@ -116,9 +116,6 @@
     <Filter Include="98. UTIL\04. cRay">
       <UniqueIdentifier>{598b46a6-3b49-4821-995e-837e8df6e349}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Manager\03. cTextureManager">
-      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Manager\10. cMapManager">
       <UniqueIdentifier>{7f0c78a3-c82b-4032-a5bd-7f3e3ec4320f}</UniqueIdentifier>
     </Filter>
@@ -221,6 +218,15 @@
     <Filter Include="98. UTIL\05. cSceneCamera">
       <UniqueIdentifier>{a5087242-f519-43f4-a3da-7d25270e275c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. cCharacter\03. cLeader\00. Leader_State\02. CavalryState">
+      <UniqueIdentifier>{473a2a10-2a36-40eb-b2d7-af25758a27c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. cCharacter\02. cUnit\02. cCavalryUnit">
+      <UniqueIdentifier>{5f89c62d-5de6-40df-be6b-4d830958d78a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState">
+      <UniqueIdentifier>{9d6ee9e9-f8c4-493f-b788-f709e167b5d2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. cScene\04. cBattleScene">
       <UniqueIdentifier>{410d8aeb-ecbe-44c2-97de-dfb0a31ab793}</UniqueIdentifier>
     </Filter>
@@ -229,6 +235,9 @@
     </Filter>
     <Filter Include="03. cScene\04. cBattleScene\Orc">
       <UniqueIdentifier>{c6747f9d-858d-4097-b5f1-72b2c8c63d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\02. cInputManager\03. cTextureManager">
+      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,7 +309,7 @@
       <Filter>00. Manager\06. cAIManager\00. cStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="cTextureManager.h">
-      <Filter>00. Manager\03. cTextureManager</Filter>
+      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
     </ClInclude>
     <ClInclude Include="cTimeManager.h">
       <Filter>00. Manager\08. cTimeManager</Filter>
@@ -465,11 +474,20 @@
     <ClInclude Include="cSceneCamera.h">
       <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClInclude>
+    <ClInclude Include="cCavalryUnit.h">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="Cavalry_State.h">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClInclude>
     <ClInclude Include="cBattleScene_Orc.h">
       <Filter>03. cScene\04. cBattleScene\Orc</Filter>
     </ClInclude>
     <ClInclude Include="cBattleScene_Human.h">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="cArrowMaker.h">
+      <Filter>02. cCharacter\04.cArrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -526,7 +544,7 @@
       <Filter>04. Loader\00. xFileLoader</Filter>
     </ClCompile>
     <ClCompile Include="cTextureManager.cpp">
-      <Filter>00. Manager\03. cTextureManager</Filter>
+      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
     </ClCompile>
     <ClCompile Include="cTimeManager.cpp">
       <Filter>00. Manager\08. cTimeManager</Filter>
@@ -750,11 +768,38 @@
     <ClCompile Include="cSceneCamera.cpp">
       <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClCompile>
+    <ClCompile Include="Leader_State_Cavalry_Idle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\02. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Cavalry_Walk.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\02. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="Leader_State_Cavalry_Battle.cpp">
+      <Filter>02. cCharacter\03. cLeader\00. Leader_State\02. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="cCavalryUnit.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Death.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Idle.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
     <ClCompile Include="cBattleScene_Orc.cpp">
       <Filter>03. cScene\04. cBattleScene\Orc</Filter>
     </ClCompile>
     <ClCompile Include="cBattleScene_Human.cpp">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Walk.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Battle.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="cArrowMaker.cpp">
+      <Filter>02. cCharacter\04.cArrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ cTownScene::~cTownScene()
 void cTownScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
-	MAP->Init("TESTTOWN.txt");
+	MAP->Init(SCENE_TOWN);
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 
@@ -69,9 +69,16 @@ void cTownScene::OnUpdate()
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
-	if (eventIDTap > -1)
+	switch (eventIDTap)
 	{
-		int check = itemID;
+	case TOWN_TAB_INVENTORY:
+		OBJECT->SellItem(itemID);
+		UI->Setup_Inventory();
+		break;
+	case TOWN_TAB_SHOP_ATT:
+		OBJECT->BuyItem(itemID);
+		UI->Setup_Inventory();
+		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -84,6 +91,7 @@ void cTownScene::OnUpdate()
 	if (m_vecST_Sphere[0].isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
+		m_vecST_Sphere[0].isPicked = false;
 	}
 	//<< 
 }

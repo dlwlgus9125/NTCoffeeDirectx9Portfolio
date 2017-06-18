@@ -35,6 +35,7 @@ public:
 
 class Leader_State_Melee_Walk : public IState<cLeader*>
 {
+	
 public:
 	void OnBegin(cLeader* pLeader);
 
@@ -91,6 +92,39 @@ public:
 };
 
 class Leader_State_Bowman_Battle : public IState<cLeader*>
+{
+public:
+	void OnBegin(cLeader* pLeader);
+
+	void OnUpdate(cLeader* pLeader, float deltaTime);
+
+	void OnEnd(cLeader* pLeader);
+};
+
+
+//>>±âº´
+class Leader_State_Cavalry_Idle : public IState<cLeader*>
+{
+public:
+	void OnBegin(cLeader* pLeader);
+
+	void OnUpdate(cLeader* pLeader, float deltaTime);
+
+	void OnEnd(cLeader* pLeader);
+};
+
+class Leader_State_Cavalry_Walk : public IState<cLeader*>
+{
+	
+public:
+	void OnBegin(cLeader* pLeader);
+
+	void OnUpdate(cLeader* pLeader, float deltaTime);
+
+	void OnEnd(cLeader* pLeader);
+};
+
+class Leader_State_Cavalry_Battle : public IState<cLeader*>
 {
 public:
 	void OnBegin(cLeader* pLeader);

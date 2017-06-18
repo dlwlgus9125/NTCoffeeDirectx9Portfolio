@@ -47,7 +47,7 @@ public:
 		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
 	void AddSlotData(int itemMId, int itemSID, string name, string imagePath, string info);
 	void SetShownData(int itemMID, int startIndex);
-	void GetClickedItemID(OUT int& eventID, OUT int& itemID);
+	HRESULT GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	// << 
 
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);

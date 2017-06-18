@@ -27,12 +27,15 @@ protected:
 	MODE_STATE       m_currentMode;
 	ST_Character*    m_Status;
 	bool             m_isDeath;
+	bool m_isAiming;
 	//>>목표 타겟 평소엔 NULL
 	cObject*         m_targetObject;
 	//<<
 	int              m_currentIndex;
 	CAMP_STATE       m_camp;
 	MeshSpere        m_MeshSphere;
+
+	bool             m_isAnimDeath;
 public:
 	cCharacter();
 	virtual ~cCharacter();
@@ -74,5 +77,9 @@ public:
 	virtual void SetAnimDeath() {};
 
 	void SetID(C_C_ID id) { m_ID = id; }
+	MeshSpere GetMeshSphere() { return m_MeshSphere; }
+
+
+	bool isAnimDeath() {};
 };
 

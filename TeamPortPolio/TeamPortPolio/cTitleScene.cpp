@@ -20,7 +20,7 @@ cTitleScene::~cTitleScene()
 void cTitleScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
-	MAP->Init("TESTMAP3.txt");
+	MAP->Init(SCENE_TITLE);
 	UI->Change(SCENE_TITLE);
 	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8,0,30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pPlayer->SetID(C_C_HUMAN_MALE);
@@ -37,7 +37,7 @@ void cTitleScene::OnEnter()
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
-	pLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(11581)->Id());
+	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 	Setup_DirLight();
@@ -45,8 +45,6 @@ void cTitleScene::OnEnter()
 
 void cTitleScene::OnUpdate()
 {
-	if (INPUT->IsKeyDown(VK_F2)) SCENE->ChangeScene(SCENE_TOWN);
-
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 

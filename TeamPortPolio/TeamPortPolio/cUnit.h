@@ -46,5 +46,7 @@ public:
 	virtual void SetBattleState() {};
 	virtual void SetIdleState() {};
 	virtual void SetDefenceState() {};
+
+	
 };
 
