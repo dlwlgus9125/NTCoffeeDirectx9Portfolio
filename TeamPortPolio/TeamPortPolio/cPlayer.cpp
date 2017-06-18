@@ -8,16 +8,16 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 {
 	m_CharacterEntity = new ISteeringEntity(pos, radius, forward, mass, maxSpeed);
-	m_unitLeader = NULL;
-	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
-
-	m_unitLeader->SetID(C_C_HUMAN_CAVALRY);
-
-	m_unitLeader->SetCamp(CAMP_PLAYER);
-	m_unitLeader->Init();
-	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
-	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);
+	// m_unitLeader = NULL;
+	// m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
+	// 
+	// m_unitLeader->SetID(C_C_HUMAN_CAVALRY);
+	// 
+	// m_unitLeader->SetCamp(CAMP_PLAYER);
+	// m_unitLeader->Init();
+	// m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
+	// OBJECT->AddObject(m_unitLeader);
+	// OBJECT->AddLeader(m_unitLeader);
 	m_fRotY = 0.0f;
 
 }
