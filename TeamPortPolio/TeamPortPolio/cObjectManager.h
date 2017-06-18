@@ -51,5 +51,9 @@ public:
 	void AddArrowByUnit(cBallisticArrow* pArrow, CAMP_STATE camp);
 
 	void DeleteArrows();
+
+	vector<int> GetInventory();
+	void SellItem(int itemSID);
+	void ByuItem(int itemSID);
 };
 

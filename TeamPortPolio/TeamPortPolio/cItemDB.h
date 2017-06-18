@@ -16,6 +16,7 @@ enum I_M_ITEMID
 	I_M_SWORD,
 	I_M_AXE,
 	I_M_BOW,
+	I_M_INVENTORY,
 	I_M_END,
 };
 

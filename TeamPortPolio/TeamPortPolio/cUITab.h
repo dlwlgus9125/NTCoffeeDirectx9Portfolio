@@ -51,5 +51,7 @@ public:
 	// << 
 
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
+
+	void ClearShownData();
 };
 

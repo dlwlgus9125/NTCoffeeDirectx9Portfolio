@@ -33,6 +33,7 @@ public:
 	void PressKey();
 	void SetEvent(int uiID, int order);
 	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& eventID, OUT int& itemID);
+	void Setup_Inventory();
 
 
 };
