@@ -37,12 +37,13 @@ public:
 	}
 	void ClearTargetedEnemy() { m_targetedEnemy.clear(); }
 
-
+	
 	virtual void SetAnimBlock(){};
 	virtual void SetAnimHit()  {};
 	virtual void SetAnimDeath(){};
 	virtual void SetStatus() {};
 
+	virtual void SetBattleState() {};
 	virtual void SetIdleState() {};
 	virtual void SetDefenceState() {};
 };

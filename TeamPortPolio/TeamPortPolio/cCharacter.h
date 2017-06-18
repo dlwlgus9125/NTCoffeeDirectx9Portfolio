@@ -30,7 +30,7 @@ protected:
 	cObject*         m_targetObject;
 	//<<
 	int              m_currentIndex;
-
+	CAMP_STATE       m_camp;
 	MeshSpere        m_MeshSphere;
 public:
 	cCharacter();
@@ -64,6 +64,9 @@ public:
 	FIGHT_STATE      Fight(cCharacter* attacker, cCharacter* defender);
 	ST_Character*    GetStatus() { return m_Status; }
 
+	//>>진영 설정
+	void             SetCamp(int camp) { m_camp = (CAMP_STATE)camp; }
+	CAMP_STATE       GetCamp() { return m_camp; }
 
 	virtual void SetAnimBlock() {};
 	virtual void SetAnimHit() {};

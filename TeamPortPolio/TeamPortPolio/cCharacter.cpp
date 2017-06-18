@@ -16,7 +16,7 @@ cCharacter::~cCharacter()
 void cCharacter::Init()
 {
 	m_currentMode = DEFENDING_MODE;
-	m_AttackCollideSphere.fRadius = 0.1f;
+	m_AttackCollideSphere.fRadius = 0.3f;
 	D3DXCreateSphere(D3DDevice, m_CollideSphere.fRadius, 10, 10, &m_MeshSphere.m_pMeshSphere, NULL);
 	ZeroMemory(&m_MeshSphere.m_stMtlSphere, sizeof(D3DMATERIAL9));
 	m_MeshSphere.m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
@@ -28,7 +28,6 @@ void cCharacter::Init()
 	//m_arrangeCollideSphere.m_stMtlSphere.Diffuse = D3DXCOLOR(255.0f, 0.7f, 255.0f, 1.0f);
 	//m_arrangeCollideSphere.m_stMtlSphere.Specular = D3DXCOLOR(255.0f, 0.7f, 255.0f, 1.0f);
 	m_currentIndex = 0;
-	m_AttackCollideSphere.fRadius = 0.3f;
 	m_isDeath = false;
 
 	m_Status = new ST_Character(*CHARACTERDB->GetMapCharacter(m_ID));
@@ -111,7 +110,7 @@ void cCharacter::Render()
 		{
 			m_pSkinnedMesh->UpdateAndRender(m_isDeath);
 
-			SetAttackColliderPos();
+			//SetAttackColliderPos();
 			D3DXMATRIXA16 matT;
 			D3DXMatrixIdentity(&matT);
 
@@ -121,7 +120,7 @@ void cCharacter::Render()
 			D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
 
 			D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+		//	m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 			D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 	}

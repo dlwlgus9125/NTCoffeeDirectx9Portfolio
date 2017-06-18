@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "cUITab.h"
+#include "cUIButton.h"
 
 
-cUITab::cUITab() : m_pTexture_Body(NULL)
+cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL), m_nFirstKeyInMap(-1)
 {
 }
 
@@ -32,17 +33,25 @@ void cUITab::AddTitle(string title, D3DXVECTOR3 pos_title)
 	m_vecTabInfo.push_back(tab);
 }
 
-void cUITab::Update(float deltaTime)
+void cUITab::SetDef()
 {
-	if (m_isHidden) return;
+	SetShownData(m_nFirstKeyInMap, 0);
 
 	// >> 탭 켜질 때, 첫번째 메뉴가 보이도록
-	for (int i = 0; i < m_vecTabInfo.size(); i++)
+	m_vecTabInfo[0].state = UI_SELECTED;
+	for (int i = 1; i < m_vecTabInfo.size(); i++)
 	{
-		if (m_vecTabInfo[i].state == UI_SELECTED) break;
-		if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
+		m_vecTabInfo[i].state = UI_IDLE;
+		//if (m_vecTabInfo[i].state == UI_SELECTED) break;
+		//if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
 	}
 	// << 
+}
+
+void cUITab::Update(float deltaTime)
+{
+	m_pBtn_Exit->SetHidden(m_isHidden);
+	if (m_isHidden) return;
 
 	// >> 탭의 타이틀 클릭 시 모든 탭 타이틀의 상태 바꿔주는 부분
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
@@ -51,6 +60,8 @@ void cUITab::Update(float deltaTime)
 		{
 			D3DXVECTOR2 lt = D3DXVECTOR2(m_vecTabInfo[i].pos.x, m_vecTabInfo[i].pos.y);
 			D3DXVECTOR2 rb = D3DXVECTOR2(m_vecTabInfo[i].pos.x + m_stTitleSize.nWidth, m_vecTabInfo[i].pos.y + m_stTitleSize.nHeight);
+			SetShownData(i + m_nFirstKeyInMap, 0);
+
 			if (MATH->IsCollided(INPUT->GetMousePosVector2(), lt, rb))
 			{
 				for (int k = 0; k < m_vecTabInfo.size(); k++)
@@ -64,6 +75,11 @@ void cUITab::Update(float deltaTime)
 	}	
 	// <<
 
+	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
+	m_pBtn_Exit->Update(deltaTime);
+	if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
+	// << 
+
 	cUIObject::Update(deltaTime);
 }
 
@@ -76,6 +92,11 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
 	pSprite->SetTransform(&m_matWorld);
 
+	// >> 바디 렌더
+	SetRect(&rc, 0, 0, m_stBodySize.nWidth, m_stBodySize.nHeight);
+	pSprite->Draw(m_pTexture_Body, &rc, &D3DXVECTOR3(0, 0, 0), &m_vPos_Body, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	// << 
+	
 	// >> 타이틀 렌더
 	for (int i = 0; i < m_vecTabInfo.size(); i++)
 	{
@@ -84,25 +105,28 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	}
 	// << 
 
-	// >> 바디 렌더
-	SetRect(&rc, 0, 0, m_stBodySize.nWidth, m_stBodySize.nHeight);
-	pSprite->Draw(m_pTexture_Body, &rc, &D3DXVECTOR3(0, 0, 0), &m_vPos_Body, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-	// << 
+	pSprite->End();
+
+	// 종료 버튼 렌더
+	m_pBtn_Exit->Render(pSprite);
 
 	// >> 슬롯 이미지
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
+		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+		pSprite->SetTransform(&m_matWorld);
+
 		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
-		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 		
 		D3DXIMAGE_INFO imageInfo;
 		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
 		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+
+		pSprite->End();
 	}
 	// << 
-
-	pSprite->End();
 
 	// >> 타이틀 글씨 인쇄
 	for (int i = 0; i < m_vecTabInfo.size(); i++)
@@ -153,23 +177,37 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 	m_eFont_Slot = eFont;
 }
 
-void cUITab::AddSlotData(int itemID, string name, string imagePath, string info)
+void cUITab::AddSlotData(int itemMID, int itemSID, string name, string imagePath, string info)
 {
+	if (m_nFirstKeyInMap < 0) m_nFirstKeyInMap = itemMID;
 	D3DXIMAGE_INFO imageinfo;
 	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
-	m_vecSlotData.push_back(data);
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemSID, name, imagePath, info);
+	
+	if (m_mapVecSlotData.find(itemMID) == m_mapVecSlotData.end())
+	{
+		vector<ST_SLOTDATA*> vecSlotData;
+		m_mapVecSlotData[itemMID] = vecSlotData;
+	}
+
+	m_mapVecSlotData[itemMID].push_back(data);
 }
 
-void cUITab::SetShownData(int startIndex)
+void cUITab::SetShownData(int itemMID, int startIndex)
 {
 	m_vecShownData.clear();
+
+	if (m_mapVecSlotData.find(itemMID) == m_mapVecSlotData.end()) return;
+
+	vector<ST_SLOTDATA*> vecSlotData = m_mapVecSlotData[itemMID];
+
+
 	for (int i = startIndex; i < m_vecSlotInfo.size(); i++)
 	{
-		if (startIndex + i >= m_vecSlotData.size()) break;
+		if (startIndex + i >= vecSlotData.size()) break;
 
-		m_vecShownData.push_back(m_vecSlotData[i]);
+		m_vecShownData.push_back(vecSlotData[i]);
 	}
 }
 
@@ -189,7 +227,16 @@ void cUITab::GetClickedItemID(OUT int& eventID, OUT int& itemID)
 			{
 				eventID = m_eEventID;
 				itemID = m_vecShownData[i]->itemID;
+				break;
 			}
 		}
 	}
+}
+
+void cUITab::Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked)
+{
+	m_pBtn_Exit = new cUIButton;
+	m_vBtnPos = m_vPosition + btnPos;
+	m_pBtn_Exit->Setup(m_vBtnPos, UI_BUTTON);
+	m_pBtn_Exit->Setup_Button(sPath_idle, sPath_mouseover, sPath_clicked, TOWN_BTN_SHOPEXIT);
 }

@@ -5,7 +5,6 @@
 
 void cCamera::Setup()
 {
-
 	m_vEye = D3DXVECTOR3(0, 0, -5);
 	m_vLookAt = D3DXVECTOR3(0, 0, 0);
 	m_vUp = D3DXVECTOR3(0, 1, 0);
@@ -28,6 +27,7 @@ void cCamera::Setup()
 		rc.right / (float)rc.bottom,
 		1.0f,
 		1000.0f);
+
 	D3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 

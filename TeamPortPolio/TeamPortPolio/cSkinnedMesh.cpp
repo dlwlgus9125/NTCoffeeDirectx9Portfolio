@@ -128,6 +128,59 @@ void cSkinnedMesh::UpdateAndRender(bool isStop)
 	}
 }
 
+void cSkinnedMesh::UpdateAndRenderForArrow(bool isStop)
+{
+	m_fPassedTime += TIME->GetElapsedTime();
+	if (m_pAnimController)
+	{
+		if (m_isAnimBlend)
+		{
+			m_fPassedBlendTime += TIME->GetElapsedTime();
+			if (m_fPassedBlendTime >= m_fBlendTime)
+			{
+				m_isAnimBlend = false;
+				m_pAnimController->SetTrackWeight(0, 1.0f);
+				m_pAnimController->SetTrackEnable(1, false);
+			}
+			else
+			{
+				float fWeight = m_fPassedBlendTime / m_fBlendTime;
+				m_pAnimController->SetTrackWeight(0, fWeight);
+				m_pAnimController->SetTrackWeight(1, 1.0f - fWeight);
+
+			}
+		}
+		if (isStop == false)m_pAnimController->AdvanceTime(TIME->GetElapsedTime(), NULL);
+		else m_pAnimController->AdvanceTime(0.0f, NULL);
+	}
+
+	if (m_pRootFrame)
+	{
+		D3DXMATRIXA16 mat, matS, matR, matRX, matRY, matRZ,matT;
+		D3DXMatrixScaling(&matS, 2.0f, 2.0f, 2.0f);
+		D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+
+		D3DXVECTOR3 dirX = m_vForward ;
+		D3DXVECTOR3 dirZ = m_vForward + D3DXVECTOR3(0, 0, 1);
+		dirX.x *= 10000000;
+		D3DXVec3Normalize(&dirX, &dirX);
+
+		
+
+		
+		//D3DXMatrixRotationX(&matRX, MATH->GetRotX(m_vForward));
+		
+		D3DXMatrixRotationY(&matR, MATH->GetRotY(m_vForward));
+		//D3DXMatrixRotationZ(&matRZ, MATH->GetRotY(m_vForward));
+
+		
+		//matR = matRX*matRY;
+		mat = matS* matR*matT;
+		Update(m_pRootFrame, &mat);
+		Render(m_pRootFrame);
+	}
+}
+
 void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
