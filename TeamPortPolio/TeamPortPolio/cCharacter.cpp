@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "cCharacter.h"
 
-
 cCharacter::cCharacter()
 {
 	m_targetObject = NULL;
@@ -70,9 +69,6 @@ void cCharacter::Render()
 	}
 
 	RenderSphere();		
-
-
-
 }
 
 void cCharacter::RenderSphere()

@@ -45,5 +45,12 @@ public:
 	// Ãß°¡
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }
 	void SetUnitLeaderTargetIndex(int index);
+
+	D3DXVECTOR3 SetUpAim() {
+		D3DXVECTOR3 vAim = CAMERA->GetLookAt() - CAMERA->GetEye();
+		vAim.y += 1;
+		return	MATH->Nomalize(vAim);
+	}
+
 };
 

@@ -2,13 +2,14 @@
 #include "cPlayer.h"
 #include "cGameManager.h"
 #include "cLeader.h"
-#include"cBallisticArrow.h"
+#include"cArrowMaker.h"
 
-cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed) :m_pBalisticArrow(NULL)
+
+cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed) 
 
 {
 	m_CharacterEntity = new ISteeringEntity(pos, radius, forward, mass, maxSpeed);
-	/*m_unitLeader = NULL;
+	m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
 	m_unitLeader->SetID(C_C_ORC_BOWMAN);
@@ -17,9 +18,9 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_unitLeader->Init();
 	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
 	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);*/
+	OBJECT->AddLeader(m_unitLeader);
 	m_fRotY = 0.0f;
-
+	m_isAiming = false;
 }
 
 
@@ -67,23 +68,26 @@ void cPlayer::Update(float deltaTime)
 	{
 		m_fRotY += 0.03;
 	}
+
+
 	//<< 화살처리
-	if (INPUT->IsKeyDown(VK_SPACE) && !m_pBalisticArrow)
+	if (INPUT->IsMouseDown(MOUSE_RIGHT)&& !m_isAiming)
 	{
-		D3DXVECTOR3 vPos = m_CharacterEntity->Pos();
-		vPos.y += 1.0f;
-		D3DXVECTOR3 vTarget = D3DXVECTOR3(0, 0, 0);
-		D3DXVECTOR3 vDir = m_CharacterEntity->Forward();
-		vDir.y = cosf(30);
-		D3DXVec3Normalize(&vDir, &vDir);
-
-
-		OBJECT->AddArrowByUnit(new cBallisticArrow(vPos, vTarget, 10, vDir, 0, 0),CAMP_PLAYER);
+		
+	//	CAMERA->SetCameraDistance(0.1);
 		//화살구체
+		
 	}
-
+	
+	if (INPUT->IsMouseDown(MOUSE_LEFT)&&!m_isAiming)
+	{
+		//CAMERA->SetCameraDistance(5);
+	
+		OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
+		//m_isAiming = true;
+	}
 	//화살처리
-
+	
 	D3DXMATRIXA16 matR;
 	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
 	D3DXMatrixIdentity(&matR);
@@ -93,8 +97,10 @@ void cPlayer::Update(float deltaTime)
 	m_CharacterEntity->SetForward(forward);
 
 	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-
+	
 	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+
+
 }
 
 void cPlayer::Render()
