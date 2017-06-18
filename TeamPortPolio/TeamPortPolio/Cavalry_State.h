@@ -31,16 +31,18 @@ public:
 	void StateChanger(cCavalryUnit * pUnit);
 };
 
-//class Cavalry_Battle : public IState<cCavalryUnit*>
-//{
-//	cObject* BattleTarget;
-//public:
-//	void OnBegin(cCavalryUnit* pUnit);
-//
-//	void OnUpdate(cCavalryUnit* pUnit, float deltaTime);
-//
-//	void OnEnd(cCavalryUnit* pUnit);
-//};
+class Cavalry_Battle : public IState<cCavalryUnit*>
+{
+	cObject* BattleTarget;
+public:
+	void OnBegin(cCavalryUnit* pUnit);
+
+	void OnUpdate(cCavalryUnit* pUnit, float deltaTime);
+
+	void OnEnd(cCavalryUnit* pUnit);
+
+	void StateChanger(cCavalryUnit * pUnit);
+};
 
 
 class Cavalry_Death : public IState<cCavalryUnit*>

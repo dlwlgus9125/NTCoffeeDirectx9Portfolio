@@ -89,7 +89,8 @@ public:
 	void             PathClear() { m_path.clear(); }
 
 	float            GetVelocity() { return m_velocity; }
-	void             AddVelocity(float force) { m_velocity += force; }
-	void             SetVelocity(float velocity) { m_velocity = velocity; }
+	void             AddVelocity(float force) { m_velocity += force; m_velocity=MATH->Clamp(m_velocity, 0.0f, 0.05f); }
+	void             SetVelocity(float velocity) { m_velocity = velocity; m_velocity= MATH->Clamp(m_velocity, 0.0f, 0.05f);
+	}
 };
 

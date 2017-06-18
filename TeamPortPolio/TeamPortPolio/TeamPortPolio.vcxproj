@@ -231,8 +231,9 @@
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAstar.cpp" />
     <ClCompile Include="cAstarManager.cpp" />
+    <ClCompile Include="Cavalry_Battle.cpp" />
     <ClCompile Include="Cavalry_Death.cpp" />
-    <ClCompile Include="Cavalry_Walkcpp.cpp" />
+    <ClCompile Include="Cavalry_Walk.cpp" />
     <ClCompile Include="cBattleScene_Human.cpp" />
     <ClCompile Include="cBattleScene_Orc.cpp" />
     <ClCompile Include="cBowUnit.cpp" />

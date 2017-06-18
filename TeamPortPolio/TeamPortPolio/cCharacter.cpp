@@ -15,6 +15,7 @@ cCharacter::~cCharacter()
 
 void cCharacter::Init()
 {
+	m_isAnimDeath = false;
 	m_currentMode = DEFENDING_MODE;
 	m_AttackCollideSphere.fRadius = 0.5f;
 	D3DXCreateSphere(D3DDevice, m_CollideSphere.fRadius, 10, 10, &m_MeshSphere.m_pMeshSphere, NULL);

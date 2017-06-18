@@ -13,6 +13,7 @@ cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_CharacterEntity->SetForward(-m_CharacterEntity->Forward());
 	m_targetIndex = m_currentIndex;
 	m_camp = CAMP_NONE;
+	m_velocity = 0.0f;
 }
 
 
@@ -242,7 +243,7 @@ void cLeader::ClickedButtonOne()
 	{
 	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
-		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}
 }
 
@@ -252,7 +253,7 @@ void cLeader::ClickedButtonTwo()
 	{
 	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_BATTLE); break;
-		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_BATTLE); break;
 	}
 }
 

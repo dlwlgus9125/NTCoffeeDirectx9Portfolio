@@ -40,7 +40,6 @@ void IEntity::SetVelocity(D3DXVECTOR3 velocity) { m_velocity = MATH->Clamp(veloc
 void IEntity::AddVelocity(D3DXVECTOR3 velocity) { SetVelocity(m_velocity + velocity); }
 void IEntity::SetRadius(float radius) { m_radius = radius; }
 void IEntity::SetDeath(bool death) { m_isDeath = death; }
-
 bool IEntity::IsDeath()
 {
 	return m_isDeath;
