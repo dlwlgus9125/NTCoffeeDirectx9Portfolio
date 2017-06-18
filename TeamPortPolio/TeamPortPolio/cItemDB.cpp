@@ -6,6 +6,9 @@ void cItemDB::Setup()
 	Add(new ST_ITEM(I_L_MELEE, I_M_SWORD, I_S_SHORTSWORD, "숏 소드", "가장 흔한 짧은 검이다.", 50, "image/item/sword/shortsword.png"));
 	Add(new ST_ITEM(I_L_MELEE, I_M_SWORD, I_S_LONGSWORD, "롱 소드", "평범한 긴 검이다.", 250, "image/item/sword/longsword.png"));
 	Add(new ST_ITEM(I_L_MELEE, I_M_SWORD, I_S_BASTARDSWORD, "바스타드 소드", "중세 양날 검이다.", 750, "image/item/sword/bastardsword.png"));
+	Add(new ST_ITEM(I_L_MELEE, I_M_AXE, I_S_SMALLAXE, "짧은 도끼", "싸우기엔 짧은 도끼.", 50, "image/item/axe/ShortAxe.png"));
+	Add(new ST_ITEM(I_L_MELEE, I_M_AXE, I_S_WARAXE, "전투 도끼", "고기 썰 정도의 도끼.", 250, "image/item/axe/WarAxe.png"));
+	Add(new ST_ITEM(I_L_MELEE, I_M_AXE, I_S_TWOHANDAXE, "양날 도끼", "양날로 싸우기 좋은 도끼.", 750, "image/item/axe/TH_axe.png"));
 }
 
 void cItemDB::Add(ST_ITEM * pData)

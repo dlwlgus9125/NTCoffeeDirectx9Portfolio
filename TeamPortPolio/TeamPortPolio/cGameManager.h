@@ -4,7 +4,7 @@
 
 #define GAMEMAIN cGameManager::Instance()
 class cGameManager : public Singleton<cGameManager>
-{
+{ 
 private:
 	float m_frameTime;
 	float m_currentTime;

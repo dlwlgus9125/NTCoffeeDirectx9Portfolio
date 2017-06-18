@@ -23,8 +23,9 @@ public:
 	float Distance(D3DXVECTOR3 from, D3DXVECTOR3 to);
 	float SqrDistance(D3DXVECTOR3 from, D3DXVECTOR3 to);
 
-
+	float GetRotX(D3DXVECTOR3 dir);
 	float GetRotY(D3DXVECTOR3 dir);
+	float GetRotZ(D3DXVECTOR3 dir);
 	D3DXVECTOR3 Clamp(D3DXVECTOR3 v, float min, float max);
 	bool IsCollided(ST_SPHERE c0, ST_SPHERE c1);
 	bool IsCollided(MeshSpere c0, MeshSpere c1);
@@ -41,5 +42,7 @@ public:
 	float CosAngle(D3DXVECTOR3 from, D3DXVECTOR3 to);
 	float Angle(D3DXVECTOR3 from, D3DXVECTOR3 to);
 	
+	// Á¤·Ä
+	void BubbleSort(IN OUT vector<int>& vecInven);
 
 };

@@ -9,9 +9,6 @@ BallisticMotion::BallisticMotion(IEntity * entity, D3DXVECTOR3 vOrigin, D3DXVECT
 	,m_fGravity(-1)
 {
 	m_pEntity->SetForward(vDir);
-	m_stSphere.fRadius = entity->Radius();
-	m_stSphere.vCenter = entity->Pos();
-	m_stSphere.vCenter.y = entity->Pos().y;
 }
 
 BallisticMotion::~BallisticMotion()
@@ -28,12 +25,10 @@ void BallisticMotion::Update_with_targetpos()
 	float maxHeight = fdistance*cosf(30);
 
 	vToTarget.y = maxHeight - m_fGravity*GravityMultiPlier(fdistance);
-	m_fGravity += maxHeight / TIME->FPS();
+	m_fGravity += (maxHeight / TIME->FPS());
 	
 	Entity()->SetForward(vToTarget);
 	Entity()->AddPos(Entity()->Forward());
-	m_stSphere.vCenter = Entity()->Pos();
-	m_stSphere.vCenter.y++;
 }
 
 void BallisticMotion::Update_with_dir()
@@ -44,10 +39,10 @@ void BallisticMotion::Update_with_dir()
 	float fDistance =MATH->Distance(m_vOrigin , Entity()->Pos());
 	vDirtoTarget.y += m_fGravity/GravityMultiPlier(fDistance);
 
+	D3DXVec3Normalize(&vDirtoTarget, &vDirtoTarget);
+
 	Entity()->SetForward(vDirtoTarget);
 	Entity()->AddPos(vArrowvellocity / 60);
-	m_stSphere.vCenter = Entity()->Pos();
-	m_stSphere.vCenter.y++;
 }
 
 float BallisticMotion::GravityMultiPlier(float distance)

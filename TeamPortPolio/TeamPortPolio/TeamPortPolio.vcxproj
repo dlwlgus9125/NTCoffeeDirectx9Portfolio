@@ -146,9 +146,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallisticMotion.h" />
+    <ClInclude Include="Bow_State.h" />
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAstar.h" />
     <ClInclude Include="cAstarManager.h" />
+    <ClInclude Include="cBattleScene_Human.h" />
+    <ClInclude Include="cBattleScene_Orc.h" />
+    <ClInclude Include="cBowUnit.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cCharacterDB.h" />
@@ -217,9 +222,16 @@
     <ClInclude Include="cBallisticArrow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bow_Battle.cpp" />
+    <ClCompile Include="Bow_Death.cpp" />
+    <ClCompile Include="Bow_Idle.cpp" />
+    <ClCompile Include="Bow_Walk.cpp" />
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAstar.cpp" />
     <ClCompile Include="cAstarManager.cpp" />
+    <ClCompile Include="cBattleScene_Human.cpp" />
+    <ClCompile Include="cBattleScene_Orc.cpp" />
+    <ClCompile Include="cBowUnit.cpp" />
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cCharacterDB.cpp" />
@@ -271,17 +283,20 @@
     <ClCompile Include="cUIText.cpp" />
     <ClCompile Include="cUnit.cpp" />
     <ClCompile Include="cWeather.cpp" />
+    <ClCompile Include="Leader_State_Bowman_Battle.cpp" />
+    <ClCompile Include="Leader_State_Bowman_Idle.cpp" />
+    <ClCompile Include="Leader_State_Bowman_Walk.cpp" />
     <ClCompile Include="Leader_State_Defeat.cpp" />
-    <ClCompile Include="Leader_State_Defence.cpp" />
+    <ClCompile Include="Leader_State_Melee_Defence.cpp" />
     <ClCompile Include="Melee_Battle.cpp" />
     <ClCompile Include="Melee_Defence.cpp" />
     <ClCompile Include="Melee_Idle.cpp" />
     <ClCompile Include="Melee_Walk.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="ISteeringEntity.cpp" />
-    <ClCompile Include="Leader_State_Idle.cpp" />
-    <ClCompile Include="Leader_State_Battle.cpp" />
-    <ClCompile Include="Leader_State_Walk.cpp" />
+    <ClCompile Include="Leader_State_Melee_Idle.cpp" />
+    <ClCompile Include="Leader_State_Melee_Battle.cpp" />
+    <ClCompile Include="Leader_State_Melee_Walk.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Melee_Death.cpp" />
     <ClCompile Include="Player_Attack.cpp" />

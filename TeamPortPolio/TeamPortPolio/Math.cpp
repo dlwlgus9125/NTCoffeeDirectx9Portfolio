@@ -15,11 +15,22 @@ float Math::Clamp(float num, float min, float max)
 float Math::Distance(D3DXVECTOR3 from, D3DXVECTOR3 to) { return D3DXVec3Length(&(to - from)); }
 float Math::SqrDistance(D3DXVECTOR3 from, D3DXVECTOR3 to) { return D3DXVec3LengthSq(&(to - from)); }
 
+float Math::GetRotX(D3DXVECTOR3 dir)
+{
+	//return atan2(-dir.y, -dir.x);
+	return atan2(-dir.y, dir.z);
+}
 
 float Math::GetRotY(D3DXVECTOR3 dir)
 {
 	return atan2(-dir.x, -dir.z);
 }
+
+float Math::GetRotZ(D3DXVECTOR3 dir)
+{
+	return atan2(-dir.x, -dir.y);
+}
+
 D3DXVECTOR3 Math::Nomalize(D3DXVECTOR3 vec) { D3DXVECTOR3 Nomal; D3DXVec3Normalize(&Nomal, &vec); return Nomal; }
 
 D3DXVECTOR3 Math::Clamp(D3DXVECTOR3 v, float min, float max)
@@ -106,4 +117,20 @@ float Math::Angle(D3DXVECTOR3 from, D3DXVECTOR3 to)
 	float angle = CosAngle(from, to);
 	if (SinAngle(from, to) < 0) angle = 360 - angle;
 	return angle;
+}
+
+void Math::BubbleSort(IN OUT vector<int>& vecInven)
+{
+	for (int i = 1; i < vecInven.size(); i++)
+	{
+		for (int k = 0; k < vecInven.size() - 1; k++)
+		{
+			if (vecInven[k] > vecInven[i])
+			{
+				int temp = vecInven[k];
+				vecInven[k] = vecInven[i];
+				vecInven[i] = temp;
+			}
+		}
+	}
 }

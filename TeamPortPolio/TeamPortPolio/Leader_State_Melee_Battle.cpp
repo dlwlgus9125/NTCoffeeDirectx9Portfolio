@@ -7,10 +7,10 @@ void Leader_State_Melee_Battle::OnBegin(cLeader * pLeader)
 	//>>전투 시작과 동시에 휘하 유닛에게 상대 부대 id를 넘김
 	for (int i = 0; i < pLeader->GetUnits().size(); i++)
 	{
-		if (((cMeleeUnit*)pLeader->GetUnits()[i])->IsDeath() != true)
+		if (pLeader->GetUnits()[i]->IsDeath() != true)
 		{
-			((cMeleeUnit*)pLeader->GetUnits()[i])->SetTargetObject(pLeader->GetTargetObject());
-			((cMeleeUnit*)pLeader->GetUnits()[i])->FSM()->Play(UNIT_STATE_MELEE_BATTLE);
+			pLeader->GetUnits()[i]->SetTargetObject(pLeader->GetTargetObject());
+			pLeader->GetUnits()[i]->SetBattleState();
 		}
 	}
 		
@@ -22,7 +22,7 @@ void Leader_State_Melee_Battle::OnUpdate(cLeader * pLeader, float deltaTime)
 	{
 		pLeader->SetTargetObject(NULL);
 		pLeader->SetTargetIndex(pLeader->GetIndex());
-		pLeader->FSM()->Play(LEADER_STATE_IDLE);
+		pLeader->FSM()->Play(LEADER_STATE_MELEE_IDLE);
 	}
 	else
 	{

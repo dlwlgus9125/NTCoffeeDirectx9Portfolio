@@ -11,10 +11,11 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	/*m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
-	m_unitLeader->SetID(C_C_HUMAN_MALE);
+	m_unitLeader->SetID(C_C_ORC_BOWMAN);
 
-	m_unitLeader->Init();
 	m_unitLeader->SetCamp(CAMP_PLAYER);
+	m_unitLeader->Init();
+	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
 	OBJECT->AddObject(m_unitLeader);
 	OBJECT->AddLeader(m_unitLeader);*/
 	m_fRotY = 0.0f;
@@ -69,30 +70,18 @@ void cPlayer::Update(float deltaTime)
 	//<< 화살처리
 	if (INPUT->IsKeyDown(VK_SPACE) && !m_pBalisticArrow)
 	{
-		D3DXVECTOR3 vTarget = m_unitLeader->GetUnitLeader()->Pos();
+		D3DXVECTOR3 vPos = m_CharacterEntity->Pos();
+		vPos.y += 1.0f;
+		D3DXVECTOR3 vTarget = D3DXVECTOR3(0, 0, 0);
 		D3DXVECTOR3 vDir = m_CharacterEntity->Forward();
 		vDir.y = cosf(30);
-		D3DXVECTOR3 NormalDir = MATH->Nomalize(vDir);
-		m_pBalisticArrow = new cBallisticArrow(m_CharacterEntity->Pos(), vTarget, 10, NormalDir, 0, 0);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+
+		OBJECT->AddArrowByUnit(new cBallisticArrow(vPos, vTarget, 10, vDir, 0, 0),CAMP_PLAYER);
 		//화살구체
-
-		D3DXCreateSphere(D3DDevice, 0.5f, 10, 10, &m_pMeshSphere, NULL);
-		ZeroMemory(&m_stMtlSphere, sizeof(D3DMATERIAL9));
-		m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
-		m_stMtlSphere.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
-		m_stMtlSphere.Specular = D3DXCOLOR(0.7f, 0.7f, 0.0f, 1.0f);
 	}
 
-	if (m_pBalisticArrow)
-	{
-		m_pBalisticArrow->Shoot()->Update_with_dir();
-		if (m_pBalisticArrow->Shoot()->Entity()->Pos().y < -10)
-		{
-			SAFE_RELEASE(m_pMeshSphere);
-			SAFE_DELETE(m_pBalisticArrow);
-		}
-
-	}
 	//화살처리
 
 	D3DXMATRIXA16 matR;
@@ -106,8 +95,6 @@ void cPlayer::Update(float deltaTime)
 	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
 
 	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-
-
 }
 
 void cPlayer::Render()
@@ -115,26 +102,23 @@ void cPlayer::Render()
 	cCharacter::Render();
 	//m_unitLeader->Render();
 
-			//test
-	if (m_pBalisticArrow)
-	{
-		D3DXMATRIXA16 matT, matR, matWorld;
-		D3DXMatrixIdentity(&matT);
-		D3DXMatrixIdentity(&matR);
-		D3DXMatrixTranslation(&matT, m_pBalisticArrow->GetSphere().vCenter.x, m_pBalisticArrow->GetSphere().vCenter.y, m_pBalisticArrow->GetSphere().vCenter.z);
-
-		D3DXVec3TransformCoord(&m_pBalisticArrow->Shoot()->Entity()->Forward(), &m_pBalisticArrow->Shoot()->Entity()->Forward(), &matR);
-		matWorld = matR*matT;
-
-		D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-		D3DDevice->SetMaterial(&m_stMtlSphere);
-		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_pMeshSphere->DrawSubset(0);
-
-		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	}
-
-
+//			//test
+//	if (m_pBalisticArrow)
+//	{
+//		D3DXMATRIXA16 matT, matR, matWorld;
+//		D3DXMatrixIdentity(&matT);
+//		D3DXMatrixIdentity(&matR);
+//		D3DXMatrixTranslation(&matT, m_pBalisticArrow->GetSphere().vCenter.x, m_pBalisticArrow->GetSphere().vCenter.y, m_pBalisticArrow->GetSphere().vCenter.z);
+//
+//		D3DXVec3TransformCoord(&m_pBalisticArrow->Shoot()->Entity()->Forward(), &m_pBalisticArrow->Shoot()->Entity()->Forward(), &matR);
+//		matWorld = matR*matT;
+//
+//		D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+//		D3DDevice->SetMaterial(&m_stMtlSphere);
+//		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+//		m_pMeshSphere->DrawSubset(0);
+//		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+//	}
 }
 
 
@@ -152,4 +136,22 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 			cout << "size : " << m_unitLeader->GetPath().size() << endl;*/
 		}
 	}
+}
+
+void cPlayer::SellItem(int itemSID)
+{
+	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
+	{
+		if (*it == itemSID) it = m_vecInventory.erase(it);
+		else it++;
+	}
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::ByuItem(int itemSID)
+{
+	m_vecInventory.push_back(itemSID);
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
 }

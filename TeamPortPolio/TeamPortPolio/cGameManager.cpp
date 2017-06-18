@@ -63,10 +63,10 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();
 	ITEMDB->Setup();
-	OBJECTDB->Setup();
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_TOWN, new cTownScene());

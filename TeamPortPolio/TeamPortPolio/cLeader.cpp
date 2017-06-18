@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cLeader.h"
 #include "cMeleeUnit.h"
+#include "cBowUnit.h"
 
 cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed)
 
@@ -25,24 +26,27 @@ cLeader::~cLeader()
 
 void cLeader::Init()
 {
+
 	m_CollideSphere.fRadius = 0.1f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
-	
+
 
 
 	m_arrangeCollideSphere.fRadius = 20.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	cCharacter::Init();
 
+
+
+	//AddUnit(new cUnit(m_CharacterEntity, D3DXVECTOR3(2, 0, 2) * 3.0f));
+
 	for (float z = -2.0f; z <= 1.0f; z++)
 	{
 		for (float x = 2.0f; x >= -2.0f; x--)
 		{
-			AddUnit(new cMeleeUnit(m_CharacterEntity, D3DXVECTOR3(x, 0, z) * 3.0f));
 			m_RectOffest.push_back(D3DXVECTOR3(x, 0, z) * 3.0f);
 		}
 	}
-	//AddUnit(new cUnit(m_CharacterEntity, D3DXVECTOR3(2, 0, 2) * 3.0f));
 	m_RectOffest.push_back(D3DXVECTOR3(2, 0, 2) * 3.0f);
 	m_TriOffest.push_back(D3DXVECTOR3(0, 0, -4.0f) * 3.0f);
 
@@ -72,12 +76,10 @@ void cLeader::Init()
 	m_TriOffest.push_back(D3DXVECTOR3(-2.0f, 0, 1.0f) * 3.0f);
 
 	m_pFsm = new cStateMachine<cLeader*>(this);
-	m_pFsm->Register(LEADER_STATE_IDLE, new Leader_State_Melee_Idle());
-	m_pFsm->Register(LEADER_STATE_WALK, new Leader_State_Melee_Walk());
-	m_pFsm->Register(LEADER_STATE_PURSUIT, new Leader_State_Melee_Battle());
-	m_pFsm->Register(LEADER_STATE_DEFENCE, new Leader_State_Melee_Defence());
+	SetType();
+
 	m_pFsm->Register(LEADER_STATE_DEFEAT, new Leader_State_Defeat());
-	m_pFsm->Play(LEADER_STATE_IDLE);
+	m_pFsm->Play(m_TypeStart);
 	m_meshSphere.m_vCenter = m_arrangeCollideSphere.vCenter;
 	D3DXCreateSphere(D3DDevice, m_arrangeCollideSphere.fRadius, 10, 10, &m_meshSphere.m_pMeshSphere, NULL);
 	ZeroMemory(&m_meshSphere.m_stMtlSphere, sizeof(D3DMATERIAL9));
@@ -85,13 +87,14 @@ void cLeader::Init()
 	m_meshSphere.m_stMtlSphere.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_meshSphere.m_stMtlSphere.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 
+	SetRectOffset();
 }
 
 void cLeader::Update(float deltaTime)
 {
 	if (m_isDeath == true)
 	{
-		if(m_pFsm->CurrentID()!= LEADER_STATE_DEFEAT)m_pFsm->Play(LEADER_STATE_DEFEAT);
+		if (m_pFsm->CurrentID() != LEADER_STATE_DEFEAT)m_pFsm->Play(LEADER_STATE_DEFEAT);
 	}
 	else
 	{
@@ -116,7 +119,7 @@ void cLeader::Update(float deltaTime)
 			}
 		}
 	}
-	
+
 }
 
 void cLeader::Render()
@@ -130,7 +133,7 @@ void cLeader::Render()
 	D3DXMatrixTranslation(&matT, m_meshSphere.m_vCenter.x, m_meshSphere.m_vCenter.y, m_meshSphere.m_vCenter.z);
 	matWorld = matR*matT;
 
-	
+
 	D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 	D3DDevice->SetMaterial(&m_meshSphere.m_stMtlSphere);
 	//g_pD3DDevice->SetTexture(0, m_pSphere.m_pTexture);
@@ -145,6 +148,7 @@ void cLeader::AddUnit(cUnit * pUnit)
 {
 	pUnit->SetID(m_ID);
 	pUnit->Init();
+	pUnit->SetCamp(m_camp);
 	m_vectorUnit.push_back(pUnit);
 	OBJECT->AddObject(pUnit);
 	OBJECT->AddCharacter(pUnit);
@@ -153,7 +157,7 @@ void cLeader::AddUnit(cUnit * pUnit)
 
 void cLeader::DeleteUnit(int key)
 {
-	
+
 }
 
 void cLeader::SetRectOffset()
@@ -161,7 +165,7 @@ void cLeader::SetRectOffset()
 	int key = 0;
 	for (int i = 0; i < m_vectorUnit.size(); i++)
 	{
-		if(((cMeleeUnit*)m_vectorUnit[i])->IsDeath()==false)m_vectorUnit[i]->SetOffset(m_RectOffest[key++]);
+		if (m_vectorUnit[i]->IsDeath() == false)m_vectorUnit[i]->SetOffset(m_RectOffest[key++]);
 	}
 }
 
@@ -170,7 +174,7 @@ void cLeader::SetTriOffset()
 	int key = 0;
 	for (int i = 0; i < m_vectorUnit.size(); i++)
 	{
-		if (((cMeleeUnit*)m_vectorUnit[i])->IsDeath() == false)m_vectorUnit[i]->SetOffset(m_TriOffest[key++]);
+		if (m_vectorUnit[i]->IsDeath() == false)m_vectorUnit[i]->SetOffset(m_TriOffest[key++]);
 	}
 }
 
@@ -189,3 +193,62 @@ void cLeader::SetDefendMode()
 		if (m_vectorUnit[i]->IsDeath() == false)m_vectorUnit[i]->SetDefenceState();
 	}
 }
+
+void cLeader::SetMeleeType()
+{
+	m_type = LEADER_MELEE;
+	m_pFsm->Register(LEADER_STATE_MELEE_IDLE, new Leader_State_Melee_Idle());
+	m_pFsm->Register(LEADER_STATE_MELEE_WALK, new Leader_State_Melee_Walk());
+	m_pFsm->Register(LEADER_STATE_MELEE_BATTLE, new Leader_State_Melee_Battle());
+	m_pFsm->Register(LEADER_STATE_MELEE_DEFENCE, new Leader_State_Melee_Defence());
+	m_TypeStart = LEADER_STATE_MELEE_IDLE;
+	for (int i = 0; i < 20; i++)AddUnit(new cMeleeUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
+}
+
+void cLeader::SetBowType()
+{
+	m_type = LEADER_BOW;
+	m_pFsm->Register(LEADER_STATE_BOW_IDLE, new Leader_State_Bowman_Idle());
+	m_pFsm->Register(LEADER_STATE_BOW_WALK, new Leader_State_Bowman_Walk());
+	m_pFsm->Register(LEADER_STATE_BOW_BATTLE, new Leader_State_Bowman_Battle());
+	m_TypeStart = LEADER_STATE_BOW_IDLE;
+	for (int i = 0; i < 20; i++)AddUnit(new cBowUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
+}
+
+void cLeader::SetCavalryType()
+{
+	m_type = LEADER_CAVALRY;
+}
+
+void cLeader::SetType()
+{
+	switch (m_ID)
+	{
+	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType(); m_type = LEADER_MELEE; break;
+	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType(); m_type = LEADER_BOW; break;
+	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); m_type = LEADER_CAVALRY; break;
+	}
+}
+
+void cLeader::ClickedButtonOne()
+{
+	switch (m_type)
+	{
+	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
+	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
+		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	}
+}
+
+void cLeader::ClickedButtonTwo()
+{
+	switch (m_type)
+	{
+	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
+	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_BATTLE); break;
+		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	}
+}
+
+
+

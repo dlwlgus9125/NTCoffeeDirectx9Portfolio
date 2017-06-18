@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cObjectManager.h"
 #include "cTextureManager.h"
+#include "cBallisticArrow.h"
 #include "cObject.h"
 #include "cPlayer.h"
 #include "cLeader.h"
@@ -41,6 +42,10 @@ void cObjectManager::Update(float deltaTime)
 	{
 		m_vecObject[i]->Update(deltaTime);
 	}
+	for (int i = 0; i < m_vecArrow.size(); i++)
+	{
+		m_vecArrow[i]->Update(deltaTime);
+	}
 }
 
 void cObjectManager::Render()
@@ -52,15 +57,22 @@ void cObjectManager::Render()
 	{
 		if(FRUSTUM->IsIn(m_vecObject[i]->GetCharacterEntity()->Pos()))m_vecObject[i]->Render();
 	}
+	for (int i = 0; i < m_vecArrow.size(); i++)
+	{
+		if (m_vecArrow[i]&&FRUSTUM->IsIn(m_vecArrow[i]->GetCharacterEntity()->Pos()))m_vecArrow[i]->Render();
+	}
+	
 }
 
 void cObjectManager::Release()
 {
+	DeleteArrows();
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
 		delete m_vecObject[i];
 	}
 	m_vecObject.clear();
+
 }
 
 void cObjectManager::AddEntity(IEntity * entity)
@@ -73,4 +85,43 @@ void cObjectManager::AddObject(cObject * object)
 	m_vecObject.push_back(object);
 }
 
+void cObjectManager::AddArrowByPlayer(cBallisticArrow * pArrow)
+{
+	pArrow->SetCamp(CAMP_PLAYER);
+	pArrow->SetIsPlayer();
+	pArrow->SetID(C_C_ARROW_ARROW);
+	pArrow->Init();
+	m_vecArrow.push_back(pArrow);
+}
 
+void cObjectManager::AddArrowByUnit(cBallisticArrow * pArrow, CAMP_STATE camp)
+{
+	pArrow->SetCamp(camp);
+	pArrow->SetID(C_C_ARROW_ARROW);
+	pArrow->Init();
+	m_vecArrow.push_back(pArrow);
+}
+
+void cObjectManager::DeleteArrows()
+{
+	for (int i = 0; i < m_vecArrow.size(); i++)
+	{
+		SAFE_DELETE(m_vecArrow[i]);
+	}
+	m_vecArrow.clear();
+}
+
+vector<int> cObjectManager::GetInventory()
+{
+	return m_player->GetInventory();
+}
+
+void cObjectManager::SellItem(int itemSID)
+{
+	m_player->SellItem(itemSID);
+}
+
+void cObjectManager::ByuItem(int itemSID)
+{
+	m_player->ByuItem(itemSID);
+}
