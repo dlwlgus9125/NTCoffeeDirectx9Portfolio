@@ -111,4 +111,17 @@ void cObjectManager::DeleteArrows()
 	m_vecArrow.clear();
 }
 
+vector<int> cObjectManager::GetInventory()
+{
+	return m_player->GetInventory();
+}
 
+void cObjectManager::SellItem(int itemSID)
+{
+	m_player->SellItem(itemSID);
+}
+
+void cObjectManager::ByuItem(int itemSID)
+{
+	m_player->ByuItem(itemSID);
+}

@@ -42,5 +42,7 @@ public:
 	float CosAngle(D3DXVECTOR3 from, D3DXVECTOR3 to);
 	float Angle(D3DXVECTOR3 from, D3DXVECTOR3 to);
 	
+	// Á¤·Ä
+	void BubbleSort(IN OUT vector<int>& vecInven);
 
 };
