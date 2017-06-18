@@ -34,21 +34,26 @@ void cShadowManager::Render()
 {
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	D3DDevice->Clear(NULL, NULL, D3DCLEAR_STENCIL, D3DCOLOR_XRGB(47, 121, 112), 1.0f, 0);
+	D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	D3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+
+	D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+
+	D3DDevice->SetRenderState(D3DRS_STENCILREF, 0x0);
+	D3DDevice->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
+	D3DDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
+
+	D3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
+	D3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
+	D3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
+
+	D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{
-
-		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-
-		D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-
-		D3DDevice->SetRenderState(D3DRS_STENCILREF, 0x0);
-		D3DDevice->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
-		D3DDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
-
-		D3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
-		D3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
-		D3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
 
 		D3DXPLANE groundPlane(0.0f, -1.0f, 0.0f, m_vecConstruct[i]->GetPosition().y + 0.001f);
 
@@ -72,10 +77,6 @@ void cShadowManager::Render()
 
 		D3DDevice->SetTransform(D3DTS_WORLD, &W);
 
-		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
 		D3DMATERIAL9 mtrl = InitMtrl(D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(0, 0, 0), 0.0f);
 		mtrl.Diffuse.a = 0.5f; // 50% transparency.
 
@@ -83,7 +84,6 @@ void cShadowManager::Render()
 							   // render the shadow on top of the floor.
 
 
-		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 		for (int j = 0; j < m_vecConstruct[i]->GetVecObjMtlTex().size(); j++)
 		{
@@ -91,16 +91,16 @@ void cShadowManager::Render()
 			D3DDevice->SetTexture(0, 0);
 			m_vecConstruct[i]->GetObjMesh()->DrawSubset(j);
 		}
-
-		D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-
-		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-		D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
 	}
+
+	D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+
+	D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	D3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
 
@@ -126,3 +126,4 @@ void cShadowManager::SetLight()
 	D3DDevice->SetLight(0, &m_light);
 	D3DDevice->LightEnable(0, true);
 }
+

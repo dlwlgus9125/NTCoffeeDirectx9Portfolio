@@ -72,7 +72,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
-	SCENE->ChangeScene(SCENE_LOGIN);
+	SCENE->ChangeScene(SCENE_SELECT);
 	CAMERA->Setup();
 
 	srand((unsigned)time(NULL));
