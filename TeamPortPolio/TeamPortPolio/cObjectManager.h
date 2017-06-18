@@ -7,6 +7,7 @@ class cPlayer;
 class cLeader;
 class cSkinnedMesh;
 class cBallisticArrow;
+class BallisticMotion;
 
 class IEntity;
 #define OBJECT  cObjectManager::Instance()
@@ -19,14 +20,16 @@ class cObjectManager : public Singleton<cObjectManager>
 	vector<IEntity*>    m_vecEntity;
 	vector<cLeader*>    m_vecLeader;
 	vector<cCharacter*> m_vecCharacter;
-	vector<cBallisticArrow*> m_vecArrow;
-	list<cBallisticArrow*> m_UnitArrow;
-	list<cBallisticArrow*> m_PlayerArrow;
+
 	cPlayer*        m_player;
 	
 	queue<cSkinnedMesh*> m_queFootman;
 
+	list<cBallisticArrow*> m_listPlayerArrow;
+	list<cBallisticArrow*> m_listUnitArrow;
 
+	void PlayerArrow(cBallisticArrow * pArrow);
+	void UnitArrow(cBallisticArrow * pArrow);
 public:
 
 
@@ -47,13 +50,14 @@ public:
 
 	cPlayer* GetPlayer() { return m_player; }
 
-	void AddArrowByPlayer(cBallisticArrow* pArrow);
-	void AddArrowByUnit(cBallisticArrow* pArrow, CAMP_STATE camp);
-
 	void DeleteArrows();
 
-	vector<int> GetInventory();
-	void SellItem(int itemSID);
-	void ByuItem(int itemSID);
+
+	list<cBallisticArrow*> GetPlayerArrows();
+	list<cBallisticArrow*> GetUnitArrows();
+	void AddPlayerArrow(IEntity * pos, D3DXVECTOR3 forward);
+	void AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget);
+	void ArrowUpdate();
+	void ClearArrow();
 };
 

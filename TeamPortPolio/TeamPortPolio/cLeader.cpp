@@ -2,6 +2,7 @@
 #include "cLeader.h"
 #include "cMeleeUnit.h"
 #include "cBowUnit.h"
+#include "cCavalryUnit.h"
 
 cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed)
 
@@ -12,6 +13,7 @@ cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_CharacterEntity->SetForward(-m_CharacterEntity->Forward());
 	m_targetIndex = m_currentIndex;
 	m_camp = CAMP_NONE;
+	m_velocity = 0.0f;
 }
 
 
@@ -218,15 +220,20 @@ void cLeader::SetBowType()
 void cLeader::SetCavalryType()
 {
 	m_type = LEADER_CAVALRY;
+	m_pFsm->Register(LEADER_STATE_CAVALRY_IDLE, new Leader_State_Cavalry_Idle());
+	m_pFsm->Register(LEADER_STATE_CAVALRY_WALK, new Leader_State_Cavalry_Walk());
+	m_pFsm->Register(LEADER_STATE_CAVALRY_BATTLE, new Leader_State_Cavalry_Battle());
+	m_TypeStart = LEADER_STATE_CAVALRY_IDLE;
+	for (int i = 0; i < 20; i++)AddUnit(new cCavalryUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
 }
 
 void cLeader::SetType()
 {
 	switch (m_ID)
 	{
-	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType(); m_type = LEADER_MELEE; break;
-	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType(); m_type = LEADER_BOW; break;
-	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); m_type = LEADER_CAVALRY; break;
+	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType();break;
+	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType();break;
+	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); break;
 	}
 }
 
@@ -236,7 +243,7 @@ void cLeader::ClickedButtonOne()
 	{
 	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
-		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}
 }
 
@@ -246,7 +253,7 @@ void cLeader::ClickedButtonTwo()
 	{
 	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_BATTLE); break;
-		//	case LEADER_CAVALRY: m_type = LEADER_CAVALRY; break;
+	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_BATTLE); break;
 	}
 }
 

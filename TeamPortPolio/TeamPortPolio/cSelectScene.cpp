@@ -83,7 +83,7 @@ void cSelectScene::OnUpdate()
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
-			SCENE->ChangeScene(SCENE_TOWN);
+			SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
 		}
 		break;
 
@@ -136,6 +136,16 @@ void cSelectScene::MovePosition()
 	}
 	else
 	{
-		m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_STAND);
+		if (m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetPassedTime() > m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.3f)
+		{
+			if (m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetIndex() != P_STAND&&m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetIndex() != P_BATTLECRY)
+			{
+				m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_BATTLECRY);
+			}
+			else
+			{
+				m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_STAND);
+			}
+		}
 	}
 }

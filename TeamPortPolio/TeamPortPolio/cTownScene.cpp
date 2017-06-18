@@ -15,7 +15,7 @@ cTownScene::~cTownScene()
 void cTownScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
-	MAP->Init("TESTTOWN.txt");
+	MAP->Init(SCENE_TOWN);
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 

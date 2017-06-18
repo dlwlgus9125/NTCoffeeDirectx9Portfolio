@@ -27,6 +27,6 @@ public:
 	void SetAnimDeath() { m_pFsm->Play(UNIT_STATE_BOW_DEATH); };
 	void SetBattleState() { m_pFsm->Play(UNIT_STATE_BOW_BATTLE); };
 	void SetIdleState() { m_pFsm->Play(UNIT_STATE_BOW_IDLE); };
-	void SetDefenceState() { m_pFsm->Play(UNIT_STATE_BOW_DEFENCE); };
+	void SetDefenceState() {};
 };
 

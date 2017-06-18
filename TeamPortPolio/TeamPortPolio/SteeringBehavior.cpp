@@ -91,10 +91,26 @@ void SteeringBehavior::LeaderArrive(D3DXVECTOR3 targetPos)
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-		if (speed > 0.1f)speed = 0.2f;
+		if (speed > 0.2f)speed = 0.2f;
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
 		Entity()->SetSpeed(speed);
+	}
+}
+
+void SteeringBehavior::CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity)
+{
+	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
+	vToTarget.y = 0;
+	float distance = MATH->Magnitude(vToTarget);
+	float speedMultiplier = 3;
+	if (distance > EPSILON)
+	{
+		float speed = (distance / TIME->FPS())*speedMultiplier;
+		if (speed > 0.1f)speed = 0.1f;
+		Entity()->SetForward(vToTarget);
+		Entity()->AddPos(Entity()->Forward()*(speed+velocity));
+		Entity()->SetSpeed(speed + velocity);
 	}
 }
 
@@ -111,6 +127,22 @@ void SteeringBehavior::UnitArrive(D3DXVECTOR3 targetPos)
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
 		Entity()->SetSpeed(speed);
+	}
+}
+
+void SteeringBehavior::CavalryUnitArrive(D3DXVECTOR3 targetPos,float velocity)
+{
+	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
+	float distance = MATH->Magnitude(vToTarget);
+	float speedMultiplier = 3;
+	if (distance > EPSILON)
+	{
+		float speed = (distance / TIME->FPS())*speedMultiplier;
+		if (speed > 0.1f)speed = 0.1f;
+
+		Entity()->SetForward(vToTarget);
+		Entity()->AddPos(Entity()->Forward()*(speed+velocity));
+		Entity()->SetSpeed(speed + velocity);
 	}
 }
 
@@ -254,8 +286,14 @@ void SteeringBehavior::OffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
 	float distance = MATH->Distance(Entity()->Pos(), targetPos);
 	float arrivalTime = distance / Entity()->MaxSpeed();
 	Arrive(targetPos + pLeader->Velocity() * arrivalTime);
+}
 
-	/*cout << "worldOffset : " << worldOffset.x << ", " << worldOffset.y << ", " << worldOffset.z << endl;
-	cout << "targetPos : " << targetPos.x << ", " << targetPos.y << ", " << targetPos.z << endl;
-	*/
+void SteeringBehavior::CavalryOffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
+{
+	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, pLeader->Forward());
+	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
+	targetPos.y = 0;
+	float distance = MATH->Distance(Entity()->Pos(), targetPos);
+	float arrivalTime = distance / Entity()->MaxSpeed();
+	CavalryUnitArrive(targetPos + pLeader->Velocity() * arrivalTime, (pLeader->Speed()*0.8f));
 }

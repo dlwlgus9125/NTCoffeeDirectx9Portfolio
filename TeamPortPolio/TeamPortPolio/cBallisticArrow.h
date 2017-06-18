@@ -1,26 +1,25 @@
 #pragma once
-//#include "IEntity.h"
 #include "cCharacter.h"
 #include "BallisticMotion.h"
-class cBallisticArrow:public cCharacter
+
+class cBallisticArrow :public cCharacter
 {
-
-	
-
 public:
-	cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
+	cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTOR3 forward, float radius = 0.1, float mass = 1, float maxSpeed = 1);
 	~cBallisticArrow();
 	BallisticMotion* Shoot();
-//ST_SPHERE GetSphere() { return Shoot()->m_stSphere; }
+	D3DXMATRIXA16 GetMatrix() { return m_pArrow->GetMatrix(); }
+ 
 	void Init();
-	void Update(float deltaTime);
 	void Render();
-
-	void SetCamp(CAMP_STATE camp) { m_Camp = camp; };
-	void SetIsPlayer() { m_isPlayer = true; }
+	void ArrowUpdate();
 private:
 	BallisticMotion* m_pArrow;
-	CAMP_STATE m_Camp;
-	bool       m_isPlayer;
-	bool m_isHit;
+	IEntity* pEntity;
+	ST_SPHERE		m_ArrowSphere;
+	LPD3DXMESH      m_pMeshSphere;
+	D3DMATERIAL9    m_stMtlSphere;
+
+	D3DXVECTOR3 m_vTarget;
+	D3DXVECTOR3 m_vDir;
 };

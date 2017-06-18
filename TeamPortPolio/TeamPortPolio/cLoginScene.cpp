@@ -56,7 +56,7 @@ void cLoginScene::OnUpdate()
 		m_isClosed = true;
 		break;
 
-	}
+	}  
 }
 
 void cLoginScene::OnExit()

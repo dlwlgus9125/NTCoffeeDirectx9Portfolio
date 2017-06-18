@@ -103,6 +103,7 @@ using namespace std;
 enum SCENE_TAG
 {
 	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN, SCENE_SELECT,
+	SCENE_BATTLE_HUMAN, SCENE_BATTLE_ORC,
 };
 
 enum UI_TAG
@@ -402,8 +403,12 @@ enum UNIT_STATE
 	UNIT_STATE_BOW_IDLE,
 	UNIT_STATE_BOW_WALK,
 	UNIT_STATE_BOW_BATTLE,
-	UNIT_STATE_BOW_DEFENCE,
 	UNIT_STATE_BOW_DEATH,
+
+	UNIT_STATE_CAVALRY_IDLE,
+	UNIT_STATE_CAVALRY_WALK,
+	UNIT_STATE_CAVALRY_BATTLE,
+	UNIT_STATE_CAVALRY_DEATH,
 };
 
 enum CAMP_STATE
@@ -456,7 +461,7 @@ public: virtual void Set##funName(varType var){\
 #include "cCharacterDB.h"
 #include "cObject.h"
 #include "cItemDB.h"
-
 //<<
 #include "cRay.h"
+#include "cArrowMaker.h"
 

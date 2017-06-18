@@ -29,8 +29,8 @@ public:
 	// object에 관한 함수
 
 	// 초기화 + render state 설정
-	void Setup(float sizeX, float sizeY, float sizeZ);
-	void Setup_Texture();
+	void Setup(float sizeX, float sizeY, float sizeZ, char* szFolder, char* szExtension);
+	void Setup_Texture(char* szFolder, char* szExtension);
 
 	// Projection, View, World Matrix에 관한 처리
 	void Update(cCamera* pCamera);
