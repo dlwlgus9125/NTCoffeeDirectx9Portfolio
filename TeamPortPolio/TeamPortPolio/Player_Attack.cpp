@@ -30,9 +30,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 		{
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
-
-			}
-
+		}
 	}
 
 	else if (INPUT->IsKeyPress(VK_W) || INPUT->IsKeyPress(VK_S))
@@ -50,9 +48,27 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		{
 			pPlayer->FSM()->Play(PLAYER_STATE_IDLE);
 		}
-
 	}
 
+	  for (int i = 0; i < OBJECT->GetLeader().size(); i++)
+         {
+            if (OBJECT->GetLeader()[i]->GetCamp() == CAMP_PLAYER)return;
+            
+            for each(auto p in OBJECT->GetLeader()[i]->GetUnits())
+            {
+				int attackCount = 0;
+               if (MATH->IsCollided(pPlayer->GetAttackCollider(), p->GetSphere()))
+               {
+                  p->GetMesh()->SetAnimationIndexBlend(FG_HIT);
+				  attackCount++;
+               }
+			   if (attackCount >= 3)
+			   {
+				   p->GetMesh()->SetAnimationIndexBlend(FG_DEATH);
+				   attackCount = 0;
+			   }
+            }
+         }
 }
 
 void Player_Attack::OnEnd(cPlayer* pPlayer)
