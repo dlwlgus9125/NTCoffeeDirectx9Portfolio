@@ -69,6 +69,15 @@ void cTownScene::OnUpdate()
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
+	switch (buttonIndex)
+	{
+	case TOWN_BTN_BATTLE_ORC:
+		SCENE->ChangeScene(SCENE_BATTLE_ORC);
+		break;
+	case TOWN_BTN_BATTLE_HUMAN:
+		SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		break;
+	}
 	switch (eventIDTap)
 	{
 	case TOWN_TAB_INVENTORY:
