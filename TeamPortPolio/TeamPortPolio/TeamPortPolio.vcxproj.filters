@@ -221,6 +221,15 @@
     <Filter Include="98. UTIL\05. cSceneCamera">
       <UniqueIdentifier>{a5087242-f519-43f4-a3da-7d25270e275c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. cScene\04. cBattleScene">
+      <UniqueIdentifier>{410d8aeb-ecbe-44c2-97de-dfb0a31ab793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\04. cBattleScene\Human">
+      <UniqueIdentifier>{a85cfc15-3112-46a4-829b-5b2110fbdbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\04. cBattleScene\Orc">
+      <UniqueIdentifier>{c6747f9d-858d-4097-b5f1-72b2c8c63d06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -455,6 +464,12 @@
     </ClInclude>
     <ClInclude Include="cSceneCamera.h">
       <Filter>98. UTIL\05. cSceneCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="cBattleScene_Orc.h">
+      <Filter>03. cScene\04. cBattleScene\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="cBattleScene_Human.h">
+      <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -734,6 +749,12 @@
     </ClCompile>
     <ClCompile Include="cSceneCamera.cpp">
       <Filter>98. UTIL\05. cSceneCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="cBattleScene_Orc.cpp">
+      <Filter>03. cScene\04. cBattleScene\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="cBattleScene_Human.cpp">
+      <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
