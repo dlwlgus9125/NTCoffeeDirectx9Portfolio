@@ -16,12 +16,7 @@ enum LEADER_STATE
 
 	LEADER_STATE_DEFEAT,
 };
-enum CAMP_STATE
-{
-	CAMP_PLAYER,
-	CAMP_ENEMY1,
-	CAMP_NONE,
-};
+
 
 enum LEADER_TYPE
 {
@@ -46,7 +41,7 @@ class cLeader :
 	int            m_targetIndex;
 	vector<int>    m_path;
 	MeshSpere      m_meshSphere;
-	CAMP_STATE     m_camp;
+
 	LEADER_TYPE    m_type;
 	LEADER_STATE   m_TypeStart;
 public:
@@ -69,8 +64,7 @@ public:
 	IEntity*       GetUnitLeader() { return m_unitLeader; }
 	vector<cUnit*> GetUnits() { return m_vectorUnit; }
 
-	void             SetCamp(int camp) { m_camp = (CAMP_STATE)camp; }
-	CAMP_STATE       GetCamp() { return m_camp; }
+	
 	void             SetPath(vector<int> path) { m_path = path; }
 	void             PathClear() { m_path.clear(); }
 	vector<int>      GetPath() { return m_path; }

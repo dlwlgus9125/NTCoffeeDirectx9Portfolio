@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Bow_State.h"
-
+#include "cBallisticArrow.h"
 
 void Bow_Battle::OnBegin(cBowUnit * pUnit)
 {
@@ -19,7 +19,7 @@ void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 			case B_BOWATTACK1:
 				pUnit->GetMesh()->SetAnimationIndexBlend(B_BOWATTACK2);
 				//>>화살쏘는 생성자 넣을자리
-
+				OBJECT->AddArrowByUnit(new cBallisticArrow(pUnit->GetCharacterEntity()->Pos(), pUnit->GetTargetObject()->GetCharacterEntity()->Pos(), 0.1f, D3DXVECTOR3(0, 0, 1), 0, 0), pUnit->GetCamp());
 				//<<
 				break;
 			default:

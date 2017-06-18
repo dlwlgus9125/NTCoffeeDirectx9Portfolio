@@ -417,6 +417,13 @@ enum UNIT_STATE
 	UNIT_STATE_BOW_DEATH,
 };
 
+enum CAMP_STATE
+{
+	CAMP_PLAYER,
+	CAMP_ENEMY1,
+	CAMP_NONE,
+};
+
 #define SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
 public: inline varType Get##funName(void) const { return varName; }\

@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallisticMotion.h" />
     <ClInclude Include="Bow_State.h" />
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAstar.h" />

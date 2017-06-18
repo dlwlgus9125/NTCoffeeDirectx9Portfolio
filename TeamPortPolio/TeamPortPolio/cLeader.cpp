@@ -148,6 +148,7 @@ void cLeader::AddUnit(cUnit * pUnit)
 {
 	pUnit->SetID(m_ID);
 	pUnit->Init();
+	pUnit->SetCamp(m_camp);
 	m_vectorUnit.push_back(pUnit);
 	OBJECT->AddObject(pUnit);
 	OBJECT->AddCharacter(pUnit);

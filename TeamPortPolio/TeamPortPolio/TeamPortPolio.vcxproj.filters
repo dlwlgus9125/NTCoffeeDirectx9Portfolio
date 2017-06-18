@@ -375,9 +375,6 @@
     <ClInclude Include="cUIButton.h">
       <Filter>07. UI\03. cUIButton</Filter>
     </ClInclude>
-    <ClInclude Include="cBallisticArrow.h">
-      <Filter>02. cCharacter\04.cArrow</Filter>
-    </ClInclude>
     <ClInclude Include="cItemDB.h">
       <Filter>06. Database\02. cItemDB</Filter>
     </ClInclude>
@@ -428,6 +425,12 @@
     </ClInclude>
     <ClInclude Include="Bow_State.h">
       <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClInclude>
+    <ClInclude Include="cBallisticArrow.h">
+      <Filter>02. cCharacter\04.cArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="BallisticMotion.h">
+      <Filter>02. cCharacter\04.cArrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
