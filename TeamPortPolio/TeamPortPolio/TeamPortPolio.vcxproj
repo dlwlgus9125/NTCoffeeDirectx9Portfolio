@@ -149,6 +149,8 @@
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAstar.h" />
     <ClInclude Include="cAstarManager.h" />
+    <ClInclude Include="cBattleScene_Human.h" />
+    <ClInclude Include="cBattleScene_Orc.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cCharacterDB.h" />
@@ -220,6 +222,8 @@
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAstar.cpp" />
     <ClCompile Include="cAstarManager.cpp" />
+    <ClCompile Include="cBattleScene_Human.cpp" />
+    <ClCompile Include="cBattleScene_Orc.cpp" />
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cCharacterDB.cpp" />
