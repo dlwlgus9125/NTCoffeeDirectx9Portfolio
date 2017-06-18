@@ -95,10 +95,6 @@ void cPlayer::Update(float deltaTime)
 	}
 	//화살처리
 
-
-
-
-
 	D3DXMATRIXA16 matR;
 	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
 	D3DXMatrixIdentity(&matR);
