@@ -2,7 +2,7 @@
 #include "cUITab.h"
 
 
-cUITab::cUITab() : m_pTexture_Body(NULL)
+cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL)
 {
 }
 
@@ -76,6 +76,11 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
 	pSprite->SetTransform(&m_matWorld);
 
+	// >> πŸµ ∑ª¥ı
+	SetRect(&rc, 0, 0, m_stBodySize.nWidth, m_stBodySize.nHeight);
+	pSprite->Draw(m_pTexture_Body, &rc, &D3DXVECTOR3(0, 0, 0), &m_vPos_Body, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	// << 
+	
 	// >> ≈∏¿Ã∆≤ ∑ª¥ı
 	for (int i = 0; i < m_vecTabInfo.size(); i++)
 	{
@@ -84,25 +89,28 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	}
 	// << 
 
-	// >> πŸµ ∑ª¥ı
-	SetRect(&rc, 0, 0, m_stBodySize.nWidth, m_stBodySize.nHeight);
-	pSprite->Draw(m_pTexture_Body, &rc, &D3DXVECTOR3(0, 0, 0), &m_vPos_Body, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-	// << 
+	pSprite->End();
+
+	// ¡æ∑· πˆ∆∞ ∑ª¥ı
+	m_pBtn_Exit->Render(pSprite);
 
 	// >> ΩΩ∑‘ ¿ÃπÃ¡ˆ
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
+		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+		pSprite->SetTransform(&m_matWorld);
+
 		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
-		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 		
 		D3DXIMAGE_INFO imageInfo;
 		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
 		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+
+		pSprite->End();
 	}
 	// << 
-
-	pSprite->End();
 
 	// >> ≈∏¿Ã∆≤ ±€ææ ¿Œº‚
 	for (int i = 0; i < m_vecTabInfo.size(); i++)
@@ -192,4 +200,12 @@ void cUITab::GetClickedItemID(OUT int& eventID, OUT int& itemID)
 			}
 		}
 	}
+}
+
+void cUITab::Setup_exitbtn(D3DXVECTOR3 pos, string imagePath)
+{
+	m_vBtnPos = m_vPosition + pos;
+	D3DXIMAGE_INFO imageInfo;
+	m_pTexture_Btn = TEXTURE->GetTexture(imagePath, imageInfo);
+	m_stBtnSize = ST_SIZEN(imageInfo.Width, imageInfo.Height);
 }

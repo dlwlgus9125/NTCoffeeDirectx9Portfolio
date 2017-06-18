@@ -64,6 +64,9 @@ void cUIManager::Setup_TownScene()
 	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_BASTARDSWORD)->eSmallID, ITEMDB->GetItem(I_S_BASTARDSWORD)->name, ITEMDB->GetItem(I_S_BASTARDSWORD)->szImagePath, ITEMDB->GetItem(I_S_BASTARDSWORD)->info);
 	pTab_Weapon->SetShownData(0);
 
+	// 상점 1 종료버튼
+	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(370, 0, 0), "image/ui/townscene/tab_shop/btn.png");
+
 	pTab_Weapon->SetEventID(TOWN_TAB_SHOP_ATT);
 	m_vecTab.push_back(pTab_Weapon);
 	// <<
