@@ -55,7 +55,7 @@ void cUIManager::Setup_TownScene()
 	pTab_Inven->Setup_Tap("image/ui/townscene/tab_shop/idle.png", "image/ui/townscene/tab_shop/selected.png", "image/ui/townscene/tab_shop/body.png", D3DXVECTOR3(0, 0, 0));
 	pTab_Inven->AddTitle("인벤토리", D3DXVECTOR3(0, 600, 0));
 	/// 인벤토리 슬롯
-	pTab_Inven->Setup_Slot(D3DXVECTOR3(20, 20, 0), 1, 5, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
+	pTab_Inven->Setup_Slot(D3DXVECTOR3(20, 20, 0), 1, 7, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
 		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
 	vector<int> vecInven = OBJECT->GetInventory();
 	for (int i = 0; i < vecInven.size(); i++)
@@ -288,7 +288,6 @@ void cUIManager::SetEvent(int uiID, int order)
 	switch (uiID)
 	{
 	case TOWN_TAB_SHOP_ATT:
-		Setup_Inventory();
 		m_vecTab[0]->SetHidden(order);
 		m_vecTab[0]->SetDef();
 		m_vecTab[1]->SetHidden(order);
@@ -325,7 +324,7 @@ void cUIManager::GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& 
 	itemID = -1;
 	for (int i = 0; i < m_vecTab.size(); i++)
 	{
-		m_vecTab[i]->GetClickedItemID(eventID, itemID);
+		if(m_vecTab[i]->GetClickedItemID(eventID, itemID)) break;
 	}
 }
 

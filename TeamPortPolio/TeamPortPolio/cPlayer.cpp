@@ -142,7 +142,11 @@ void cPlayer::SellItem(int itemSID)
 {
 	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
 	{
-		if (*it == itemSID) it = m_vecInventory.erase(it);
+		if (*it == itemSID)
+		{
+			it = m_vecInventory.erase(it);
+			break;
+		}
 		else it++;
 	}
 

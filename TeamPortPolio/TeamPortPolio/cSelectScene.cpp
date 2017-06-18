@@ -30,7 +30,7 @@ void cSelectScene::OnEnter()
 	m_pImage->SetHidden(false);
 	
 	m_mapPlayer[SELECT_HUMAN] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
-	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MELEE);
+	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MALE);
 	m_mapPlayer[SELECT_HUMAN]->Init();
 
 	m_mapPlayer[SELECT_ORC] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
