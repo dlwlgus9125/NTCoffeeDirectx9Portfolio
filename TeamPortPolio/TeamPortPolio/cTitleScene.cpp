@@ -37,7 +37,7 @@ void cTitleScene::OnEnter()
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
-	pLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(11581)->Id());
+	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 	Setup_DirLight();

@@ -32,7 +32,7 @@ void cCavalryUnit::Init()
 	m_pFsm = new cStateMachine<cCavalryUnit*>(this);
 	m_pFsm->Register(UNIT_STATE_CAVALRY_IDLE, new Cavalry_Idle());
 	m_pFsm->Register(UNIT_STATE_CAVALRY_WALK, new Cavalry_Walk());
-//	m_pFsm->Register(UNIT_STATE_CAVALRY_BATTLE, new Cavalry_Battle());
+	m_pFsm->Register(UNIT_STATE_CAVALRY_BATTLE, new Cavalry_Battle());
 	m_pFsm->Register(UNIT_STATE_CAVALRY_DEATH, new Cavalry_Death());
 	m_pFsm->Play(UNIT_STATE_CAVALRY_IDLE);
 }

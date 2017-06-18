@@ -25,22 +25,22 @@ void Leader_State_Melee_Walk::OnUpdate(cLeader * pLeader, float deltaTime)
 		{
 
 			pLeader->GetCharacterEntity()->Steering()->LeaderArrive(targetPos);
-			
-		if (MATH->IsCollided( pLeader->GetSphere() , ASTAR->GetGraph()->GetNode(pLeader->GetPath().back())->GetSphere()))
-		{
-			pLeader->PathPopBack();
-		}
+
+			if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetPath().back())->GetSphere()))
+			{
+				pLeader->PathPopBack();
+			}
 		}
 
 	}
 	else if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->GetSphere()))
 	{
-		pLeader->PathClear(); 
+		pLeader->PathClear();
 		cout << "clear!" << endl;
 		pLeader->FSM()->Play(LEADER_STATE_MELEE_IDLE);
 	}
 
-	
+
 }
 
 void Leader_State_Melee_Walk::OnEnd(cLeader * pUnit)

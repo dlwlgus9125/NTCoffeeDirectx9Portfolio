@@ -18,7 +18,7 @@ void Cavalry_Walk::OnUpdate(cCavalryUnit * pUnit, float deltaTime)
 
 	if (distance > 0.1f)
 	{
-		pUnit->GetCharacterEntity()->Steering()->OffsetPursuit(pUnit->GetLeader(), pUnit->GetOffset());
+		pUnit->GetCharacterEntity()->Steering()->CavalryOffsetPursuit(pUnit->GetLeader(), pUnit->GetOffset());
 		pUnit->GetCharacterEntity()->Steering()->ConstrainOverlap(OBJECT->GetEntities());
 
 	}

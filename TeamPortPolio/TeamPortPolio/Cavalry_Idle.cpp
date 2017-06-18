@@ -3,7 +3,7 @@
 
 void Cavalry_Idle::OnBegin(cCavalryUnit * pUnit)
 {
-
+	pUnit->GetMesh()->SetAnimationIndexBlend(K_STAND);
 }
 
 void Cavalry_Idle::OnUpdate(cCavalryUnit * pUnit, float deltaTime)

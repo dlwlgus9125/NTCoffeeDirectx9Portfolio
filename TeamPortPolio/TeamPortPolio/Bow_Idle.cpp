@@ -3,7 +3,7 @@
 
 void Bow_Idle::OnBegin(cBowUnit * pUnit)
 {
-
+	pUnit->GetMesh()->SetAnimationIndexBlend(B_READYATTACK);
 }
 
 void Bow_Idle::OnUpdate(cBowUnit * pUnit, float deltaTime)

@@ -783,14 +783,17 @@
     <ClCompile Include="Cavalry_Idle.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
     </ClCompile>
-    <ClCompile Include="Cavalry_Walkcpp.cpp">
-      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
-    </ClCompile>
     <ClCompile Include="cBattleScene_Orc.cpp">
       <Filter>03. cScene\04. cBattleScene\Orc</Filter>
     </ClCompile>
     <ClCompile Include="cBattleScene_Human.cpp">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Walk.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="Cavalry_Battle.cpp">
+      <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
