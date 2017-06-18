@@ -3,6 +3,8 @@
 
 class cBattleScene_Human : public cIScene
 {
+	LPD3DXSPRITE			m_pSprite;
+
 public:
 	cBattleScene_Human();
 	~cBattleScene_Human();

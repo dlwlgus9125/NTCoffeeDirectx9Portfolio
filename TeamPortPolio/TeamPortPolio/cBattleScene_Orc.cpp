@@ -4,6 +4,7 @@
 
 
 cBattleScene_Orc::cBattleScene_Orc()
+	: m_pSprite(NULL)
 {
 }
 
@@ -21,7 +22,7 @@ void cBattleScene_Orc::OnEnter()
 
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
-	MAP->Init("BATTLE2.txt");
+	MAP->Init(SCENE_BATTLE_ORC);
 	Setup_DirLight();
 
 
