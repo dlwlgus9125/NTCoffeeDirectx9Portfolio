@@ -16,7 +16,7 @@ cCharacter::~cCharacter()
 void cCharacter::Init()
 {
 	m_currentMode = DEFENDING_MODE;
-	m_AttackCollideSphere.fRadius = 0.3f;
+	m_AttackCollideSphere.fRadius = 0.5f;
 	D3DXCreateSphere(D3DDevice, m_CollideSphere.fRadius, 10, 10, &m_MeshSphere.m_pMeshSphere, NULL);
 	ZeroMemory(&m_MeshSphere.m_stMtlSphere, sizeof(D3DMATERIAL9));
 	m_MeshSphere.m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
