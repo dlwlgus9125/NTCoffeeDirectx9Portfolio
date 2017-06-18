@@ -59,10 +59,13 @@ void cUIManager::Setup_TownScene()
 	// 상점 1 슬롯 테스트용
 	pTab_Weapon->Setup_Slot(D3DXVECTOR3(20, 20, 0), 2, 10, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
 		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
-	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_SHORTSWORD)->eSmallID, ITEMDB->GetItem(I_S_SHORTSWORD)->name, ITEMDB->GetItem(I_S_SHORTSWORD)->szImagePath, ITEMDB->GetItem(I_S_SHORTSWORD)->info);
-	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_LONGSWORD )->eSmallID, ITEMDB->GetItem(I_S_LONGSWORD)->name,ITEMDB->GetItem(I_S_LONGSWORD)->szImagePath, ITEMDB->GetItem(I_S_LONGSWORD)->info);
-	pTab_Weapon->AddSlotData(ITEMDB->GetItem(I_S_BASTARDSWORD)->eSmallID, ITEMDB->GetItem(I_S_BASTARDSWORD)->name, ITEMDB->GetItem(I_S_BASTARDSWORD)->szImagePath, ITEMDB->GetItem(I_S_BASTARDSWORD)->info);
-	pTab_Weapon->SetShownData(0);
+	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_SHORTSWORD)->eSmallID, ITEMDB->GetItem(I_S_SHORTSWORD)->name, ITEMDB->GetItem(I_S_SHORTSWORD)->szImagePath, ITEMDB->GetItem(I_S_SHORTSWORD)->info);
+	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_LONGSWORD )->eSmallID, ITEMDB->GetItem(I_S_LONGSWORD)->name,ITEMDB->GetItem(I_S_LONGSWORD)->szImagePath, ITEMDB->GetItem(I_S_LONGSWORD)->info);
+	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_BASTARDSWORD)->eSmallID, ITEMDB->GetItem(I_S_BASTARDSWORD)->name, ITEMDB->GetItem(I_S_BASTARDSWORD)->szImagePath, ITEMDB->GetItem(I_S_BASTARDSWORD)->info);
+	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_SMALLAXE)->eSmallID, ITEMDB->GetItem(I_S_SMALLAXE)->name, ITEMDB->GetItem(I_S_SMALLAXE)->szImagePath, ITEMDB->GetItem(I_S_SMALLAXE)->info);
+	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_WARAXE)->eSmallID, ITEMDB->GetItem(I_S_WARAXE)->name, ITEMDB->GetItem(I_S_WARAXE)->szImagePath, ITEMDB->GetItem(I_S_WARAXE)->info);
+	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_TWOHANDAXE)->eSmallID, ITEMDB->GetItem(I_S_TWOHANDAXE)->name, ITEMDB->GetItem(I_S_TWOHANDAXE)->szImagePath, ITEMDB->GetItem(I_S_TWOHANDAXE)->info);
+	pTab_Weapon->SetDef();
 
 	// 상점 1 종료버튼
 	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(370, 0, 0), 
@@ -267,6 +270,7 @@ void cUIManager::SetEvent(int uiID, int order)
 	{
 	case TOWN_TAB_SHOP_ATT:
 		m_vecTab[0]->SetHidden(order);
+		m_vecTab[0]->SetDef();
 		break;
 	case SELECT_MSGBOX_ORC:
 		m_vecMsg[0]->SetHidden(order);

@@ -5,6 +5,7 @@
 //´ëºÐ·ù
 enum I_L_ITEMID
 {
+	I_L_NONE, 
 	I_L_MELEE,
 	I_L_RANGE,
 	I_L_END,
@@ -27,6 +28,7 @@ enum I_S_ITEMID
 	I_S_LONGBOW,
 	I_S_SMALLAXE,
 	I_S_WARAXE,
+	I_S_TWOHANDAXE,
 	I_S_END,
 };
 
