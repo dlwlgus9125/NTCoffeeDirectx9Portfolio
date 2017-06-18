@@ -235,7 +235,7 @@ void cUIManager::Setup_BattleScene_Human()
 	// ¹Ì´Ï¸Ê
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/ground3.png", 150);
+	m_pMiniMap->Setup_Image("image/UI/BattleScene_Human/minimap/ground3.png", 150);
 	m_pMiniMap->SetAlpha(150);
 
 	// ¹Ì´Ï¸Ê¹öÆ° 1
@@ -363,12 +363,22 @@ void cUIManager::Change(int sceneID)
 	case SCENE_SELECT:
 		Setup_SelectScene();
 		break;
+	case SCENE_BATTLE_HUMAN:
+		Setup_BattleScene_Human();
+		break;
+	case SCENE_BATTLE_ORC:
+		Setup_BattleScene_Orc();
+		break;
 	}
 }
 
 void cUIManager::PressKey()
 {
-	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap) m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
+	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap)
+	{
+		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
+	}
+
 
 	if (INPUT->IsKeyDown(VK_F3)) m_vecTab[0]->SetHiddenAll(!(m_vecTab[0]->GetHidden()));
 }

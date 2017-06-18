@@ -17,6 +17,7 @@ void cBattleScene_Human::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);
+	UI->Change(SCENE_BATTLE_HUMAN);
 	Setup_DirLight();
 
 
@@ -52,12 +53,43 @@ void cBattleScene_Human::OnEnter()
 void cBattleScene_Human::OnUpdate()
 {
 	MAP->Update();
+	UI->Update(TIME->DeltaTime());
+
+	// >> UI의 이벤트 정보 
+	int indexInMiniMap;
+	int buttonIndex;
+	int eventIDTap;
+	int itemID;
+
+	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
+	if (indexInMiniMap > 0)
+	{
+		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		cout << "UI Index : " << indexInMiniMap << endl;
+	}
+	switch (buttonIndex)
+	{
+	case TITLE_BTN_FMT_RECT:
+		OBJECT->GetPlayer()->GetUnitLeader()->SetRectOffset();
+		break;
+	case TITLE_BTN_FMT_TRI:
+		OBJECT->GetPlayer()->GetUnitLeader()->SetTriOffset();
+		break;
+	case TITLE_BTN_ATTSTATE:
+		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonOne();
+		break;
+	case TITLE_BTN_DEFSTATE:
+		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonTwo();
+		break;
+	}
+	// <<
 	OBJECT->Update(TIME->DeltaTime());
 }
 
 void cBattleScene_Human::OnExit()
 {
 	SAFE_RELEASE(m_pSprite);
+	UI->Release();
 	MAP->Destroy();
 }
 
@@ -65,6 +97,7 @@ void cBattleScene_Human::OnRender()
 {
 	MAP->Render();
 	OBJECT->Render();
+	UI->Render(m_pSprite);
 }
 void cBattleScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
