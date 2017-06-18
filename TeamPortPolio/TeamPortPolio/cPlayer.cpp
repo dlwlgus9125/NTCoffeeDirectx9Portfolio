@@ -11,7 +11,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	/*m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
-	m_unitLeader->SetID(C_C_ORC_BOWMAN);
+	m_unitLeader->SetID(C_C_ORC_CAVALRY);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
 	m_unitLeader->Init();
@@ -136,4 +136,22 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 			cout << "size : " << m_unitLeader->GetPath().size() << endl;*/
 		}
 	}
+}
+
+void cPlayer::SellItem(int itemSID)
+{
+	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
+	{
+		if (*it == itemSID) it = m_vecInventory.erase(it);
+		else it++;
+	}
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::ByuItem(int itemSID)
+{
+	m_vecInventory.push_back(itemSID);
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
 }

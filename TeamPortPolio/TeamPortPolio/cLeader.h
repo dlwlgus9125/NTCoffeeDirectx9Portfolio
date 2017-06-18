@@ -13,6 +13,10 @@ enum LEADER_STATE
 	LEADER_STATE_BOW_WALK,
 	LEADER_STATE_BOW_BATTLE,
 
+	LEADER_STATE_CAVALRY_IDLE,
+	LEADER_STATE_CAVALRY_WALK,
+	LEADER_STATE_CAVALRY_BATTLE,
+
 
 	LEADER_STATE_DEFEAT,
 };
@@ -28,6 +32,7 @@ enum LEADER_TYPE
 class cUnit;
 class cMeleeUnit;
 class cBowUnit;
+class cCavalryUnit;
 
 class cLeader :
 	public cCharacter
@@ -44,6 +49,7 @@ class cLeader :
 
 	LEADER_TYPE    m_type;
 	LEADER_STATE   m_TypeStart;
+	float          m_velocity;
 public:
 	cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cLeader();
@@ -66,7 +72,6 @@ public:
 
 	
 	void             SetPath(vector<int> path) { m_path = path; }
-	void             PathClear() { m_path.clear(); }
 	vector<int>      GetPath() { return m_path; }
 	void             SetTargetIndex(int i) { m_targetIndex = i; }
 	int              GetTargetIndex() { return m_targetIndex; }
@@ -79,5 +84,12 @@ public:
 
 	void             ClickedButtonOne();
 	void             ClickedButtonTwo();
+
+	void             PathPopBack() { m_path.pop_back(); }
+	void             PathClear() { m_path.clear(); }
+
+	float            GetVelocity() { return m_velocity; }
+	void             AddVelocity(float force) { m_velocity += force; }
+	void             SetVelocity(float velocity) { m_velocity = velocity; }
 };
 

@@ -73,6 +73,5 @@ public:
 	virtual void SetAnimDeath() {};
 
 	void SetID(C_C_ID id) { m_ID = id; }
-
 };
 

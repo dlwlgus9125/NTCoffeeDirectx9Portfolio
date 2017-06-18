@@ -18,8 +18,6 @@ void Leader_State_Melee_Walk::OnUpdate(cLeader * pLeader, float deltaTime)
 	{
 		D3DXVECTOR3 LeaderPos = pLeader->GetCharacterEntity()->Pos();
 		D3DXVECTOR3 targetPos = ASTAR->GetGraph()->GetNode(pLeader->GetPath().back())->Pos();
-		//targetPos.y = 0;
-		//LeaderPos.y = 0;
 
 		float distance = MATH->Distance(LeaderPos, targetPos);
 
@@ -30,20 +28,14 @@ void Leader_State_Melee_Walk::OnUpdate(cLeader * pLeader, float deltaTime)
 			
 		if (MATH->IsCollided( pLeader->GetSphere() , ASTAR->GetGraph()->GetNode(pLeader->GetPath().back())->GetSphere()))
 		{
-			//cout << "Path Back : " << pLeader->GetPath().back() << endl;
-			vector<int> n_path = pLeader->GetPath();
-			n_path.pop_back();
-			pLeader->SetPath(n_path);
-			//cout << "pop!" << endl;
+			pLeader->PathPopBack();
 		}
 		}
 
 	}
 	else if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->GetSphere()))
 	{
-		pLeader->GetPath().clear();
-		D3DXVECTOR3 pos = ASTAR->GetGraph()->GetNode(pLeader->GetIndex())->Pos();//pLeader->GetCharacterEntity()->Pos();
-		D3DXVECTOR3 targetpos = ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->Pos();
+		pLeader->PathClear(); 
 		cout << "clear!" << endl;
 		pLeader->FSM()->Play(LEADER_STATE_MELEE_IDLE);
 	}

@@ -3,7 +3,7 @@
 
 void Bow_Walk::OnBegin(cBowUnit * pUnit)
 {
-	pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLEWALK);
+	pUnit->GetMesh()->SetAnimationIndexBlend(B_BATTLEWALK);
 }
 
 void Bow_Walk::OnUpdate(cBowUnit * pUnit, float deltaTime)

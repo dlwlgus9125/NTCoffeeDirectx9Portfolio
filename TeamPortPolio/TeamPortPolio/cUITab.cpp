@@ -240,3 +240,17 @@ void cUITab::Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_m
 	m_pBtn_Exit->Setup(m_vBtnPos, UI_BUTTON);
 	m_pBtn_Exit->Setup_Button(sPath_idle, sPath_mouseover, sPath_clicked, TOWN_BTN_SHOPEXIT);
 }
+
+void cUITab::ClearShownData()
+{
+	m_vecShownData.clear();	
+
+	for (map<int, vector<ST_SLOTDATA*>>::iterator it = m_mapVecSlotData.begin(); it != m_mapVecSlotData.end(); it++)
+	{
+		vector<ST_SLOTDATA*> vecData = (*it).second;
+		for (int i = 0; i < vecData.size(); i++)
+		{
+			SAFE_DELETE(vecData[i]);
+		}
+	}
+}

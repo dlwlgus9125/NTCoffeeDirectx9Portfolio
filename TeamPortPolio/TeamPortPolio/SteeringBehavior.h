@@ -36,6 +36,9 @@ public:
 
 	// 도착 : 부대가 목표점으로 
 	void LeaderArrive(D3DXVECTOR3 targetPos);
+	
+	// 도착 : 기병부대가 목표점으로 
+	void CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity);
 
 	// 도착 : 유닛이 목표점으로 
 	void UnitArrive(D3DXVECTOR3 targetPos);

@@ -151,10 +151,12 @@
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAstar.h" />
     <ClInclude Include="cAstarManager.h" />
+    <ClInclude Include="Cavalry_State.h" />
     <ClInclude Include="cBattleScene_Human.h" />
     <ClInclude Include="cBattleScene_Orc.h" />
     <ClInclude Include="cBowUnit.h" />
     <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCavalryUnit.h" />
     <ClInclude Include="cCharacter.h" />
     <ClInclude Include="cCharacterDB.h" />
     <ClInclude Include="cConstruct.h" />
@@ -229,10 +231,13 @@
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAstar.cpp" />
     <ClCompile Include="cAstarManager.cpp" />
+    <ClCompile Include="Cavalry_Death.cpp" />
+    <ClCompile Include="Cavalry_Walkcpp.cpp" />
     <ClCompile Include="cBattleScene_Human.cpp" />
     <ClCompile Include="cBattleScene_Orc.cpp" />
     <ClCompile Include="cBowUnit.cpp" />
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCavalryUnit.cpp" />
     <ClCompile Include="cCharacter.cpp" />
     <ClCompile Include="cCharacterDB.cpp" />
     <ClCompile Include="cConstruct.cpp" />
@@ -286,6 +291,9 @@
     <ClCompile Include="Leader_State_Bowman_Battle.cpp" />
     <ClCompile Include="Leader_State_Bowman_Idle.cpp" />
     <ClCompile Include="Leader_State_Bowman_Walk.cpp" />
+    <ClCompile Include="Leader_State_Cavalry_Battle.cpp" />
+    <ClCompile Include="Leader_State_Cavalry_Idle.cpp" />
+    <ClCompile Include="Leader_State_Cavalry_Walk.cpp" />
     <ClCompile Include="Leader_State_Defeat.cpp" />
     <ClCompile Include="Leader_State_Melee_Defence.cpp" />
     <ClCompile Include="Melee_Battle.cpp" />
@@ -313,6 +321,7 @@
     <ClCompile Include="TeamPortPolio.cpp" />
     <ClCompile Include="TestMap.cpp" />
     <ClCompile Include="cBallisticArrow.cpp" />
+    <ClCompile Include="Cavalry_Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc" />

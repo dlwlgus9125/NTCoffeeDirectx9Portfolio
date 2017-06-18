@@ -27,22 +27,16 @@ void Leader_State_Bowman_Walk::OnUpdate(cLeader * pLeader, float deltaTime)
 
 			if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetPath().back())->GetSphere()))
 			{
-				//cout << "Path Back : " << pLeader->GetPath().back() << endl;
-				vector<int> n_path = pLeader->GetPath();
-				n_path.pop_back();
-				pLeader->SetPath(n_path);
-				//cout << "pop!" << endl;
+				pLeader->PathPopBack();
 			}
 		}
 
 	}
 	else if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->GetSphere()))
 	{
-		pLeader->GetPath().clear();
-		D3DXVECTOR3 pos = ASTAR->GetGraph()->GetNode(pLeader->GetIndex())->Pos();//pLeader->GetCharacterEntity()->Pos();
-		D3DXVECTOR3 targetpos = ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->Pos();
+		pLeader->PathClear();
 		cout << "clear!" << endl;
-		pLeader->FSM()->Play(LEADER_STATE_MELEE_IDLE);
+		pLeader->FSM()->Play(LEADER_STATE_BOW_IDLE);
 	}
 
 }
