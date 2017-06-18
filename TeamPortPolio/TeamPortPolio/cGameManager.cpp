@@ -6,6 +6,8 @@
 #include "cTownScene.h"
 #include "cLoginScene.h"
 #include "cSelectScene.h"
+#include "cBattleScene_Human.h"
+#include "cBattleScene_Orc.h"
 #include "cSceneCamera.h"
 
 void cGameManager::Init()
@@ -72,6 +74,8 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
+	SCENE->Register(SCENE_BATTLE_HUMAN, new cBattleScene_Human());
+	SCENE->Register(SCENE_BATTLE_ORC, new cBattleScene_Orc());
 	SCENE->ChangeScene(SCENE_LOGIN);
 	CAMERA->Setup();
 
