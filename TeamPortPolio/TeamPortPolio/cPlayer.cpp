@@ -11,7 +11,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	/*m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
-	m_unitLeader->SetID(C_C_ORC_BOWMAN);
+	m_unitLeader->SetID(C_C_ORC_CAVALRY);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
 	m_unitLeader->Init();

@@ -24,8 +24,8 @@ void Bow_Idle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 		pUnit->GetCharacterEntity()->Steering()->ConstrainOverlap(OBJECT->GetEntities());
 		switch (pUnit->GetMode())
 		{
-		case FIGHTING_MODE: pUnit->GetMesh()->SetAnimationIndexBlend(FG_READYATTACK); break;
-		case DEFENDING_MODE:pUnit->GetMesh()->SetAnimationIndexBlend(FG_STAND); break;
+		case FIGHTING_MODE: pUnit->GetMesh()->SetAnimationIndexBlend(B_READYATTACK); break;
+		case DEFENDING_MODE:pUnit->GetMesh()->SetAnimationIndexBlend(B_STAND); break;
 		}
 
 	}

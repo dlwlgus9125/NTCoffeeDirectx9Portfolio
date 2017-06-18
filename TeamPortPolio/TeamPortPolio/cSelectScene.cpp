@@ -30,7 +30,7 @@ void cSelectScene::OnEnter()
 	m_pImage->SetHidden(false);
 	
 	m_mapPlayer[SELECT_HUMAN] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
-	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MELEE);
+	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MALE);
 	m_mapPlayer[SELECT_HUMAN]->Init();
 
 	m_mapPlayer[SELECT_ORC] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
@@ -136,6 +136,16 @@ void cSelectScene::MovePosition()
 	}
 	else
 	{
-		m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_STAND);
+		if (m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetPassedTime() > m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.3f)
+		{
+			if (m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetIndex() != P_STAND&&m_mapPlayer[m_nCurrentPlayer]->GetMesh()->GetIndex() != P_BATTLECRY)
+			{
+				m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_BATTLECRY);
+			}
+			else
+			{
+				m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_STAND);
+			}
+		}
 	}
 }
