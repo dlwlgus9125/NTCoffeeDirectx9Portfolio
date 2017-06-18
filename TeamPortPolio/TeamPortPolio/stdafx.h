@@ -48,9 +48,7 @@
 #include <Windows.h>
 #include <mmsystem.h >
 #pragma comment(lib, "winmm.lib")
-
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
-
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 using namespace std;
 //<<
 
@@ -104,12 +102,12 @@ using namespace std;
 
 enum SCENE_TAG
 {
-	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN,
+	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN, SCENE_SELECT,
 };
 
 enum UI_TAG
 {
-	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT,
+	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT, UI_MSGBOX,
 };
 
 enum UI_STATE
@@ -261,40 +259,39 @@ struct ST_TAB
 
 struct ST_SLOT
 {
+	D3DXVECTOR3 rectPos;
+	ST_SIZEN rectSize;
 	D3DXVECTOR3 imagePos;
 	ST_SIZEN imageSize;
 	D3DXVECTOR3 textPos;
 	ST_SIZEN textSize;
-	D3DXVECTOR2 LeftTop;
-	D3DXVECTOR2 RightBottom;
 
-	ST_SLOT(D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize)
+	ST_SLOT(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize)
 	{
-		this->imagePos=	imagePos;
-		this->imageSize=imageSize;
-		this->textPos=textPos;
-		this->textSize=textSize;
-
-		LeftTop = D3DXVECTOR2(imagePos.x, imagePos.y);
-		RightBottom = D3DXVECTOR2(textPos.x + textSize.nWidth, textPos.y + textSize.nHeight);
+		this->rectPos = rectPos;
+		this->rectSize = rectSize;
+		this->imagePos = imagePos;
+		this->imageSize = imageSize;
+		this->textPos = textPos;
+		this->textSize = textSize;
 	}
+	D3DXVECTOR2 LeftTop() {return D3DXVECTOR2(rectPos.x, rectPos.y);}
+	D3DXVECTOR2 RightBottom() { return D3DXVECTOR2(rectPos.x + rectSize.nWidth, rectPos.y + rectSize.nHeight); }
 };
 
 struct ST_SLOTDATA
 {
-	LPDIRECT3DTEXTURE9 texture;
+	int itemID;
+	string imagePath;
 	string info;
 	string name;
 
-	ST_SLOTDATA(string name, LPDIRECT3DTEXTURE9 texture, string info)
+	ST_SLOTDATA(int itemID, string name, string imagePath, string info)
 	{
+		this->itemID = itemID;
 		this->name = name;
-		this->texture = texture;
+		this->imagePath = imagePath;
 		this->info = info;
-	}
-	~ST_SLOTDATA()
-	{
-		SAFE_RELEASE(texture);
 	}
 };
 
@@ -391,16 +388,16 @@ enum ITEM_TAG
 	ITEM_RANGE,
 };
 
-enum EVENTID_TITLESCENE
+enum EVENTID
 {
-	TITLE_BTN_FMT_RECT = 0, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
-};
+	LOGIN_BTN_START = 1, LOGIN_BTN_HELP, LOGIN_BTN_EXIT,
 
-enum EVENTID_TOWNSCENE
-{
-	
-};
+	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
+	TOWN_TAB_SHOP_ATT = 200, TOWN_BTN_SHOPEXIT,
+
+	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
+};
 
 enum UNIT_STATE
 {
@@ -447,24 +444,27 @@ public: virtual void Set##funName(varType var){\
 
 
 //>>include
-#include "Singleton.h"
-#include "cCamera.h"
+#include "cEffectManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"
 #include "cTimeManager.h"
-#include "Math.h"
 #include "cTextureManager.h"
-#include "cStateMachine.h"
 #include "cAstarManager.h"
-#include "cObjectDB.h"
-#include "cCharacterDB.h"
-#include "cObject.h"
 #include "cMapManager.h"
 #include "cUIManager.h"
 #include "cFontManager.h"
+#include "cSoundManager.h"
+
+#include "Singleton.h"
+#include "cCamera.h"
+#include "Math.h"
+#include "cStateMachine.h"
+#include "cObjectDB.h"
+#include "cCharacterDB.h"
+#include "cObject.h"
 #include "cItemDB.h"
-#include "cEffectManager.h"
+
 //<<
 #include "cRay.h"
 

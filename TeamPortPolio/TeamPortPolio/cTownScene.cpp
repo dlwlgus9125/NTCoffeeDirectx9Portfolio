@@ -19,12 +19,8 @@ void cTownScene::OnEnter()
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 
-	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8, 0, 30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
-	pPlayer->SetID(C_C_ORC_MELEE);
-	pPlayer->Init();
-	OBJECT->AddCharacter(pPlayer);
-	OBJECT->AddObject(pPlayer);
-	OBJECT->SetPlayer(pPlayer);
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	EFFECT->Init(false, 0, true, true);
 
@@ -65,6 +61,18 @@ void cTownScene::OnUpdate()
 	EFFECT->Update();
 
 	// >> 테스트용
+
+	int indexInMiniMap;
+	int buttonIndex;
+	int eventIDTap;
+	int itemID;
+
+	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
+
+	if (eventIDTap > -1)
+	{
+		int check = itemID;
+	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
@@ -75,7 +83,7 @@ void cTownScene::OnUpdate()
 
 	if (m_vecST_Sphere[0].isPicked)
 	{
-		UI->SetEvent(0);
+		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
 	}
 	//<< 
 }

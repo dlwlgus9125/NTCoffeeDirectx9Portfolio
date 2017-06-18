@@ -12,8 +12,8 @@
 
 void cObjectManager::Init()
 {
-
-
+	
+	
 	/*cLeader* pEnemy = new cLeader(D3DXVECTOR3(0, 0, 50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pEnemy->Init();
 	m_vecObject.push_back(pEnemy);

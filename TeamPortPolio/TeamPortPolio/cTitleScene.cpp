@@ -53,8 +53,10 @@ void cTitleScene::OnUpdate()
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
 	int buttonIndex;
+	int eventIDTap;
+	int itemID;
 
-	UI->GetEvent(indexInMiniMap, buttonIndex);
+	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
 		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
@@ -90,9 +92,8 @@ void cTitleScene::OnExit()
 void cTitleScene::OnRender()
 {
 	MAP->Render();
-	UI->Render(m_pSprite);
 	OBJECT->Render();
-	
+	UI->Render(m_pSprite);	
 }
 
 void cTitleScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

@@ -39,7 +39,7 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
-	
+
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 
@@ -68,11 +68,11 @@ void cCharacter::Render()
 			D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 	}
-	
-	RenderSphere();	
+
+	RenderSphere();		
 
 
-	
+
 }
 
 void cCharacter::RenderSphere()
@@ -89,7 +89,7 @@ void cCharacter::SetAttackColliderPos()
 
 FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 {
-	
+
 	int randCount = rand() % 10+1;
 
 	if (randCount <= defender->m_Status->m_defence)

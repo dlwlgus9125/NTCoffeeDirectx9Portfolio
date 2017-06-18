@@ -18,6 +18,8 @@ protected:
 
 	SYNTHESIZE(bool, m_isHidden, Hidden);
 
+	SYNTHESIZE(int, m_eEventID, EventID);
+
 public:
 	virtual void Setup(D3DXVECTOR3 pos, int tag);
 	virtual void Update(float deltaTime);

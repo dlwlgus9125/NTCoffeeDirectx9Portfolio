@@ -35,8 +35,8 @@ void cSceneManager::Register(int tag, cIScene * pScene)
 void cSceneManager::ChangeScene(int tag)
 {
 	m_current = tag;
-	m_currentScene = GetScene(m_current);	// 지워야 할 것들
-	m_currentScene->OnEnter();				// 지워야 할 것들
+	//m_currentScene = GetScene(m_current);	// 지워야 할 것들
+	//m_currentScene->OnEnter();				// 지워야 할 것들
 }
 
 void cSceneManager::Update()
@@ -61,6 +61,8 @@ void cSceneManager::Render()
 
 void cSceneManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (m_current < 0) return;
+
 	cIScene* currentScene = GetScene(m_current);
 	if (currentScene != NULL)
 		currentScene->WndProc(hWnd, message, wParam, lParam);

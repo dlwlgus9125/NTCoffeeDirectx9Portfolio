@@ -37,14 +37,14 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 
 void cUIMiniMap::Destroy()
 {
-	SAFE_RELEASE(m_pTexture);
-
 	cUIObject::Destroy();
 }
 
-void cUIMiniMap::Setup_Image(LPDIRECT3DTEXTURE9 texture, int nCellPerRow)
+void cUIMiniMap::Setup_Image(string imagePath, int nCellPerRow)
 {
-	m_pTexture = texture;
+	D3DXIMAGE_INFO info;
+	m_pTexture = TEXTURE->GetTexture(imagePath, info);
+	SetSize(ST_SIZEN(info.Width, info.Height));
 	m_nCellPerRow = nCellPerRow;
 }
 

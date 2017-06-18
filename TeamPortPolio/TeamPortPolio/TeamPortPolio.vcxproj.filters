@@ -209,6 +209,18 @@
     <Filter Include="02. cCharacter\02. cUnit\01. cBowUnit\00. BowState">
       <UniqueIdentifier>{486f33c6-e8cf-4981-a719-79812d48910b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. cObject\03. cParticle\Fog">
+      <UniqueIdentifier>{bc6adb7b-0771-49ca-b03e-fe50a9400278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. cObject\03. cParticle\Weather">
+      <UniqueIdentifier>{02d50ff7-19ae-435e-b774-7c40f02c9dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\07. cUIMsgBox">
+      <UniqueIdentifier>{02aed0ac-5f29-40c5-a47f-fa787b2ae7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. UTIL\05. cSceneCamera">
+      <UniqueIdentifier>{a5087242-f519-43f4-a3da-7d25270e275c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -381,12 +393,6 @@
     <ClInclude Include="cEffectManager.h">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClInclude>
-    <ClInclude Include="cWeather.h">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="cFog.h">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClInclude>
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
@@ -431,6 +437,24 @@
     </ClInclude>
     <ClInclude Include="BallisticMotion.h">
       <Filter>02. cCharacter\04.cArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="cFog.h">
+      <Filter>01. cObject\03. cParticle\Fog</Filter>
+    </ClInclude>
+    <ClInclude Include="cWeather.h">
+      <Filter>01. cObject\03. cParticle\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="cSoundManager.h">
+      <Filter>00. Manager\05. cSoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMsgBox.h">
+      <Filter>07. UI\07. cUIMsgBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_State.h">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneCamera.h">
+      <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -579,12 +603,6 @@
     <ClCompile Include="cEffectManager.cpp">
       <Filter>00. Manager\12. cEffectManager</Filter>
     </ClCompile>
-    <ClCompile Include="cWeather.cpp">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClCompile>
-    <ClCompile Include="cFog.cpp">
-      <Filter>01. cObject\03. cParticle</Filter>
-    </ClCompile>
     <ClCompile Include="cShadowManager.cpp">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClCompile>
@@ -689,6 +707,33 @@
     </ClCompile>
     <ClCompile Include="Bow_Battle.cpp">
       <Filter>02. cCharacter\02. cUnit\01. cBowUnit\00. BowState</Filter>
+    </ClCompile>
+    <ClCompile Include="cFog.cpp">
+      <Filter>01. cObject\03. cParticle\Fog</Filter>
+    </ClCompile>
+    <ClCompile Include="cWeather.cpp">
+      <Filter>01. cObject\03. cParticle\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="cSoundManager.cpp">
+      <Filter>00. Manager\05. cSoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Walk.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Attack.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Defence.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Idle.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMsgBox.cpp">
+      <Filter>07. UI\07. cUIMsgBox</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneCamera.cpp">
+      <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

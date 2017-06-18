@@ -15,7 +15,7 @@ public:
 	virtual void Render(LPD3DXSPRITE pSprite);
 	virtual void Destroy();
 
-	void Setup_Image(LPDIRECT3DTEXTURE9 texture, int nCellPerRow);
+	void Setup_Image(string imagePath, int nCellPerRow);
 	int GetIndex();
 };
 
