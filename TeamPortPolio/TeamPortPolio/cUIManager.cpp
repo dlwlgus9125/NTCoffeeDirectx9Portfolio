@@ -185,6 +185,96 @@ void cUIManager::Setup_SelectScene()
 	m_vecMsg.push_back(pMsgBox_Human);
 }
 
+void cUIManager::Setup_BattleScene_Orc()
+{
+	// ¹Ì´Ï¸Ê
+	m_pMiniMap = new cUIMiniMap;
+	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
+	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/ground.png", 150);
+	m_pMiniMap->SetAlpha(150);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 1
+	cUIButton* pBtn_start = new cUIButton;
+	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_start->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
+		"Image/UI/titlescene/button/formation_rect/mouseover.png",
+		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
+	m_vecEventBtn.push_back(pBtn_start);
+	m_pMiniMap->AddChild(pBtn_start);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 2
+	cUIButton* pBtn_Help = new cUIButton;
+	pBtn_Help->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Help->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
+		"Image/UI/titlescene/button/formation_tri/mouseover.png",
+		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
+	m_vecEventBtn.push_back(pBtn_Help);
+	m_pMiniMap->AddChild(pBtn_Help);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 3
+	cUIButton* pBtn_Exit = new cUIButton;
+	pBtn_Exit->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Exit->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
+		"Image/UI/titlescene/button/state_att/mouseover.png",
+		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
+	m_vecEventBtn.push_back(pBtn_Exit);
+	m_pMiniMap->AddChild(pBtn_Exit);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 4
+	cUIButton* pButton4 = new cUIButton;
+	pButton4->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pButton4->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
+		"Image/UI/titlescene/button/state_def/mouseover.png",
+		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
+	m_vecEventBtn.push_back(pButton4);
+	m_pMiniMap->AddChild(pButton4);
+}
+
+void cUIManager::Setup_BattleScene_Human()
+{
+	// ¹Ì´Ï¸Ê
+	m_pMiniMap = new cUIMiniMap;
+	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
+	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/ground3.png", 150);
+	m_pMiniMap->SetAlpha(150);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 1
+	cUIButton* pBtn_start = new cUIButton;
+	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_start->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
+		"Image/UI/titlescene/button/formation_rect/mouseover.png",
+		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
+	m_vecEventBtn.push_back(pBtn_start);
+	m_pMiniMap->AddChild(pBtn_start);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 2
+	cUIButton* pBtn_Help = new cUIButton;
+	pBtn_Help->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Help->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
+		"Image/UI/titlescene/button/formation_tri/mouseover.png",
+		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
+	m_vecEventBtn.push_back(pBtn_Help);
+	m_pMiniMap->AddChild(pBtn_Help);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 3
+	cUIButton* pBtn_Exit = new cUIButton;
+	pBtn_Exit->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Exit->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
+		"Image/UI/titlescene/button/state_att/mouseover.png",
+		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
+	m_vecEventBtn.push_back(pBtn_Exit);
+	m_pMiniMap->AddChild(pBtn_Exit);
+
+	// ¹Ì´Ï¸Ê¹öÆ° 4
+	cUIButton* pButton4 = new cUIButton;
+	pButton4->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pButton4->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
+		"Image/UI/titlescene/button/state_def/mouseover.png",
+		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
+	m_vecEventBtn.push_back(pButton4);
+	m_pMiniMap->AddChild(pButton4);
+}
+
 void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;

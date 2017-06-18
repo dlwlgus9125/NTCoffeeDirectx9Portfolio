@@ -76,7 +76,7 @@ void cTownScene::OnUpdate()
 		UI->Setup_Inventory();
 		break;
 	case TOWN_TAB_SHOP_ATT:
-		OBJECT->ByuItem(itemID);
+		OBJECT->BuyItem(itemID);
 		UI->Setup_Inventory();
 		break;
 	}
