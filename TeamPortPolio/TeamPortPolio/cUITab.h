@@ -1,6 +1,8 @@
 #pragma once
 #include "cUIObject.h"
 
+class cUIButton;
+
 class cUITab :
 	public cUIObject
 {
@@ -21,6 +23,11 @@ class cUITab :
 	vector<ST_SLOTDATA*>		m_vecShownData;
 	FONT_TAG m_eFont_Slot;
 	// << 
+
+	// >>  끄는 버튼					버튼 수정해야 함
+	D3DXVECTOR3					m_vBtnPos;
+	cUIButton*					m_pBtn_Exit;
+	// <<
 public:
 	cUITab();
 	~cUITab();
@@ -40,5 +47,7 @@ public:
 	void SetShownData(int startIndex);
 	void GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	// << 
+
+	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 };
 
