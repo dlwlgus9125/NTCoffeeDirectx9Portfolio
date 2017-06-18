@@ -75,6 +75,7 @@ void cSelectScene::OnUpdate()
 			OBJECT->AddObject(m_mapPlayer[m_nCurrentPlayer]);
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
+			SOUND->Stop("LoginBGM");
 			SCENE->ChangeScene(SCENE_TOWN);
 		}
 		break;

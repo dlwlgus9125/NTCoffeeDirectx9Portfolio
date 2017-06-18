@@ -48,7 +48,6 @@ void cLoginScene::OnUpdate()
 	{
 	case LOGIN_BTN_START:
 		SCENE->ChangeScene(SCENE_SELECT);
-		SOUND->Stop("LoginBGM");
 		break;
 	case LOGIN_BTN_HELP:
 		
