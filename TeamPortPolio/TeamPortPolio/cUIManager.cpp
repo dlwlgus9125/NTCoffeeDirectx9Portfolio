@@ -187,9 +187,9 @@ void cUIManager::Setup_SelectScene()
 	// 돌아가기
 	cUIButton* pBtn_Back = new cUIButton;
 	pBtn_Back->Setup(D3DXVECTOR3(1100, 630, 0), UI_BUTTON);
-	pBtn_Back->Setup_Button("Image/UI/SelectScene/Button/Character_BT/BT_STAND.png",
-		"Image/UI/SelectScene/Button/Character_BT/BT_MOUSE_OVER.png",
-		"Image/UI/SelectScene/Button/Character_BT/BT_SELECT.png", SELECT_BTN_BACK);
+	pBtn_Back->Setup_Button("Image/UI/SelectScene/Button/SCENE_BACK/BT_STAND.png",
+		"Image/UI/SelectScene/Button/SCENE_BACK/BT_MOUSE_OVER.png",
+		"Image/UI/SelectScene/Button/SCENE_BACK/BT_SELECT.png", SELECT_BTN_BACK);
 	m_vecShownBtn.push_back(pBtn_Back);
 	m_vecEventBtn.push_back(pBtn_Back);
 	pBtn_Back->SetHidden(false);
