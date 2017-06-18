@@ -154,12 +154,13 @@ void cUIManager::Setup_LoginScene()
 
 void cUIManager::Setup_SelectScene()
 {
+	// 각 종족 아이콘 선택시 선택 후 이미지가 셀렉트상태이미지만 출력해줘야함.
 	// 오크
 	cUIButton* pBtn_Orc = new cUIButton;
 	pBtn_Orc->Setup(D3DXVECTOR3(650, 545, 0), UI_BUTTON);
 	pBtn_Orc->Setup_Button("Image/UI/SelectScene/Icon/Horde.png",
-		"Image/UI/SelectScene/Icon/Horde.png",
-		"Image/UI/SelectScene/Icon/Horde.png", SELECT_BTN_ORC);
+		"Image/UI/SelectScene/Icon/Horde_Over.png",
+		"Image/UI/SelectScene/Icon/Horde_Select.png", SELECT_BTN_ORC);
 	m_vecShownBtn.push_back(pBtn_Orc);
 	m_vecEventBtn.push_back(pBtn_Orc);
 	pBtn_Orc->SetHidden(false);
@@ -168,8 +169,8 @@ void cUIManager::Setup_SelectScene()
 	cUIButton* pBtn_Human = new cUIButton;
 	pBtn_Human->Setup(D3DXVECTOR3(500, 550, 0), UI_BUTTON);
 	pBtn_Human->Setup_Button("Image/UI/SelectScene/Icon/Alliance.png",
-		"Image/UI/SelectScene/Icon/Alliance.png",
-		"Image/UI/SelectScene/Icon/Alliance.png", SELECT_BTN_HUMAN);
+		"Image/UI/SelectScene/Icon/Alliance_Over.png",
+		"Image/UI/SelectScene/Icon/Alliance_Select.png", SELECT_BTN_HUMAN);
 	m_vecShownBtn.push_back(pBtn_Human);
 	m_vecEventBtn.push_back(pBtn_Human);
 	pBtn_Human->SetHidden(false);
