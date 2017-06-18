@@ -97,6 +97,7 @@ void cCharacter::Render()
 		mtrl.Diffuse.a = 0.3f;
 		D3DDevice->SetMaterial(&mtrl);
 		D3DDevice->SetTexture(0, 0);
+
 		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 
 		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
