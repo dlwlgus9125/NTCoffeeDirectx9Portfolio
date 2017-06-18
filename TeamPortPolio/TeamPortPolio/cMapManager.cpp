@@ -55,7 +55,7 @@ void cMapManager::Init(string fileName)
 
 	// >> 스카이박스 생성
 	m_pSkyBox = new cSkyBox();
-	m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2);
+	m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox2", "png");
 	// << 
 	ASTAR->Setup(m_vecPosOfNode);
 
