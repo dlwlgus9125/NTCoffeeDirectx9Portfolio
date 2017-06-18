@@ -15,11 +15,11 @@ void Leader_State_Melee_Idle::OnUpdate(cLeader * pLeader, float deltaTime)
 {
 	if (pLeader->GetTargetObject()!=NULL)
 	{
-		pLeader->FSM()->Play(LEADER_STATE_PURSUIT);
+		pLeader->FSM()->Play(LEADER_STATE_MELEE_BATTLE);
 	}
 	else if (pLeader->GetPath().size() > 0)
 	{
-		pLeader->FSM()->Play(LEADER_STATE_WALK);
+		pLeader->FSM()->Play(LEADER_STATE_MELEE_WALK);
 	}
 }
 

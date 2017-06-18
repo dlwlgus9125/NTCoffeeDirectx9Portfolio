@@ -8,7 +8,6 @@ public:
 	void Update_with_targetpos();
 	void Update_with_dir();
 	IEntity* Entity() { return m_pEntity; }
-	ST_SPHERE m_stSphere;
 private:
 	D3DXVECTOR3 m_vOrigin;
 	D3DXVECTOR3 m_vTarget;

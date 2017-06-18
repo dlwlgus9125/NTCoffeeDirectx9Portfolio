@@ -25,7 +25,7 @@ public:
 	void SetAnimHit() { m_pSkinnedMesh->SetAnimationIndexBlend(FG_HIT); };
 	void SetAnimDeath() { m_pFsm->Play(UNIT_STATE_MELEE_DEATH); };
 
-
+	void SetBattleState() { m_pFsm->Play(UNIT_STATE_MELEE_BATTLE); };
 	void SetIdleState() { m_pFsm->Play(UNIT_STATE_MELEE_IDLE); };
 	void SetDefenceState() { m_pFsm->Play(UNIT_STATE_MELEE_DEFENCE); };
 };

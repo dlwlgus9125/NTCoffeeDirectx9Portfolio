@@ -3,7 +3,7 @@
 #include "cUIButton.h"
 
 
-cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL)
+cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL), m_nFirstKeyInMap(-1)
 {
 }
 
@@ -33,18 +33,25 @@ void cUITab::AddTitle(string title, D3DXVECTOR3 pos_title)
 	m_vecTabInfo.push_back(tab);
 }
 
+void cUITab::SetDef()
+{
+	SetShownData(m_nFirstKeyInMap, 0);
+
+	// >> 탭 켜질 때, 첫번째 메뉴가 보이도록
+	m_vecTabInfo[0].state = UI_SELECTED;
+	for (int i = 1; i < m_vecTabInfo.size(); i++)
+	{
+		m_vecTabInfo[i].state = UI_IDLE;
+		//if (m_vecTabInfo[i].state == UI_SELECTED) break;
+		//if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
+	}
+	// << 
+}
+
 void cUITab::Update(float deltaTime)
 {
 	m_pBtn_Exit->SetHidden(m_isHidden);
 	if (m_isHidden) return;
-
-	// >> 탭 켜질 때, 첫번째 메뉴가 보이도록
-	for (int i = 0; i < m_vecTabInfo.size(); i++)
-	{
-		if (m_vecTabInfo[i].state == UI_SELECTED) break;
-		if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
-	}
-	// << 
 
 	// >> 탭의 타이틀 클릭 시 모든 탭 타이틀의 상태 바꿔주는 부분
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
@@ -53,6 +60,8 @@ void cUITab::Update(float deltaTime)
 		{
 			D3DXVECTOR2 lt = D3DXVECTOR2(m_vecTabInfo[i].pos.x, m_vecTabInfo[i].pos.y);
 			D3DXVECTOR2 rb = D3DXVECTOR2(m_vecTabInfo[i].pos.x + m_stTitleSize.nWidth, m_vecTabInfo[i].pos.y + m_stTitleSize.nHeight);
+			SetShownData(i + m_nFirstKeyInMap, 0);
+
 			if (MATH->IsCollided(INPUT->GetMousePosVector2(), lt, rb))
 			{
 				for (int k = 0; k < m_vecTabInfo.size(); k++)
@@ -168,23 +177,37 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 	m_eFont_Slot = eFont;
 }
 
-void cUITab::AddSlotData(int itemID, string name, string imagePath, string info)
+void cUITab::AddSlotData(int itemMID, int itemSID, string name, string imagePath, string info)
 {
+	if (m_nFirstKeyInMap < 0) m_nFirstKeyInMap = itemMID;
 	D3DXIMAGE_INFO imageinfo;
 	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
-	m_vecSlotData.push_back(data);
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemSID, name, imagePath, info);
+	
+	if (m_mapVecSlotData.find(itemMID) == m_mapVecSlotData.end())
+	{
+		vector<ST_SLOTDATA*> vecSlotData;
+		m_mapVecSlotData[itemMID] = vecSlotData;
+	}
+
+	m_mapVecSlotData[itemMID].push_back(data);
 }
 
-void cUITab::SetShownData(int startIndex)
+void cUITab::SetShownData(int itemMID, int startIndex)
 {
 	m_vecShownData.clear();
+
+	if (m_mapVecSlotData.find(itemMID) == m_mapVecSlotData.end()) return;
+
+	vector<ST_SLOTDATA*> vecSlotData = m_mapVecSlotData[itemMID];
+
+
 	for (int i = startIndex; i < m_vecSlotInfo.size(); i++)
 	{
-		if (startIndex + i >= m_vecSlotData.size()) break;
+		if (startIndex + i >= vecSlotData.size()) break;
 
-		m_vecShownData.push_back(m_vecSlotData[i]);
+		m_vecShownData.push_back(vecSlotData[i]);
 	}
 }
 
@@ -204,6 +227,7 @@ void cUITab::GetClickedItemID(OUT int& eventID, OUT int& itemID)
 			{
 				eventID = m_eEventID;
 				itemID = m_vecShownData[i]->itemID;
+				break;
 			}
 		}
 	}

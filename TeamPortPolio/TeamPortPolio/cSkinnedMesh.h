@@ -55,6 +55,8 @@ public:
 	D3DXMATRIXA16  GetAttackBoneMat() { return m_AttackBone->CombinedTransformationMatrix; }
 	void      FindAttackBone(char* BoneName);
 	void      FindAttackBone(ST_BONE* pBone, char* BoneName);
+
+	void UpdateAndRenderForArrow(bool isStop);
 private:
 	cSkinnedMesh();
 	void Load(char* szFolder, char* szFilename);

@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "cMeleeUnit.h"
+#include "cBowUnit.h"
 #include "cPlayer.h"
 
 
 
-cMeleeUnit::cMeleeUnit(IEntity * pLeader, D3DXVECTOR3 offset) :cUnit::cUnit()
+cBowUnit::cBowUnit(IEntity * pLeader, D3DXVECTOR3 offset) :cUnit::cUnit()
 {
 	m_CharacterEntity = new ISteeringEntity(pLeader->Pos(), 0.5f,
 		pLeader->Forward(), pLeader->Mass(), pLeader->MaxSpeed() * 3);
@@ -12,12 +12,12 @@ cMeleeUnit::cMeleeUnit(IEntity * pLeader, D3DXVECTOR3 offset) :cUnit::cUnit()
 	m_offset = offset;
 }
 
-cMeleeUnit::~cMeleeUnit()
+cBowUnit::~cBowUnit()
 {
 	SAFE_DELETE(m_pFsm);
 }
 
-void cMeleeUnit::Init()
+void cBowUnit::Init()
 {
 	m_CollideSphere.fRadius = 1.0f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
@@ -26,19 +26,18 @@ void cMeleeUnit::Init()
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	cUnit::Init();
 
-	
+
 
 	m_pSkinnedMesh->FindAttackBone(m_Status->m_szColliderBoneName);
-	m_pFsm = new cStateMachine<cMeleeUnit*>(this);
-	m_pFsm->Register(UNIT_STATE_MELEE_IDLE, new Melee_Idle());
-	m_pFsm->Register(UNIT_STATE_MELEE_WALK, new Melee_Walk());
-	m_pFsm->Register(UNIT_STATE_MELEE_BATTLE, new Melee_Battle());
-	m_pFsm->Register(UNIT_STATE_MELEE_DEFENCE, new Melee_Defence());
-	m_pFsm->Register(UNIT_STATE_MELEE_DEATH, new Melee_Death());
-	m_pFsm->Play(UNIT_STATE_MELEE_IDLE);
+	m_pFsm = new cStateMachine<cBowUnit*>(this);
+	m_pFsm->Register(UNIT_STATE_BOW_IDLE, new Bow_Idle());
+	m_pFsm->Register(UNIT_STATE_BOW_WALK, new Bow_Walk());
+	m_pFsm->Register(UNIT_STATE_BOW_BATTLE, new Bow_Battle());
+	m_pFsm->Register(UNIT_STATE_BOW_DEATH, new Bow_Death());
+	m_pFsm->Play(UNIT_STATE_BOW_IDLE);
 }
 
-void cMeleeUnit::Update(float deltaTime)
+void cBowUnit::Update(float deltaTime)
 {
 	if (m_isDeath == false)
 	{
@@ -56,8 +55,8 @@ void cMeleeUnit::Update(float deltaTime)
 	}
 }
 
-void cMeleeUnit::Render()
+void cBowUnit::Render()
 {
 	cUnit::Render();
-	
+
 }
