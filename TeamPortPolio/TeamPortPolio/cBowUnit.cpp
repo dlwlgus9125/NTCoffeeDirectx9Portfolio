@@ -47,7 +47,10 @@ void cBowUnit::Update(float deltaTime)
 		MAP->GetHeight(pos.x, pos.y, pos.z);
 		m_CharacterEntity->SetPos(pos);
 		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-
+		if (INPUT->IsKeyDown(VK_SPACE))
+		{
+			OBJECT->AddUnitArrow(pos, OBJECT->GetPlayer()->GetCharacterEntity()->Pos());
+		}
 		//if (MATH->IsCollided(OBJECT->GetPlayer()->GetSphere(), m_arrangeCollideSphere&&this->GetLeader()->)
 		//{
 		//	//battleT

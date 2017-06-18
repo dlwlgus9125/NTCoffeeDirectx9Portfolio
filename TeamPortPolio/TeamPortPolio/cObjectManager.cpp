@@ -6,9 +6,21 @@
 #include "cPlayer.h"
 #include "cLeader.h"
 #include "cUnit.h"
+#include "BallisticMotion.h"
 //#include "IEntity.h"
 
 
+
+void cObjectManager::PlayerArrow(cBallisticArrow * pArrow)
+{
+	m_listPlayerArrow.push_back(pArrow);
+}
+
+void cObjectManager::UnitArrow(cBallisticArrow * pArrow)
+{
+	m_listUnitArrow.push_back(pArrow);
+	if (m_listUnitArrow.size() > 1000) ClearArrow();
+}
 
 void cObjectManager::Init()
 {
@@ -33,6 +45,16 @@ void cObjectManager::Init()
 	pEnemy3->Init();
 	m_vecObject.push_back(pEnemy3);
 	m_vecEnemyLeader.push_back(pEnemy3);*/
+	for each (auto p in OBJECT->GetPlayerArrows())
+	{
+		p->Init();
+	}
+
+	for each (auto p in OBJECT->GetUnitArrows())
+	{
+		p->Init();
+	}
+	
 }
 
 void cObjectManager::Update(float deltaTime)
@@ -42,10 +64,7 @@ void cObjectManager::Update(float deltaTime)
 	{
 		m_vecObject[i]->Update(deltaTime);
 	}
-	for (int i = 0; i < m_vecArrow.size(); i++)
-	{
-		m_vecArrow[i]->Update(deltaTime);
-	}
+	ArrowUpdate();
 }
 
 void cObjectManager::Render()
@@ -56,23 +75,28 @@ void cObjectManager::Render()
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
 		if(FRUSTUM->IsIn(m_vecObject[i]->GetCharacterEntity()->Pos()))m_vecObject[i]->Render();
-	}
-	for (int i = 0; i < m_vecArrow.size(); i++)
+	}	
+
+	for each (auto p in OBJECT->GetPlayerArrows())
 	{
-		if (m_vecArrow[i]&&FRUSTUM->IsIn(m_vecArrow[i]->GetCharacterEntity()->Pos()))m_vecArrow[i]->Render();
+		p->Render();
 	}
-	
+
+	for each (auto p in OBJECT->GetUnitArrows())
+	{
+		p->Render();
+	}
 }
 
 void cObjectManager::Release()
 {
-	DeleteArrows();
+
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
 		delete m_vecObject[i];
 	}
 	m_vecObject.clear();
-
+	ClearArrow();
 }
 
 void cObjectManager::AddEntity(IEntity * entity)
@@ -85,30 +109,62 @@ void cObjectManager::AddObject(cObject * object)
 	m_vecObject.push_back(object);
 }
 
-void cObjectManager::AddArrowByPlayer(cBallisticArrow * pArrow)
+
+
+list<cBallisticArrow*> cObjectManager::GetPlayerArrows()
 {
-	pArrow->SetCamp(CAMP_PLAYER);
-	pArrow->SetIsPlayer();
-	pArrow->SetID(C_C_ARROW_ARROW);
-	pArrow->Init();
-	m_vecArrow.push_back(pArrow);
+	return m_listPlayerArrow;
 }
 
-void cObjectManager::AddArrowByUnit(cBallisticArrow * pArrow, CAMP_STATE camp)
+list<cBallisticArrow*> cObjectManager::GetUnitArrows()
 {
-	pArrow->SetCamp(camp);
-	pArrow->SetID(C_C_ARROW_ARROW);
-	pArrow->Init();
-	m_vecArrow.push_back(pArrow);
+	return m_listUnitArrow;
 }
 
-void cObjectManager::DeleteArrows()
+void cObjectManager::AddPlayerArrow(IEntity * pos, D3DXVECTOR3 forward)
 {
-	for (int i = 0; i < m_vecArrow.size(); i++)
+	cBallisticArrow* pArrow = new cBallisticArrow(pos->Pos(), D3DXVECTOR3(), forward);
+	PlayerArrow(pArrow);
+
+}
+
+void cObjectManager::AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget)
+{
+	PosTarget.x=  PosTarget.x+ (-5.0f + (rand() % 10)+1.0f) / 10.0f;
+	PosTarget.z= PosTarget.z + (-5.0f+(rand() % 10)+1.0f) / 10.0f;
+	PosTarget.y = PosTarget.y + (-5.0f + (rand() % 10) + 1.0f) / 10.0f;
+	cBallisticArrow* pArrow = new cBallisticArrow(PosOrigin, PosTarget, D3DXVECTOR3());
+	UnitArrow(pArrow);
+}
+
+void cObjectManager::ArrowUpdate()
+{
+	for each(auto p in m_listUnitArrow)
 	{
-		SAFE_DELETE(m_vecArrow[i]);
+		p->Shoot()->Update_with_targetpos();
+		p->ArrowUpdate();
 	}
-	m_vecArrow.clear();
+
+	for each(auto p in m_listPlayerArrow)
+	{
+		p->Shoot()->Update_with_dir();
+		p->ArrowUpdate();
+	}
+}
+
+void cObjectManager::ClearArrow()
+{
+	while (!m_listPlayerArrow.empty())
+	{
+		SAFE_DELETE(m_listPlayerArrow.front());
+		m_listPlayerArrow.pop_front();
+	}
+
+	while (!m_listUnitArrow.empty())
+	{
+		SAFE_DELETE(m_listUnitArrow.front());
+		m_listUnitArrow.pop_front();
+	}
 }
 
 vector<int> cObjectManager::GetInventory()
@@ -121,7 +177,7 @@ void cObjectManager::SellItem(int itemSID)
 	m_player->SellItem(itemSID);
 }
 
-void cObjectManager::ByuItem(int itemSID)
+void cObjectManager::BuyItem(int itemSID)
 {
 	m_player->ByuItem(itemSID);
 }

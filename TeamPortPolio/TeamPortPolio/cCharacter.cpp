@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "cCharacter.h"
 
-
 cCharacter::cCharacter()
 {
 	m_targetObject = NULL;
@@ -18,7 +17,10 @@ void cCharacter::Init()
 	m_isAnimDeath = false;
 	m_currentMode = DEFENDING_MODE;
 	m_AttackCollideSphere.fRadius = 0.5f;
-	D3DXCreateSphere(D3DDevice, m_CollideSphere.fRadius, 10, 10, &m_MeshSphere.m_pMeshSphere, NULL);
+	m_CollideSphere.fRadius = 0.5f;
+	m_CollideSphere.vCenter.y += 0.5f;
+
+	D3DXCreateSphere(D3DDevice, m_AttackCollideSphere.fRadius, 10, 10, &m_MeshSphere.m_pMeshSphere, NULL);
 	ZeroMemory(&m_MeshSphere.m_stMtlSphere, sizeof(D3DMATERIAL9));
 	m_MeshSphere.m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_MeshSphere.m_stMtlSphere.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
@@ -40,7 +42,7 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
-
+	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 
@@ -116,21 +118,18 @@ void cCharacter::Render()
 			D3DXMATRIXA16 matT;
 			D3DXMatrixIdentity(&matT);
 
-			D3DXMatrixTranslation(&matT, m_CollideSphere.vCenter.x, m_CollideSphere.vCenter.y, m_CollideSphere.vCenter.z);
+			D3DXMatrixTranslation(&matT, m_AttackCollideSphere.vCenter.x, m_AttackCollideSphere.vCenter.y, m_AttackCollideSphere.vCenter.z);
 
 			D3DDevice->SetTransform(D3DTS_WORLD, &matT);
 			D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
 
 			D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		//	m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+			m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 			D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 	}
 
 	RenderSphere();		
-
-
-
 }
 
 void cCharacter::RenderSphere()

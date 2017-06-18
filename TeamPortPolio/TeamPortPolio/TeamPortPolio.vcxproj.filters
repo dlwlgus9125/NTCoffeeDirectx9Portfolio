@@ -116,9 +116,6 @@
     <Filter Include="98. UTIL\04. cRay">
       <UniqueIdentifier>{598b46a6-3b49-4821-995e-837e8df6e349}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Manager\03. cTextureManager">
-      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Manager\10. cMapManager">
       <UniqueIdentifier>{7f0c78a3-c82b-4032-a5bd-7f3e3ec4320f}</UniqueIdentifier>
     </Filter>
@@ -239,6 +236,9 @@
     <Filter Include="03. cScene\04. cBattleScene\Orc">
       <UniqueIdentifier>{c6747f9d-858d-4097-b5f1-72b2c8c63d06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\02. cInputManager\03. cTextureManager">
+      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -309,7 +309,7 @@
       <Filter>00. Manager\06. cAIManager\00. cStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="cTextureManager.h">
-      <Filter>00. Manager\03. cTextureManager</Filter>
+      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
     </ClInclude>
     <ClInclude Include="cTimeManager.h">
       <Filter>00. Manager\08. cTimeManager</Filter>
@@ -486,6 +486,9 @@
     <ClInclude Include="cBattleScene_Human.h">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClInclude>
+    <ClInclude Include="cArrowMaker.h">
+      <Filter>02. cCharacter\04.cArrow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -541,7 +544,7 @@
       <Filter>04. Loader\00. xFileLoader</Filter>
     </ClCompile>
     <ClCompile Include="cTextureManager.cpp">
-      <Filter>00. Manager\03. cTextureManager</Filter>
+      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
     </ClCompile>
     <ClCompile Include="cTimeManager.cpp">
       <Filter>00. Manager\08. cTimeManager</Filter>
@@ -794,6 +797,9 @@
     </ClCompile>
     <ClCompile Include="Cavalry_Battle.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="cArrowMaker.cpp">
+      <Filter>02. cCharacter\04.cArrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

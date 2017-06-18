@@ -222,6 +222,7 @@
     <ClInclude Include="TeamPortPolio.h" />
     <ClInclude Include="TestMap.h" />
     <ClInclude Include="cBallisticArrow.h" />
+    <ClInclude Include="cArrowMaker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bow_Battle.cpp" />
@@ -322,6 +323,7 @@
     <ClCompile Include="TeamPortPolio.cpp" />
     <ClCompile Include="TestMap.cpp" />
     <ClCompile Include="cBallisticArrow.cpp" />
+    <ClCompile Include="cArrowMaker.cpp" />
     <ClCompile Include="Cavalry_Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
