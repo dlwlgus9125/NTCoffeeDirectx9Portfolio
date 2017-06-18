@@ -83,7 +83,7 @@ void cSelectScene::OnUpdate()
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
-			SCENE->ChangeScene(SCENE_BATTLE_ORC);
+			SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
 		}
 		break;
 
