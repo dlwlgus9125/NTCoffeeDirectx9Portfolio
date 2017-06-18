@@ -65,7 +65,8 @@ void cUIManager::Setup_TownScene()
 	pTab_Weapon->SetShownData(0);
 
 	// 상점 1 종료버튼
-	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(370, 0, 0), "image/ui/townscene/tab_shop/btn.png");
+	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(370, 0, 0), 
+		"image/ui/townscene/tab_shop/btn_idle.png", "image/ui/townscene/tab_shop/btn_mouseover.png", "image/ui/townscene/tab_shop/btn_select .png");
 
 	pTab_Weapon->SetEventID(TOWN_TAB_SHOP_ATT);
 	m_vecTab.push_back(pTab_Weapon);

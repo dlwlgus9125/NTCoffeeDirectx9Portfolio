@@ -26,7 +26,6 @@ class cUITab :
 
 	// >>  끄는 버튼					버튼 수정해야 함
 	D3DXVECTOR3					m_vBtnPos;
-	ST_SIZEN					m_stBtnSize;
 	cUIButton*					m_pBtn_Exit;
 	// <<
 public:
@@ -49,6 +48,6 @@ public:
 	void GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	// << 
 
-	void Setup_exitbtn(D3DXVECTOR3 pos, string imagePath);
+	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 };
 

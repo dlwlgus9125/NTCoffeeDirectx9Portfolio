@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cUITab.h"
+#include "cUIButton.h"
 
 
 cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL)
@@ -34,6 +35,7 @@ void cUITab::AddTitle(string title, D3DXVECTOR3 pos_title)
 
 void cUITab::Update(float deltaTime)
 {
+	m_pBtn_Exit->SetHidden(m_isHidden);
 	if (m_isHidden) return;
 
 	// >> 탭 켜질 때, 첫번째 메뉴가 보이도록
@@ -63,6 +65,11 @@ void cUITab::Update(float deltaTime)
 		}
 	}	
 	// <<
+
+	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
+	m_pBtn_Exit->Update(deltaTime);
+	if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
+	// << 
 
 	cUIObject::Update(deltaTime);
 }
@@ -202,10 +209,10 @@ void cUITab::GetClickedItemID(OUT int& eventID, OUT int& itemID)
 	}
 }
 
-void cUITab::Setup_exitbtn(D3DXVECTOR3 pos, string imagePath)
+void cUITab::Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked)
 {
-	m_vBtnPos = m_vPosition + pos;
-	D3DXIMAGE_INFO imageInfo;
-	m_pTexture_Btn = TEXTURE->GetTexture(imagePath, imageInfo);
-	m_stBtnSize = ST_SIZEN(imageInfo.Width, imageInfo.Height);
+	m_pBtn_Exit = new cUIButton;
+	m_vBtnPos = m_vPosition + btnPos;
+	m_pBtn_Exit->Setup(m_vBtnPos, UI_BUTTON);
+	m_pBtn_Exit->Setup_Button(sPath_idle, sPath_mouseover, sPath_clicked, TOWN_BTN_SHOPEXIT);
 }
