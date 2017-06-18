@@ -76,11 +76,11 @@ void cMapManager::Render()
 	{
 		if (test == false)
 		{
-			//test = true;
+			test = true;
 		}
 		else
 		{
-			//test = false;
+			test = false;
 		}
 	}
 
