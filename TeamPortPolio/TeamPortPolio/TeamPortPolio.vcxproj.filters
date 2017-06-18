@@ -206,6 +206,9 @@
     <Filter Include="07. UI\07. cUIMsgBox">
       <UniqueIdentifier>{02aed0ac-5f29-40c5-a47f-fa787b2ae7d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. UTIL\05. cSceneCamera">
+      <UniqueIdentifier>{a5087242-f519-43f4-a3da-7d25270e275c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="Player_State.h">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneCamera.h">
+      <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -665,6 +671,9 @@
     </ClCompile>
     <ClCompile Include="cUIMsgBox.cpp">
       <Filter>07. UI\07. cUIMsgBox</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneCamera.cpp">
+      <Filter>98. UTIL\05. cSceneCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

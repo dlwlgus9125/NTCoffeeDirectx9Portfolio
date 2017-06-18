@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "cSelectScene.h"
+#include "cSceneCamera.h"
 #include "cPlayer.h"
 
 
 cSelectScene::cSelectScene()
-	: m_pImage(NULL), m_pSprite(NULL), m_nCurrentPlayer(SELECT_NONE)
+	: m_pImage(NULL), m_pSprite(NULL), m_nCurrentPlayer(SELECT_NONE), m_vPosition(0, 0, 0)
+	, m_vCameraDist(0), m_vCameraStartDist(20.0f)
 {
 }
 
@@ -26,17 +28,18 @@ void cSelectScene::OnEnter()
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 1.0f), UI_IMAGE);
 	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
-
-	m_mapPlayer[SELECT_HUMAN] = new cPlayer(D3DXVECTOR3(-5, 10.0f, 10.0f), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
+	
+	m_mapPlayer[SELECT_HUMAN] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
 	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MELEE);
 	m_mapPlayer[SELECT_HUMAN]->Init();
 
-	m_mapPlayer[SELECT_ORC] = new cPlayer(D3DXVECTOR3(-5, 10.0f, 10.0f), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
+	m_mapPlayer[SELECT_ORC] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
 	m_mapPlayer[SELECT_ORC]->SetID(C_C_ORC_MELEE);
 	m_mapPlayer[SELECT_ORC]->Init();
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
+	SCENE_CAMERA->Setup(-0.25f, 7.0f, 18.0f, m_vCameraStartDist);
 	UI->Change(SCENE_SELECT);
 }
 
@@ -57,14 +60,18 @@ void cSelectScene::OnUpdate()
 	switch (buttonIndex)
 	{
 	case SELECT_BTN_ORC:
+		if (m_nCurrentPlayer == SELECT_ORC)	break;
 		m_nCurrentPlayer = SELECT_ORC;
+		SCENE_CAMERA->SetDistance(m_vCameraStartDist);
 
 		UI->SetEvent(SELECT_MSGBOX_ORC, true);
 		UI->SetEvent(SELECT_MSGBOX_HUMAN, false);
 		break;
 	case SELECT_BTN_HUMAN:
+		if (m_nCurrentPlayer == SELECT_HUMAN) break;
 		m_nCurrentPlayer = SELECT_HUMAN;
-		
+		SCENE_CAMERA->SetDistance(m_vCameraStartDist);
+
 		UI->SetEvent(SELECT_MSGBOX_ORC, false);
 		UI->SetEvent(SELECT_MSGBOX_HUMAN, true);
 		break;
@@ -118,15 +125,14 @@ void cSelectScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 void cSelectScene::MovePosition()
 {
-	float fDeltaY = 0.05f;
-	float fDeltaZ = 0.01f;
-	D3DXVECTOR3 currentPos = m_mapPlayer[m_nCurrentPlayer]->GetCharacterEntity()->Pos();	
+	m_vCameraDist = SCENE_CAMERA->GetDistance();
 
-	if (currentPos.z > 0 || currentPos.y > 5.0f)
+	if (m_vCameraDist > 10.0f)
 	{
 		m_mapPlayer[m_nCurrentPlayer]->GetMesh()->SetAnimationIndexBlend(P_WALK);
-		m_mapPlayer[m_nCurrentPlayer]->GetCharacterEntity()->SetPos(D3DXVECTOR3(currentPos.x, currentPos.y - fDeltaY, currentPos.z - fDeltaZ));
-		CAMERA->SetLookAt(currentPos, D3DX_PI);
+
+		m_vCameraDist -= 0.1f;
+		SCENE_CAMERA->SetDistance(m_vCameraDist);
 	}
 	else
 	{

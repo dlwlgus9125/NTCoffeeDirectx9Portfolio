@@ -18,6 +18,9 @@ class cSelectScene : public cIScene
 	
 	map<int, cPlayer*>	m_mapPlayer;
 	int					m_nCurrentPlayer;
+	D3DXVECTOR3			m_vPosition;
+	float				m_vCameraStartDist;
+	float				m_vCameraDist;
 
 public:
 	cSelectScene();

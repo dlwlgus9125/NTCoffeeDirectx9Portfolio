@@ -178,6 +178,7 @@
     <ClInclude Include="cObjLoader.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cRay.h" />
+    <ClInclude Include="cSceneCamera.h" />
     <ClInclude Include="cSceneManager.h" />
     <ClInclude Include="cSelectScene.h" />
     <ClInclude Include="cShadowManager.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="cObjLoader.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cRay.cpp" />
+    <ClCompile Include="cSceneCamera.cpp" />
     <ClCompile Include="cSceneManager.cpp" />
     <ClCompile Include="cSelectScene.cpp" />
     <ClCompile Include="cShadowManager.cpp" />

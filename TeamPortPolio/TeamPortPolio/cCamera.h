@@ -31,5 +31,7 @@ public:
 	D3DXVECTOR3& GetUp() { return m_vUp; }
 	cCamera* GetCamera() { return this; }
 	// << :
+
+	void SetEye(D3DXVECTOR3 vEye) {m_vEye = vEye;}
 };
 
