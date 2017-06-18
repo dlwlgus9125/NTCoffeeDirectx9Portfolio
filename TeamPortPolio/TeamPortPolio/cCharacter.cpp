@@ -51,6 +51,62 @@ void cCharacter::Render()
 {
 	if (m_pSkinnedMesh)
 	{
+
+		D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+		D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+		D3DDevice->SetRenderState(D3DRS_STENCILREF, 0x0);
+		D3DDevice->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
+		D3DDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
+		D3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
+		D3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
+		D3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
+
+		D3DXPLANE groundPlane(0.0f, -1.0f, 0.0f, GetCharacterEntity()->Pos().y + 0.001f);
+
+		D3DXVECTOR4 lightTest(0.707f, -0.707f, 0.707f, 0.0f);
+
+		D3DXMATRIX S;
+		D3DXMatrixShadow(
+			&S,
+			&lightTest,
+			&groundPlane);
+
+		D3DXMATRIX T;
+		D3DXMatrixTranslation(
+			&T,
+			GetCharacterEntity()->Pos().x, GetCharacterEntity()->Pos().y, GetCharacterEntity()->Pos().z);
+
+		D3DXMATRIXA16 matS;
+
+		D3DXMatrixScaling(&matS, 0.4f, 0.2f, 0.4f);
+
+		D3DXMATRIX W = matS *T * S;
+
+		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		D3DDevice->SetTransform(D3DTS_WORLD, &W);
+		D3DMATERIAL9 mtrl;
+		mtrl.Ambient.r = 0; mtrl.Ambient.g = 0; mtrl.Ambient.b = 0;
+		mtrl.Diffuse.r = 0; mtrl.Diffuse.g = 0; mtrl.Diffuse.b = 0;
+		mtrl.Specular.r = 0; mtrl.Specular.g = 0; mtrl.Diffuse.b = 0;
+		mtrl.Emissive.r = 0; mtrl.Emissive.g = 0; mtrl.Emissive.b = 0;
+		mtrl.Power = 0.0f;
+		mtrl.Diffuse.a = 0.3f;
+		D3DDevice->SetMaterial(&mtrl);
+		D3DDevice->SetTexture(0, 0);
+		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+
+		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+		D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+
+
 		if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
 		{
 			m_pSkinnedMesh->UpdateAndRender(m_isDeath);
@@ -101,3 +157,4 @@ FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 	defender->m_Status->SetHP(-attacker->m_Status->m_Damage);
 	return FIGHT_HIT;
 }
+
