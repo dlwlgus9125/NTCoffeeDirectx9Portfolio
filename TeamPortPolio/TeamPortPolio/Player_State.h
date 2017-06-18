@@ -1,5 +1,7 @@
 #pragma once
 #include "cPlayer.h"
+#include "cLeader.h"
+#include "cUnit.h"
 
 class Player_Idle : public IState<cPlayer*>
 {

@@ -230,6 +230,15 @@
     <Filter Include="02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState">
       <UniqueIdentifier>{9d6ee9e9-f8c4-493f-b788-f709e167b5d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. cScene\04. cBattleScene">
+      <UniqueIdentifier>{410d8aeb-ecbe-44c2-97de-dfb0a31ab793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\04. cBattleScene\Human">
+      <UniqueIdentifier>{a85cfc15-3112-46a4-829b-5b2110fbdbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\04. cBattleScene\Orc">
+      <UniqueIdentifier>{c6747f9d-858d-4097-b5f1-72b2c8c63d06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -470,6 +479,12 @@
     </ClInclude>
     <ClInclude Include="Cavalry_State.h">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClInclude>
+    <ClInclude Include="cBattleScene_Orc.h">
+      <Filter>03. cScene\04. cBattleScene\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="cBattleScene_Human.h">
+      <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -770,6 +785,12 @@
     </ClCompile>
     <ClCompile Include="Cavalry_Walkcpp.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="cBattleScene_Orc.cpp">
+      <Filter>03. cScene\04. cBattleScene\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="cBattleScene_Human.cpp">
+      <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

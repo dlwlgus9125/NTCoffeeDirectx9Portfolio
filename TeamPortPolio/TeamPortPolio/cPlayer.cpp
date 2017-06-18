@@ -137,3 +137,21 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 		}
 	}
 }
+
+void cPlayer::SellItem(int itemSID)
+{
+	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
+	{
+		if (*it == itemSID) it = m_vecInventory.erase(it);
+		else it++;
+	}
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::ByuItem(int itemSID)
+{
+	m_vecInventory.push_back(itemSID);
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
