@@ -52,7 +52,7 @@ void cUIManager::Setup_TownScene()
 	// >> 인벤토리 셋팅
 	cUITab* pTab_Inven = new cUITab();
 	pTab_Inven->Setup(D3DXVECTOR3(WND_WIDTH - 300, 0, 0), UI_TAB);
-	pTab_Inven->Setup_Tap("image/ui/townscene/tab_shop/idle.png", "image/ui/townscene/tab_shop/selected.png", "image/ui/townscene/tab_shop/body.png", D3DXVECTOR3(0, 0, 0));
+	pTab_Inven->Setup_Tap("image/ui/townscene/tab_shop_atk/idle.png", "image/ui/townscene/tab_shop_atk/selected.png", "image/ui/townscene/tab_shop_atk/body.png", D3DXVECTOR3(0, 0, 0));
 	pTab_Inven->AddTitle("인벤토리", D3DXVECTOR3(0, 600, 0));
 	/// 인벤토리 슬롯
 	pTab_Inven->Setup_Slot(D3DXVECTOR3(20, 20, 0), 1, 7, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
@@ -61,37 +61,74 @@ void cUIManager::Setup_TownScene()
 	for (int i = 0; i < vecInven.size(); i++)
 	{
 		ST_ITEM* item = ITEMDB->GetItem(vecInven[i]);
-		pTab_Inven->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info);
+		pTab_Inven->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
 	}
 	pTab_Inven->SetDef();
 	/// 인벤토리 종료버튼
 	pTab_Inven->Setup_exitbtn(D3DXVECTOR3(270, 0, 0),
-		"image/ui/townscene/tab_shop/btn_idle.png", "image/ui/townscene/tab_shop/btn_mouseover.png", "image/ui/townscene/tab_shop/btn_select .png");
+		"image/ui/townscene/tab_shop_atk/btn_idle.png", "image/ui/townscene/tab_shop_atk/btn_mouseover.png", "image/ui/townscene/tab_shop_atk/btn_select .png");
 	pTab_Inven->SetEventID(TOWN_TAB_INVENTORY);
 	m_vecTab.push_back(pTab_Inven);
 	// << 
 
-	// >> 상점 1 탭 테스트용
+	// >> 상점 1 탭 무기상인
 	cUITab* pTab_Weapon = new cUITab();
 	pTab_Weapon->Setup(D3DXVECTOR3(0, 0, 0), UI_TAB);
-	pTab_Weapon->Setup_Tap("image/ui/townscene/tab_shop/idle.png", "image/ui/townscene/tab_shop/selected.png", "image/ui/townscene/tab_shop/body.png", D3DXVECTOR3(0, 0, 0));
-	pTab_Weapon->AddTitle("검", D3DXVECTOR3(0, 600, 0));
-	pTab_Weapon->AddTitle("도끼", D3DXVECTOR3(170, 600, 0));
+	pTab_Weapon->Setup_Tap("image/ui/townscene/tab_shop_atk/idle.png", "image/ui/townscene/tab_shop_atk/selected.png", "image/ui/townscene/tab_shop_atk/body.png", D3DXVECTOR3(0, 0, 0));
+	pTab_Weapon->AddTitle("검", D3DXVECTOR3(25, 475, 0));
+	pTab_Weapon->AddTitle("도끼", D3DXVECTOR3(150, 475, 0));
+	pTab_Weapon->AddTitle("활", D3DXVECTOR3(275, 475, 0));
 	/// 상점 1 슬롯 테스트용
-	pTab_Weapon->Setup_Slot(D3DXVECTOR3(20, 20, 0), 2, 10, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
+	pTab_Weapon->Setup_Slot(D3DXVECTOR3(22, 90, 0), 2, 14, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 55),
 		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
-	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_SHORTSWORD)->eSmallID, ITEMDB->GetItem(I_S_SHORTSWORD)->name, ITEMDB->GetItem(I_S_SHORTSWORD)->szImagePath, ITEMDB->GetItem(I_S_SHORTSWORD)->info);
-	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_LONGSWORD )->eSmallID, ITEMDB->GetItem(I_S_LONGSWORD)->name,ITEMDB->GetItem(I_S_LONGSWORD)->szImagePath, ITEMDB->GetItem(I_S_LONGSWORD)->info);
-	pTab_Weapon->AddSlotData(I_M_SWORD, ITEMDB->GetItem(I_S_BASTARDSWORD)->eSmallID, ITEMDB->GetItem(I_S_BASTARDSWORD)->name, ITEMDB->GetItem(I_S_BASTARDSWORD)->szImagePath, ITEMDB->GetItem(I_S_BASTARDSWORD)->info);
-	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_SMALLAXE)->eSmallID, ITEMDB->GetItem(I_S_SMALLAXE)->name, ITEMDB->GetItem(I_S_SMALLAXE)->szImagePath, ITEMDB->GetItem(I_S_SMALLAXE)->info);
-	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_WARAXE)->eSmallID, ITEMDB->GetItem(I_S_WARAXE)->name, ITEMDB->GetItem(I_S_WARAXE)->szImagePath, ITEMDB->GetItem(I_S_WARAXE)->info);
-	pTab_Weapon->AddSlotData(I_M_AXE, ITEMDB->GetItem(I_S_TWOHANDAXE)->eSmallID, ITEMDB->GetItem(I_S_TWOHANDAXE)->name, ITEMDB->GetItem(I_S_TWOHANDAXE)->szImagePath, ITEMDB->GetItem(I_S_TWOHANDAXE)->info);
+	for (int i = I_S_SWORD_SHORT_NOR; i <= I_S_SWORD_MITHRIL_GLZ; i++)
+	{
+		ST_ITEM* newItem = ITEMDB->GetItem(i);
+		pTab_Weapon->AddSlotData(I_M_SWORD, newItem->eSmallID, newItem->name, newItem->szImagePath, newItem->info, newItem->cost);
+	}
+	for (int i = I_S_AXE_STONE; i <= I_S_AXE_HONORABLE; i++)
+	{
+		ST_ITEM* newItem = ITEMDB->GetItem(i);
+		pTab_Weapon->AddSlotData(I_M_AXE, newItem->eSmallID, newItem->name, newItem->szImagePath, newItem->info, newItem->cost);
+	}
+	for (int i = I_S_BOW_WOODEN_NOR; i <= I_S_BOW_ELF_GLZ; i++)
+	{
+		ST_ITEM* newItem = ITEMDB->GetItem(i);
+		pTab_Weapon->AddSlotData(I_M_BOW, newItem->eSmallID, newItem->name, newItem->szImagePath, newItem->info, newItem->cost);
+	}
 	pTab_Weapon->SetDef();
 	/// 상점 1 종료버튼
-	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(370, 0, 0), 
-		"image/ui/townscene/tab_shop/btn_idle.png", "image/ui/townscene/tab_shop/btn_mouseover.png", "image/ui/townscene/tab_shop/btn_select .png");
+	pTab_Weapon->Setup_exitbtn(D3DXVECTOR3(382, 17, 0), 
+		"image/ui/townscene/tab_shop_atk/btn_idle.png", "image/ui/townscene/tab_shop_atk/btn_mouseover.png", "image/ui/townscene/tab_shop_atk/btn_select.png");
 	pTab_Weapon->SetEventID(TOWN_TAB_SHOP_ATT);
 	m_vecTab.push_back(pTab_Weapon);
+	// <<
+
+	// >> 상점 2 탭 방어구 상인
+	cUITab* pTab_Armor = new cUITab();
+	pTab_Armor->Setup(D3DXVECTOR3(0, 0, 0), UI_TAB);
+	pTab_Armor->Setup_Tap("image/ui/townscene/tab_shop_def/idle.png", "image/ui/townscene/tab_shop_def/selected.png", "image/ui/townscene/tab_shop_def/body.png", D3DXVECTOR3(0, 0, 0));
+	pTab_Armor->AddTitle("갑옷", D3DXVECTOR3(25, 475, 0));
+	pTab_Armor->AddTitle("방패", D3DXVECTOR3(150, 475, 0));
+	/// 상점 2 슬롯 테스트용
+	pTab_Armor->Setup_Slot(D3DXVECTOR3(22, 90, 0), 2, 14, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 55),
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
+	for (int i = I_S_ARMOR_OLD; i <= I_S_ARMOR_GENERAL_GLZ; i++)
+	{
+		ST_ITEM* newItem = ITEMDB->GetItem(i);
+		pTab_Armor->AddSlotData(I_M_ARMOR, newItem->eSmallID, newItem->name, newItem->szImagePath, newItem->info, newItem->cost), newItem->cost;
+	}
+	for (int i = I_S_SHIELD_WOODEN_NOR; i <= I_S_SHIELD_HONORABLE; i++)
+	{
+		ST_ITEM* newItem = ITEMDB->GetItem(i);
+		pTab_Armor->AddSlotData(I_M_SHIELD, newItem->eSmallID, newItem->name, newItem->szImagePath, newItem->info, newItem->cost);
+	}
+	pTab_Armor->SetDef();
+	/// 상점 2 종료버튼
+	pTab_Armor->Setup_exitbtn(D3DXVECTOR3(382, 17, 0),
+		"image/ui/townscene/tab_shop_def/btn_idle.png", "image/ui/townscene/tab_shop_def/btn_mouseover.png", "image/ui/townscene/tab_shop_def/btn_select.png");
+	pTab_Armor->SetEventID(TOWN_TAB_SHOP_DEF);
+	m_vecTab.push_back(pTab_Armor);
 	// <<
 
 	// 미니맵
@@ -99,6 +136,7 @@ void cUIManager::Setup_TownScene()
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
 	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
 	m_pMiniMap->SetAlpha(150);
+	m_pMiniMap->SetEventID(TOWN_MINIMAP);
 
 	// 미니맵 오크전장 버튼
 	cUIButton* pBtn_Battle_Human = new cUIButton;
@@ -418,6 +456,15 @@ void cUIManager::SetEvent(int uiID, int order)
 		m_vecTab[1]->SetHidden(order);
 		m_vecTab[1]->SetDef();
 		break;
+	case TOWN_TAB_SHOP_DEF:
+		m_vecTab[0]->SetHidden(order);
+		m_vecTab[0]->SetDef();
+		m_vecTab[2]->SetHidden(order);
+		m_vecTab[2]->SetDef();
+		break;
+	case TOWN_MINIMAP:
+		if (m_pMiniMap) m_pMiniMap->SetHiddenAll(order);
+		break;
 	case SELECT_MSGBOX_ORC:
 		m_vecMsg[0]->SetHidden(order);
 		break;
@@ -462,7 +509,7 @@ void cUIManager::Setup_Inventory()
 	for (int i = 0; i < vecInven.size(); i++)
 	{
 		ST_ITEM* item = ITEMDB->GetItem(vecInven[i]);
-		m_vecTab[0]->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info);
+		m_vecTab[0]->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
 	}
 	m_vecTab[0]->SetDef();
 }
