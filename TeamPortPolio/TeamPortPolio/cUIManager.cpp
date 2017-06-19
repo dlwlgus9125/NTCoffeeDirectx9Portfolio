@@ -53,9 +53,9 @@ void cUIManager::Setup_TownScene()
 	cUITab* pTab_Inven = new cUITab();
 	pTab_Inven->Setup(D3DXVECTOR3(WND_WIDTH - 300, 0, 0), UI_TAB);
 	pTab_Inven->Setup_Tap("image/ui/townscene/tab_shop_inventory/idle.png", "image/ui/townscene/tab_shop_inventory/selected.png", "image/ui/townscene/tab_shop_inventory/body.png", D3DXVECTOR3(0, 0, 0));
-	pTab_Inven->AddTitle("인벤토리", D3DXVECTOR3(0, 600, 0));
+	pTab_Inven->AddTitle("인벤토리", D3DXVECTOR3(25, 475, 0));
 	/// 인벤토리 슬롯
-	pTab_Inven->Setup_Slot(D3DXVECTOR3(20, 20, 0), 1, 7, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 70),
+	pTab_Inven->Setup_Slot(D3DXVECTOR3(22, 90, 0), 1, 7, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 55),
 		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
 	vector<int> vecInven = OBJECT->GetInventory();
 	for (int i = 0; i < vecInven.size(); i++)
@@ -65,8 +65,8 @@ void cUIManager::Setup_TownScene()
 	}
 	pTab_Inven->SetDef();
 	/// 인벤토리 종료버튼
-	pTab_Inven->Setup_exitbtn(D3DXVECTOR3(270, 0, 0),
-		"image/ui/townscene/tab_shop_inventory/btn_idle.png", "image/ui/townscene/tab_shop_inventory/btn_mouseover.png", "image/ui/townscene/tab_shop_inventory/btn_select .png");
+	pTab_Inven->Setup_exitbtn(D3DXVECTOR3(244, 17, 0),
+		"image/ui/townscene/tab_shop_inventory/btn_idle.png", "image/ui/townscene/tab_shop_inventory/btn_mouseover.png", "image/ui/townscene/tab_shop_inventory/btn_select.png");
 	pTab_Inven->SetEventID(TOWN_TAB_INVENTORY);
 	m_vecTab.push_back(pTab_Inven);
 	// << 
