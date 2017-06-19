@@ -154,12 +154,13 @@ void cUIManager::Setup_LoginScene()
 
 void cUIManager::Setup_SelectScene()
 {
+	// 각 종족 아이콘 선택시 선택 후 이미지가 셀렉트상태이미지만 출력해줘야함.
 	// 오크
 	cUIButton* pBtn_Orc = new cUIButton;
 	pBtn_Orc->Setup(D3DXVECTOR3(650, 545, 0), UI_BUTTON);
 	pBtn_Orc->Setup_Button("Image/UI/SelectScene/Icon/Horde.png",
-		"Image/UI/SelectScene/Icon/Horde.png",
-		"Image/UI/SelectScene/Icon/Horde.png", SELECT_BTN_ORC);
+		"Image/UI/SelectScene/Icon/Horde_Over.png",
+		"Image/UI/SelectScene/Icon/Horde_Select.png", SELECT_BTN_ORC);
 	m_vecShownBtn.push_back(pBtn_Orc);
 	m_vecEventBtn.push_back(pBtn_Orc);
 	pBtn_Orc->SetHidden(false);
@@ -168,8 +169,8 @@ void cUIManager::Setup_SelectScene()
 	cUIButton* pBtn_Human = new cUIButton;
 	pBtn_Human->Setup(D3DXVECTOR3(500, 550, 0), UI_BUTTON);
 	pBtn_Human->Setup_Button("Image/UI/SelectScene/Icon/Alliance.png",
-		"Image/UI/SelectScene/Icon/Alliance.png",
-		"Image/UI/SelectScene/Icon/Alliance.png", SELECT_BTN_HUMAN);
+		"Image/UI/SelectScene/Icon/Alliance_Over.png",
+		"Image/UI/SelectScene/Icon/Alliance_Select.png", SELECT_BTN_HUMAN);
 	m_vecShownBtn.push_back(pBtn_Human);
 	m_vecEventBtn.push_back(pBtn_Human);
 	pBtn_Human->SetHidden(false);
@@ -177,9 +178,9 @@ void cUIManager::Setup_SelectScene()
 	// 게임 시작
 	cUIButton* pBtn_Start = new cUIButton;
 	pBtn_Start->Setup(D3DXVECTOR3(950, 630, 0), UI_BUTTON);
-	pBtn_Start->Setup_Button("Image/UI/SelectScene/Button/BT_SMALL_STAND.png",
-		"Image/UI/SelectScene/Button/BT_SMALL_MOUSE_OVER.png",
-		"Image/UI/SelectScene/Button/BT_SMALL_SELECT.png", SELECT_BTN_CREATE);
+	pBtn_Start->Setup_Button("Image/UI/SelectScene/Button/Character_BT/BT_STAND.png",
+		"Image/UI/SelectScene/Button/Character_BT/BT_MOUSE_OVER.png",
+		"Image/UI/SelectScene/Button/Character_BT/BT_SELECT.png", SELECT_BTN_CREATE);
 	m_vecShownBtn.push_back(pBtn_Start);
 	m_vecEventBtn.push_back(pBtn_Start);
 	pBtn_Start->SetHidden(false);
@@ -187,26 +188,26 @@ void cUIManager::Setup_SelectScene()
 	// 돌아가기
 	cUIButton* pBtn_Back = new cUIButton;
 	pBtn_Back->Setup(D3DXVECTOR3(1100, 630, 0), UI_BUTTON);
-	pBtn_Back->Setup_Button("Image/UI/SelectScene/Button/BT_SMALL_STAND.png",
-		"Image/UI/SelectScene/Button/BT_SMALL_MOUSE_OVER.png",
-		"Image/UI/SelectScene/Button/BT_SMALL_SELECT.png", SELECT_BTN_BACK);
+	pBtn_Back->Setup_Button("Image/UI/SelectScene/Button/SCENE_BACK/BT_STAND.png",
+		"Image/UI/SelectScene/Button/SCENE_BACK/BT_MOUSE_OVER.png",
+		"Image/UI/SelectScene/Button/SCENE_BACK/BT_SELECT.png", SELECT_BTN_BACK);
 	m_vecShownBtn.push_back(pBtn_Back);
 	m_vecEventBtn.push_back(pBtn_Back);
 	pBtn_Back->SetHidden(false);
 
 	// 오크 설명 창
-	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
-	pMsgBox_Orc->Setup(D3DXVECTOR3(900, 50, 0), UI_MSGBOX);
-	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
-	pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
-	m_vecMsg.push_back(pMsgBox_Orc);
-
-	// 휴먼 설명 창
 	cUIMsgBox* pMsgBox_Human = new cUIMsgBox;
 	pMsgBox_Human->Setup(D3DXVECTOR3(900, 50, 0), UI_MSGBOX);
-	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
+	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
 	pMsgBox_Human->Setup_Text("인간이다\n얼굴이 잘생겼는지는\n근데 힘이 세냐 이놈도?");
 	m_vecMsg.push_back(pMsgBox_Human);
+
+	// 휴먼 설명 창
+	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
+	pMsgBox_Orc->Setup(D3DXVECTOR3(900, 50, 0), UI_MSGBOX);
+	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
+	pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
+	m_vecMsg.push_back(pMsgBox_Orc);
 }
 
 void cUIManager::Setup_BattleScene_Orc()

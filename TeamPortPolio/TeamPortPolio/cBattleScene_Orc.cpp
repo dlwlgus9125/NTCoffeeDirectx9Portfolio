@@ -27,15 +27,15 @@ void cBattleScene_Orc::OnEnter()
 	Setup_DirLight();
 
 
-	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pPlayer->SetID(C_C_HUMAN_MALE);
-	pPlayer->Init();
-	OBJECT->AddCharacter(pPlayer);
+	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	//pPlayer->SetID(C_C_HUMAN_MALE);
+	//pPlayer->Init();
+	//OBJECT->AddCharacter(pPlayer);
 
 
 
-	OBJECT->AddObject(pPlayer);
-	OBJECT->SetPlayer(pPlayer);
+	//OBJECT->AddObject(pPlayer);
+	//OBJECT->SetPlayer(pPlayer);
 
 
 	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
@@ -47,8 +47,8 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->AddLeader(pLeader);
 
 
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
+	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
+	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 }
 
 void cBattleScene_Orc::OnUpdate()
