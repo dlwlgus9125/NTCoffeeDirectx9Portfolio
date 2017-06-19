@@ -286,13 +286,15 @@ struct ST_SLOTDATA
 	string imagePath;
 	string info;
 	string name;
+	int cost;
 
-	ST_SLOTDATA(int itemID, string name, string imagePath, string info)
+	ST_SLOTDATA(int itemID, string name, string imagePath, string info, int cost)
 	{
 		this->itemID = itemID;
 		this->name = name;
 		this->imagePath = imagePath;
 		this->info = info;
+		this->cost = cost;
 	}
 };
 
@@ -387,7 +389,7 @@ enum EVENTID
 
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
-	TOWN_TAB_SHOP_ATT = 200, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
+	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
 
 	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 };

@@ -22,8 +22,8 @@ LPD3DXFONT cFontManager::GetFont(FONT_TAG e)
 
 	if (e == FONT_SHOP)
 	{
-		fd.Height = 10;									// height¿Í width¸¦ ¹Ù²Ù¸é ±Û¾¾ Å©±â°¡ ¹Ù²ñ
-		fd.Width = 5;
+		fd.Height = 12;									// height¿Í width¸¦ ¹Ù²Ù¸é ±Û¾¾ Å©±â°¡ ¹Ù²ñ
+		fd.Width = 6;
 		fd.Weight = FW_NORMAL;
 		fd.Italic = false;
 		fd.CharSet = DEFAULT_CHARSET;
