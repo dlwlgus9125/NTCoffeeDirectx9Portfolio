@@ -28,7 +28,6 @@ void BallisticMotion::Update_with_targetpos()
 
 	Entity()->SetForward(vToTarget);
 	Entity()->AddPos(Entity()->Forward());
-
 }
 
 void BallisticMotion::Update_with_dir()

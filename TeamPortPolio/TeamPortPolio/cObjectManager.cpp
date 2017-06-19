@@ -177,7 +177,7 @@ void cObjectManager::SellItem(int itemSID)
 	m_player->SellItem(itemSID);
 }
 
-void cObjectManager::ByuItem(int itemSID)
+void cObjectManager::BuyItem(int itemSID)
 {
 	m_player->ByuItem(itemSID);
 }

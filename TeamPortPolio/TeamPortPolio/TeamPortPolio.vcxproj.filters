@@ -486,9 +486,6 @@
     <ClInclude Include="cBattleScene_Human.h">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClInclude>
-    <ClInclude Include="cArrowMaker.h">
-      <Filter>02. cCharacter\04.cArrow</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -797,9 +794,6 @@
     </ClCompile>
     <ClCompile Include="Cavalry_Battle.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
-    </ClCompile>
-    <ClCompile Include="cArrowMaker.cpp">
-      <Filter>02. cCharacter\04.cArrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

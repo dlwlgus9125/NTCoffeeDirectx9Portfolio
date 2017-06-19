@@ -50,8 +50,12 @@ public:
 
 	cPlayer* GetPlayer() { return m_player; }
 
-	void DeleteArrows();
 
+	vector<int>GetInventory();
+
+	void SellItem(int itemSID);
+
+	void BuyItem(int itemSID);
 
 	list<cBallisticArrow*> GetPlayerArrows();
 	list<cBallisticArrow*> GetUnitArrows();

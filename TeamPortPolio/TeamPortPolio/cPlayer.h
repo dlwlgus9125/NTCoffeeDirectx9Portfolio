@@ -52,10 +52,11 @@ public:
 
 	// >> 인벤토리용 함수
 	void SellItem(int itemSID);
-	void ByuItem(int itemSID);
+	void BuyItem(int itemSID);
 	// <<
 
-	D3DXVECTOR3 SetUpAim() {
+	D3DXVECTOR3 SetUpAim()
+	{
 		D3DXVECTOR3 vAim = CAMERA->GetLookAt() - CAMERA->GetEye();
 		vAim.y += 1;
 		return	MATH->Nomalize(vAim);
