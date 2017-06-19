@@ -150,6 +150,28 @@ extern LPD3DXSPRITE g_Sprite;
 
 #define MAX_LOADSTRING 100
 
+
+#define SYNTHESIZE(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType Get##funName(void) const { return varName; }\
+public: inline void Set##funName(varType var){ varName = var; }
+
+#define SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType& Get##funName(void) { return varName; }\
+public: inline void Set##funName(varType& var){ varName = var; }
+
+#define SYNTHESIZE_ADD_REF(varType, varName, funName)    \
+protected: varType varName; \
+public: virtual varType Get##funName(void) const { return varName; } \
+public: virtual void Set##funName(varType var){\
+	if (varName != var) {\
+	SAFE_ADD_REF(var);\
+	SAFE_RELEASE(varName);\
+	varName = var;\
+	}\
+}
+
 struct ST_PN_VERTEX
 {
 	D3DXVECTOR3 p;
@@ -420,27 +442,6 @@ enum CAMP_STATE
 	CAMP_ENEMY1,
 	CAMP_NONE,
 };
-
-#define SYNTHESIZE(varType, varName, funName)\
-protected: varType varName;\
-public: inline varType Get##funName(void) const { return varName; }\
-public: inline void Set##funName(varType var){ varName = var; }
-
-#define SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
-protected: varType varName;\
-public: inline varType& Get##funName(void) { return varName; }\
-public: inline void Set##funName(varType& var){ varName = var; }
-
-#define SYNTHESIZE_ADD_REF(varType, varName, funName)    \
-protected: varType varName; \
-public: virtual varType Get##funName(void) const { return varName; } \
-public: virtual void Set##funName(varType var){\
-	if (varName != var) {\
-	SAFE_ADD_REF(var);\
-	SAFE_RELEASE(varName);\
-	varName = var;\
-	}\
-}
 
 struct ST_WEATHER
 {
