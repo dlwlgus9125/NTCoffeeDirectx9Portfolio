@@ -5,6 +5,8 @@
 
 cObjLoader::cObjLoader()
 {
+	m_stWeather = ST_WEATHER();
+	m_stShadow = ST_SHADOW();
 }
 
 cObjLoader::~cObjLoader()
@@ -420,6 +422,52 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 				sscanf_s(szTemp, "%*s %d", &cellPerRow);
 			}
 		}
+		else if (szTemp[0] == 'w')
+		{
+			if (szTemp[1] == 's')
+			{
+				bool isOn;
+				int count;
+				float move;
+				float speed;
+				sscanf_s(szTemp, "%*s %d %d %f %f", &isOn, &count, &move, &speed);
+				m_stWeather.SetSnowOn(isOn);
+				m_stWeather.SetCount_Snow(count);
+				m_stWeather.SetMove_Snow(move);
+				m_stWeather.SetSpeed_Snow(speed);
+			}
+			if (szTemp[1] == 'r')
+			{
+				bool isOn;
+				int count;
+				float move;
+				float speed;
+				sscanf_s(szTemp, "%*s %d %d %f %f", &isOn, &count, &move, &speed);
+				m_stWeather.SetRainOn(isOn);
+				m_stWeather.SetCount_Rain(count);
+				m_stWeather.SetMove_Rain(move);
+				m_stWeather.SetSpeed_Rain(speed);
+			}
+			if (szTemp[1] == 'f')
+			{
+				bool isOn;
+				int index;
+				sscanf_s(szTemp, "%*s %d %d", &isOn, &index);
+				m_stWeather.SetFogOn(isOn);
+				m_stWeather.SetFogPassIndex(index);
+			}
+		}
+		else if (szTemp[0] == 'e')
+		{
+			if (szTemp[1] == 's')
+			{
+				bool isOn;
+				float diffuseAlpha;
+				sscanf_s(szTemp, "%*s %d %f", &isOn, &diffuseAlpha);
+				m_stShadow.SetShadowOn(isOn);
+				m_stShadow.SetShadowDiffuseAlpha(diffuseAlpha);
+			}
+		}
 		else if (szTemp[0] == 'o')
 		{
 			int nSID = -1;
@@ -498,3 +546,12 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 	return pMesh;
 }
 
+ST_WEATHER& cObjLoader::GetWeatherInfo()
+{
+	return m_stWeather;
+}
+
+ST_SHADOW& cObjLoader::GetShadowInfo()
+{
+	return m_stShadow;
+}

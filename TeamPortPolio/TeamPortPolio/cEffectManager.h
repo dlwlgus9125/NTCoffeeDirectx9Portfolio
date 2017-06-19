@@ -16,6 +16,7 @@ class cEffectManager : public Singleton<cEffectManager>
 
 public:
 	void Init(bool isFogOn, int fogPassIndex, bool isSnowOn, bool isRainOn);
+	void Setup_Snow()
 	void Update();
 	void Render();
 	void Render_Fog_Begin();

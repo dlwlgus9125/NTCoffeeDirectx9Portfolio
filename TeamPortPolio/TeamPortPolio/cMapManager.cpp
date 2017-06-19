@@ -62,6 +62,10 @@ void cMapManager::Init(int sceneID)
 	vector<ST_PNT_VERTEX> vecVertex;
 	vector<DWORD> vecIndex;
 	LPD3DXMESH pMesh = loader.LoadMesh_Map(vecMtlTex, vecVertex, vecIndex, nCellPerRow, fCellSpace, m_vecConstruct, folderPath, filePath, false);
+	m_stWeather = ST_WEATHER();
+	m_stWeather = loader.GetWeatherInfo();
+	m_stShadow = ST_SHADOW();
+	m_stShadow = loader.GetShadowInfo();
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
