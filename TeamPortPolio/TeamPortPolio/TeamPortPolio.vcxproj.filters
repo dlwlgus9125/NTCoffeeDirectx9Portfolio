@@ -242,6 +242,15 @@
     <Filter Include="03. cScene\05. cLoadingScene">
       <UniqueIdentifier>{76575df6-c18c-4fbd-8a42-bf45dd70131f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. UI\08. cUIProgressBar">
+      <UniqueIdentifier>{3dd28048-469c-4a24-b313-0e505f38890a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Orc">
+      <UniqueIdentifier>{529f369e-c9f8-459c-917d-e99eef3b980c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Human">
+      <UniqueIdentifier>{0662adf5-8ea6-4dc9-82a3-df5f98f5a4fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -494,6 +503,15 @@
     </ClInclude>
     <ClInclude Include="cLoadingScene.h">
       <Filter>03. cScene\05. cLoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIProgressBar.h">
+      <Filter>07. UI\08. cUIProgressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="cTownScene_Orc.h">
+      <Filter>03. cScene\03. cTownScene\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="cTownScene_Human.h">
+      <Filter>03. cScene\03. cTownScene\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -809,6 +827,15 @@
     </ClCompile>
     <ClCompile Include="cLoadingScene.cpp">
       <Filter>03. cScene\05. cLoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIProgressBar.cpp">
+      <Filter>07. UI\08. cUIProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="cTownScene_Orc.cpp">
+      <Filter>03. cScene\03. cTownScene\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="cTownScene_Human.cpp">
+      <Filter>03. cScene\03. cTownScene\Human</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

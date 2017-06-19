@@ -24,20 +24,24 @@ void cLoadingScene::OnEnter()
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
-	UI->Change(SCENE_LOGIN);
+	UI->Change(SCENE_LOADING);
 }
+
 void cLoadingScene::OnUpdate()
 {
-
+	m_pImage->Update(TIME->DeltaTime());
 }
+
 void cLoadingScene::OnExit()
 {
-
+	m_pImage->Destroy();
 }
+
 void cLoadingScene::OnRender()
 {
-
+	m_pImage->Render(m_pSprite);
 }
+
 void cLoadingScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
