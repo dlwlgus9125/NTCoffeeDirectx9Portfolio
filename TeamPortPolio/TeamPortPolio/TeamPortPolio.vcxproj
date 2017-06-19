@@ -175,6 +175,7 @@
     <ClInclude Include="cHeightMap.h" />
     <ClInclude Include="cIMap.h" />
     <ClInclude Include="cInputManager.h" />
+    <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cLoginScene.h" />
     <ClInclude Include="cMapManager.h" />
     <ClInclude Include="cMeleeUnit.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="cGroup.cpp" />
     <ClCompile Include="cHeightMap.cpp" />
     <ClCompile Include="cIMap.cpp" />
+    <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cLoginScene.cpp" />
     <ClCompile Include="cMapManager.cpp" />
     <ClCompile Include="cMeleeUnit.cpp" />
