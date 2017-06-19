@@ -8,16 +8,16 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 {
 	m_CharacterEntity = new ISteeringEntity(pos, radius, forward, mass, maxSpeed);
-	m_unitLeader = NULL;
-	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
-
-	m_unitLeader->SetID(C_C_HUMAN_CAVALRY);
-
-	m_unitLeader->SetCamp(CAMP_PLAYER);
-	m_unitLeader->Init();
-	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
-	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);
+	//m_unitLeader = NULL;
+	//m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
+	//
+	//m_unitLeader->SetID(C_C_HUMAN_CAVALRY);
+	//
+	//m_unitLeader->SetCamp(CAMP_PLAYER);
+	//m_unitLeader->Init();
+	//m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
+	//OBJECT->AddObject(m_unitLeader);
+	//OBJECT->AddLeader(m_unitLeader);
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 }
@@ -32,7 +32,6 @@ void cPlayer::Init()
 {
 	m_CollideSphere.fRadius = m_CharacterEntity->Radius();
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
-	m_CollideSphere.vCenter.y += 0.5f;
 
 	m_arrangeCollideSphere.fRadius = 20.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
@@ -52,7 +51,7 @@ void cPlayer::Init()
 void cPlayer::Update(float deltaTime)
 {
 	cCharacter::Update(deltaTime);
-
+	m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 	m_pFsm->Update(deltaTime);
 
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
@@ -147,7 +146,11 @@ void cPlayer::SellItem(int itemSID)
 {
 	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
 	{
-		if (*it == itemSID) it = m_vecInventory.erase(it);
+		if (*it == itemSID)
+		{
+			it = m_vecInventory.erase(it);
+			break;
+		}
 		else it++;
 	}
 

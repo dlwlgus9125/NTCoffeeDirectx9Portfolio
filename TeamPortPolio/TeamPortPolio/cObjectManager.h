@@ -63,5 +63,9 @@ public:
 	void AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget);
 	void ArrowUpdate();
 	void ClearArrow();
+
+	vector<int> cObjectManager::GetInventory();
+	void cObjectManager::SellItem(int itemSID);
+	void cObjectManager::BuyItem(int itemSID);
 };
 

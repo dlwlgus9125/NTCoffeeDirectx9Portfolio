@@ -69,9 +69,25 @@ void cTownScene::OnUpdate()
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
-	if (eventIDTap > -1)
+	switch (buttonIndex)
 	{
-		int check = itemID;
+	case TOWN_BTN_BATTLE_ORC:
+		SCENE->ChangeScene(SCENE_BATTLE_ORC);
+		break;
+	case TOWN_BTN_BATTLE_HUMAN:
+		SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		break;
+	}
+	switch (eventIDTap)
+	{
+	case TOWN_TAB_INVENTORY:
+		OBJECT->SellItem(itemID);
+		UI->Setup_Inventory();
+		break;
+	case TOWN_TAB_SHOP_ATT:
+		OBJECT->BuyItem(itemID);
+		UI->Setup_Inventory();
+		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -84,6 +100,7 @@ void cTownScene::OnUpdate()
 	if (m_vecST_Sphere[0].isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
+		m_vecST_Sphere[0].isPicked = false;;;
 	}
 	//<< 
 }

@@ -23,6 +23,8 @@ class cUIManager : public Singleton<cUIManager>
 	void Setup_TownScene();
 	void Setup_LoginScene();
 	void Setup_SelectScene();
+	void Setup_BattleScene_Orc();
+	void Setup_BattleScene_Human();
 
 public:
 	void Setup();
