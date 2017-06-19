@@ -389,21 +389,21 @@ void cUIManager::Update(float deltaTime)
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
 {
-	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
-
 	for (int i = 0; i < m_vecTab.size(); i++)
 	{
 		m_vecTab[i]->Render(pSprite);
 	}
 
-	for (int i = 0; i < m_vecShownBtn.size(); i++)
-	{
-		m_vecShownBtn[i]->Render(pSprite);
-	}
-
 	for (int i = 0; i < m_vecMsg.size(); i++)
 	{
 		m_vecMsg[i]->Render(pSprite);
+	}
+
+	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
+
+	for (int i = 0; i < m_vecShownBtn.size(); i++)
+	{
+		m_vecShownBtn[i]->Render(pSprite);
 	}
 }
 
@@ -451,19 +451,34 @@ void cUIManager::SetEvent(int uiID, int order)
 	switch (uiID)
 	{
 	case TOWN_TAB_SHOP_ATT:
-		m_vecTab[0]->SetHidden(order);
+	{
+		bool bOrder = order;
+		m_vecTab[2]->SetHidden(!bOrder);
+		m_vecTab[0]->SetHidden(bOrder);
 		m_vecTab[0]->SetDef();
-		m_vecTab[1]->SetHidden(order);
+		m_vecTab[1]->SetHidden(bOrder);
 		m_vecTab[1]->SetDef();
+	}
 		break;
 	case TOWN_TAB_SHOP_DEF:
-		m_vecTab[0]->SetHidden(order);
+	{
+		bool bOrder = order;
+		m_vecTab[1]->SetHidden(!bOrder);
+		m_vecTab[0]->SetHidden(bOrder);
 		m_vecTab[0]->SetDef();
-		m_vecTab[2]->SetHidden(order);
+		m_vecTab[2]->SetHidden(bOrder);
 		m_vecTab[2]->SetDef();
+	}
 		break;
 	case TOWN_MINIMAP:
-		if (m_pMiniMap) m_pMiniMap->SetHiddenAll(order);
+	{
+		bool bOrder = order;
+		if (m_pMiniMap) m_pMiniMap->SetHiddenAll(bOrder);
+		for (int i = 0; i < m_vecTab.size(); i++)
+		{
+			m_vecTab[i]->SetHidden(!bOrder);
+		}
+	}
 		break;
 	case SELECT_MSGBOX_ORC:
 		m_vecMsg[0]->SetHidden(order);
