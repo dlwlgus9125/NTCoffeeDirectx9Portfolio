@@ -12,7 +12,7 @@ cConstruct::cConstruct()
 {
 }
 
-
+  
 cConstruct::~cConstruct()
 {
 }
