@@ -199,14 +199,14 @@ void cUIManager::Setup_SelectScene()
 	cUIMsgBox* pMsgBox_Human = new cUIMsgBox;
 	pMsgBox_Human->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_human_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
-	pMsgBox_Human->Setup_Text("인간이다\n얼굴이 잘생겼는지는\n근데 힘이 세냐 이놈도?");
+	//pMsgBox_Human->Setup_Text("인간이다\n얼굴이 잘생겼는지는\n근데 힘이 세냐 이놈도?");
 	m_vecMsg.push_back(pMsgBox_Human);
 
 	// 휴먼 설명 창
 	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
 	pMsgBox_Orc->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_orc_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
-	pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
+	//pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
 	m_vecMsg.push_back(pMsgBox_Orc);
 }
 
