@@ -2,10 +2,12 @@
 #include "cSceneManager.h"
 
 class cUIImage;
+class cUIProgressBar;
 
 class cLoadingScene : public cIScene
 {
 	cUIImage*			m_pImage;
+	cUIProgressBar*		m_pProgressBar;
 	LPD3DXSPRITE		m_pSprite;
 
 public:
