@@ -426,7 +426,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 		{
 			if (szTemp[1] == 's')
 			{
-				bool isOn;
+				int isOn;
 				int count;
 				float move;
 				float speed;
@@ -438,7 +438,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 			}
 			if (szTemp[1] == 'r')
 			{
-				bool isOn;
+				int isOn;
 				int count;
 				float move;
 				float speed;
@@ -450,7 +450,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 			}
 			if (szTemp[1] == 'f')
 			{
-				bool isOn;
+				int isOn;
 				int index;
 				sscanf_s(szTemp, "%*s %d %d", &isOn, &index);
 				m_stWeather.SetFogOn(isOn);
@@ -461,7 +461,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 		{
 			if (szTemp[1] == 's')
 			{
-				bool isOn;
+				int isOn;
 				float diffuseAlpha;
 				sscanf_s(szTemp, "%*s %d %f", &isOn, &diffuseAlpha);
 				m_stShadow.SetShadowOn(isOn);
