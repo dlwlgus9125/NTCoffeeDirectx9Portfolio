@@ -103,7 +103,7 @@ using namespace std;
 enum SCENE_TAG
 {
 	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN, SCENE_SELECT,
-	SCENE_BATTLE_HUMAN, SCENE_BATTLE_ORC, 
+	SCENE_TOWN_HUMAN, SCENE_TOWN_ORC, SCENE_BATTLE_HUMAN, SCENE_BATTLE_ORC, 
 };
 
 enum UI_TAG
@@ -286,13 +286,15 @@ struct ST_SLOTDATA
 	string imagePath;
 	string info;
 	string name;
+	int cost;
 
-	ST_SLOTDATA(int itemID, string name, string imagePath, string info)
+	ST_SLOTDATA(int itemID, string name, string imagePath, string info, int cost)
 	{
 		this->itemID = itemID;
 		this->name = name;
 		this->imagePath = imagePath;
 		this->info = info;
+		this->cost = cost;
 	}
 };
 
@@ -386,7 +388,7 @@ enum EVENTID
 
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
-	TOWN_TAB_SHOP_ATT = 200, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
+	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
 
 	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 };
