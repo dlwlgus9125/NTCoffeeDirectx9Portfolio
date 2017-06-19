@@ -100,7 +100,7 @@ void cTownScene::OnUpdate()
 	if (m_vecST_Sphere[0].isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
-		m_vecST_Sphere[0].isPicked = false;
+		m_vecST_Sphere[0].isPicked = false;;;
 	}
 	//<< 
 }
