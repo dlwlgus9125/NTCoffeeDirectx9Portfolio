@@ -160,8 +160,8 @@ void cAstarManager::PathUpdate()
 	if (m_isMapLoadingComplete == true)
 	{		
 		SetLeaderPath();
-	}
 	THREAD->TerminateThreadByKey(HANDlE_ATSTAR_FINDPATH);
+	}
 }
 
 void cAstarManager::Release()
@@ -217,7 +217,6 @@ void cAstarManager::SetLeaderPath()
 			OBJECT->GetLeader()[i]->SetPath(this->GetPath(OBJECT->GetLeader()[i]->GetIndex(), OBJECT->GetLeader()[i]->GetTargetIndex()));
 		}
 	}
-
 }
 
 void cAstarManager::SetLeaderPath(cLeader* pLeader)

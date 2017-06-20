@@ -24,32 +24,6 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 HCURSOR g_Cursor;
 LPD3DXSPRITE g_Sprite;
 HWND			g_hWnd;
-CRITICAL_SECTION cs;
-
-//unsigned __stdcall UpdateThread(LPVOID lpParam)
-//{
-//	while (1)
-//	{
-//		EnterCriticalSection(&cs);
-//		if (OBJECT->GetPlayer() != NULL)ASTAR->Update();
-//		LeaveCriticalSection(&cs);
-//	}
-//	return 0;
-//}
-//
-//unsigned __stdcall TestThread(LPVOID lpParam)
-//{
-//	while (1)
-//	{
-//		EnterCriticalSection(&cs);
-//		if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
-//		LeaveCriticalSection(&cs);
-//		//ASTAR->SuspendAstarThread(1);
-//	}
-//	return 0;
-//}
-
-
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

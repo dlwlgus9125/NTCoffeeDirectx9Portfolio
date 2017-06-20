@@ -52,9 +52,9 @@ void cThreadManager::TerminateThreadByKey(int key)
 {
 	if (TerminateThread(m_mapHandle[key].m_handle, 0))
 	{
-		cout << "cout" << endl;
 		CloseHandle(m_mapHandle[key].m_handle);
 	}
+	
 }
 
 bool cThreadManager::IsReCreateFindPathThread(int key)
