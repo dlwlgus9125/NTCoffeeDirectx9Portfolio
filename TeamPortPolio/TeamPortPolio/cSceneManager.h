@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 class cIScene
 {
 private:
@@ -39,5 +37,6 @@ public:
 	void     WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	int      Current();
 	cIScene* GetScene(int tag);
+	int		GetCurrentSceneTag() { return m_current; }
 };
 
