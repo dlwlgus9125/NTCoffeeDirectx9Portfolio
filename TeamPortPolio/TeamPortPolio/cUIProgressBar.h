@@ -12,6 +12,7 @@ class cUIProgressBar : public cUIObject
 	D3DXVECTOR3			m_vPos_FillLine;
 
 	float				m_fScaleX;
+	SYNTHESIZE(bool, m_isFinished, IsFinished);
 
 public:
 	cUIProgressBar();

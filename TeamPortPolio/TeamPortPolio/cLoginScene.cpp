@@ -4,7 +4,7 @@
 
 
 cLoginScene::cLoginScene()
-	:	m_pImage(NULL), m_pSprite(NULL), m_isClosed(false)
+	: m_pImage_Bg(NULL), m_pSprite(NULL), m_isClosed(false)
 {
 	SOUND->LoadFile("LoginBGM", "Sound/BGM/LoginScene/01. A Siege of Worlds.mp3", true);
 }
@@ -12,17 +12,17 @@ cLoginScene::cLoginScene()
 
 cLoginScene::~cLoginScene()
 {
-	SAFE_DELETE(m_pImage);
+	SAFE_DELETE(m_pImage_Bg);
 	SAFE_DELETE(m_pSprite);
 }
 
 void cLoginScene::OnEnter()
 {
-	m_pImage = new cUIImage();
-	m_pImage->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage->Setup_Image("Image/UI/LoginScene/Bg/Login1.png");
-	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
-	m_pImage->SetHidden(false);
+	m_pImage_Bg = new cUIImage();
+	m_pImage_Bg->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
+	m_pImage_Bg->Setup_Image("Image/UI/LoginScene/Bg/Login1.png");
+	m_pImage_Bg->SetSize(ST_SIZEN(m_pImage_Bg->GetSize().nWidth, m_pImage_Bg->GetSize().nHeight + 30));
+	m_pImage_Bg->SetHidden(false);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
@@ -33,7 +33,7 @@ void cLoginScene::OnEnter()
 
 void cLoginScene::OnUpdate()
 {
-	m_pImage->Update(TIME->DeltaTime());
+	m_pImage_Bg->Update(TIME->DeltaTime());
 
 	UI->Update(TIME->DeltaTime());
 
@@ -61,14 +61,14 @@ void cLoginScene::OnUpdate()
 
 void cLoginScene::OnExit()
 {
-	m_pImage->Destroy();
+	m_pImage_Bg->Destroy();
 
 	UI->Release();
 }
 
 void cLoginScene::OnRender()
 {
-	m_pImage->Render(m_pSprite);
+	m_pImage_Bg->Render(m_pSprite);
 
 	UI->Render(m_pSprite);
 }

@@ -83,7 +83,7 @@ void cSelectScene::OnUpdate()
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
-			SCENE->ChangeScene(SCENE_TOWN);
+			SCENE->ChangeScene(SCENE_LOADING);
 			//if(m_nCurrentPlayer == SELECT_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
 			//else if (m_nCurrentPlayer == SELECT_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
 		}

@@ -4,7 +4,7 @@
 
 cUIProgressBar::cUIProgressBar()
 	: m_pTexture_OutLine(NULL), m_pTexture_FillLine(NULL)
-	, m_fScaleX(0.0f)
+	, m_fScaleX(0.0f), m_isFinished(false)
 {
 }
 
@@ -28,7 +28,11 @@ void cUIProgressBar::Setup_Progress(char* cOutLine_Path, char* cFillLine_Path, D
 void cUIProgressBar::Update(float deltaTime)
 {
 	m_fScaleX += 0.05f;
-	if (m_fScaleX >14.0f) m_fScaleX =14.0f;
+	if (m_fScaleX > 14.5f)
+	{
+		m_fScaleX = 14.5f;
+		m_isFinished = true;
+	}
 
 	cUIObject::Update(deltaTime);
 }
@@ -45,9 +49,11 @@ void cUIProgressBar::Render(LPD3DXSPRITE pSprite)
 
 	D3DXMATRIXA16 matS, matT, matWorld;
 	D3DXMatrixIdentity(&matS);
+	D3DXMatrixIdentity(&matT);
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matS, m_fScaleX, 0.5f, 1.0f);
-	matWorld = matS * m_matWorld;
+	D3DXMatrixTranslation(&matT, m_vPos_FillLine.x, m_vPos_FillLine.y, m_vPos_FillLine.z);
+	matWorld = matS * matT * m_matWorld;
 	pSprite->SetTransform(&matWorld);
 
 	pSprite->Draw(m_pTexture_FillLine, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));

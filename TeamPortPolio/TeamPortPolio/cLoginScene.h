@@ -5,7 +5,7 @@ class cUIImage;
 
 class cLoginScene : public cIScene
 {  
-	cUIImage*			m_pImage;
+	cUIImage*			m_pImage_Bg;
 	LPD3DXSPRITE		m_pSprite;
 
 	SYNTHESIZE(bool, m_isClosed, IsClosed);

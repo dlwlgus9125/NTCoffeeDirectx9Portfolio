@@ -429,9 +429,6 @@
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
-    <ClInclude Include="cLoginScene.h">
-      <Filter>03. cScene\01. cLoginScene</Filter>
-    </ClInclude>
     <ClInclude Include="cSelectScene.h">
       <Filter>03. cScene\02. cSelectScene</Filter>
     </ClInclude>
@@ -518,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="cUIInventory.h">
       <Filter>07. UI\09. cInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoginScene.h">
+      <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

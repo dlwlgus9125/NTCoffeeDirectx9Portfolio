@@ -28,16 +28,16 @@ void cLoadingScene::OnEnter()
 
 	m_pProgressBar = new cUIProgressBar();
 	m_pProgressBar->Setup(D3DXVECTOR3(120, 600, 0.0f), UI_PROGRESSBAR);
-	m_pProgressBar->Setup_Progress("Image/UI/LoadingScene/Line/OutLine.png", "Image/UI/LoadingScene/Line/FillLine.png", D3DXVECTOR3(10,0, 0));
+	m_pProgressBar->Setup_Progress("Image/UI/LoadingScene/Line/OutLine.png", "Image/UI/LoadingScene/Line/FillLine.png", D3DXVECTOR3(30, 20, 0));
 	m_pProgressBar->SetHidden(false);
-
-	UI->Change(SCENE_LOADING);
 }
 
 void cLoadingScene::OnUpdate()
 {
 	m_pImage->Update(TIME->DeltaTime());
 	m_pProgressBar->Update(TIME->DeltaTime());
+
+	if(m_pProgressBar->GetIsFinished()) SCENE->ChangeScene(SCENE_BATTLE_ORC);
 }
 
 void cLoadingScene::OnExit()
