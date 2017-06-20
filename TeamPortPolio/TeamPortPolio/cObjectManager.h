@@ -60,11 +60,8 @@ public:
 	void ArrowUpdate();
 	void ClearArrow();
 
-
-	vector<int> GetInventory();
-
-	void SellItem(int itemSID);
-
-	void BuyItem(int itemSID);
+	vector<int> cObjectManager::GetInventory();
+	void cObjectManager::SellItem(int itemSID);
+	void cObjectManager::BuyItem(int itemSID);
 };
 

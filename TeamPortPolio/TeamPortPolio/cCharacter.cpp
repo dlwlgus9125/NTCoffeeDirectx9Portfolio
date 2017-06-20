@@ -38,7 +38,7 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
-
+	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 

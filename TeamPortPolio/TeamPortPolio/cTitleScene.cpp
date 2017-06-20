@@ -51,8 +51,6 @@ void cTitleScene::OnEnter()
 
 void cTitleScene::OnUpdate()
 {
-	if (INPUT->IsKeyDown(VK_F2)) SCENE->ChangeScene(SCENE_TOWN);
-
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 

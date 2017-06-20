@@ -28,7 +28,7 @@ void cSelectScene::OnEnter()
 	m_pImage->Setup(D3DXVECTOR3(0, 0, 1.0f), UI_IMAGE);
 	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
-	
+
 	m_mapPlayer[SELECT_HUMAN] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
 	m_mapPlayer[SELECT_HUMAN]->SetID(C_C_HUMAN_MALE);
 	m_mapPlayer[SELECT_HUMAN]->Init();
@@ -55,7 +55,7 @@ void cSelectScene::OnUpdate()
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
-	if(m_nCurrentPlayer != SELECT_NONE) MovePosition();
+	if (m_nCurrentPlayer != SELECT_NONE) MovePosition();
 
 	switch (buttonIndex)
 	{
@@ -83,7 +83,9 @@ void cSelectScene::OnUpdate()
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
-			SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+			SCENE->ChangeScene(SCENE_TOWN);
+			//if(m_nCurrentPlayer == SELECT_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
+			//else if (m_nCurrentPlayer == SELECT_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
 		}
 		break;
 
@@ -114,7 +116,7 @@ void cSelectScene::OnExit()
 void cSelectScene::OnRender()
 {
 	m_pImage->Render(m_pSprite);
-	if(m_nCurrentPlayer != SELECT_NONE) m_mapPlayer[m_nCurrentPlayer]->Render();
+	if (m_nCurrentPlayer != SELECT_NONE) m_mapPlayer[m_nCurrentPlayer]->Render();
 	UI->Render(m_pSprite);
 }
 
