@@ -34,7 +34,7 @@ void cSelectScene::OnEnter()
 	m_mapPlayer[SELECT_HUMAN]->Init();
 
 	m_mapPlayer[SELECT_ORC] = new cPlayer(m_vPosition, 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 5000);
-	m_mapPlayer[SELECT_ORC]->SetID(C_C_ORC_MELEE);
+	m_mapPlayer[SELECT_ORC]->SetID(C_C_ORC_MALE);
 	m_mapPlayer[SELECT_ORC]->Init();
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);

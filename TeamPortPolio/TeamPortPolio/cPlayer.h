@@ -26,18 +26,19 @@ private:
 	cStateMachine<cPlayer*>* m_pFsm;
 
 
-	//화살처리 변수랑 메쉬표시변수들
-	cBallisticArrow* m_pBalisticArrow;
-	LPD3DXMESH				m_pMeshSphere;
-	D3DMATERIAL9			m_stMtlSphere;
+
+	
 
 	// >> 케릭터 아이템 저장 (인벤토리)
 	SYNTHESIZE(vector<int>, m_vecInventory, Inventory);
 	// << 
 
+	//>>무기를 장착할 손의 좌표를 불러오기위한 주소값 그릇
 	ST_BONE* m_rightHand;
 	ST_BONE* m_leftHand;
 	ST_BONE* m_AttackCollider;
+
+
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cPlayer();

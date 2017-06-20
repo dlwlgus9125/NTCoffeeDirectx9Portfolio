@@ -484,6 +484,7 @@ struct ST_SHADOW
 
 //>>include
 #include "cEffectManager.h"
+#include "cThreadManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"

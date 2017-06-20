@@ -86,7 +86,12 @@ public:
 	void             ClickedButtonTwo();
 
 	void             PathPopBack() { m_path.pop_back(); }
-	void             PathClear() { m_path.clear(); }
+	void             PathClear() 
+	{
+		for (int i = 0; i < m_path.size(); i++)m_path.pop_back();
+
+		m_path.clear(); 
+	}
 
 	float            GetVelocity() { return m_velocity; }
 	void             AddVelocity(float force) { m_velocity += force; m_velocity=MATH->Clamp(m_velocity, 0.0f, 0.05f); }

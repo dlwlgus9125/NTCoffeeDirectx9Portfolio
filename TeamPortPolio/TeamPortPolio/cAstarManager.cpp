@@ -7,9 +7,10 @@
 #include "cUnit.h"
 
 
+
+
 void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 {
-	m_isThreadResume = false;
 	m_vecPosOfNode = vecPosOfNode;
 
 	m_graph = new cGraph(m_vecPosOfNode.size());
@@ -48,7 +49,6 @@ void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 		AddEdge(i, x + 1, z + 1);
 	}
 
-	m_isMapLoadingComplete = true;
 }
 
 void cAstarManager::SetupThread()
@@ -113,7 +113,7 @@ void cAstarManager::AddEdge(int from, int col, int row)
 	}
 }
 
-void cAstarManager::AddEdgeTest(cGraph* pGraph,int from, int col, int row)
+void cAstarManager::AddEdgeTest(cGraph* pGraph, int from, int col, int row)
 {
 	if (col >= 0 && col < 150 && row >= 0 && row < 150)
 		//if (col >= 0 && col < 15 && row >= 0 && row < 15)
@@ -135,22 +135,22 @@ vector<int> cAstarManager::GetPath(int chrindex, int targetIndex)
 {
 	if (chrindex != targetIndex)
 	{
-		cAstar as(m_graph, chrindex, targetIndex);
+		cGraph* pGraph = SetupGraph();
+		cAstar as(pGraph, chrindex, targetIndex);
 		if (as.Search())
 		{
 			return as.GetPath();
-			//m_path = as.GetRoute();
 		}
+		SAFE_DELETE(pGraph);
 	}
 	return vector<int>();
 }
 
 void cAstarManager::Update()
 {
-	if (m_isMapLoadingComplete == true &&TIME->UpdateOneSecond())
+	if (m_isMapLoadingComplete == true && TIME->UpdateOneSecond())
 	{
 		SetObjectIndex();
-		////SetLeaderPath();
 		SetTargetOfLeader();
 	}
 }
@@ -158,10 +158,10 @@ void cAstarManager::Update()
 void cAstarManager::PathUpdate()
 {
 	if (m_isMapLoadingComplete == true)
-	{
-		//SetLeaderPath();
+	{		
+		SetLeaderPath();
 	}
-	
+	THREAD->TerminateThreadByKey(HANDlE_ATSTAR_FINDPATH);
 }
 
 void cAstarManager::Release()
@@ -198,13 +198,6 @@ bool cAstarManager::GetCursorIndex(int & TargetIndex)
 
 void cAstarManager::SetObjectIndex()
 {
-	/*for (int i = 0; i < OBJECT->GetCharacter().size(); i++)
-	{
-		D3DXVECTOR3 pos = OBJECT->GetCharacter()[i]->GetCharacterEntity()->Pos();
-		int index = 0;
-		MAP->GetMap()->GetIndex(pos.x, pos.z, index);
-		if (OBJECT->GetCharacter()[i]->GetIndex() != index)OBJECT->GetCharacter()[i]->SetIndex(index);
-	}*/
 	for (int i = 0; i < OBJECT->GetLeader().size(); i++)
 	{
 		D3DXVECTOR3 pos = OBJECT->GetLeader()[i]->GetCharacterEntity()->Pos();
@@ -218,13 +211,13 @@ void cAstarManager::SetLeaderPath()
 {
 	for (int i = 0; i < OBJECT->GetLeader().size(); i++)
 	{
-		if (OBJECT->GetLeader()[i]->GetPath().size()<=0&&OBJECT->GetLeader()[i]->GetIndex() != OBJECT->GetLeader()[i]->GetTargetIndex())
+		if (OBJECT->GetLeader()[i]->GetPath().size() <= 0 && OBJECT->GetLeader()[i]->GetIndex() != OBJECT->GetLeader()[i]->GetTargetIndex())
 		{
 			OBJECT->GetLeader()[i]->PathClear();
 			OBJECT->GetLeader()[i]->SetPath(this->GetPath(OBJECT->GetLeader()[i]->GetIndex(), OBJECT->GetLeader()[i]->GetTargetIndex()));
 		}
 	}
-	
+
 }
 
 void cAstarManager::SetLeaderPath(cLeader* pLeader)
@@ -254,7 +247,7 @@ void cAstarManager::SetTargetOfLeader()
 								break;
 							}
 						}
-						
+
 					}
 				}
 			}

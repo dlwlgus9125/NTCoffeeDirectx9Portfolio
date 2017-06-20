@@ -30,6 +30,7 @@ cGraph::~cGraph()
 		m_edges[i].clear();
 	}
 	m_edges.clear();
+	SAFE_RELEASE(m_line);
 }
 
 int cGraph::NodeCount() { return m_nodes.size(); }
@@ -74,7 +75,7 @@ void cGraph::RemoveEdge(int from, int to)
 
 void cGraph::Render()
 {
-	D3DXMATRIXA16 out, proj, view;
+	/*D3DXMATRIXA16 out, proj, view;
 	D3DDevice->GetTransform(D3DTS_VIEW, &view);
 	D3DDevice->GetTransform(D3DTS_PROJECTION, &proj);
 	out = view * proj;
@@ -100,7 +101,7 @@ void cGraph::Render()
 				}
 			}
 		}
-	}
+	}*/
 	
 
 }

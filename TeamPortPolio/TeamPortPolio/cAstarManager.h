@@ -15,10 +15,8 @@ class cAstarManager :
 
 	vector<D3DXVECTOR3> m_vecPosOfNode;
 
-	HANDLE ASTAR_Handle[2];
 
 	bool                    m_isMapLoadingComplete;
-	bool                    m_isThreadResume;
 public:
 	void Setup(vector<D3DXVECTOR3> vecPosOfNode);
 	void SetupThread();
@@ -43,11 +41,9 @@ public:
 	void SetLeaderPath(cLeader * pLeader);
 	void SetTargetOfLeader();
 
-	HANDLE GetHandle(int i) { return ASTAR_Handle[i]; }
-	HANDLE* GetHandles() { return ASTAR_Handle; }
-	void   SetHandle(HANDLE beginThread, int i) { ASTAR_Handle[i] = beginThread; }
+	
+	
+	
 
-	void SuspendAstarThread(int i) { if (m_isThreadResume != false) { m_isThreadResume = false; SuspendThread(ASTAR_Handle[i]); } }
-	void ResumeAstarThread(int i) { if (m_isThreadResume != true) { m_isThreadResume = true; ResumeThread(ASTAR_Handle[i]); } }
 };
 

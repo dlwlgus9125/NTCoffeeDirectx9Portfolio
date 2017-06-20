@@ -75,25 +75,4 @@ public:
 
 	void RemoveEdge(int from, int to);
 	void Render();
-	/*void Render()
-	{
-	for (int i = 0; i < m_nodes.size(); i++)
-	{
-	if (m_nodes[i]->Active())
-	{
-	RENDER->FillCircle(m_nodes[i]->Pos(), 5, ColorF::Green);
-
-	EdgeList list = GetEdgeList(i);
-	for (EdgeListIter it = list.begin(); it != list.end(); it++)
-	{
-	GraphNode* pFromNode = GetNode((*it)->From());
-	GraphNode* pToNode = GetNode((*it)->To());
-	if (pToNode->Active())
-	{
-	RENDER->DrawLine(pFromNode->Pos(), pToNode->Pos(), ColorF::Green);
-	}
-	}
-	}
-	}
-	}*/
 };

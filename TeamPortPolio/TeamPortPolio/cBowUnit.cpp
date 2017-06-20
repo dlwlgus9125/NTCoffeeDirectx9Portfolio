@@ -64,5 +64,8 @@ void cBowUnit::Update(float deltaTime)
 void cBowUnit::Render()
 {
 	cUnit::Render();
-
+	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
+	{
+		m_pSkinnedMesh->UpdateAndRender(m_isDeath);
+	}
 }

@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "TeamPortPolio.h"
 #include "cGameManager.h"
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new( _CLIENT_BLOCK, __FILE__, __LINE__ )
+#endif
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -21,28 +26,28 @@ LPD3DXSPRITE g_Sprite;
 HWND			g_hWnd;
 CRITICAL_SECTION cs;
 
-unsigned __stdcall UpdateThread(LPVOID lpParam)
-{
-	while (1)
-	{
-		EnterCriticalSection(&cs);
-		if (OBJECT->GetPlayer() != NULL)ASTAR->Update();
-		LeaveCriticalSection(&cs);
-	}
-	return 0;
-}
-
-unsigned __stdcall TestThread(LPVOID lpParam)
-{
-	while (1)
-	{
-		EnterCriticalSection(&cs);
-		if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
-		LeaveCriticalSection(&cs);
-		//ASTAR->SuspendAstarThread(1);
-	}
-	return 0;
-}
+//unsigned __stdcall UpdateThread(LPVOID lpParam)
+//{
+//	while (1)
+//	{
+//		EnterCriticalSection(&cs);
+//		if (OBJECT->GetPlayer() != NULL)ASTAR->Update();
+//		LeaveCriticalSection(&cs);
+//	}
+//	return 0;
+//}
+//
+//unsigned __stdcall TestThread(LPVOID lpParam)
+//{
+//	while (1)
+//	{
+//		EnterCriticalSection(&cs);
+//		if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
+//		LeaveCriticalSection(&cs);
+//		//ASTAR->SuspendAstarThread(1);
+//	}
+//	return 0;
+//}
 
 
 
@@ -71,26 +76,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GAMEMAIN->Init();
 	MSG msg;
 	//>>thread
-	DWORD dwThlD1, dwThlD2;
-	
-	unsigned long uiStackSize = 0;
+	THREAD->Init();
 
-	dwThlD1 = dwThlD2 = 0;
-
-	ASTAR->SetHandle(NULL, 0);
-	ASTAR->SetHandle(NULL, 1);
-	//g_hThread[0] = g_hThread[1] = NULL;
-	InitializeCriticalSection(&cs);
-	//<<
-
-
-
-
-	//GAMEMAIN->Init();
-
-	ASTAR->SetHandle((HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))UpdateThread, NULL, 0, (unsigned*)& dwThlD1),0);
-	ASTAR->SetHandle((HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))TestThread, NULL, 0, (unsigned*)& dwThlD2),1);
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// 기본 메시지 루프입니다.
 	while (true)
@@ -116,10 +104,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		}
 	}
-	WaitForMultipleObjects(2, ASTAR->GetHandles(), TRUE, INFINITE);
-
-	CloseHandle(ASTAR->GetHandle(0));
-	CloseHandle(ASTAR->GetHandle(1));
+	THREAD->CloseThreadManager();
 
 	GAMEMAIN->Release();
 
