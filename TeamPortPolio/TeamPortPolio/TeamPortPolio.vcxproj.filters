@@ -489,6 +489,9 @@
     <ClInclude Include="cArrowMaker.h">
       <Filter>02. cCharacter\04.cArrow</Filter>
     </ClInclude>
+    <ClInclude Include="cNonPlayerCharacter.h" />
+    <ClInclude Include="cNPC_State.h" />
+    <ClInclude Include="cNpcDB.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -801,6 +804,9 @@
     <ClCompile Include="cArrowMaker.cpp">
       <Filter>02. cCharacter\04.cArrow</Filter>
     </ClCompile>
+    <ClCompile Include="cNonPlayerCharacter.cpp" />
+    <ClCompile Include="cNPC_State.cpp" />
+    <ClCompile Include="cNpcDB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc">

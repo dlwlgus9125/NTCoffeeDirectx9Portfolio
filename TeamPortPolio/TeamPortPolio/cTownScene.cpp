@@ -17,6 +17,7 @@ void cTownScene::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN);
 	UI->Change(SCENE_TOWN);
+	//NPC->Chanage(SCENE_TOWN); TOWN ÈÞ¸Õ , ¿ÀÅ©
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));

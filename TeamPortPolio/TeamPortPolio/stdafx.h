@@ -461,6 +461,7 @@ public: virtual void Set##funName(varType var){\
 #include "cCharacterDB.h"
 #include "cObject.h"
 #include "cItemDB.h"
+#include "cNpcDB.h"
 //<<
 #include "cRay.h"
 #include "cArrowMaker.h"

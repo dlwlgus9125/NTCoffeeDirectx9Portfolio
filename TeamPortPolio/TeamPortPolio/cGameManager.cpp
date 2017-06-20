@@ -70,6 +70,7 @@ void cGameManager::Init()
 	SOUND->Setup();
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
+	NPCDB->Setup(); // NPC ¼¼ÆÃ...
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
