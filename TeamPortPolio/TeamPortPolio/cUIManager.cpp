@@ -157,7 +157,7 @@ void cUIManager::Setup_TownScene()
 	m_pInven = new cUIInventory;
 	m_pInven->Setup(D3DXVECTOR3(0, 0, 0), UI_INVENTORY);
 	m_pInven->Setup_Tap("image/ui/townscene/inventory/body.png", D3DXVECTOR3(0, 0, 0));
-	m_pInven->Setup_exitbtn(D3DXVECTOR3(244, 17, 0),
+	m_pInven->Setup_exitbtn(D3DXVECTOR3(160, 420, 0),
 		"image/ui/townscene/inventory/btn_idle.png", "image/ui/townscene/inventory/btn_mouseover.png", "image/ui/townscene/inventory/btn_select.png");
 	//pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY);
 
@@ -373,6 +373,7 @@ void cUIManager::Setup_BattleScene_Human()
 void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
+	m_pInven = NULL;
 }
 
 void cUIManager::Release()
@@ -418,6 +419,8 @@ void cUIManager::Update(float deltaTime)
 	{
 		m_vecMsg[i]->Update(deltaTime);
 	}
+
+	if (m_pInven) m_pInven->Update(deltaTime);
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
@@ -431,6 +434,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	{
 		m_vecMsg[i]->Render(pSprite);
 	}
+
+	if (m_pInven) m_pInven->Render(pSprite);
 
 	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
 
@@ -504,6 +509,10 @@ void cUIManager::Update_ConnectedUI()
 	}
 	// << 
 
+	// >> 인벤토리 끄면 아이템창 끄는 부분
+	if (m_vecTab.size() >= 4 && m_vecTab[3]->GetHidden()) m_pInven->SetHiddenAll(true);
+	if (m_vecTab.size() >= 4 && m_pInven->GetHidden()) m_vecTab[3]->SetHiddenAll(true);
+	// << 
 }
 
 void cUIManager::SetEvent(int uiID, int order)

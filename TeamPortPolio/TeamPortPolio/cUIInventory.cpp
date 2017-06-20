@@ -45,38 +45,38 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 	m_pBtn_Exit->Render(pSprite);
 	pSprite->End();
 
-	// >> 슬롯 이미지	
-	for (int i = 0; i < m_vecShownData.size(); i++)
-	{
-		pSprite->SetTransform(&m_matWorld);
-		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-
-		// 테스트용
-		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
-		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-
-		D3DXIMAGE_INFO imageInfo;
-		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
-		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
-
-		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-
-		pSprite->End();
-	}
-	// << 
-
-	// >> 품명, 설명 인쇄
-	for (int i = 0; i < m_vecShownData.size(); i++)
-	{
-		pSprite->SetTransform(&m_matWorld);
-		LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
-		SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
-			m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
-
-		string text = m_vecShownData[i]->name;
-		pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
-	}
-	// << 
+	//// >> 슬롯 이미지	
+	//for (int i = 0; i < m_vecShownData.size(); i++)
+	//{
+	//	pSprite->SetTransform(&m_matWorld);
+	//	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	//
+	//	// 테스트용
+	//	SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
+	//	pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	//
+	//	D3DXIMAGE_INFO imageInfo;
+	//	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
+	//	SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+	//
+	//	pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	//
+	//	pSprite->End();
+	//}
+	//// << 
+	//
+	//// >> 품명, 설명 인쇄
+	//for (int i = 0; i < m_vecShownData.size(); i++)
+	//{
+	//	pSprite->SetTransform(&m_matWorld);
+	//	LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
+	//	SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
+	//		m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
+	//
+	//	string text = m_vecShownData[i]->name;
+	//	pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
+	//}
+	//// << 
 
 	cUIObject::Render(pSprite);
 }
