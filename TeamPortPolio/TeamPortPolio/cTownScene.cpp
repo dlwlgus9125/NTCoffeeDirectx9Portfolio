@@ -16,6 +16,7 @@ void cTownScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN);
+	vector<ST_NPC_INFO> vecNPC = MAP->GetVecNPC();
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 
