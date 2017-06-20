@@ -481,6 +481,25 @@ struct ST_SHADOW
 	SYNTHESIZE(float, m_diffuseAlpha, ShadowDiffuseAlpha);
 };
 
+struct ST_NPC_INFO
+{
+	int nSID;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 scale;
+	float fRotX, fRotY, fRotZ;
+	ST_NPC_INFO() {}
+	ST_NPC_INFO(int nSID, D3DXVECTOR3 pos, D3DXVECTOR3 scale, float fRotX, float fRotY, float fRotZ)
+	{
+		this->nSID= nSID;
+		this->pos = pos;
+		this->scale = scale;
+		this->fRotX = fRotX;
+		this->fRotY = fRotY;
+		this->fRotZ = fRotZ;
+	}
+
+};
+
 //>>include
 #include "cEffectManager.h"
 #include "cDeviceManager.h"

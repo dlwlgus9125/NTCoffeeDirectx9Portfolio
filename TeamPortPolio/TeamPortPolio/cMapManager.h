@@ -23,8 +23,9 @@ class cMapManager : public Singleton<cMapManager>
 
 	ST_PNT_VERTEX                     m_vPositionVertex;
 	
-	ST_WEATHER				          m_stWeather;
-	ST_SHADOW				          m_stShadow;
+	SYNTHESIZE(ST_WEATHER, m_stWeather, Weather);
+	SYNTHESIZE(ST_SHADOW, m_stShadow, Shadow);
+	SYNTHESIZE(vector<ST_NPC_INFO>, m_vecStNPC, VecNPC);
 public:
 	cMapManager();
 	~cMapManager();
@@ -41,7 +42,5 @@ public:
 	void Destroy();
 
 	cHeightMap* GetMap() { return m_pMap; }
-
-	
 };
 

@@ -67,6 +67,7 @@ void cMapManager::Init(int sceneID)
 	m_stWeather = loader.GetWeatherInfo();
 	m_stShadow = ST_SHADOW();
 	m_stShadow = loader.GetShadowInfo();
+	m_vecStNPC = loader.GetNPCInfo();
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
