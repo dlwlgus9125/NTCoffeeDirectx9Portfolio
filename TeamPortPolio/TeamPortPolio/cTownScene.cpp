@@ -16,6 +16,7 @@ void cTownScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN);
+	vector<ST_NPC_INFO> vecNPC = MAP->GetVecNPC();
 	UI->Change(SCENE_TOWN);
 	Setup_DirLight();
 
@@ -83,15 +84,18 @@ void cTownScene::OnUpdate()
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_DEF:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_INVENTORY_EQUIP:
+		UI->AddItem_Inven(itemID);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

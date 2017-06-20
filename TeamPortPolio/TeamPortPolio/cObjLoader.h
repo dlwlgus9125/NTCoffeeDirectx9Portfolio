@@ -14,6 +14,7 @@ private:
 
 	ST_WEATHER				m_stWeather;
 	ST_SHADOW				m_stShadow;
+	vector<ST_NPC_INFO>		m_vecStNPC;
 public:
 	void LoadMtlLib(char* szFolder, char* szFile);
 	LPD3DXMESH LoadMesh(OUT vector<cMtlTex*> &vecMtlTex, IN char* szFolder, IN char* szFile);
@@ -24,5 +25,6 @@ public:
 						IN char* szFolder, IN char* szFile, bool doOptimizeInplace = true);
 	ST_WEATHER& GetWeatherInfo();
 	ST_SHADOW& GetShadowInfo();
+	vector<ST_NPC_INFO>& GetNPCInfo();
 
 };

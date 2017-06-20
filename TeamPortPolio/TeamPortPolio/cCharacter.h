@@ -36,6 +36,7 @@ protected:
 	MeshSpere        m_MeshSphere;
 
 	bool             m_isAnimDeath;
+	bool             m_isEquiped;
 public:
 	cCharacter();
 	virtual ~cCharacter();
@@ -60,7 +61,7 @@ public:
 
 	//전투용 충돌 체크
 	ST_SPHERE        GetAttackCollider() { return m_AttackCollideSphere; }
-	void             SetAttackColliderPos();
+	virtual void     SetAttackColliderPos();
 
 	void             SetDeath(bool death) { m_isDeath = death; }
 	bool             IsDeath() { return m_isDeath; }

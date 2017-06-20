@@ -37,7 +37,7 @@ void cLoadingScene::OnUpdate()
 	m_pImage->Update(TIME->DeltaTime());
 	m_pProgressBar->Update(TIME->DeltaTime());
 
-	if(m_pProgressBar->GetIsFinished()) SCENE->ChangeScene(SCENE_BATTLE_ORC);
+	if(m_pProgressBar->GetIsFinished()) SCENE->ChangeScene(SCENE_TOWN);
 }
 
 void cLoadingScene::OnExit()

@@ -38,8 +38,8 @@ public:
 	void Update_ConnectedUI();
 	void SetEvent(int uiID, int order);
 	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& eventID, OUT int& itemID);
-	void Setup_Inventory(int tabID);
-
+	void AddItem_Tab(int tabID);
+	void AddItem_Inven(int itemSID);
 
 };
 

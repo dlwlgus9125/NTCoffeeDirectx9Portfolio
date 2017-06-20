@@ -133,7 +133,7 @@ void cUIManager::Setup_TownScene()
 
 	// >> 인벤토리 셋팅 : 아이템 착용용
 	cUITab* pTab_Inven_Equip = new cUITab();
-	pTab_Inven_Equip->Setup(D3DXVECTOR3(WND_WIDTH - 300, 0, 0), UI_TAB);
+	pTab_Inven_Equip->Setup(D3DXVECTOR3(WND_WIDTH - 285, 0, 0), UI_TAB);
 	pTab_Inven_Equip->Setup_Tap("image/ui/townscene/tab_shop_inventory/idle.png", "image/ui/townscene/tab_shop_inventory/selected.png", "image/ui/townscene/tab_shop_inventory/body.png", D3DXVECTOR3(0, 0, 0));
 	pTab_Inven_Equip->AddTitle("인벤토리", D3DXVECTOR3(25, 475, 0));
 	/// 인벤토리 슬롯
@@ -149,7 +149,7 @@ void cUIManager::Setup_TownScene()
 	/// 인벤토리 종료버튼
 	pTab_Inven_Equip->Setup_exitbtn(D3DXVECTOR3(244, 17, 0),
 		"image/ui/townscene/tab_shop_inventory/btn_idle.png", "image/ui/townscene/tab_shop_inventory/btn_mouseover.png", "image/ui/townscene/tab_shop_inventory/btn_select.png");
-	pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY);
+	pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY_EQUIP);
 	m_vecTab.push_back(pTab_Inven_Equip);
 	// << 
 
@@ -157,10 +157,12 @@ void cUIManager::Setup_TownScene()
 	m_pInven = new cUIInventory;
 	m_pInven->Setup(D3DXVECTOR3(0, 0, 0), UI_INVENTORY);
 	m_pInven->Setup_Tap("image/ui/townscene/inventory/body.png", D3DXVECTOR3(0, 0, 0));
-	m_pInven->Setup_exitbtn(D3DXVECTOR3(244, 17, 0),
+	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 55), D3DXVECTOR3(236, 258, 0), ST_SIZEN(50, 50));
+	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 5), D3DXVECTOR3(38, 258, 0), ST_SIZEN(50, 50));
+	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 5), D3DXVECTOR3(137, 153, 0), ST_SIZEN(50, 50));
+	m_pInven->Setup_exitbtn(D3DXVECTOR3(205, 467, 0),
 		"image/ui/townscene/inventory/btn_idle.png", "image/ui/townscene/inventory/btn_mouseover.png", "image/ui/townscene/inventory/btn_select.png");
-	//pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY);
-
+	m_pInven->SetEventID(TOWN_INVENTORY);
 	// <<
 
 	// 미니맵
@@ -373,6 +375,7 @@ void cUIManager::Setup_BattleScene_Human()
 void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
+	m_pInven = NULL;
 }
 
 void cUIManager::Release()
@@ -418,6 +421,8 @@ void cUIManager::Update(float deltaTime)
 	{
 		m_vecMsg[i]->Update(deltaTime);
 	}
+
+	if (m_pInven) m_pInven->Update(deltaTime);
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
@@ -431,6 +436,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	{
 		m_vecMsg[i]->Render(pSprite);
 	}
+
+	if (m_pInven) m_pInven->Render(pSprite);
 
 	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
 
@@ -486,7 +493,7 @@ void cUIManager::PressKey()
 
 		bool hidden = !m_vecTab[3]->GetHidden();
 		m_vecTab[3]->SetHidden(hidden);
-		Setup_Inventory(TOWN_TAB_INVENTORY_EQUIP);
+		AddItem_Tab(TOWN_TAB_INVENTORY_EQUIP);
 		m_vecTab[3]->SetDef();
 
 		m_pInven->SetHiddenAll(hidden);
@@ -504,6 +511,10 @@ void cUIManager::Update_ConnectedUI()
 	}
 	// << 
 
+	// >> 인벤토리 끄면 아이템창 끄는 부분
+	if (m_vecTab.size() >= 4 && m_vecTab[3]->GetHidden()) m_pInven->SetHiddenAll(true);
+	if (m_vecTab.size() >= 4 && m_pInven->GetHidden()) m_vecTab[3]->SetHiddenAll(true);
+	// << 
 }
 
 void cUIManager::SetEvent(int uiID, int order)
@@ -573,9 +584,12 @@ void cUIManager::GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& 
 	{
 		if(m_vecTab[i]->GetClickedItemID(eventID, itemID)) break;
 	}
+
+	// 장비창에서 클릭된 놈의 아이템 아이디 반환하는 부분
+	if(m_pInven && itemID == -1) m_pInven->GetClickedItemID(eventID, itemID);
 }
 
-void cUIManager::Setup_Inventory(int tabID)
+void cUIManager::AddItem_Tab(int tabID)
 {
 	int index = -1;
 	switch (tabID)
@@ -591,9 +605,9 @@ void cUIManager::Setup_Inventory(int tabID)
 	// 해당 인벤토리가 없을 경우 예외처리
 	if (index == -1) return;			
 
-	// 인벤토리 초기화
+	// 탭_인벤토리 초기화
 	m_vecTab[index]->ClearShownData();
-	// 인벤토리 슬롯 재삽입
+	// 탭_인벤토리 슬롯 재삽입
 	vector<int> vecInven = OBJECT->GetInventory();
 	for (int i = 0; i < vecInven.size(); i++)
 	{
@@ -601,4 +615,9 @@ void cUIManager::Setup_Inventory(int tabID)
 		m_vecTab[index]->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
 	}
 	m_vecTab[index]->SetDef();
+}
+
+void cUIManager::AddItem_Inven(int itemSID)
+{
+	m_pInven->AddShownData(itemSID);
 }

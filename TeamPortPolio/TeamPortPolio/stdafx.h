@@ -121,6 +121,13 @@ enum FONT_TAG
 	FONT_DEF, FONT_SHOP,
 };
 
+enum FONT_BOWMOTION
+{
+	BOW_NORMAL,
+	BOW_PULL,
+	BOW_PUSH,
+};
+
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;
@@ -344,14 +351,15 @@ enum P_STATE // P: Player
 	P_ATTACK1,
 	P_ATTACK2,
 	P_ATTACK3,
-	//P_BOWATTACK1,
-	//P_BOWATTACK2,
+	P_BOWATTACK1,
+	P_BOWATTACK2,
 	P_SHEILDBLOCK,
 	P_SHEILDUP,
 	P_HIT,
 	P_BATTLECRY,
 	P_KNOCKDOWN,
 	P_DEATH,
+
 };
 
 
@@ -412,7 +420,7 @@ enum EVENTID
 
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
-	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_TAB_INVENTORY_EQUIP, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
+	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_TAB_INVENTORY_EQUIP, TOWN_INVENTORY, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
 
 	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 };
@@ -481,8 +489,28 @@ struct ST_SHADOW
 	SYNTHESIZE(float, m_diffuseAlpha, ShadowDiffuseAlpha);
 };
 
+struct ST_NPC_INFO
+{
+	int nSID;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 scale;
+	float fRotX, fRotY, fRotZ;
+	ST_NPC_INFO() {}
+	ST_NPC_INFO(int nSID, D3DXVECTOR3 pos, D3DXVECTOR3 scale, float fRotX, float fRotY, float fRotZ)
+	{
+		this->nSID= nSID;
+		this->pos = pos;
+		this->scale = scale;
+		this->fRotX = fRotX;
+		this->fRotY = fRotY;
+		this->fRotZ = fRotZ;
+	}
+
+};
+
 //>>include
 #include "cEffectManager.h"
+#include "cThreadManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"

@@ -12,7 +12,6 @@ class cUIInventory :
 	// >> 슬롯
 	vector<ST_SLOT>						m_vecSlotInfo;
 	vector<ST_SLOTDATA*>				m_vecShownData;
-	FONT_TAG							m_eFont_Slot;
 	// << 
 
 	// >>  끄는 버튼					버튼 수정해야 함
@@ -28,7 +27,7 @@ public:
 	virtual void Destroy();
 
 	void Setup_Tap(string sPath_body, D3DXVECTOR3 pos_body);
-	void Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize,	D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
+	void Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize,	D3DXVECTOR3 imagePos, ST_SIZEN imageSize);
 	void AddShownData(int itemSID);
 	void DeleteShownData(int itemSID);
 	HRESULT GetClickedItemID(OUT int& eventID, OUT int& itemID);

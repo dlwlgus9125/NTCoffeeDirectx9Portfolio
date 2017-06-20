@@ -30,11 +30,14 @@ private:
 
 	//충돌체 확인용
 	ST_BONE*                    m_AttackBone;
+	ST_BONE*                    m_RightHand;
+	ST_BONE*                    m_leftHand;
 public:
 	cSkinnedMesh(cSkinnedMesh* pSkinnedMesh);
 	~cSkinnedMesh(void);
 
 	void UpdateAndRender(bool isStop);
+	void UpdateAndRenderForItem(bool isStop, D3DXMATRIXA16& handMat);
 	void SetAnimationIndex(int nIndex);
 	void SetAnimationIndexBlend(int nIndex);
 	int  GetIndex() { return m_currentIndex; }
@@ -55,6 +58,13 @@ public:
 	D3DXMATRIXA16  GetAttackBoneMat() { return m_AttackBone->CombinedTransformationMatrix; }
 	void      FindAttackBone(char* BoneName);
 	void      FindAttackBone(ST_BONE* pBone, char* BoneName);
+
+	ST_BONE* GetFrameRoot() { return m_pRootFrame; }
+	void     GetFindHand(ST_BONE* targetBone);
+
+	ST_BONE* GetRightHand() { return m_RightHand; }
+	ST_BONE* GetLeftHand() { return m_leftHand; }
+	ST_BONE* GetAttackBone() { return m_AttackBone; }
 
 	void UpdateAndRenderForArrow(bool isStop);
 private:

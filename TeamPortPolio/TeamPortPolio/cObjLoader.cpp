@@ -343,7 +343,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 {
 	ST_PNT_VERTEX		vertex = ST_PNT_VERTEX();
 	vector<DWORD>		vecAttrBuf;
-
+	ST_NPC_INFO npcInfo;
 	string sFullPath(szFolder);
 	sFullPath += (string("/") + string(szFile));
 
@@ -507,6 +507,24 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 
 			vecConstruct.push_back(pConstruct);
 		}
+		else if (szTemp[0] == 'p')
+		{
+			int nSID = -1;
+			D3DXVECTOR3 vPos = D3DXVECTOR3(0, 0, 0);
+			D3DXVECTOR3 vScale = D3DXVECTOR3(0, 0, 0);
+			float fRotX = 0.0f;
+			float fRotY = 0.0f;
+			float fRotZ = 0.0f;
+
+			sscanf_s(szTemp, "%*s %d %f %f %f %f %f %f %f %f %f",
+				&nSID,
+				&vPos.x, &vPos.y, &vPos.z,
+				&vScale.x, &vScale.y, &vScale.z,
+				&fRotX, &fRotY, &fRotZ);
+
+			npcInfo = ST_NPC_INFO(nSID, vPos, vScale, fRotX, fRotY, fRotZ);
+			m_vecStNPC.push_back(npcInfo);
+		}
 	}
 
 	fclose(fp);
@@ -554,4 +572,9 @@ ST_WEATHER& cObjLoader::GetWeatherInfo()
 ST_SHADOW& cObjLoader::GetShadowInfo()
 {
 	return m_stShadow;
+}
+
+vector<ST_NPC_INFO>& cObjLoader::GetNPCInfo()
+{
+	return m_vecStNPC;
 }
