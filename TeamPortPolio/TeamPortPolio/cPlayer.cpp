@@ -33,7 +33,6 @@ void cPlayer::Init()
 {
 	m_CollideSphere.fRadius = m_CharacterEntity->Radius();
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
-	m_CollideSphere.vCenter.y += 0.5f;
 
 	m_arrangeCollideSphere.fRadius = 20.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
@@ -53,7 +52,7 @@ void cPlayer::Init()
 void cPlayer::Update(float deltaTime)
 {
 	cCharacter::Update(deltaTime);
-
+	m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 	m_pFsm->Update(deltaTime);
 
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();

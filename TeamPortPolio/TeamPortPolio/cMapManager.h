@@ -19,6 +19,8 @@ class cMapManager : public Singleton<cMapManager>
 
 	ST_PNT_VERTEX           m_vPositionVertex;
 	
+	ST_WEATHER				m_stWeather;
+	ST_SHADOW				m_stShadow;
 public:
 	cMapManager();
 	~cMapManager();

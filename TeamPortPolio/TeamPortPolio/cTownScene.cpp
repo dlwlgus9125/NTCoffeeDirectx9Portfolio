@@ -70,15 +70,28 @@ void cTownScene::OnUpdate()
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
+	switch (buttonIndex)
+	{
+	case TOWN_BTN_BATTLE_ORC:
+		SCENE->ChangeScene(SCENE_BATTLE_ORC);
+		break;
+	case TOWN_BTN_BATTLE_HUMAN:
+		SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		break;
+	}
 	switch (eventIDTap)
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
-		UI->Setup_Inventory();
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory();
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_SHOP_DEF:
+		OBJECT->BuyItem(itemID);
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
@@ -92,7 +105,17 @@ void cTownScene::OnUpdate()
 	if (m_vecST_Sphere[0].isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
-		m_vecST_Sphere[0].isPicked = false;
+		m_vecST_Sphere[0].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[1].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_SHOP_DEF, false);
+		m_vecST_Sphere[1].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[2].isPicked)
+	{
+		UI->SetEvent(TOWN_MINIMAP, false);
+		m_vecST_Sphere[2].isPicked = false;;;
 	}
 	//<< 
 }
@@ -110,8 +133,8 @@ void cTownScene::OnRender()
 {
 	MAP->Render();
 	EFFECT->Render();
-	UI->Render(m_pSprite);
 	OBJECT->Render();
+	UI->Render(m_pSprite);
 
 	// >> 테스트용
 	D3DXMATRIXA16 matWorld;

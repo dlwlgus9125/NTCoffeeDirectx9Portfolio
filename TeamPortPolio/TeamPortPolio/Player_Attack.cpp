@@ -32,11 +32,6 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
 		}
 	}
-
-	else if (INPUT->IsKeyPress(VK_W) || INPUT->IsKeyPress(VK_S))
-	{
-		pPlayer->FSM()->Play(PLAYER_STATE_WALK);
-	}
 	else if (INPUT->IsKeyPress(MOUSE_RIGHT) && pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 	{
 		pPlayer->FSM()->Play(PLAYER_STATE_DEFENCE);
@@ -49,7 +44,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 			pPlayer->FSM()->Play(PLAYER_STATE_IDLE);
 		}
 	}
-
+	// 충돌 처리 및 공격 카운트 후 죽는 모션까지..
 	  for (int i = 0; i < OBJECT->GetLeader().size(); i++)
          {
             if (OBJECT->GetLeader()[i]->GetCamp() == CAMP_PLAYER)return;
@@ -60,14 +55,23 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
                if (MATH->IsCollided(pPlayer->GetAttackCollider(), p->GetSphere()))
                {
                   p->GetMesh()->SetAnimationIndexBlend(FG_HIT);
-				  attackCount++;
+
+				  if (p->GetMesh()->GetPassedTime() > p->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.25f)
+				  {
+					  attackCount++;
+				  }
                }
-			   if (attackCount >= 3)
+			   else if (attackCount > 5)
 			   {
-				   p->GetMesh()->SetAnimationIndexBlend(FG_DEATH);
+				   p->SetDeath(true);
 				   attackCount = 0;
 			   }
-            }
+
+			   if (p->GetLeader()->IsDeath() == true)
+			   {
+				   p->GetMesh()->SetAnimationIndexBlend(FG_DEATH);
+			   }
+			}
          }
 }
 

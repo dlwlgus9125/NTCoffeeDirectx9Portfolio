@@ -23,6 +23,7 @@ protected:
 	ST_SPHERE        m_arrangeCollideSphere;
 	ST_SPHERE        m_AttackCollideSphere;
 	cSkinnedMesh*    m_pSkinnedMesh;
+
 	MODE_STATE       m_currentMode;
 	ST_Character*    m_Status;
 	bool             m_isDeath;

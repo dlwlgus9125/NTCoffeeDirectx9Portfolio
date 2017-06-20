@@ -94,17 +94,18 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
 	SetRect(&rc, 0, 0, m_stBodySize.nWidth, m_stBodySize.nHeight);
 	pSprite->Draw(m_pTexture_Body, &rc, &D3DXVECTOR3(0, 0, 0), &m_vPos_Body, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	pSprite->End();
 	// << 
 	
-	// >> 타이틀 렌더
-	for (int i = 0; i < m_vecTabInfo.size(); i++)
-	{
-		pSprite->SetTransform(&m_matWorld);
-		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-		SetRect(&rc, 0, 0, m_stTitleSize.nWidth, m_stTitleSize.nHeight);
-		pSprite->Draw(m_mapTexture_Title[m_vecTabInfo[i].state], &rc, &D3DXVECTOR3(0, 0, 0), &m_vecTabInfo[i].pos, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-		pSprite->End();
-	}
+	// >> 타이틀 렌더	// 스프라이트에서 이미 탭이 있으니 렌더 안하도록
+	//for (int i = 0; i < m_vecTabInfo.size(); i++)
+	//{
+	//	pSprite->SetTransform(&m_matWorld);
+	//	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	//	SetRect(&rc, 0, 0, m_stTitleSize.nWidth, m_stTitleSize.nHeight);
+	//	pSprite->Draw(m_mapTexture_Title[m_vecTabInfo[i].state], &rc, &D3DXVECTOR3(0, 0, 0), &m_vecTabInfo[i].pos, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	//	pSprite->End();
+	//}
 	// << 	
 
 	// 종료 버튼 렌더
@@ -113,34 +114,36 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	m_pBtn_Exit->Render(pSprite);
 	pSprite->End();
 
-	// >> 슬롯 이미지
+	// >> 슬롯 이미지	
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
 		pSprite->SetTransform(&m_matWorld);
 		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-
-		SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
-		pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	
+		// 테스트용
+		//SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
+		//pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 		
 		D3DXIMAGE_INFO imageInfo;
 		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
 		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+		
 		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-
+	
 		pSprite->End();
 	}
 	// << 
 
-	// >> 타이틀 글씨 인쇄
-	for (int i = 0; i < m_vecTabInfo.size(); i++)
-	{
-		pSprite->SetTransform(&m_matWorld);
-		LPD3DXFONT pFont = FONT->GetFont(m_eFont_Tab);
-		SetRect(&rc, m_vPosition.x + m_vecTabInfo[i].pos.x, m_vPosition.y + m_vecTabInfo[i].pos.y,
-			m_vPosition.x + m_vecTabInfo[i].pos.x + m_stTitleSize.nWidth, m_vPosition.y +  m_vecTabInfo[i].pos.y + m_stTitleSize.nHeight);
-		pFont->DrawText(NULL, m_vecTabInfo[i].text.c_str(), m_vecTabInfo[i].text.length(), &rc, DT_CENTER | DT_VCENTER,
-			m_vecTabInfo[i].state == UI_IDLE ? D3DCOLOR_XRGB(255, 255, 255) : D3DCOLOR_XRGB(255, 255, 0));
-	}
+	// >> 타이틀 글씨 인쇄 // 스프라이트에서 이미 탭이 있으니 렌더 안하도록
+	//for (int i = 0; i < m_vecTabInfo.size(); i++)
+	//{
+	//	pSprite->SetTransform(&m_matWorld);
+	//	LPD3DXFONT pFont = FONT->GetFont(m_eFont_Tab);
+	//	SetRect(&rc, m_vPosition.x + m_vecTabInfo[i].pos.x, m_vPosition.y + m_vecTabInfo[i].pos.y,
+	//		m_vPosition.x + m_vecTabInfo[i].pos.x + m_stTitleSize.nWidth, m_vPosition.y +  m_vecTabInfo[i].pos.y + m_stTitleSize.nHeight);
+	//	pFont->DrawText(NULL, m_vecTabInfo[i].text.c_str(), m_vecTabInfo[i].text.length(), &rc, DT_CENTER | DT_VCENTER,
+	//		m_vecTabInfo[i].state == UI_IDLE ? D3DCOLOR_XRGB(255, 255, 255) : D3DCOLOR_XRGB(255, 255, 0));
+	//}
 	// << 
 
 	// >> 품명, 설명 인쇄
@@ -151,7 +154,7 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 		SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
 			m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
 
-		string text = m_vecShownData[i]->name + "\n" + m_vecShownData[i]->info;
+		string text = m_vecShownData[i]->name + "\n\n가격 : " + to_string(m_vecShownData[i]->cost) + " 골드";
 		pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
 	}
 	// << 
@@ -161,6 +164,16 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 
 void cUITab::Destroy()
 {
+	for(map<int, vector<ST_SLOTDATA*>>::iterator it = m_mapVecSlotData.begin(); it != m_mapVecSlotData.end(); it++)
+	{
+		vector<ST_SLOTDATA*> vecSlotData = (*it).second;
+
+		for (int i = 0; i < vecSlotData.size(); i++)
+		{
+			SAFE_DELETE(vecSlotData[i]);
+		}
+	}
+	m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 
@@ -183,13 +196,13 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 	m_eFont_Slot = eFont;
 }
 
-void cUITab::AddSlotData(int itemMID, int itemSID, string name, string imagePath, string info)
+void cUITab::AddSlotData(int itemMID, int itemSID, string name, string imagePath, string info, int cost)
 {
 	if (m_nFirstKeyInMap < 0) m_nFirstKeyInMap = itemMID;
 	D3DXIMAGE_INFO imageinfo;
 	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemSID, name, imagePath, info);
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemSID, name, imagePath, info,cost);
 	
 	if (m_mapVecSlotData.find(itemMID) == m_mapVecSlotData.end())
 	{

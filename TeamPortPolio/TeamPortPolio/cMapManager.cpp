@@ -24,25 +24,35 @@ void cMapManager::Init(int sceneID)
 	case SCENE_TITLE:
 		folderPath = "map";
 		filePath = strdup("TESTMAP3.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox1", "bmp");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
 		break;
 
 	case SCENE_TOWN:
 		folderPath = "map";
 		filePath = strdup("TESTTOWN.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox1", "bmp");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
+		break;
+
+	case SCENE_TOWN_HUMAN:
+		break;
+
+	case SCENE_TOWN_ORC:
+		folderPath = "map";
+		filePath = strdup("TOWNORC.txt");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
+		break;
 		break;
 
 	case SCENE_BATTLE_HUMAN:
 		folderPath = "map";
 		filePath = strdup("BATTLE.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox2", "png");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
 		break;
 
 	case SCENE_BATTLE_ORC:
 		folderPath = "map";
 		filePath = strdup("BATTLE2.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox3", "png");
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
 		break;
 	}
 
@@ -52,6 +62,10 @@ void cMapManager::Init(int sceneID)
 	vector<ST_PNT_VERTEX> vecVertex;
 	vector<DWORD> vecIndex;
 	LPD3DXMESH pMesh = loader.LoadMesh_Map(vecMtlTex, vecVertex, vecIndex, nCellPerRow, fCellSpace, m_vecConstruct, folderPath, filePath, false);
+	m_stWeather = ST_WEATHER();
+	m_stWeather = loader.GetWeatherInfo();
+	m_stShadow = ST_SHADOW();
+	m_stShadow = loader.GetShadowInfo();
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
