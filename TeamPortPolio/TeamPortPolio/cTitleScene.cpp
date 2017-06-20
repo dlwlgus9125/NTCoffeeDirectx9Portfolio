@@ -113,6 +113,7 @@ void cTitleScene::Setup_DirLight()
 	D3DXVECTOR3   vDir(1.0f, 1.0f, 1.0f);
 	D3DXVec3Normalize(&vDir, &vDir);
 	stLight.Direction = vDir;
+	SHADOW->SetLightDir(stLight.Direction);
 	D3DDevice->SetLight(0, &stLight);
 	D3DDevice->LightEnable(0, true);
 }

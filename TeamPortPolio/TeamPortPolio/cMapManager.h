@@ -5,7 +5,6 @@
 #include "cHeightMap.h"
 #include "cObjLoader.h"
 #include "cConstruct.h"
-#include "cNonPlayerCharacter.h"
 // << 
 #define MAP cMapManager::Instance()
 
@@ -14,8 +13,6 @@ class cMapManager : public Singleton<cMapManager>
 	cSkyBox*				          m_pSkyBox;
 	cHeightMap*			              m_pMap;
 	vector<cConstruct*>		          m_vecConstruct;
-
-	std::vector<cNonPlayerCharacter*> m_vecNpc;
 
 	vector<D3DXVECTOR3>               m_vecPosOfNode;
 	int                               m_CellPerRow;

@@ -164,6 +164,7 @@
     <ClInclude Include="cEffectManager.h" />
     <ClInclude Include="cFog.h" />
     <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cNpcManager.h" />
     <ClInclude Include="cUIInventory.h" />
     <ClInclude Include="cItem.h" />
     <ClInclude Include="cItemDB.h" />
@@ -181,8 +182,6 @@
     <ClInclude Include="cMapManager.h" />
     <ClInclude Include="cMeleeUnit.h" />
     <ClInclude Include="cMtlTex.h" />
-    <ClInclude Include="cNonPlayerCharacter.h" />
-    <ClInclude Include="cNpcDB.h" />
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectDB.h" />
     <ClInclude Include="cObjectManager.h" />
@@ -254,6 +253,7 @@
     <ClCompile Include="cEffectManager.cpp" />
     <ClCompile Include="cFog.cpp" />
     <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cNpcManager.cpp" />
     <ClCompile Include="cUIInventory.cpp" />
     <ClCompile Include="cItem.cpp" />
     <ClCompile Include="cItemDB.cpp" />
@@ -270,8 +270,6 @@
     <ClCompile Include="cMapManager.cpp" />
     <ClCompile Include="cMeleeUnit.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
-    <ClCompile Include="cNonPlayerCharacter.cpp" />
-    <ClCompile Include="cNpcDB.cpp" />
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectDB.cpp" />
     <ClCompile Include="cObjectManager.cpp" />

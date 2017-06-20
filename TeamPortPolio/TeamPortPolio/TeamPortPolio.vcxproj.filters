@@ -519,8 +519,7 @@
     <ClInclude Include="cLoginScene.h">
       <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
-    <ClInclude Include="cNonPlayerCharacter.h" />
-    <ClInclude Include="cNpcDB.h" />
+    <ClInclude Include="cNpcManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -848,8 +847,7 @@
     <ClCompile Include="cUIInventory.cpp">
       <Filter>07. UI\09. cInventory</Filter>
     </ClCompile>
-    <ClCompile Include="cNonPlayerCharacter.cpp" />
-    <ClCompile Include="cNpcDB.cpp" />
+    <ClCompile Include="cNpcManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc">

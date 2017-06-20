@@ -522,7 +522,7 @@ struct ST_NPC_INFO
 #include "cCharacterDB.h"
 #include "cObject.h"
 #include "cItemDB.h"
-#include "cNpcDB.h"
+#include "cShadowManager.h"
 //<<
 #include "cRay.h"
 #include "cArrowMaker.h"

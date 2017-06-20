@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cMapManager.h"
 #include "cShadowManager.h"
+#include "cNpcManager.h"
 
 cMapManager::cMapManager()
 {
@@ -67,7 +68,9 @@ void cMapManager::Init(int sceneID)
 	m_stWeather = loader.GetWeatherInfo();
 	m_stShadow = ST_SHADOW();
 	m_stShadow = loader.GetShadowInfo();
+	SHADOW->SetAlpha(m_stShadow.GetShadowDiffuseAlpha());
 	m_vecStNPC = loader.GetNPCInfo();
+	NPC->Init(m_vecStNPC);
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
@@ -105,6 +108,7 @@ void cMapManager::Init(int sceneID)
 void cMapManager::Update()
 {
 	if (m_pSkyBox) m_pSkyBox->Update(CAMERA->GetCamera());
+	NPC->Update(m_vecStNPC);
 }
 
 void cMapManager::Render()
@@ -128,6 +132,9 @@ void cMapManager::Render()
 		if (m_pSkyBox) m_pSkyBox->Render();
 
 		if (m_pMap) m_pMap->Render();
+		
+		if (m_vecStNPC.size() > 0)
+			NPC->Render();
 
 		SHADOW->Render();
 		for (int i = 0; i < m_vecConstruct.size(); i++)
