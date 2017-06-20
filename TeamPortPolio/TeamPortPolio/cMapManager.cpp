@@ -45,13 +45,13 @@ void cMapManager::Init(int sceneID)
 
 	case SCENE_BATTLE_HUMAN:
 		folderPath = "map";
-		filePath = strdup("BATTLE.txt");
+		filePath = strdup("BATTLEHUMAN.txt");
 		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
 		break;
 
 	case SCENE_BATTLE_ORC:
 		folderPath = "map";
-		filePath = strdup("BATTLE2.txt");
+		filePath = strdup("BATTLEORC.txt");
 		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
 		break;
 	}
