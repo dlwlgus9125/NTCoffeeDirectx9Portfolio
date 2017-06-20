@@ -82,15 +82,15 @@ void cTownScene::OnUpdate()
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
-		UI->Setup_Inventory();
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory();
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_DEF:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory();
+		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

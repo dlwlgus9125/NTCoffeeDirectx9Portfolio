@@ -251,6 +251,9 @@
     <Filter Include="07. UI\02. cUIText">
       <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. UI\09. cInventory">
+      <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -512,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="cTownScene_Human.h">
       <Filter>03. cScene\03. cTownScene\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIInventory.h">
+      <Filter>07. UI\09. cInventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -836,6 +842,9 @@
     </ClCompile>
     <ClCompile Include="cTownScene_Human.cpp">
       <Filter>03. cScene\03. cTownScene\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIInventory.cpp">
+      <Filter>07. UI\09. cInventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

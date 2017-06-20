@@ -18,6 +18,8 @@ enum I_M_ITEMID
 	I_M_BOW,
 	I_M_ARMOR,
 	I_M_SHIELD,
+	I_M_HELM,
+	I_M_BOOTS,
 	I_M_INVENTORY,
 	I_M_END,
 };
