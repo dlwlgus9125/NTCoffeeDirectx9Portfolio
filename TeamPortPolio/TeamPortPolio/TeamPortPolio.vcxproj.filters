@@ -179,9 +179,6 @@
     <Filter Include="07. UI\01. cUIImage">
       <UniqueIdentifier>{6884dbb3-27ca-4b65-b5e7-3408c15782a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. UI\02. cUIText">
-      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. UI\03. cUIButton">
       <UniqueIdentifier>{5fcd1a10-77ee-4001-9081-5dbfb58f3f4b}</UniqueIdentifier>
     </Filter>
@@ -250,6 +247,9 @@
     </Filter>
     <Filter Include="03. cScene\03. cTownScene\Human">
       <UniqueIdentifier>{0662adf5-8ea6-4dc9-82a3-df5f98f5a4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\02. cUIText">
+      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

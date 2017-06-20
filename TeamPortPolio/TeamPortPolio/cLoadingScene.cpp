@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "cLoadingScene.h"
+#include "cUIImage.h"
+#include "cUIProgressBar.h"
 
 
 cLoadingScene::cLoadingScene()
-	: m_pImage(NULL), m_pSprite(NULL)
+	: m_pImage(NULL), m_pSprite(NULL), m_pProgressBar(NULL)
 {
 }
 
@@ -24,22 +26,30 @@ void cLoadingScene::OnEnter()
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
+	m_pProgressBar = new cUIProgressBar();
+	m_pProgressBar->Setup(D3DXVECTOR3(120, 600, 0.0f), UI_PROGRESSBAR);
+	m_pProgressBar->Setup_Progress("Image/UI/LoadingScene/Line/OutLine.png", "Image/UI/LoadingScene/Line/FillLine.png", D3DXVECTOR3(10,0, 0));
+	m_pProgressBar->SetHidden(false);
+
 	UI->Change(SCENE_LOADING);
 }
 
 void cLoadingScene::OnUpdate()
 {
 	m_pImage->Update(TIME->DeltaTime());
+	m_pProgressBar->Update(TIME->DeltaTime());
 }
 
 void cLoadingScene::OnExit()
 {
 	m_pImage->Destroy();
+	m_pProgressBar->Destroy();
 }
 
 void cLoadingScene::OnRender()
 {
 	m_pImage->Render(m_pSprite);
+	m_pProgressBar->Render(m_pSprite);
 }
 
 void cLoadingScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
