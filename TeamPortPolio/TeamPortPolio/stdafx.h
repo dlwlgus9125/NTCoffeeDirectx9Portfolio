@@ -121,6 +121,13 @@ enum FONT_TAG
 	FONT_DEF, FONT_SHOP,
 };
 
+enum FONT_BOWMOTION
+{
+	BOW_NORMAL,
+	BOW_PULL,
+	BOW_PUSH,
+};
+
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;
@@ -344,14 +351,15 @@ enum P_STATE // P: Player
 	P_ATTACK1,
 	P_ATTACK2,
 	P_ATTACK3,
-	//P_BOWATTACK1,
-	//P_BOWATTACK2,
+	P_BOWATTACK1,
+	P_BOWATTACK2,
 	P_SHEILDBLOCK,
 	P_SHEILDUP,
 	P_HIT,
 	P_BATTLECRY,
 	P_KNOCKDOWN,
 	P_DEATH,
+
 };
 
 
@@ -502,6 +510,7 @@ struct ST_NPC_INFO
 
 //>>include
 #include "cEffectManager.h"
+#include "cThreadManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"

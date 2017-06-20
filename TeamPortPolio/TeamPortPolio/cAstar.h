@@ -29,4 +29,6 @@ public:
 	vector<int> GetRoute();
 
 	vector<int> GetPath();
+
+	cGraph* GetAstarGraph() { return m_pGraph; }
 };

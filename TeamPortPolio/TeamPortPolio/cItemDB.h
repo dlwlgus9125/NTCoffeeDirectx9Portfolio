@@ -71,7 +71,6 @@ enum I_S_ITEMID
 };
 
 
-
 struct ST_ITEM
 {
 	I_L_ITEMID eLargeID;
@@ -85,7 +84,13 @@ struct ST_ITEM
 	char* szImagePath;
 
 
-	ST_ITEM(I_L_ITEMID L_ID, I_M_ITEMID M_ID, I_S_ITEMID S_ID, string name, string info, int cost, char* szImagePath)
+	char* szTexturePath;
+	char* szTextureFileName;
+	char* szColliderBoneName;
+
+
+	ST_ITEM(I_L_ITEMID L_ID, I_M_ITEMID M_ID, I_S_ITEMID S_ID, string name, string info, int cost,
+		char* szImagePath, char* szTexturePath = "", char* szTextureFileName = "", char* szColliderBoneName = "")
 	{
 		eLargeID = L_ID;
 		eMiddleID = M_ID;
@@ -94,6 +99,9 @@ struct ST_ITEM
 		this->info = info;
 		this->cost = cost;
 		this->szImagePath = szImagePath;
+		this->szTexturePath = szTexturePath;
+		this->szTextureFileName = szTextureFileName;
+		this->szColliderBoneName = szColliderBoneName;
 	}
 };
 

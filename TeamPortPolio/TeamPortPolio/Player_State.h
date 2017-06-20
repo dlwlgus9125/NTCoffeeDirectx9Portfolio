@@ -1,5 +1,6 @@
 #pragma once
 #include "cPlayer.h"
+
 #include "cLeader.h"
 #include "cUnit.h"
 
@@ -39,10 +40,35 @@ public:
 
 	void OnEnd(cPlayer* pPlayer);
 
+	void FindBattleTarget(cPlayer * pPlayer);
+};
+
+class Player_BowAttack : public IState<cPlayer*>
+{
+	cObject* BattleTarget;
+
+public:
+	void OnBegin(cPlayer* pPlayer);
+
+	void OnUpdate(cPlayer* pPlayer, float deltaTime);
+
+	void OnEnd(cPlayer* pPlayer);
+
 	void StateChanger(cPlayer * pPlayer);
 };
 
 class Player_Defence : public IState<cPlayer*>
+{
+public:
+	void OnBegin(cPlayer* pPlayer);
+
+	void OnUpdate(cPlayer* pPlayer, float deltaTime);
+
+	void OnEnd(cPlayer* pPlayer);
+};
+
+
+class Player_Death : public IState<cPlayer*>
 {
 public:
 	void OnBegin(cPlayer* pPlayer);
