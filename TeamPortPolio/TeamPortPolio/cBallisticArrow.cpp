@@ -12,6 +12,7 @@ cBallisticArrow::cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTO
 	m_vDir = forward;
 	SetID(C_C_ARROW_ARROW);
 	Init();
+	m_isHit = false;
 }
 
 cBallisticArrow::~cBallisticArrow()
@@ -51,25 +52,36 @@ void cBallisticArrow::Render()
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	cCharacter::Render();
-	
-
+	//cCharacter::Render();
+	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
+	{
+		m_pSkinnedMesh->UpdateAndRender(m_isDeath);
+	}
 }
 
 void cBallisticArrow::ArrowUpdate()
 {
-	//m_CollideSphere.vCenter = m_pArrow->Entity()->Pos();
-	cCharacter::Update(TIME->DeltaTime());
-	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-	for (int i = 0; i < OBJECT->GetCharacter().size(); i++)
-	{
-		if (OBJECT->GetCharacter()[i]->GetCharacterEntity()->IsDeath() == false&&OBJECT->GetCharacter()[i]->GetCamp() != m_camp&&MATH->IsCollided(OBJECT->GetCharacter()[i]->GetSphere(), m_CollideSphere))
+	if (m_isDeath != true)
+	{//m_CollideSphere.vCenter = m_pArrow->Entity()->Pos();
+		cCharacter::Update(TIME->DeltaTime());
+
+		float y = 0.0f;
+		MAP->GetHeight(m_CharacterEntity->Pos().x, y, m_CharacterEntity->Pos().z);
+
+		if(m_CharacterEntity->Pos().y<=y)this->SetDeath(true);
+
+		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+		for (int i = 0; i < OBJECT->GetCharacter().size(); i++)
 		{
-			OBJECT->GetCharacter()[i]->SetAnimHit();
+			if (m_isHit == false && OBJECT->GetCharacter()[i]->GetCharacterEntity()->IsDeath() == false && OBJECT->GetCharacter()[i]->GetCamp() != m_camp&&MATH->IsCollided(OBJECT->GetCharacter()[i]->GetSphere(), m_CollideSphere))
+			{
+				OBJECT->GetCharacter()[i]->SetAnimHit();
 
-			this->Fight(this, OBJECT->GetCharacter()[i]);
+				this->Fight(this, OBJECT->GetCharacter()[i]);
+				m_isHit = true;
+			}
+
 		}
-
 	}
 
 

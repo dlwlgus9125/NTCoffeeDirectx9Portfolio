@@ -9,13 +9,26 @@ enum PLAYER_STATE
 	PLAYER_STATE_IDLE,
 	PLAYER_STATE_WALK,
 	PLAYER_STATE_ATTACK,
+	PLAYER_STATE_BOWATTACK,
 	PLAYER_STATE_DEFENCE,
+	PLAYER_STATE_DEFEAT,
+};
+
+enum CURRENT_ATTACKTYPE
+{
+	ATTACK_MELEE,
+	ATTACK_BOW,
 };
 
 class cLeader;
 class Player_State;
 class cSkinnedMesh;
 class cBallisticArrow;
+
+
+
+
+
 class cPlayer :
 	public cCharacter
 {
@@ -26,7 +39,8 @@ private:
 	cStateMachine<cPlayer*>* m_pFsm;
 
 
-
+	cSkinnedMesh* m_RightWeaponMesh;
+	cSkinnedMesh* m_LeftWeaponMesh;
 	
 
 	// >> 케릭터 아이템 저장
@@ -39,6 +53,11 @@ private:
 	ST_BONE* m_leftHand;
 	ST_BONE* m_AttackCollider;
 
+	CURRENT_ATTACKTYPE m_AttackType;
+
+	bool m_isPull;
+
+	ST_SPHERE m_MeleeCollider;
 
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
@@ -61,8 +80,16 @@ public:
 	void ByuItem(int itemSID);
 
 	void EquipRightHand(int itemSID);
+	void TestEquip();
 	void EquipLeftHand(int itemSID);
+
+	//>>활당기는 모션
+	void IsPullBow(bool pull) { m_isPull = pull; }
+	cSkinnedMesh* GetBowSkin() { return m_LeftWeaponMesh; }
 	// <<
+
+	//>>칼 전투용 충돌체
+	ST_SPHERE GetMeleeCollider() { return m_MeleeCollider; }
 
 	D3DXVECTOR3 SetUpAim() {
 		D3DXVECTOR3 vAim = CAMERA->GetLookAt() - CAMERA->GetEye();
@@ -70,7 +97,13 @@ public:
 		return	MATH->Nomalize(vAim);
 	}
 
+	CURRENT_ATTACKTYPE GetAttackType() { return m_AttackType; }
+	void SetAttackColliderPos();
 
 
+
+	void SetAnimBlock() { m_pSkinnedMesh->SetAnimationIndexBlend(P_SHEILDBLOCK); };
+	void SetAnimHit() { m_pSkinnedMesh->SetAnimationIndexBlend(P_HIT); };
+	void SetAnimDeath() { m_pFsm->Play(PLAYER_STATE_DEFEAT); };
 };
 

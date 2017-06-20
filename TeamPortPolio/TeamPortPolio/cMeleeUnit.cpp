@@ -56,7 +56,7 @@ void cMeleeUnit::Update(float deltaTime)
 		//	//battleT
 		//}
 
-		if (GetTargetObject()==NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
+		if (OBJECT->GetPlayer()->GetCharacterEntity()->IsDeath()==false&&GetTargetObject()==NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
 		{
 			SetTargetObject(OBJECT->GetPlayer());
 			m_pFsm->Play(UNIT_STATE_MELEE_BATTLE);

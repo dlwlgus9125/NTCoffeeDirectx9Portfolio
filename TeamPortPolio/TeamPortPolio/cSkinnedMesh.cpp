@@ -132,7 +132,7 @@ void cSkinnedMesh::UpdateAndRender(bool isStop)
 
 void cSkinnedMesh::UpdateAndRenderForItem(bool isStop, D3DXMATRIXA16& handMat)
 {
-	m_fPassedTime += TIME->GetElapsedTime();
+	
 	if (m_pAnimController)
 	{
 		if (m_isAnimBlend)
@@ -152,8 +152,8 @@ void cSkinnedMesh::UpdateAndRenderForItem(bool isStop, D3DXMATRIXA16& handMat)
 
 			}
 		}
-		if (isStop == false)m_pAnimController->AdvanceTime(TIME->GetElapsedTime(), NULL);
-		else m_pAnimController->AdvanceTime(0.0f, NULL);
+		if (isStop == false) { m_pAnimController->AdvanceTime(TIME->GetElapsedTime(), NULL); m_fPassedTime += TIME->GetElapsedTime(); }
+		else { m_pAnimController->AdvanceTime(0.0f, NULL); }
 	}
 
 	if (m_pRootFrame)

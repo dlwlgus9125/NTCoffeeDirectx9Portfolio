@@ -101,6 +101,11 @@ void cLeader::Update(float deltaTime)
 	}
 	else
 	{
+		if (GetTargetObject() == NULL&&OBJECT->GetPlayer()->GetCharacterEntity()->IsDeath() == false && m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
+		{
+			SetTargetObject(OBJECT->GetPlayer());
+		}
+
 		cCharacter::Update(deltaTime);
 		m_pFsm->Update(deltaTime);
 
@@ -123,10 +128,7 @@ void cLeader::Update(float deltaTime)
 		}
 	}
 
-	if (GetTargetObject() == NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
-	{
-		SetTargetObject(OBJECT->GetPlayer());
-	}
+	
 
 }
 

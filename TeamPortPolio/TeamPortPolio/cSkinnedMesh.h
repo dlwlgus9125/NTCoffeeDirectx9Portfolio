@@ -64,6 +64,7 @@ public:
 
 	ST_BONE* GetRightHand() { return m_RightHand; }
 	ST_BONE* GetLeftHand() { return m_leftHand; }
+	ST_BONE* GetAttackBone() { return m_AttackBone; }
 
 	void UpdateAndRenderForArrow(bool isStop);
 private:

@@ -10,7 +10,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 {
 	m_camp = CAMP_PLAYER;
 	m_CharacterEntity = new ISteeringEntity(pos, radius, forward, mass, maxSpeed);
-	m_unitLeader = NULL;
+	/*m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
 	m_unitLeader->SetID(C_C_HUMAN_BOWMAN);
@@ -19,9 +19,10 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_unitLeader->Init();
 	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
 	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);
+	OBJECT->AddLeader(m_unitLeader);*/
 	m_fRotY = 0.0f;
 	m_isAiming = false;
+	m_AttackType = ATTACK_MELEE;
 }
 
 
@@ -52,73 +53,75 @@ void cPlayer::Init()
 		m_leftHand = TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName)->GetLeftHand();
 	}
 
+	m_RightWeaponMesh = NULL;
+	m_LeftWeaponMesh = NULL;
 
-	//char* test = CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath;
-	//m_rightHand->pFrameFirstChild = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName)->GetFrameRoot();
-	//m_leftHand->pFrameFirstChild = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName)->GetFrameRoot();
 
-	//m_pSkinnedMesh->FindAttackBone(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szColliderBoneName);
-	//cSkinnedMesh* test = TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName);
+	TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName)->FindAttackBone("Sword_2H_Broadsword_A_03_Bone08");
+	TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName)->FindAttackBone("Weapon_Attack_Bone_Col_root");
+	TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName)->FindAttackBone("Bow_1H_Standard_C_01_Bone00");
+
+	
+	/*CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->
+	(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m
+		CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->*/
+
+
 	m_pFsm = new cStateMachine<cPlayer*>(this);
 	m_pFsm->Register(PLAYER_STATE_IDLE, new Player_Idle());
 	m_pFsm->Register(PLAYER_STATE_WALK, new Player_Walk());
 	m_pFsm->Register(PLAYER_STATE_ATTACK, new Player_Attack());
+	m_pFsm->Register(PLAYER_STATE_BOWATTACK, new Player_BowAttack());
 	m_pFsm->Register(PLAYER_STATE_DEFENCE, new Player_Defence());
+	m_pFsm->Register(PLAYER_STATE_DEFEAT, new Player_Death());
 	m_pFsm->Play(PLAYER_STATE_IDLE);
-
+	m_isPull = false;
+	m_MeleeCollider.fRadius = 0.2f;
 }
 
 void cPlayer::Update(float deltaTime)
 {
-	cCharacter::Update(deltaTime);
-	m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
-	m_pFsm->Update(deltaTime);
-
-	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
-	MAP->GetHeight(movePos.x, movePos.y, movePos.z);
-	m_CharacterEntity->SetPos(movePos);
-
-	if (INPUT->IsKeyPress(VK_A))
+	if (m_isDeath == true && m_isPull == false)m_isPull = true;
+	if (m_isDeath == false)
 	{
-		m_fRotY -= 0.03;
+		cCharacter::Update(deltaTime);
+
+		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
+		m_pFsm->Update(deltaTime);
+		D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
+		MAP->GetHeight(movePos.x, movePos.y, movePos.z);
+		m_CharacterEntity->SetPos(movePos);
+		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
+		m_MeleeCollider.vCenter.y += 0.5f;
+		if (INPUT->IsKeyPress(VK_A))
+		{
+			m_fRotY -= 0.03;
+		}
+		if (INPUT->IsKeyPress(VK_D))
+		{
+			m_fRotY += 0.03;
+		}
+
+		if (INPUT->IsKeyDown('1'))EquipLeftHand(1);
+		if (INPUT->IsKeyDown('2'))EquipRightHand(1);
+		if (INPUT->IsKeyDown('3'))TestEquip();
+
+		//화살처리
+
+		D3DXMATRIXA16 matR;
+		D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+		D3DXMatrixIdentity(&matR);
+		D3DXMatrixRotationY(&matR, m_fRotY);
+
+		D3DXVec3TransformCoord(&forward, &forward, &matR);
+		m_CharacterEntity->SetForward(forward);
+
+		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+
+		
 	}
-	if (INPUT->IsKeyPress(VK_D))
-	{
-		m_fRotY += 0.03;
-	}
-
-
-	//<< 화살처리
-	if (INPUT->IsMouseDown(MOUSE_RIGHT) && !m_isAiming)
-	{
-
-		//	CAMERA->SetCameraDistance(0.1);
-			//화살구체
-
-	}
-
-	if (INPUT->IsMouseDown(MOUSE_LEFT) && !m_isAiming)
-	{
-		//CAMERA->SetCameraDistance(5);
-
-	//	OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
-		//m_isAiming = true;
-	}
-	//화살처리
-
-	D3DXMATRIXA16 matR;
-	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
-	D3DXMatrixIdentity(&matR);
-	D3DXMatrixRotationY(&matR, m_fRotY);
-
-	D3DXVec3TransformCoord(&forward, &forward, &matR);
-	m_CharacterEntity->SetForward(forward);
-
-	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-
 	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-
-
+	
 }
 
 void cPlayer::Render()
@@ -126,13 +129,19 @@ void cPlayer::Render()
 	cCharacter::Render();
 	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
 	{
-		m_pSkinnedMesh->UpdateAndRender(m_isDeath);
+		m_pSkinnedMesh->UpdateAndRender(m_isPull);
+
+		//>>아이템착용 출력단
+		if (m_RightWeaponMesh!=NULL)m_RightWeaponMesh->UpdateAndRenderForItem(m_isDeath, m_rightHand->CombinedTransformationMatrix);
+		if (m_LeftWeaponMesh!=NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
+		//<<
+
 
 		SetAttackColliderPos();
 		D3DXMATRIXA16 matT;
 		D3DXMatrixIdentity(&matT);
 
-		D3DXMatrixTranslation(&matT, m_AttackCollideSphere.vCenter.x, m_AttackCollideSphere.vCenter.y, m_AttackCollideSphere.vCenter.z);
+		D3DXMatrixTranslation(&matT, m_MeleeCollider.vCenter.x, m_MeleeCollider.vCenter.y, m_MeleeCollider.vCenter.z);
 
 		D3DDevice->SetTransform(D3DTS_WORLD, &matT);
 		D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
@@ -187,8 +196,42 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 
 	void cPlayer::EquipRightHand(int itemSID)
 	{
+		m_AttackType = ATTACK_BOW;
+		m_RightWeaponMesh = NULL;
+		m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName);
+
 	}
 
+	void cPlayer::TestEquip()
+	{
+		m_AttackType = ATTACK_MELEE;
+		m_RightWeaponMesh = NULL;
+		m_LeftWeaponMesh = NULL;
+	}
 	void cPlayer::EquipLeftHand(int itemSID)
 	{
+		m_AttackType = ATTACK_MELEE;
+		//Add(new ST_Character(C_R_END, C_G_END, C_C_BOW_BOW, 100.0f, 100.f, 100.0f, 4, "Character/Weapon/", "WeaponBow.x", "Weapon_Attack_Bone_Col_root"));
+		m_RightWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName);
+		m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName);
+		
+	}
+
+	void cPlayer::SetAttackColliderPos()
+	{
+		if (m_RightWeaponMesh == NULL&&m_LeftWeaponMesh == NULL)
+		{
+			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_rightHand->CombinedTransformationMatrix);
+		}
+		else if (m_RightWeaponMesh != NULL)
+		{
+			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_RightWeaponMesh->GetAttackBoneMat());
+		}
+		else if (m_LeftWeaponMesh != NULL&&m_RightWeaponMesh == NULL)
+		{
+			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_LeftWeaponMesh->GetAttackBoneMat());
+		}
 	}

@@ -855,6 +855,12 @@
     <ClCompile Include="cUIInventory.cpp">
       <Filter>07. UI\09. cInventory</Filter>
     </ClCompile>
+    <ClCompile Include="Player_BowAttack.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Death.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc">

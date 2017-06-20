@@ -121,6 +121,13 @@ enum FONT_TAG
 	FONT_DEF, FONT_SHOP,
 };
 
+enum FONT_BOWMOTION
+{
+	BOW_NORMAL,
+	BOW_PULL,
+	BOW_PUSH,
+};
+
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;

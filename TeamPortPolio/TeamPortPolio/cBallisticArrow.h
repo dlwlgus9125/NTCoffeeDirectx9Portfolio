@@ -22,4 +22,6 @@ private:
 
 	D3DXVECTOR3 m_vTarget;
 	D3DXVECTOR3 m_vDir;
+
+	bool         m_isHit;
 };

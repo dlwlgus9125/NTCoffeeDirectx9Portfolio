@@ -322,6 +322,8 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Melee_Death.cpp" />
     <ClCompile Include="Player_Attack.cpp" />
+    <ClCompile Include="Player_BowAttack.cpp" />
+    <ClCompile Include="Player_Death.cpp" />
     <ClCompile Include="Player_Defence.cpp" />
     <ClCompile Include="Player_Idle.cpp" />
     <ClCompile Include="Player_Walk.cpp" />
