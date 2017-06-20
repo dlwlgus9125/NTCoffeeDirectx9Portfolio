@@ -20,8 +20,7 @@ void cUnit::Init()
 	m_CollideSphere.fRadius = 1.0f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 
-	m_arrangeCollideSphere.fRadius = 1.0f;
-	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
+
 	cCharacter::Init();
 
 	

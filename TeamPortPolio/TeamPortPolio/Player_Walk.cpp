@@ -30,7 +30,11 @@ void Player_Walk::OnUpdate(cPlayer* pPlayer, float deltaTime)
 	{
 		isMove = false;
 
-		pPlayer->FSM()->Play(PLAYER_STATE_ATTACK);
+		switch (pPlayer->GetAttackType())
+		{
+		case ATTACK_MELEE:pPlayer->FSM()->Play(PLAYER_STATE_ATTACK); break;
+		case ATTACK_BOW:pPlayer->FSM()->Play(PLAYER_STATE_BOWATTACK); break;
+		}
 	}
 }
 
