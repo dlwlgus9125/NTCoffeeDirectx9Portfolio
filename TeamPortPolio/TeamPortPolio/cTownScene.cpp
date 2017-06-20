@@ -22,6 +22,7 @@ void cTownScene::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
+	
 	EFFECT->Init(false, 0, true, true);
 
 	// >> 테스트용 
