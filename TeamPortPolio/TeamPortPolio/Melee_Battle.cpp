@@ -66,13 +66,14 @@ void Melee_Battle::StateChanger(cMeleeUnit * pUnit)
 //자신과 충돌한 적을 찾는 함수
 void Melee_Battle::FindTarget(cMeleeUnit * pUnit)
 {
-	for (int i = 0; i < ((cLeader*)pUnit->GetTargetObject())->GetUnits().size(); i++)
+	for (int i = 0; i < OBJECT->GetCharacter().size(); i++)
 	{
-		if (((cLeader*)pUnit->GetTargetObject())->GetUnits()[i]->IsDeath() == false)
+		if (OBJECT->GetCharacter()[i]->IsDeath() == false&& OBJECT->GetCharacter()[i]->GetCamp()!=pUnit->GetCamp())
 		{
-			if (MATH->IsCollided(((cLeader*)pUnit->GetTargetObject())->GetUnits()[i]->GetArrangeSphere(), pUnit->GetArrangeSphere()))
+			if (MATH->IsCollided(OBJECT->GetCharacter()[i]->GetSphere(), pUnit->GetArrangeSphere()))
 			{
-				BattleTarget = ((cLeader*)pUnit->GetTargetObject())->GetUnits()[i];
+				BattleTarget = OBJECT->GetCharacter()[i];
+				break;
 			}
 		}
 	}
@@ -84,23 +85,28 @@ void Melee_Battle::FindNearTarget(cMeleeUnit * pUnit)
 	{
 		D3DXVECTOR3 nextTargetPos, prevTargetPos;
 		D3DXVECTOR3 pos = pUnit->GetCharacterEntity()->Pos();
-		for (int i = 1; i < ((cLeader*)pUnit->GetTargetObject())->GetUnits().size(); i++)
+		if (OBJECT->GetCharacter()[0]->GetCharacterEntity()->IsDeath() ==false&&OBJECT->GetCharacter()[0]->GetCamp() != pUnit->GetCamp() && MATH->IsCollided(pUnit->GetArrangeSphere(), OBJECT->GetCharacter()[0]->GetSphere()))
 		{
-			if (((cLeader*)pUnit->GetTargetObject())->GetUnits()[i]->IsDeath() == false)
+			BattleTarget = OBJECT->GetCharacter()[0];
+		}
+
+		for (int i = 1; i < OBJECT->GetCharacter().size(); i++)
+		{
+			if (OBJECT->GetCharacter()[i]->GetCharacterEntity()->IsDeath() == false && OBJECT->GetCharacter() [i]->GetCamp()!=pUnit->GetCamp()&& MATH->IsCollided(pUnit->GetArrangeSphere(), OBJECT->GetCharacter()[i]->GetArrangeSphere()))
 			{
-				prevTargetPos = ((cLeader*)pUnit->GetTargetObject())->GetUnits()[i - 1]->GetCharacterEntity()->Pos();
-				nextTargetPos = ((cLeader*)pUnit->GetTargetObject())->GetUnits()[i]->GetCharacterEntity()->Pos();
+				prevTargetPos = OBJECT->GetCharacter()[i - 1]->GetCharacterEntity()->Pos();
+				nextTargetPos = OBJECT->GetCharacter()[i]->GetCharacterEntity()->Pos();
 
 				if (MATH->Distance(pos, prevTargetPos) > MATH->Distance(pos, nextTargetPos))
 				{
-					BattleTarget = ((cLeader*)pUnit->GetTargetObject())->GetUnits()[i];
+					BattleTarget = OBJECT->GetCharacter()[i];
 				}
 				else
 				{
-					BattleTarget = ((cLeader*)pUnit->GetTargetObject())->GetUnits()[i - 1];
+					BattleTarget = OBJECT->GetCharacter()[i - 1];
 				}
 			}
-		}
+		}		
 	}
 }
 
@@ -119,6 +125,8 @@ void Melee_Battle::Charge(cMeleeUnit * pUnit)
 		pUnit->GetCharacterEntity()->Steering()->UnitArrive(targetPos);
 		pUnit->GetCharacterEntity()->Steering()->ConstrainOverlap(OBJECT->GetEntities());
 		FindTarget(pUnit);
+		if (pUnit->GetTargetObject() == ((cObject*)OBJECT->GetPlayer()))FindNearTarget(pUnit);
+	
 	}
 	else
 	{
@@ -132,28 +140,31 @@ void Melee_Battle::Battle(cMeleeUnit * pUnit)
 
 void Melee_Battle::BattleWithTarget(cMeleeUnit * pUnit)
 {
-	if (pUnit->GetMesh()->GetPassedTime() > pUnit->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.3f)
+	if (((cCharacter*)BattleTarget)->GetCharacterEntity()->IsDeath() == false)
 	{
-		D3DXVECTOR3 dir = BattleTarget->GetCharacterEntity()->Pos() - pUnit->GetCharacterEntity()->Pos();
-		D3DXVec3Normalize(&dir, &dir);
-		pUnit->GetCharacterEntity()->SetForward(dir);
-
-		switch (pUnit->GetMesh()->GetIndex())
+		if (pUnit->GetMesh()->GetPassedTime() > pUnit->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.3f)
 		{
-		case FG_ATTACK1:
-			pUnit->GetMesh()->SetAnimationIndexBlend(FG_ATTACK2);
-			break;
-		default:
-			pUnit->GetMesh()->SetAnimationIndexBlend(FG_ATTACK1);
-			break;
-		}
+			D3DXVECTOR3 dir = BattleTarget->GetCharacterEntity()->Pos() - pUnit->GetCharacterEntity()->Pos();
+			D3DXVec3Normalize(&dir, &dir);
+			pUnit->GetCharacterEntity()->SetForward(dir);
 
-		if (MATH->IsCollided(pUnit->GetAttackCollider(), ((cCharacter*)BattleTarget)->GetSphere()))
-		{
-			switch (pUnit->Fight(pUnit, (cCharacter*)BattleTarget))
+			switch (pUnit->GetMesh()->GetIndex())
 			{
-			case FIGHT_BLOCK:((cCharacter*)BattleTarget)->SetAnimBlock(); break;
-			case FIGHT_HIT:((cCharacter*)BattleTarget)->SetAnimHit(); break;
+			case FG_ATTACK1:
+				pUnit->GetMesh()->SetAnimationIndexBlend(FG_ATTACK2);
+				break;
+			default:
+				pUnit->GetMesh()->SetAnimationIndexBlend(FG_ATTACK1);
+				break;
+			}
+
+			if (MATH->IsCollided(pUnit->GetAttackCollider(), ((cCharacter*)BattleTarget)->GetSphere()))
+			{
+				switch (pUnit->Fight(pUnit, (cCharacter*)BattleTarget))
+				{
+				case FIGHT_BLOCK:((cCharacter*)BattleTarget)->SetAnimBlock(); break;
+				case FIGHT_HIT:((cCharacter*)BattleTarget)->SetAnimHit(); break;
+				}
 			}
 		}
 	}

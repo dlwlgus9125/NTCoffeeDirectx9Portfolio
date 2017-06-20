@@ -197,6 +197,7 @@
     <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="cStateMachine.h" />
     <ClInclude Include="cTextureManager.h" />
+    <ClInclude Include="cThreadManager.h" />
     <ClInclude Include="cTimeManager.h" />
     <ClInclude Include="cTitleScene.h" />
     <ClInclude Include="cTownScene.h" />
@@ -285,6 +286,7 @@
     <ClCompile Include="cSoundManager.cpp" />
     <ClCompile Include="cTextureManager.cpp" />
     <ClCompile Include="BallisticMotion.cpp" />
+    <ClCompile Include="cThreadManager.cpp" />
     <ClCompile Include="cTimeManager.cpp" />
     <ClCompile Include="cTitleScene.cpp" />
     <ClCompile Include="cTownScene.cpp" />
@@ -322,6 +324,8 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Melee_Death.cpp" />
     <ClCompile Include="Player_Attack.cpp" />
+    <ClCompile Include="Player_BowAttack.cpp" />
+    <ClCompile Include="Player_Death.cpp" />
     <ClCompile Include="Player_Defence.cpp" />
     <ClCompile Include="Player_Idle.cpp" />
     <ClCompile Include="Player_Walk.cpp" />

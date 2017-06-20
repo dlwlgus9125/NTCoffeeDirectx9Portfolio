@@ -18,7 +18,7 @@ void Leader_State_Melee_Battle::OnBegin(cLeader * pLeader)
 
 void Leader_State_Melee_Battle::OnUpdate(cLeader * pLeader, float deltaTime)
 {
-	if (((cCharacter*)pLeader->GetTargetObject())->IsDeath() == true)
+	if (((cCharacter*)pLeader->GetTargetObject())->GetCharacterEntity()->IsDeath() == true)
 	{
 		pLeader->SetTargetObject(NULL);
 		pLeader->SetTargetIndex(pLeader->GetIndex());

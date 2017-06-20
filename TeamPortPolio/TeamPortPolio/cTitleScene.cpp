@@ -23,7 +23,7 @@ void cTitleScene::OnEnter()
 	MAP->Init(SCENE_TITLE);
 	UI->Change(SCENE_TITLE);
 	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8,0,30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pPlayer->SetID(C_C_HUMAN_MALE);
+	pPlayer->SetID(C_C_ORC_MALE);
 	pPlayer->Init();
 	OBJECT->AddCharacter(pPlayer);
 
@@ -35,12 +35,18 @@ void cTitleScene::OnEnter()
 
 	cLeader* pLeader = new cLeader(ASTAR->GetGraph()->GetNode(11581)->Pos(), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
-	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
-	pLeader->SetTargetIndex(11581);
+	pLeader->Init();
+	int index=0;
+	MAP->GetMap()->GetIndex(pLeader->GetCharacterEntity()->Pos().x, pLeader->GetCharacterEntity()->Pos().z, index);
+	pLeader->SetTargetIndex(index);
+		;
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 	Setup_DirLight();
+
+
+	ASTAR->SetMapLoadingComplete(true);
 }
 
 void cTitleScene::OnUpdate()
@@ -59,6 +65,7 @@ void cTitleScene::OnUpdate()
 	{
 		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
 		cout << "UI Index : " << indexInMiniMap << endl;
+		cout << "Node ID : " << ASTAR->GetGraph()->GetNode(indexInMiniMap)->Id() << endl;
 	}
 	switch (buttonIndex)
 	{
@@ -82,6 +89,7 @@ void cTitleScene::OnUpdate()
 
 void cTitleScene::OnExit()
 {
+	ASTAR->SetMapLoadingComplete(false);
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	UI->Release();

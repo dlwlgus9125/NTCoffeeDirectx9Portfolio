@@ -4,7 +4,7 @@
 
 cUIInventory::cUIInventory()
 {
-	m_vecShownData.resize(5);
+	m_vecShownData.resize(3, 0);
 }
 
 
@@ -45,26 +45,25 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 	m_pBtn_Exit->Render(pSprite);
 	pSprite->End();
 
-	//// >> 슬롯 이미지	
-	//for (int i = 0; i < m_vecShownData.size(); i++)
-	//{
-	//	pSprite->SetTransform(&m_matWorld);
-	//	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-	//
-	//	// 테스트용
-	//	SetRect(&rc, 0, 0, m_vecSlotInfo[i].rectSize.nWidth, m_vecSlotInfo[i].rectSize.nHeight);
-	//	pSprite->Draw(TEXTURE->GetTexture("image/rect/darkgray.png"), &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-	//
-	//	D3DXIMAGE_INFO imageInfo;
-	//	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
-	//	SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
-	//
-	//	pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-	//
-	//	pSprite->End();
-	//}
-	//// << 
-	//
+	// >> 슬롯 이미지	
+	for (int i = 0; i < m_vecShownData.size(); i++)
+	{
+		pSprite->SetTransform(&m_matWorld);
+		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+	
+		D3DXIMAGE_INFO imageInfo;
+		if (m_vecShownData.size() - 1 >= i)
+		{
+			LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
+			SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+
+			pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		}
+	
+		pSprite->End();
+	}
+	// << 
+	
 	//// >> 품명, 설명 인쇄
 	//for (int i = 0; i < m_vecShownData.size(); i++)
 	//{
@@ -100,12 +99,10 @@ void cUIInventory::Setup_Tap(string sPath_body, D3DXVECTOR3 pos_body)
 	m_stBodySize = ST_SIZEN(imageInfo.Width, imageInfo.Height);
 }
 
-void cUIInventory::Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont)
+void cUIInventory::Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR3 imagePos, ST_SIZEN imageSize)
 {
-	ST_SLOT slot = ST_SLOT(rectPos, rectSize, imagePos, imageSize, textPos, textSize);
+	ST_SLOT slot = ST_SLOT(rectPos, rectSize, imagePos, imageSize, D3DXVECTOR3(0,0,0), ST_SIZEN(0,0));
 	m_vecSlotInfo.push_back(slot);
-
-	m_eFont_Slot = eFont;
 }
 
 void cUIInventory::AddShownData(int itemSID)
@@ -119,59 +116,43 @@ void cUIInventory::AddShownData(int itemSID)
 
 	// 벡터 인덱스 - 아이템 매칭
 	/*
-			0 : 머리
-			1 : 오른손
-			2 : 왼손
-			3 : 몸
-			4 : 발
+			0 : 오른손
+			1 : 왼손
+			2 : 몸
 	
 	*/
 	switch (itemMID)
 	{
-	case I_M_HELM:
-	{
-		if (m_vecShownData[0]) SAFE_DELETE(m_vecShownData[0]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[0] = newData;
-	}
-		break;
 	case I_M_SWORD:
 	case I_M_AXE:
 	{
-		if (m_vecShownData[1]) SAFE_DELETE(m_vecShownData[1]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[1] = newData;
+		if (m_vecShownData[0]) SAFE_DELETE(m_vecShownData[0]);
+		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
+		m_vecShownData[0] = newData;
 	}
 		break;
 	case I_M_BOW:
 	{
+		if (m_vecShownData[0]) SAFE_DELETE(m_vecShownData[0]);
+		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
+		m_vecShownData[0] = newData;
 		if (m_vecShownData[1]) SAFE_DELETE(m_vecShownData[1]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[1] = newData;
-		if (m_vecShownData[2]) SAFE_DELETE(m_vecShownData[2]);
-		ST_SLOTDATA* newData2 = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[2] = newData2;
+		ST_SLOTDATA* newData2 = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
+		m_vecShownData[1] = newData2;
 	}
 		break;
 	case I_M_SHIELD:
 	{
-		if (m_vecShownData[2]) SAFE_DELETE(m_vecShownData[2]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[2] = newData;
+		if (m_vecShownData[1]) SAFE_DELETE(m_vecShownData[1]);
+		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
+		m_vecShownData[1] = newData;
 	}
 		break;
 	case I_M_ARMOR:
 	{
-		if (m_vecShownData[3]) SAFE_DELETE(m_vecShownData[3]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[3] = newData;
-	}
-		break;
-	case I_M_BOOTS:
-	{
-		if (m_vecShownData[4]) SAFE_DELETE(m_vecShownData[4]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, NULL, NULL);
-		m_vecShownData[4] = newData;
+		if (m_vecShownData[2]) SAFE_DELETE(m_vecShownData[2]);
+		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
+		m_vecShownData[2] = newData;
 	}
 		break;
 	}
