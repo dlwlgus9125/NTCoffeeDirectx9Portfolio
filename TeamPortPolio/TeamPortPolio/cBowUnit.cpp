@@ -22,7 +22,7 @@ void cBowUnit::Init()
 	m_CollideSphere.fRadius = 1.0f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 
-	m_arrangeCollideSphere.fRadius = 15.0f;
+	m_arrangeCollideSphere.fRadius = 25.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	cUnit::Init();
 
@@ -47,9 +47,12 @@ void cBowUnit::Update(float deltaTime)
 		MAP->GetHeight(pos.x, pos.y, pos.z);
 		m_CharacterEntity->SetPos(pos);
 		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-		if (INPUT->IsKeyDown(VK_SPACE))
+
+
+		if (GetTargetObject() == NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
 		{
-			OBJECT->AddUnitArrow(pos, OBJECT->GetPlayer()->GetCharacterEntity()->Pos());
+			SetTargetObject(OBJECT->GetPlayer());
+			m_pFsm->Play(UNIT_STATE_BOW_BATTLE);
 		}
 		//if (MATH->IsCollided(OBJECT->GetPlayer()->GetSphere(), m_arrangeCollideSphere&&this->GetLeader()->)
 		//{

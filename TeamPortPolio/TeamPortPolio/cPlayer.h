@@ -34,6 +34,10 @@ private:
 	// >> 케릭터 아이템 저장 (인벤토리)
 	SYNTHESIZE(vector<int>, m_vecInventory, Inventory);
 	// << 
+
+	ST_BONE* m_rightHand;
+	ST_BONE* m_leftHand;
+	ST_BONE* m_AttackCollider;
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cPlayer();
@@ -53,6 +57,9 @@ public:
 	// >> 인벤토리용 함수
 	void SellItem(int itemSID);
 	void ByuItem(int itemSID);
+
+	void EquipRightHand(int itemSID);
+	void EquipLeftHand(int itemSID);
 	// <<
 
 	D3DXVECTOR3 SetUpAim() {
@@ -60,6 +67,8 @@ public:
 		vAim.y += 1;
 		return	MATH->Nomalize(vAim);
 	}
+
+
 
 };
 

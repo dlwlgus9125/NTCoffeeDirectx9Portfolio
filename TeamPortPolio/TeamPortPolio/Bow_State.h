@@ -40,6 +40,9 @@ public:
 	void OnUpdate(cBowUnit* pUnit, float deltaTime);
 
 	void OnEnd(cBowUnit* pUnit);
+
+	void FindNearTarget(cBowUnit * pUnit);
+
 };
 
 

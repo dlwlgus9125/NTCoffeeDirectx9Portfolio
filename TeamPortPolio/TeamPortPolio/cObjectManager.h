@@ -56,8 +56,15 @@ public:
 	list<cBallisticArrow*> GetPlayerArrows();
 	list<cBallisticArrow*> GetUnitArrows();
 	void AddPlayerArrow(IEntity * pos, D3DXVECTOR3 forward);
-	void AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget);
+	void AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget, CAMP_STATE camp);
 	void ArrowUpdate();
 	void ClearArrow();
+
+
+	vector<int> GetInventory();
+
+	void SellItem(int itemSID);
+
+	void BuyItem(int itemSID);
 };
 

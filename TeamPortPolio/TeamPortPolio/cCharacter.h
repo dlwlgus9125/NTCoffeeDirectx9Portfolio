@@ -35,6 +35,7 @@ protected:
 	MeshSpere        m_MeshSphere;
 
 	bool             m_isAnimDeath;
+	bool             m_isEquiped;
 public:
 	cCharacter();
 	virtual ~cCharacter();

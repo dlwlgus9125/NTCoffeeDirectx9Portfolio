@@ -9,28 +9,31 @@
 
 void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 {
-	m_graph = new cGraph(vecPosOfNode.size());
-	int col = sqrt(vecPosOfNode.size());
-	for (int i = 0; i < vecPosOfNode.size(); i++)
+	m_isThreadResume = false;
+	m_vecPosOfNode = vecPosOfNode;
+
+	m_graph = new cGraph(m_vecPosOfNode.size());
+	int col = sqrt(m_vecPosOfNode.size());
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
 	{
 		m_graph->GetNode(i)->SetActive(false);
 
 		D3DXVECTOR3 pos;//<-여기에 heightmap연산해서 좌표넣기
 		//그렇게하면 높이값까지 코스트로 적용이 가능하기때문에 오히려 자연스러움
 
-		m_graph->GetNode(i)->SetPos(vecPosOfNode[i]);
+		m_graph->GetNode(i)->SetPos(m_vecPosOfNode[i]);
 		int index = 0;
-		MAP->GetMap()->GetIndex(vecPosOfNode[i].x, vecPosOfNode[i].z, index);
+		MAP->GetMap()->GetIndex(m_vecPosOfNode[i].x, m_vecPosOfNode[i].z, index);
 		m_graph->GetNode(i)->SetID(index);
 	}
-	for (int i = 0; i < vecPosOfNode.size(); i++)
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
 	{
-		if (vecPosOfNode[i].y == 0.0f || vecPosOfNode[i].y == 1.0f || vecPosOfNode[i].y == 2.0f || vecPosOfNode[i].y == 3.0f || vecPosOfNode[i].y == 4.0f)
+		if (m_vecPosOfNode[i].y == 0.0f || m_vecPosOfNode[i].y == 1.0f || m_vecPosOfNode[i].y == 2.0f || m_vecPosOfNode[i].y == 3.0f || m_vecPosOfNode[i].y == 4.0f)
 		{
 			m_graph->GetNode(i)->SetActive(true);
 		}
 	}
-	for (int i = 0; i < vecPosOfNode.size(); i++)
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
 	{
 		int x = i % col;	// 열 번호
 		int z = i / col;	// 줄 번호	
@@ -48,6 +51,50 @@ void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 	m_isMapLoadingComplete = true;
 }
 
+void cAstarManager::SetupThread()
+{
+}
+
+cGraph* cAstarManager::SetupGraph()
+{
+	cGraph* pGraph = new cGraph(m_vecPosOfNode.size());
+	int col = sqrt(m_vecPosOfNode.size());
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
+	{
+		pGraph->GetNode(i)->SetActive(false);
+
+		D3DXVECTOR3 pos;//<-여기에 heightmap연산해서 좌표넣기
+						//그렇게하면 높이값까지 코스트로 적용이 가능하기때문에 오히려 자연스러움
+
+		pGraph->GetNode(i)->SetPos(m_vecPosOfNode[i]);
+		int index = 0;
+		MAP->GetMap()->GetIndex(m_vecPosOfNode[i].x, m_vecPosOfNode[i].z, index);
+		pGraph->GetNode(i)->SetID(index);
+	}
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
+	{
+		if (m_vecPosOfNode[i].y == 0.0f || m_vecPosOfNode[i].y == 1.0f || m_vecPosOfNode[i].y == 2.0f || m_vecPosOfNode[i].y == 3.0f || m_vecPosOfNode[i].y == 4.0f)
+		{
+			pGraph->GetNode(i)->SetActive(true);
+		}
+	}
+	for (int i = 0; i < m_vecPosOfNode.size(); i++)
+	{
+		int x = i % col;	// 열 번호
+		int z = i / col;	// 줄 번호	
+
+		AddEdgeTest(pGraph, i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
+		AddEdgeTest(pGraph, i, x + 1, z + 0);
+		AddEdgeTest(pGraph, i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후
+		AddEdgeTest(pGraph, i, x + 0, z + 1);
+		AddEdgeTest(pGraph, i, x - 1, z - 1);
+		AddEdgeTest(pGraph, i, x - 1, z + 1);
+		AddEdgeTest(pGraph, i, x + 1, z - 1);
+		AddEdgeTest(pGraph, i, x + 1, z + 1);
+	}
+	return pGraph;
+}
+
 void cAstarManager::AddEdge(int from, int col, int row)
 {
 	if (col >= 0 && col < 150 && row >= 0 && row < 150)
@@ -62,6 +109,24 @@ void cAstarManager::AddEdge(int from, int col, int row)
 			D3DXVECTOR3 length = toPos - fromPos;
 
 			m_graph->AddEdge(from, to, sqrt(pow(length.x, 2) + pow(length.z, 2)));
+		}
+	}
+}
+
+void cAstarManager::AddEdgeTest(cGraph* pGraph,int from, int col, int row)
+{
+	if (col >= 0 && col < 150 && row >= 0 && row < 150)
+		//if (col >= 0 && col < 15 && row >= 0 && row < 15)
+	{
+		int to = col + row * 150;
+		D3DXVECTOR3 fromPos = pGraph->GetNode(from)->Pos();//get노드로 처리해서 엣지추가여부 결정하기
+		D3DXVECTOR3 toPos = pGraph->GetNode(to)->Pos();
+
+		if (abs(fromPos.y - toPos.y) <= 1.0f&&pGraph->GetNode(from)->Active() == true && pGraph->GetNode(to)->Active() == true)
+		{
+			D3DXVECTOR3 length = toPos - fromPos;
+
+			pGraph->AddEdge(from, to, sqrt(pow(length.x, 2) + pow(length.z, 2)));
 		}
 	}
 }
@@ -85,9 +150,18 @@ void cAstarManager::Update()
 	if (m_isMapLoadingComplete == true &&TIME->UpdateOneSecond())
 	{
 		SetObjectIndex();
-		SetLeaderPath();
+		////SetLeaderPath();
 		SetTargetOfLeader();
 	}
+}
+
+void cAstarManager::PathUpdate()
+{
+	if (m_isMapLoadingComplete == true)
+	{
+		//SetLeaderPath();
+	}
+	
 }
 
 void cAstarManager::Release()
@@ -144,11 +218,19 @@ void cAstarManager::SetLeaderPath()
 {
 	for (int i = 0; i < OBJECT->GetLeader().size(); i++)
 	{
-		if (OBJECT->GetLeader()[i]->GetPath().size() <= 0 && OBJECT->GetLeader()[i]->GetIndex() != OBJECT->GetLeader()[i]->GetTargetIndex())
+		if (OBJECT->GetLeader()[i]->GetPath().size()<=0&&OBJECT->GetLeader()[i]->GetIndex() != OBJECT->GetLeader()[i]->GetTargetIndex())
 		{
+			OBJECT->GetLeader()[i]->PathClear();
 			OBJECT->GetLeader()[i]->SetPath(this->GetPath(OBJECT->GetLeader()[i]->GetIndex(), OBJECT->GetLeader()[i]->GetTargetIndex()));
 		}
 	}
+	
+}
+
+void cAstarManager::SetLeaderPath(cLeader* pLeader)
+{
+
+
 }
 
 //...ㅋㅋㅋㅋㅋㅋㅋ
@@ -167,7 +249,10 @@ void cAstarManager::SetTargetOfLeader()
 						if (MATH->IsCollided(OBJECT->GetLeader()[thisLeader]->GetArrangeSphere(), OBJECT->GetLeader()[anotherLeader]->GetArrangeSphere()))
 						{
 							if (OBJECT->GetLeader()[thisLeader]->GetTargetObject() != OBJECT->GetLeader()[anotherLeader])
+							{
 								OBJECT->GetLeader()[thisLeader]->SetTargetObject(OBJECT->GetLeader()[anotherLeader]);
+								break;
+							}
 						}
 						
 					}

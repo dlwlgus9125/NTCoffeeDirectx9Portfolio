@@ -4,17 +4,19 @@
 
 cBallisticArrow::cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTOR3 forward, float radius, float mass, float maxSpeed)
 {
-	pEntity = new IEntity(pos, radius, forward);
-	m_pArrow = new BallisticMotion(pEntity, pos, vtarget, forward, radius);
-	m_ArrowSphere.fRadius =radius;
+	pos.y += 1.0f;
+	m_CharacterEntity = new ISteeringEntity(pos, radius, forward,0,0);
+	m_pArrow = new BallisticMotion(m_CharacterEntity, pos, vtarget, forward, radius);
+	m_CollideSphere.fRadius =radius;
 	m_vTarget = vtarget;
 	m_vDir = forward;
+	SetID(C_C_ARROW_ARROW);
 	Init();
 }
 
 cBallisticArrow::~cBallisticArrow()
 {
-	SAFE_DELETE(pEntity);
+	SAFE_DELETE(m_CharacterEntity);
 	SAFE_DELETE(m_pArrow);
 }
 
@@ -25,13 +27,14 @@ BallisticMotion * cBallisticArrow::Shoot()
 
 void cBallisticArrow::Init()
 {
-	m_ArrowSphere.vCenter = m_pArrow->Entity()->Pos();
-	D3DXCreateSphere(D3DDevice, pEntity->Radius(), 10, 10, &m_pMeshSphere, NULL);
+	m_CollideSphere.vCenter = m_pArrow->Entity()->Pos();
+	D3DXCreateSphere(D3DDevice, m_CharacterEntity->Radius(), 10, 10, &m_pMeshSphere, NULL);
 	
 	ZeroMemory(&m_stMtlSphere, sizeof(D3DMATERIAL9));
 	m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_stMtlSphere.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_stMtlSphere.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+	cCharacter::Init();
 }
 
 
@@ -40,20 +43,36 @@ void cBallisticArrow::Render()
 	D3DXMATRIXA16 mat;
 	D3DXMatrixIdentity(&mat);
 
-	D3DXMatrixTranslation(&mat, m_ArrowSphere.vCenter.x, m_ArrowSphere.vCenter.y, m_ArrowSphere.vCenter.z);
+	D3DXMatrixTranslation(&mat, m_CollideSphere.vCenter.x, m_CollideSphere.vCenter.y, m_CollideSphere.vCenter.z);
 
 	D3DDevice->SetTransform(D3DTS_WORLD, &mat);
 	D3DDevice->SetMaterial(&m_stMtlSphere);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pMeshSphere->DrawSubset(0);
+	//m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-
+	cCharacter::Render();
+	
 
 }
 
 void cBallisticArrow::ArrowUpdate()
 {
-	m_ArrowSphere.vCenter = m_pArrow->Entity()->Pos();
+	//m_CollideSphere.vCenter = m_pArrow->Entity()->Pos();
+	cCharacter::Update(TIME->DeltaTime());
+	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+	for (int i = 0; i < OBJECT->GetCharacter().size(); i++)
+	{
+		if (OBJECT->GetCharacter()[i]->GetCharacterEntity()->IsDeath() == false&&OBJECT->GetCharacter()[i]->GetCamp() != m_camp&&MATH->IsCollided(OBJECT->GetCharacter()[i]->GetSphere(), m_CollideSphere))
+		{
+			OBJECT->GetCharacter()[i]->SetAnimHit();
+
+			this->Fight(this, OBJECT->GetCharacter()[i]);
+		}
+
+	}
+
+
+
+
 }

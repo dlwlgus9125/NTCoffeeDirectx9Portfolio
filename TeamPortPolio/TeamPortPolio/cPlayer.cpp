@@ -3,22 +3,23 @@
 #include "cGameManager.h"
 #include "cLeader.h"
 #include"cArrowMaker.h"
+#include "cCharacterDB.h"
 
 
 cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed) 
-
 {
+	m_camp = CAMP_PLAYER;
 	m_CharacterEntity = new ISteeringEntity(pos, radius, forward, mass, maxSpeed);
-	m_unitLeader = NULL;
+	/*m_unitLeader = NULL;
 	m_unitLeader = new cLeader(pos, radius, forward, mass, maxSpeed);
 
-	m_unitLeader->SetID(C_C_HUMAN_CAVALRY);
+	m_unitLeader->SetID(C_C_HUMAN_BOWMAN);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
 	m_unitLeader->Init();
 	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
 	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);
+	OBJECT->AddLeader(m_unitLeader);*/
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 }
@@ -35,12 +36,30 @@ void cPlayer::Init()
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_CollideSphere.vCenter.y += 0.5f;
 
-	m_arrangeCollideSphere.fRadius = 20.0f;
+	m_arrangeCollideSphere.fRadius = 15.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	cCharacter::Init();
 
 
-	m_pSkinnedMesh->FindAttackBone(m_Status->m_szColliderBoneName);
+	//m_pSkinnedMesh->FindAttackBone(m_Status->m_szColliderBoneName);
+	m_rightHand = m_leftHand= m_AttackCollider = NULL;
+	
+	
+	{
+		//>>오른손 찾기
+		m_rightHand = TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName)->GetRightHand();
+
+		////>>왼손 찾기
+		m_leftHand = TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName)->GetLeftHand();
+	}
+
+
+	//char* test = CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath;
+	m_rightHand->pFrameFirstChild = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName)->GetFrameRoot();
+	m_leftHand->pFrameFirstChild = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName)->GetFrameRoot();
+	
+	m_pSkinnedMesh->FindAttackBone(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szColliderBoneName);
+	//cSkinnedMesh* test = TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName);
 	m_pFsm = new cStateMachine<cPlayer*>(this);
 	m_pFsm->Register(PLAYER_STATE_IDLE, new Player_Idle());
 	m_pFsm->Register(PLAYER_STATE_WALK, new Player_Walk());
@@ -83,7 +102,7 @@ void cPlayer::Update(float deltaTime)
 	{
 		//CAMERA->SetCameraDistance(5);
 	
-		OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
+	//	OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
 		//m_isAiming = true;
 	}
 	//화살처리
@@ -134,9 +153,11 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
 	if (m_unitLeader)
 	{
-		m_unitLeader->PathClear();
+		
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
+			//ASTAR->ResumeAstarThread(1);
+			m_unitLeader->PathClear();
 			m_unitLeader->SetTargetIndex(index);
 			/*cout << "targetInd : " << index << endl;
 			cout << "size : " << m_unitLeader->GetPath().size() << endl;*/
@@ -160,4 +181,12 @@ void cPlayer::ByuItem(int itemSID)
 	m_vecInventory.push_back(itemSID);
 
 	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::EquipRightHand(int itemSID)
+{
+}
+
+void cPlayer::EquipLeftHand(int itemSID)
+{
 }

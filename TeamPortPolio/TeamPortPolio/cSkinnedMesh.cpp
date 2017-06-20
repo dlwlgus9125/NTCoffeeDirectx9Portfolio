@@ -88,6 +88,8 @@ void cSkinnedMesh::Load(char* szDirectory, char* szFilename)
 
 	if (m_pRootFrame)
 		SetupBoneMatrixPtrs(m_pRootFrame);
+
+	GetFindHand(m_pRootFrame);
 }
 
 void cSkinnedMesh::UpdateAndRender(bool isStop)
@@ -128,6 +130,39 @@ void cSkinnedMesh::UpdateAndRender(bool isStop)
 	}
 }
 
+void cSkinnedMesh::UpdateAndRenderForItem(bool isStop, D3DXMATRIXA16& handMat)
+{
+	m_fPassedTime += TIME->GetElapsedTime();
+	if (m_pAnimController)
+	{
+		if (m_isAnimBlend)
+		{
+			m_fPassedBlendTime += TIME->GetElapsedTime();
+			if (m_fPassedBlendTime >= m_fBlendTime)
+			{
+				m_isAnimBlend = false;
+				m_pAnimController->SetTrackWeight(0, 1.0f);
+				m_pAnimController->SetTrackEnable(1, false);
+			}
+			else
+			{
+				float fWeight = m_fPassedBlendTime / m_fBlendTime;
+				m_pAnimController->SetTrackWeight(0, fWeight);
+				m_pAnimController->SetTrackWeight(1, 1.0f - fWeight);
+
+			}
+		}
+		if (isStop == false)m_pAnimController->AdvanceTime(TIME->GetElapsedTime(), NULL);
+		else m_pAnimController->AdvanceTime(0.0f, NULL);
+	}
+
+	if (m_pRootFrame)
+	{
+		Update(m_pRootFrame, &handMat);
+		Render(m_pRootFrame);
+	}
+}
+
 void cSkinnedMesh::UpdateAndRenderForArrow(bool isStop)
 {
 	m_fPassedTime += TIME->GetElapsedTime();
@@ -156,24 +191,24 @@ void cSkinnedMesh::UpdateAndRenderForArrow(bool isStop)
 
 	if (m_pRootFrame)
 	{
-		D3DXMATRIXA16 mat, matS, matR, matRX, matRY, matRZ,matT;
+		D3DXMATRIXA16 mat, matS, matR, matRX, matRY, matRZ, matT;
 		D3DXMatrixScaling(&matS, 2.0f, 2.0f, 2.0f);
 		D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
-		D3DXVECTOR3 dirX = m_vForward ;
+		D3DXVECTOR3 dirX = m_vForward;
 		D3DXVECTOR3 dirZ = m_vForward + D3DXVECTOR3(0, 0, 1);
 		dirX.x *= 10000000;
 		D3DXVec3Normalize(&dirX, &dirX);
 
-		
 
-		
+
+
 		//D3DXMatrixRotationX(&matRX, MATH->GetRotX(m_vForward));
-		
+
 		D3DXMatrixRotationY(&matR, MATH->GetRotY(m_vForward));
 		//D3DXMatrixRotationZ(&matRZ, MATH->GetRotY(m_vForward));
 
-		
+
 		//matR = matRX*matRY;
 		mat = matS* matR*matT;
 		Update(m_pRootFrame, &mat);
@@ -406,9 +441,9 @@ void cSkinnedMesh::SetAnimationIndexBlend(int nIndex)
 
 	if (nIndex != m_currentIndex)
 	{
-	m_isAnimBlend = true;
-	m_fPassedBlendTime = 0.0f;
-	
+		m_isAnimBlend = true;
+		m_fPassedBlendTime = 0.0f;
+
 		LPD3DXANIMATIONSET pPrevAnimSet = NULL;
 		LPD3DXANIMATIONSET pNextAnimSet = NULL;
 
@@ -468,6 +503,25 @@ void cSkinnedMesh::FindAttackBone(ST_BONE * pBone, char* BoneName)
 	if (pBone->pFrameFirstChild)
 	{
 		FindAttackBone((ST_BONE*)pBone->pFrameFirstChild, BoneName);
+	}
+}
+
+void cSkinnedMesh::GetFindHand(ST_BONE* targetBone)
+{
+	if (targetBone->Name)
+	{
+		if ("RHand_Bone_Col_root" == (string)targetBone->Name)m_RightHand = targetBone;
+		if ("LHand_Bone_Col_root" == (string)targetBone->Name)m_leftHand = targetBone;
+	}
+
+	if (targetBone->pFrameSibling)
+	{
+		GetFindHand((ST_BONE*)targetBone->pFrameSibling);
+	}
+
+	if (targetBone->pFrameFirstChild)
+	{
+		GetFindHand((ST_BONE*)targetBone->pFrameFirstChild);
 	}
 }
 

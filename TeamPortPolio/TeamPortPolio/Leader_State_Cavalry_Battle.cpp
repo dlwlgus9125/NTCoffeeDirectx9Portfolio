@@ -58,8 +58,8 @@ void Leader_State_Cavalry_Battle::OnUpdate(cLeader * pLeader, float deltaTime)
 
 void Leader_State_Cavalry_Battle::OnEnd(cLeader * pLeader)
 {
-	pLeader->PathClear();
 	pLeader->SetIndex(pLeader->GetIndex());
+	pLeader->PathClear();
 
 	for (int i = 0; i < pLeader->GetUnits().size(); i++)
 	{

@@ -14,6 +14,7 @@ enum I_L_ITEMID
 enum I_M_ITEMID
 {
 	I_M_SWORD,
+	I_M_SHEILD,
 	I_M_AXE,
 	I_M_BOW,
 	I_M_INVENTORY,
@@ -25,6 +26,7 @@ enum I_S_ITEMID
 	I_S_SHORTSWORD,
 	I_S_LONGSWORD,
 	I_S_BASTARDSWORD,
+	I_S_SHEILD,
 	I_S_SHORTBOW,
 	I_S_LONGBOW,
 	I_S_SMALLAXE,
@@ -47,8 +49,12 @@ struct ST_ITEM
 
 	char* szImagePath;
 
+	char* szXfilePath;
+	char* szXfileName;
+	cSkinnedMesh* weaponSkinnedMesh;
 
-	ST_ITEM(I_L_ITEMID L_ID, I_M_ITEMID M_ID, I_S_ITEMID S_ID, string name, string info, int cost, char* szImagePath)
+
+	ST_ITEM(I_L_ITEMID L_ID, I_M_ITEMID M_ID, I_S_ITEMID S_ID, string name, string info, int cost, char* szImagePath, char* szXfilePath, char* szXfileName, cSkinnedMesh* weaponSkinnedMesh=NULL)
 	{
 		eLargeID = L_ID;
 		eMiddleID = M_ID;
@@ -57,6 +63,9 @@ struct ST_ITEM
 		this->info = info;
 		this->cost = cost;
 		this->szImagePath = szImagePath;
+		this->szXfilePath = szXfilePath;
+		this->szXfileName = szXfileName;
+		this->weaponSkinnedMesh = weaponSkinnedMesh;
 	}
 };
 

@@ -3,6 +3,7 @@
 #include "cMeleeUnit.h"
 #include "cBowUnit.h"
 #include "cCavalryUnit.h"
+#include "cPlayer.h"
 
 cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed)
 
@@ -122,6 +123,11 @@ void cLeader::Update(float deltaTime)
 		}
 	}
 
+	if (GetTargetObject() == NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
+	{
+		SetTargetObject(OBJECT->GetPlayer());
+	}
+
 }
 
 void cLeader::Render()
@@ -231,7 +237,7 @@ void cLeader::SetType()
 {
 	switch (m_ID)
 	{
-	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType();break;
+	case C_C_HUMAN_MALE: case C_C_ORC_MELEE: SetMeleeType();break;
 	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType();break;
 	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); break;
 	}
@@ -241,7 +247,7 @@ void cLeader::ClickedButtonOne()
 {
 	switch (m_type)
 	{
-	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
+	case C_C_HUMAN_MALE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}
@@ -251,7 +257,7 @@ void cLeader::ClickedButtonTwo()
 {
 	switch (m_type)
 	{
-	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
+	case C_C_HUMAN_MALE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_BATTLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_BATTLE); break;
 	}

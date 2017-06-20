@@ -37,8 +37,9 @@ unsigned __stdcall TestThread(LPVOID lpParam)
 	while (1)
 	{
 		EnterCriticalSection(&cs);
-		//OBJECT->AddArmy();
+		if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
 		LeaveCriticalSection(&cs);
+		//ASTAR->SuspendAstarThread(1);
 	}
 	return 0;
 }
@@ -67,27 +68,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TEAMPORTPOLIO));
-
+	GAMEMAIN->Init();
 	MSG msg;
 	//>>thread
 	DWORD dwThlD1, dwThlD2;
-	HANDLE hThread[2];
-
+	
 	unsigned long uiStackSize = 0;
 
 	dwThlD1 = dwThlD2 = 0;
 
-	hThread[0] = hThread[1] = NULL;
+	ASTAR->SetHandle(NULL, 0);
+	ASTAR->SetHandle(NULL, 1);
+	//g_hThread[0] = g_hThread[1] = NULL;
 	InitializeCriticalSection(&cs);
 	//<<
 
 
 
-	GAMEMAIN->Init();
+
 	//GAMEMAIN->Init();
 
-	hThread[0] = (HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))UpdateThread, NULL, 0, (unsigned*)& dwThlD1);
-	hThread[1] = (HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))TestThread, NULL, 0, (unsigned*)& dwThlD2);
+	ASTAR->SetHandle((HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))UpdateThread, NULL, 0, (unsigned*)& dwThlD1),0);
+	ASTAR->SetHandle((HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))TestThread, NULL, 0, (unsigned*)& dwThlD2),1);
 
 
 	// 기본 메시지 루프입니다.
@@ -114,10 +116,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		}
 	}
-	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+	WaitForMultipleObjects(2, ASTAR->GetHandles(), TRUE, INFINITE);
 
-	CloseHandle(hThread[0]);
-	CloseHandle(hThread[1]);
+	CloseHandle(ASTAR->GetHandle(0));
+	CloseHandle(ASTAR->GetHandle(1));
 
 	GAMEMAIN->Release();
 

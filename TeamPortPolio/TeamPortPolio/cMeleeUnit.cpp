@@ -36,6 +36,8 @@ void cMeleeUnit::Init()
 	m_pFsm->Register(UNIT_STATE_MELEE_DEFENCE, new Melee_Defence());
 	m_pFsm->Register(UNIT_STATE_MELEE_DEATH, new Melee_Death());
 	m_pFsm->Play(UNIT_STATE_MELEE_IDLE);
+
+	m_isEquiped = true;
 }
 
 void cMeleeUnit::Update(float deltaTime)
@@ -53,6 +55,12 @@ void cMeleeUnit::Update(float deltaTime)
 		//{
 		//	//battleT
 		//}
+
+		if (GetTargetObject()==NULL&&m_camp != CAMP_PLAYER&&MATH->IsCollided(OBJECT->GetPlayer()->GetArrangeSphere(), m_arrangeCollideSphere))
+		{
+			SetTargetObject(OBJECT->GetPlayer());
+			m_pFsm->Play(UNIT_STATE_MELEE_BATTLE);
+		}
 	}
 }
 
