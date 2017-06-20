@@ -49,7 +49,7 @@ void cUIManager::Setup_TitleScene()
 
 void cUIManager::Setup_TownScene()
 {
-	// >> 인벤토리 셋팅
+	// >> 인벤토리 셋팅 : 상점 구매용
 	cUITab* pTab_Inven = new cUITab();
 	pTab_Inven->Setup(D3DXVECTOR3(WND_WIDTH - 300, 0, 0), UI_TAB);
 	pTab_Inven->Setup_Tap("image/ui/townscene/tab_shop_inventory/idle.png", "image/ui/townscene/tab_shop_inventory/selected.png", "image/ui/townscene/tab_shop_inventory/body.png", D3DXVECTOR3(0, 0, 0));
@@ -129,6 +129,38 @@ void cUIManager::Setup_TownScene()
 		"image/ui/townscene/tab_shop_def/btn_idle.png", "image/ui/townscene/tab_shop_def/btn_mouseover.png", "image/ui/townscene/tab_shop_def/btn_select.png");
 	pTab_Armor->SetEventID(TOWN_TAB_SHOP_DEF);
 	m_vecTab.push_back(pTab_Armor);
+	// <<
+
+	// >> 인벤토리 셋팅 : 아이템 착용용
+	cUITab* pTab_Inven_Equip = new cUITab();
+	pTab_Inven_Equip->Setup(D3DXVECTOR3(WND_WIDTH - 300, 0, 0), UI_TAB);
+	pTab_Inven_Equip->Setup_Tap("image/ui/townscene/tab_shop_inventory/idle.png", "image/ui/townscene/tab_shop_inventory/selected.png", "image/ui/townscene/tab_shop_inventory/body.png", D3DXVECTOR3(0, 0, 0));
+	pTab_Inven_Equip->AddTitle("인벤토리", D3DXVECTOR3(25, 475, 0));
+	/// 인벤토리 슬롯
+	pTab_Inven_Equip->Setup_Slot(D3DXVECTOR3(22, 90, 0), 1, 7, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 55),
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
+	vector<int> vecInven_Equip = OBJECT->GetInventory();
+	for (int i = 0; i < vecInven_Equip.size(); i++)
+	{
+		ST_ITEM* item = ITEMDB->GetItem(vecInven_Equip[i]);
+		pTab_Inven_Equip->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
+	}
+	pTab_Inven_Equip->SetDef();
+	/// 인벤토리 종료버튼
+	pTab_Inven_Equip->Setup_exitbtn(D3DXVECTOR3(244, 17, 0),
+		"image/ui/townscene/tab_shop_inventory/btn_idle.png", "image/ui/townscene/tab_shop_inventory/btn_mouseover.png", "image/ui/townscene/tab_shop_inventory/btn_select.png");
+	pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY);
+	m_vecTab.push_back(pTab_Inven_Equip);
+	// << 
+
+	// >> 장비창
+	m_pInven = new cUIInventory;
+	m_pInven->Setup(D3DXVECTOR3(0, 0, 0), UI_INVENTORY);
+	m_pInven->Setup_Tap("image/ui/townscene/inventory/body.png", D3DXVECTOR3(0, 0, 0));
+	m_pInven->Setup_exitbtn(D3DXVECTOR3(160, 420, 0),
+		"image/ui/townscene/inventory/btn_idle.png", "image/ui/townscene/inventory/btn_mouseover.png", "image/ui/townscene/inventory/btn_select.png");
+	//pTab_Inven_Equip->SetEventID(TOWN_TAB_INVENTORY);
+
 	// <<
 
 	// 미니맵
@@ -341,6 +373,7 @@ void cUIManager::Setup_BattleScene_Human()
 void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
+	m_pInven = NULL;
 }
 
 void cUIManager::Release()
@@ -368,6 +401,7 @@ void cUIManager::Release()
 void cUIManager::Update(float deltaTime)
 {
 	PressKey();
+	Update_ConnectedUI();
 
 	if(m_pMiniMap) m_pMiniMap->Update(deltaTime);
 
@@ -385,6 +419,8 @@ void cUIManager::Update(float deltaTime)
 	{
 		m_vecMsg[i]->Update(deltaTime);
 	}
+
+	if (m_pInven) m_pInven->Update(deltaTime);
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
@@ -398,6 +434,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	{
 		m_vecMsg[i]->Render(pSprite);
 	}
+
+	if (m_pInven) m_pInven->Render(pSprite);
 
 	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
 
@@ -437,13 +475,44 @@ void cUIManager::Change(int sceneID)
 
 void cUIManager::PressKey()
 {
+	// 전장에서 미니맵 띄우기
 	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap)
 	{
+		int sceneTag = SCENE->GetCurrentSceneTag();
+		if (sceneTag < SCENE_BATTLE_HUMAN || sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
 		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
 	}
 
+	// 아이템창 띄우기
+	if (INPUT->IsKeyDown(VK_I))
+	{
+		if (m_vecTab.size() < 4) return;	// 아이템창 구현 안되어있을 경우 예외처리
+		if (!m_vecTab[0]->GetHidden()) return;	// 상점창 켜있으면 인벤토리 안뜨도록 예외처리
 
-	if (INPUT->IsKeyDown(VK_F3)) m_vecTab[0]->SetHiddenAll(!(m_vecTab[0]->GetHidden()));
+		bool hidden = !m_vecTab[3]->GetHidden();
+		m_vecTab[3]->SetHidden(hidden);
+		Setup_Inventory(TOWN_TAB_INVENTORY_EQUIP);
+		m_vecTab[3]->SetDef();
+
+		m_pInven->SetHiddenAll(hidden);
+	}
+}
+
+void cUIManager::Update_ConnectedUI()
+{
+	// >> 상점에서 상점창을 끄거나 아이템창을 끄면 상점창과 아이템창을 모두 꺼버리는 부분
+	if (m_vecTab.size() >= 3 && m_vecTab[1]->GetHidden() && m_vecTab[2]->GetHidden()) m_vecTab[0]->SetHiddenAll(true);
+	if (m_vecTab.size() >= 3 && m_vecTab[0]->GetHidden())
+	{
+		m_vecTab[1]->SetHiddenAll(true);
+		m_vecTab[2]->SetHiddenAll(true);
+	}
+	// << 
+
+	// >> 인벤토리 끄면 아이템창 끄는 부분
+	if (m_vecTab.size() >= 4 && m_vecTab[3]->GetHidden()) m_pInven->SetHiddenAll(true);
+	if (m_vecTab.size() >= 4 && m_pInven->GetHidden()) m_vecTab[3]->SetHiddenAll(true);
+	// << 
 }
 
 void cUIManager::SetEvent(int uiID, int order)
@@ -515,16 +584,30 @@ void cUIManager::GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& 
 	}
 }
 
-void cUIManager::Setup_Inventory()
+void cUIManager::Setup_Inventory(int tabID)
 {
+	int index = -1;
+	switch (tabID)
+	{
+	case TOWN_TAB_INVENTORY:
+		index = 0;
+		break;
+	case TOWN_TAB_INVENTORY_EQUIP:
+		index = 3;
+		break;
+	}
+
+	// 해당 인벤토리가 없을 경우 예외처리
+	if (index == -1) return;			
+
 	// 인벤토리 초기화
-	m_vecTab[0]->ClearShownData();
+	m_vecTab[index]->ClearShownData();
 	// 인벤토리 슬롯 재삽입
 	vector<int> vecInven = OBJECT->GetInventory();
 	for (int i = 0; i < vecInven.size(); i++)
 	{
 		ST_ITEM* item = ITEMDB->GetItem(vecInven[i]);
-		m_vecTab[0]->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
+		m_vecTab[index]->AddSlotData(I_M_INVENTORY, item->eSmallID, item->name, item->szImagePath, item->info, item->cost);
 	}
-	m_vecTab[0]->SetDef();
+	m_vecTab[index]->SetDef();
 }

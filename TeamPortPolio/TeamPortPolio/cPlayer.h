@@ -29,8 +29,9 @@ private:
 
 	
 
-	// >> 케릭터 아이템 저장 (인벤토리)
-	SYNTHESIZE(vector<int>, m_vecInventory, Inventory);
+	// >> 케릭터 아이템 저장
+	SYNTHESIZE(vector<int>, m_vecInventory, Inventory);	// 인벤토리(가방)
+	SYNTHESIZE(vector<int>, m_vecEquipment, Equipment); // 착용 아이템
 	// << 
 
 	//>>무기를 장착할 손의 좌표를 불러오기위한 주소값 그릇

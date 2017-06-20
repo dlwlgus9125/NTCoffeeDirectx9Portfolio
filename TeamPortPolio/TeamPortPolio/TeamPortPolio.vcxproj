@@ -164,6 +164,7 @@
     <ClInclude Include="cEffectManager.h" />
     <ClInclude Include="cFog.h" />
     <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cUIInventory.h" />
     <ClInclude Include="cItem.h" />
     <ClInclude Include="cItemDB.h" />
     <ClInclude Include="cLeader.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="cEffectManager.cpp" />
     <ClCompile Include="cFog.cpp" />
     <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cUIInventory.cpp" />
     <ClCompile Include="cItem.cpp" />
     <ClCompile Include="cItemDB.cpp" />
     <ClCompile Include="cLeader.cpp" />

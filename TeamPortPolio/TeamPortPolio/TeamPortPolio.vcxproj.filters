@@ -179,9 +179,6 @@
     <Filter Include="07. UI\01. cUIImage">
       <UniqueIdentifier>{6884dbb3-27ca-4b65-b5e7-3408c15782a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. UI\02. cUIText">
-      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. UI\03. cUIButton">
       <UniqueIdentifier>{5fcd1a10-77ee-4001-9081-5dbfb58f3f4b}</UniqueIdentifier>
     </Filter>
@@ -253,6 +250,12 @@
     </Filter>
     <Filter Include="00. Manager\14. cThreadManager">
       <UniqueIdentifier>{7ff44b9c-1a68-4b89-967d-78c6225897b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\02. cUIText">
+      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\09. cInventory">
+      <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -429,9 +432,6 @@
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
-    <ClInclude Include="cLoginScene.h">
-      <Filter>03. cScene\01. cLoginScene</Filter>
-    </ClInclude>
     <ClInclude Include="cSelectScene.h">
       <Filter>03. cScene\02. cSelectScene</Filter>
     </ClInclude>
@@ -518,6 +518,12 @@
     </ClInclude>
     <ClInclude Include="cThreadManager.h">
       <Filter>00. Manager\14. cThreadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIInventory.h">
+      <Filter>07. UI\09. cInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoginScene.h">
+      <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -845,6 +851,9 @@
     </ClCompile>
     <ClCompile Include="cThreadManager.cpp">
       <Filter>00. Manager\14. cThreadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIInventory.cpp">
+      <Filter>07. UI\09. cInventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

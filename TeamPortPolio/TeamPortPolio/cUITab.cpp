@@ -164,6 +164,16 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 
 void cUITab::Destroy()
 {
+	for(map<int, vector<ST_SLOTDATA*>>::iterator it = m_mapVecSlotData.begin(); it != m_mapVecSlotData.end(); it++)
+	{
+		vector<ST_SLOTDATA*> vecSlotData = (*it).second;
+
+		for (int i = 0; i < vecSlotData.size(); i++)
+		{
+			SAFE_DELETE(vecSlotData[i]);
+		}
+	}
+	m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 

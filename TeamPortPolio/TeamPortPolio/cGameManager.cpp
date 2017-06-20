@@ -83,7 +83,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_BATTLE_ORC, new cBattleScene_Orc());
 	SCENE->ChangeScene(SCENE_TITLE);
 	CAMERA->Setup();
-	//¤»
+	//
 	srand((unsigned)time(NULL));
 
 	
