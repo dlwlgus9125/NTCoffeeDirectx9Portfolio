@@ -520,7 +520,6 @@
       <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
     <ClInclude Include="cNonPlayerCharacter.h" />
-    <ClInclude Include="cNPC_State.h" />
     <ClInclude Include="cNpcDB.h" />
   </ItemGroup>
   <ItemGroup>
@@ -850,7 +849,6 @@
       <Filter>07. UI\09. cInventory</Filter>
     </ClCompile>
     <ClCompile Include="cNonPlayerCharacter.cpp" />
-    <ClCompile Include="cNPC_State.cpp" />
     <ClCompile Include="cNpcDB.cpp" />
   </ItemGroup>
   <ItemGroup>

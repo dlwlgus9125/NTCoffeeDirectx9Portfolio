@@ -183,7 +183,6 @@
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cNonPlayerCharacter.h" />
     <ClInclude Include="cNpcDB.h" />
-    <ClInclude Include="cNPC_State.h" />
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectDB.h" />
     <ClInclude Include="cObjectManager.h" />
@@ -273,7 +272,6 @@
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cNonPlayerCharacter.cpp" />
     <ClCompile Include="cNpcDB.cpp" />
-    <ClCompile Include="cNPC_State.cpp" />
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectDB.cpp" />
     <ClCompile Include="cObjectManager.cpp" />

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cTownScene_Human.h"
 #include "cPlayer.h"
+#include "cNpcManager.h"
 
 
 cTownScene_Human::cTownScene_Human()
@@ -18,6 +19,9 @@ void cTownScene_Human::OnEnter()
 	MAP->Init(SCENE_TOWN_HUMAN);
 	UI->Change(SCENE_TOWN_HUMAN);
 	Setup_DirLight();
+
+	//NPC SCENE 별로 세팅
+	NPC->Change(SCENE_TOWN_HUMAN);
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));

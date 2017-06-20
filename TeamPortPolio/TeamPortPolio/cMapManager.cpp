@@ -62,6 +62,7 @@ void cMapManager::Init(int sceneID)
 	vector<ST_PNT_VERTEX> vecVertex;
 	vector<DWORD> vecIndex;
 	LPD3DXMESH pMesh = loader.LoadMesh_Map(vecMtlTex, vecVertex, vecIndex, nCellPerRow, fCellSpace, m_vecConstruct, folderPath, filePath, false);
+
 	m_stWeather = ST_WEATHER();
 	m_stWeather = loader.GetWeatherInfo();
 	m_stShadow = ST_SHADOW();
@@ -70,7 +71,7 @@ void cMapManager::Init(int sceneID)
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
 	// << 
-
+	//position , fRotY, scale , ID
 	// >> : 포지션 좌표 넣어줌 -> 사용 그림자
 	m_vPositionVertex = vecVertex[0];
 	// << :
