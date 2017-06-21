@@ -207,3 +207,11 @@ int cObjectManager::GetPlayerID()
 { 
 	return m_player->GetID();
 }
+
+void cObjectManager::ClearToChangeScene()
+{
+	for each(auto c in m_vecObject)
+	{
+
+	}
+}

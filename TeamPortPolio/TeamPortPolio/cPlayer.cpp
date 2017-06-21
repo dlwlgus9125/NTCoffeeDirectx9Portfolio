@@ -103,6 +103,7 @@ void cPlayer::Init()
 	m_isPull = false;
 	m_MeleeCollider.fRadius = 0.2f;
 	m_currentLeaderType = LEADER_MELEE;
+	SetCurrentLeader();
 }
 
 void cPlayer::Update(float deltaTime)
@@ -134,9 +135,9 @@ void cPlayer::Update(float deltaTime)
 			m_fRotY += 0.06;
 		}
 
-		if (INPUT->IsKeyDown('4'))m_currentLeaderType = LEADER_MELEE;
-		if (INPUT->IsKeyDown('5'))m_currentLeaderType = LEADER_BOW;
-		if (INPUT->IsKeyDown('6'))m_currentLeaderType = LEADER_CAVALRY;
+		if (INPUT->IsKeyDown('4')) { cout << "보병" << endl; m_currentLeaderType = LEADER_MELEE; SetCurrentLeader(); }
+		if (INPUT->IsKeyDown('5')){ cout << "궁병" << endl; m_currentLeaderType = LEADER_BOW;SetCurrentLeader(); }
+		if (INPUT->IsKeyDown('6')){ cout << "기병" << endl; m_currentLeaderType = LEADER_CAVALRY;SetCurrentLeader(); }
 
 		//화살처리
 

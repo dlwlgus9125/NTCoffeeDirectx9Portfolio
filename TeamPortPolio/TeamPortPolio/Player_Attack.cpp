@@ -73,7 +73,7 @@ void Player_Attack::FindBattleTarget(cPlayer * pPlayer)
 	BattleTarget = NULL;
 	for each(auto t in OBJECT->GetCharacter())
 	{
-		if (t->GetCharacterEntity()->IsDeath() == false && t->GetCamp() != pPlayer->GetCamp() && MATH->IsCollided(t->GetSphere(), pPlayer->GetMeleeCollider()))
+		if (t->GetCharacterEntity()->IsDeath() == false && MATH->IsCollided(t->GetSphere(), pPlayer->GetMeleeCollider()))
 		{
 			BattleTarget = t;
 			break;

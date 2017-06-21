@@ -28,6 +28,8 @@ void cTownScene_Orc::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(5.5f, 0, -5.6f));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-0.5f, 0, -0.87f)));
 	SOUND->Play("Town_Orc_BGM", 1.0f);
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
 }
 
 void cTownScene_Orc::OnUpdate()

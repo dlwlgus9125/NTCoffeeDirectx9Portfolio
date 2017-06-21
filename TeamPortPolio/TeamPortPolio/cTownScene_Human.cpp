@@ -34,6 +34,9 @@ void cTownScene_Human::OnEnter()
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	SOUND->Play("LoginBGM", 1.0f);
+
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
 }
 
 void cTownScene_Human::OnUpdate()
@@ -92,7 +95,7 @@ void cTownScene_Human::OnUpdate()
 		{
 			cout << "못삼!" << endl;
 		}
-
+		cout << "병사수 : " << OBJECT->GetPlayer()->GetUnitLeader()->GetUnits().size() << endl;
 		//cout <<"병종 : "<< trooptype << endl;
 		break;
 	}
