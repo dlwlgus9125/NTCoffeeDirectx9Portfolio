@@ -19,6 +19,7 @@ void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 	{
 		m_vecSphere[i].fRadius = 0.7f;
 		m_vecSphere[i].vCenter = m_vecNpc[i].pos;
+		m_vecSphere[i].isPicked = false;
 	}
 	D3DXCreateSphere(D3DDevice, 0.7f, 10, 10, &m_pMesh, NULL);
 	SetMtrl();
@@ -70,4 +71,11 @@ void cNpcManager::SetMtrl()
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
 	m_mtrl.Diffuse = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
 	m_mtrl.Specular = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
+}
+
+ST_SPHERE* cNpcManager::GetSphere(int index)
+{
+	if (m_vecSphere.size() <= index) return NULL;
+
+	return &m_vecSphere[index];
 }

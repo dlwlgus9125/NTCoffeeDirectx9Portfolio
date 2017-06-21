@@ -18,7 +18,7 @@ void cTownScene_Orc::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN_ORC);
 	UI->Change(SCENE_TOWN_ORC);
-	  
+	ConnectSpere();
 	m_stWeather = MAP->GetWeather();
 	EFFECT->Init(m_stWeather);
 
@@ -83,29 +83,29 @@ void cTownScene_Orc::OnUpdate()
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
 		{
-			m_vecST_Sphere[i].isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]);
+			m_vecST_Sphere[i]->isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), m_vecST_Sphere[i]);
 		}
 	}
 
-	if (m_vecST_Sphere[0].isPicked)
+	if (m_vecST_Sphere[0]->isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
-		m_vecST_Sphere[0].isPicked = false;;;
+		m_vecST_Sphere[0]->isPicked = false;;;
 	}
-	if (m_vecST_Sphere[1].isPicked)
+	if (m_vecST_Sphere[1]->isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_SHOP_DEF, false);
-		m_vecST_Sphere[1].isPicked = false;;;
+		m_vecST_Sphere[1]->isPicked = false;;;
 	}
-	if (m_vecST_Sphere[2].isPicked)
+	if (m_vecST_Sphere[2]->isPicked)
 	{
 		UI->SetEvent(TOWN_MINIMAP, false);
-		m_vecST_Sphere[2].isPicked = false;;;
+		m_vecST_Sphere[2]->isPicked = false;;;
 	}
-	if (m_vecST_Sphere[3].isPicked)
+	if (m_vecST_Sphere[3]->isPicked)
 	{
 		UI->SetEvent(TOWN_TAB_RECRUIT, false);
-		m_vecST_Sphere[3].isPicked = false;;;
+		m_vecST_Sphere[3]->isPicked = false;;;
 	}
 }
 
@@ -150,4 +150,12 @@ void cTownScene_Orc::Setup_DirLight()
 	SHADOW->SetLightDir(stLight.Direction);
 	D3DDevice->SetLight(0, &stLight);
 	D3DDevice->LightEnable(0, true);
+}
+
+void cTownScene_Orc::ConnectSpere()
+{
+	m_vecST_Sphere.push_back(NPC->GetSphere(0));	//	무기0
+	m_vecST_Sphere.push_back(NPC->GetSphere(1));	// 방어구1
+	m_vecST_Sphere.push_back(NPC->GetSphere(3));	// 전장가는애3
+	m_vecST_Sphere.push_back(NPC->GetSphere(4));	// 징집관4
 }

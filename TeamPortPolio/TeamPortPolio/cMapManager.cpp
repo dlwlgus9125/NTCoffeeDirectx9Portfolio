@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "cMapManager.h"
 #include "cShadowManager.h"
-#include "cNpcManager.h"
 
 cMapManager::cMapManager()
 {
@@ -207,3 +206,4 @@ void cMapManager::Destroy()
 	m_vecConstruct.clear();
 	
 }
+

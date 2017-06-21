@@ -19,5 +19,7 @@ public:
 	void Update(std::vector<ST_NPC_INFO> vecNpc);
 	void Release();
 	void SetMtrl();
+	ST_SPHERE* GetSphere(int index);
+
 };
 
