@@ -212,28 +212,29 @@ void cUIManager::Setup_TownScene()
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap.png", 150);
-	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(382, 400, 0),
+	if(OBJECT->GetPlayerID() == C_C_HUMAN_MALE) m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap_human.png", 150);
+	else if (OBJECT->GetPlayerID() == C_C_ORC_MALE)  m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap_orc.png", 150);
+	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
 		"image/ui/townscene/minimap/btn_idle.png", "image/ui/townscene/minimap/btn_mouseover.png", "image/ui/townscene/minimap/btn_select.png");
 	m_pMiniMap->SetEventID(TOWN_MINIMAP);
 
 	// 미니맵 오크전장 버튼
-	cUIButton* pBtn_Battle_Human = new cUIButton;
-	pBtn_Battle_Human->Setup(D3DXVECTOR3(50, 150, 0), UI_BUTTON);
-	pBtn_Battle_Human->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
-		"Image/UI/titlescene/button/formation_rect/mouseover.png",
-		"Image/UI/titlescene/button/formation_rect/selected.png", TOWN_BTN_BATTLE_ORC);
-	m_vecEventBtn.push_back(pBtn_Battle_Human);
-	m_pMiniMap->AddChild(pBtn_Battle_Human);
-
-	// 미니맵 휴먼전장 버튼
 	cUIButton* pBtn_Battle_Orc = new cUIButton;
-	pBtn_Battle_Orc->Setup(D3DXVECTOR3(300, 300, 0), UI_BUTTON);
-	pBtn_Battle_Orc->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
-		"Image/UI/titlescene/button/formation_tri/mouseover.png",
-		"Image/UI/titlescene/button/formation_tri/selected.png", TOWN_BTN_BATTLE_HUMAN);
+	pBtn_Battle_Orc->Setup(D3DXVECTOR3(205, 55, 0), UI_BUTTON);
+	pBtn_Battle_Orc->Setup_Button("Image/UI/townscene/minimap/idle.png",
+		"Image/UI/townscene/minimap/mouseover.png",
+		"Image/UI/townscene/minimap/selected.png", TOWN_BTN_BATTLE_ORC);
 	m_vecEventBtn.push_back(pBtn_Battle_Orc);
 	m_pMiniMap->AddChild(pBtn_Battle_Orc);
+
+	// 미니맵 휴먼전장 버튼
+	cUIButton* pBtn_Battle_Human = new cUIButton;
+	pBtn_Battle_Human->Setup(D3DXVECTOR3(370, 215, 0), UI_BUTTON);
+	pBtn_Battle_Human->Setup_Button("Image/UI/townscene/minimap/idle.png",
+		"Image/UI/townscene/minimap/mouseover.png",
+		"Image/UI/townscene/minimap/selected.png", TOWN_BTN_BATTLE_HUMAN);
+	m_vecEventBtn.push_back(pBtn_Battle_Human);
+	m_pMiniMap->AddChild(pBtn_Battle_Human);
 }
 
 void cUIManager::Setup_LoginScene()
@@ -316,14 +317,12 @@ void cUIManager::Setup_SelectScene()
 	cUIMsgBox* pMsgBox_Human = new cUIMsgBox;
 	pMsgBox_Human->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_human_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
-	//pMsgBox_Human->Setup_Text("인간이다\n얼굴이 잘생겼는지는\n근데 힘이 세냐 이놈도?");
 	m_vecMsg.push_back(pMsgBox_Human);
 
 	// 휴먼 설명 창
 	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
 	pMsgBox_Orc->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_orc_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
-	//pMsgBox_Orc->Setup_Text("오크는 뛰어다니는 돼지\n꿀꿀거리면서\n달려가서 도끼로 꿍\n완전 세다.");
 	m_vecMsg.push_back(pMsgBox_Orc);
 }
 
