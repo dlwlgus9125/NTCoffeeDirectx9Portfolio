@@ -4,6 +4,7 @@
 
 cNpcManager::cNpcManager()
 {
+	m_vecSphere = {};
 }
 
 
@@ -73,9 +74,7 @@ void cNpcManager::SetMtrl()
 	m_mtrl.Specular = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
 }
 
-ST_SPHERE* cNpcManager::GetSphere(int index)
+vector<ST_SPHERE>& cNpcManager::GetSphere()
 {
-	if (m_vecSphere.size() <= index) return NULL;
-
-	return &m_vecSphere[index];
+	return m_vecSphere;
 }
