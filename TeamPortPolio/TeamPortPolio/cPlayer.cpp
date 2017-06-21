@@ -54,9 +54,9 @@ void cPlayer::Update(float deltaTime)
 	m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 	m_pFsm->Update(deltaTime);
 
-	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
-	MAP->GetHeight(movePos.x, movePos.y, movePos.z);
-	m_CharacterEntity->SetPos(movePos);
+
+
+	
 
 	if (INPUT->IsKeyPress(VK_A))
 	{
@@ -69,20 +69,16 @@ void cPlayer::Update(float deltaTime)
 
 
 	//<< 화살처리
-	if (INPUT->IsMouseDown(MOUSE_RIGHT)&& !m_isAiming)
+	if (INPUT->IsMouseUp(MOUSE_LEFT) && m_isAiming)
 	{
-		
-	//	CAMERA->SetCameraDistance(0.1);
-		//화살구체
-		
+		OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
+		m_isShoot = true;
+		m_isAiming = false;
 	}
 	
-	if (INPUT->IsMouseDown(MOUSE_LEFT)&&!m_isAiming)
+	if (INPUT->IsMouseDown(MOUSE_RIGHT)&&!m_isAiming)
 	{
-		//CAMERA->SetCameraDistance(5);
-	
-		OBJECT->AddPlayerArrow(m_CharacterEntity, SetUpAim());
-		//m_isAiming = true;
+		m_isAiming = true;
 	}
 	//화살처리
 	
@@ -90,13 +86,26 @@ void cPlayer::Update(float deltaTime)
 	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
 	D3DXMatrixIdentity(&matR);
 	D3DXMatrixRotationY(&matR, m_fRotY);
-
 	D3DXVec3TransformCoord(&forward, &forward, &matR);
+
 	m_CharacterEntity->SetForward(forward);
 
 	m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
 	
-	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+	D3DXVECTOR3 vLookat = m_CharacterEntity->Pos();
+	vLookat.y += 1;
+	
+	
+	if (m_isAiming)
+	{
+		CAMERA->SetCameraDistance(0.001);
+	}
+	if(m_isShoot)
+	{
+		CAMERA->SetCameraDistance(5);
+		m_isShoot = false;
+	}
+	CAMERA->SetLookAt(vLookat,m_fRotY);
 
 
 }

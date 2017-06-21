@@ -179,5 +179,5 @@ void cObjectManager::SellItem(int itemSID)
 
 void cObjectManager::BuyItem(int itemSID)
 {
-	m_player->ByuItem(itemSID);
+	m_player->BuyItem(itemSID);
 }

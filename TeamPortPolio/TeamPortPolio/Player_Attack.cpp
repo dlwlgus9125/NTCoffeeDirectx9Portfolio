@@ -11,6 +11,8 @@ void Player_Attack::OnBegin(cPlayer* pPlayer)
 void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 {
 	P_STATE state;
+	if (pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
+	{
 
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -73,6 +75,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 			   }
 			}
          }
+	}
 }
 
 void Player_Attack::OnEnd(cPlayer* pPlayer)

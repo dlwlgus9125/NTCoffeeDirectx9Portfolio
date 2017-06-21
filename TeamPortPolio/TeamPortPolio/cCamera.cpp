@@ -57,7 +57,7 @@ void cCamera::Update()
 		//m_vLookAt.y += 1.0f;
 		//m_vEye.y += 1.0f;
 
-
+	if (INPUT->IsKeyPress(VK_0)) m_fCameraDistance++;
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &(m_vLookAt + D3DXVECTOR3(0, 1.0f, 0)), &m_vUp);
 

@@ -26,7 +26,7 @@ void Player_Walk::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		Move(pPlayer);
 	}
 
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	if (INPUT->IsMouseDown(MOUSE_LEFT)&& (PLAYER_MODE_STATE)pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
 	{
 		isMove = false;
 
@@ -52,6 +52,19 @@ void Player_Walk::StateChanger(cPlayer * pPlayer, D3DXVECTOR3 prevPos, D3DXVECTO
 	else if (INPUT->IsKeyPress(VK_SHIFT) && 0.04f < MATH->Distance(prevPos, movePos))
 	{
 		pPlayer->GetMesh()->SetAnimationIndexBlend(P_RUN);
+	}
+
+	if (INPUT->IsKeyDown(VK_E))
+	{
+		if ((PLAYER_MODE_STATE)pPlayer->GetMode() != IDLE_PLAYER_MODE)
+		{
+			pPlayer->SetMode(IDLE_PLAYER_MODE);
+		}
+
+		else if ((PLAYER_MODE_STATE)pPlayer->GetMode() != FIGHTING_PLAYER_MODE)
+		{
+			pPlayer->SetMode(FIGHTING_PLAYER_MODE);
+		}
 	}
 }
 

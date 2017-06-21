@@ -20,8 +20,6 @@ void Player_Idle::OnUpdate(cPlayer* pPlayer, float deltaTime)
 
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		cout << "Mode:" << pPlayer->GetMode() << endl;
-
 		if ((PLAYER_MODE_STATE)pPlayer->GetMode() != IDLE_PLAYER_MODE)
 		{
 			pPlayer->SetMode(IDLE_PLAYER_MODE);
@@ -41,12 +39,12 @@ void Player_Idle::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		pPlayer->FSM()->Play(PLAYER_STATE_WALK);
 	}
 
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	if (INPUT->IsMouseDown(MOUSE_LEFT) && (PLAYER_MODE_STATE)pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
 	{
 		pPlayer->FSM()->Play(PLAYER_STATE_ATTACK);
 	}
 	
-	else if (INPUT->IsKeyPress(MOUSE_RIGHT))
+	else if (INPUT->IsKeyPress(MOUSE_RIGHT)&& (PLAYER_MODE_STATE)pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
 	{
 		pPlayer->FSM()->Play(PLAYER_STATE_DEFENCE);
 	}

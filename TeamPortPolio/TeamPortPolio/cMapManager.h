@@ -18,7 +18,7 @@ class cMapManager : public Singleton<cMapManager>
 	float                   m_fCellSpace;
 
 	ST_PNT_VERTEX           m_vPositionVertex;
-	
+
 public:
 	cMapManager();
 	~cMapManager();
@@ -33,9 +33,10 @@ public:
 	float GetMinX();
 
 	void Destroy();
-
+	vector<cConstruct*>	GetvecConstruct() { return m_vecConstruct; }
 	cHeightMap* GetMap() { return m_pMap; }
 
-	
+	vector<D3DXVECTOR3>		m_vConstructVertex;
+
 };
 
