@@ -22,7 +22,7 @@ void cTitleScene::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TITLE);
 	UI->Change(SCENE_TITLE);
-	/*cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8,0,30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(-8,0,30), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pPlayer->SetID(C_C_ORC_MALE);
 	pPlayer->Init();
 	OBJECT->AddCharacter(pPlayer);
@@ -42,7 +42,7 @@ void cTitleScene::OnEnter()
 	pLeader->SetTargetIndex(index);
 		;
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);*/
+	OBJECT->AddLeader(pLeader);
 	Setup_DirLight();
 
 

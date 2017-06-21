@@ -129,6 +129,13 @@ enum FONT_BOWMOTION
 	BOW_PUSH,
 };
 
+enum LEADER_TYPE
+{
+	LEADER_MELEE,
+	LEADER_BOW,
+	LEADER_CAVALRY,
+};
+
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;

@@ -142,18 +142,15 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	static bool test = false;
-	if (INPUT->IsKeyDown(VK_TAB))
+	bool test = false;
+	if (INPUT->IsKeyPress(VK_TAB))
 	{
-		if (test == false)
-		{
 			test = true;
-		}
-		else
-		{
-			test = false;
-		}
 	}
+	/*else if (INPUT->IsKeyUp(VK_TAB))
+	{
+		test = false;
+	}*/
 
 	if (test == false)
 	{
