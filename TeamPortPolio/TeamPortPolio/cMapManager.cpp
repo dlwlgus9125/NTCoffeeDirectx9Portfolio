@@ -32,6 +32,8 @@ void cMapManager::Init(int sceneID)
 		break;
 
 	case SCENE_TOWN_HUMAN:
+		folderPath = "map";
+		filePath = strdup("TOWNHUMAN.txt");
 		break;
 
 	case SCENE_TOWN_ORC:
