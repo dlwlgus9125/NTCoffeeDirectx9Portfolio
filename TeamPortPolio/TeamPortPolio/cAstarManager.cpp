@@ -87,7 +87,7 @@ cGraph* cAstarManager::SetupGraph()
 	{
 		int x = i % col;	// 열 번호
 		int z = i / col;	// 줄 번호	
-
+		  
 		AddEdgeTest(pGraph, i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
 		AddEdgeTest(pGraph, i, x + 1, z + 0);
 		AddEdgeTest(pGraph, i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후

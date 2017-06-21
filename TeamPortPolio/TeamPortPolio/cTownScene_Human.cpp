@@ -82,7 +82,7 @@ void cTownScene_Human::OnExit()
 	MAP->Destroy();
 	UI->Release();
 	EFFECT->Release();
-	SOUND->Stop();
+	SOUND->Stop("Town_Human_BGM");
 }
 
 void cTownScene_Human::OnRender()
