@@ -24,7 +24,16 @@ void cBattleScene_Orc::OnEnter()
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.7, 0, -0.7));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
+	D3DXMATRIXA16 matR;
+	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+	D3DXMatrixIdentity(&matR);
+	D3DXMatrixRotationY(&matR, 1.5f);
+
+	D3DXVec3TransformCoord(&forward, &forward, &matR);
+	
+	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
 	//OBJECT->GetPlayer()->SetRotY(D3DX_PI);
 
 	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
@@ -106,9 +115,9 @@ void cBattleScene_Orc::OnExit()
 
 void cBattleScene_Orc::OnRender()
 {
-	EFFECT->Render_Begin();
+	//EFFECT->Render_Begin();
 	MAP->Render();
-	EFFECT->Render_End();
+	//EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
 }

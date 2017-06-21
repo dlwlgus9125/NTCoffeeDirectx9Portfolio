@@ -68,7 +68,7 @@ public:
 	void Render();
 	
 	void SetRotY(float rotY) { m_fRotY = rotY; }
-	
+	float GetRotY() { return m_fRotY; }
 	//Scene에서 부대 이동을 관리할 겟함수
 	cLeader*       GetUnitLeader() { return m_unitLeader; }
 
@@ -83,9 +83,8 @@ public:
 	void PutOffItem(int itemSID);
 	// <<
 
-	void EquipRightHand(int itemSID);
-	void TestEquip();
-	void EquipLeftHand(int itemSID);
+	void Equip();
+	void UnEquip();
 
 	//>>활당기는 모션
 	void IsPullBow(bool pull) { m_isPull = pull; }
