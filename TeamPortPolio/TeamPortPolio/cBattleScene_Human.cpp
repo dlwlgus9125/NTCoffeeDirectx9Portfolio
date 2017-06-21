@@ -23,7 +23,19 @@ void cBattleScene_Human::OnEnter()
 	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
 
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
+	OBJECT->GetPlayer()->SetCurrentLeader();
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(30, 0, -50));
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.35, 0, 0.9));
 
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
+	OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
+
+
+	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
 
 
 	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);

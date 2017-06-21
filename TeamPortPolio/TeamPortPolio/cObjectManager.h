@@ -68,5 +68,7 @@ public:
 	void PutOffItem(int itemSID);
 
 	int GetPlayerID();
+
+	void ClearToChangeScene();
 };
 

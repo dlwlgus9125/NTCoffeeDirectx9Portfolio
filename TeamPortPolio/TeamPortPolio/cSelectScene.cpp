@@ -78,8 +78,8 @@ void cSelectScene::OnUpdate()
 	case SELECT_BTN_CREATE:
 		if (m_nCurrentPlayer != SELECT_NONE)
 		{
-			OBJECT->AddCharacter(m_mapPlayer[m_nCurrentPlayer]);
-			OBJECT->AddObject(m_mapPlayer[m_nCurrentPlayer]);
+			/*OBJECT->AddCharacter(m_mapPlayer[m_nCurrentPlayer]);
+			OBJECT->AddObject(m_mapPlayer[m_nCurrentPlayer]);*/
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
