@@ -27,7 +27,8 @@ protected:
 	MODE_STATE       m_currentMode;
 	ST_Character*    m_Status;
 	bool             m_isDeath;
-	bool m_isAiming;
+	bool			 m_isAiming;
+	bool			 m_isShoot;
 	//>>목표 타겟 평소엔 NULL
 	cObject*         m_targetObject;
 	//<<
@@ -37,6 +38,8 @@ protected:
 
 	bool             m_isAnimDeath;
 	bool             m_isEquiped;
+	vector<cConstruct*>	m_vecNearConstruct;
+	cConstruct* m_pTargetConstruct;
 public:
 	cCharacter();
 	virtual ~cCharacter();
@@ -83,5 +86,8 @@ public:
 
 
 	bool isAnimDeath() {};
+
+	void UpdateNearConstruct();
+	
 };
 

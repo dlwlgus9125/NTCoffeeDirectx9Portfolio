@@ -6,30 +6,15 @@ class cUnit;
 class SteeringBehavior
 {
 	IEntity* m_pEntity;
-
-	D3DXVECTOR3 m_force;				// 조종행으로 발생한 조종힘의 합
-	float m_forceMultiplier;			// 조종힘에 곱해주는 값
-	float m_maxForce;					// 최대 조종힘
-
-	D3DXVECTOR3 m_wander;			// 배회 벡터
+			// 배회 벡터
 
 public:
-	SteeringBehavior(IEntity* pEntity, float maxForce = 2, float forceMultiplier = 200);
+	SteeringBehavior(IEntity* pEntity);
 
 	IEntity* Entity();
 
-	void AddForce(D3DXVECTOR3 force);
-
 	//m_force += force;
 
-
-// 조종힘으로 속도 계산후 적용
-	void UpdateVelocity(float deltaTime);
-
-	// 찾기 : 목표점을 찾아가는 조종힘을 합산
-	void Seek(D3DXVECTOR3 targetPos);
-	// 피하기 : 목표점으로부터 멀어지는 조종힘을 합산
-	void Flee(D3DXVECTOR3 targetPos);
 
 	// 도착 : 목표점으로 도착하는 조종힘을 합산
 	void Arrive(D3DXVECTOR3 targetPos);
@@ -51,8 +36,14 @@ public:
 	// 도주
 	void Evade(IEntity* pTarget);
 
+	void Wander(D3DXVECTOR3 PosOrigin, float distance);
+
+	void Wander(IEntity * pEntity);
+
 	// 배회
 	void Wander(float distance, float radius, float jitter);
+
+	void AvoidObstacle(ST_SPHERE pObstacle);
 
 
 	// 장애물 회피

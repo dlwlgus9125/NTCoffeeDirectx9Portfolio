@@ -153,6 +153,50 @@ void cUIManager::Setup_TownScene()
 	m_vecTab.push_back(pTab_Inven_Equip);
 	// << 
 
+	// >> 징집관
+	cUITab* pTab_Recruit = new cUITab();
+	pTab_Recruit->Setup(D3DXVECTOR3(0, 0, 0), UI_TAB);
+	pTab_Recruit->Setup_Tap("image/ui/townscene/tab_recruit/idle.png", "image/ui/townscene/tab_recruit/selected.png", "image/ui/townscene/tab_recruit/body.png", D3DXVECTOR3(0, 0, 0));
+	pTab_Recruit->AddTitle("병과 목록", D3DXVECTOR3(25, 475, 0));
+	/// 징집관 슬롯 테스트용
+	pTab_Recruit->Setup_Slot(D3DXVECTOR3(22, 90, 0), 1, 5, D3DXVECTOR3(0, 0, 0), ST_SIZEN(190, 55),
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50), D3DXVECTOR3(55, 0, 0), ST_SIZEN(140, 50), FONT_SHOP);
+
+	///휴먼일 경우
+	if (OBJECT->GetPlayerID() == C_C_HUMAN_MALE)
+	{
+		for (int i = C_C_HUMAN_MELEE; i <= C_C_HUMAN_CAVALRY; i++)
+		{
+			if(i == C_C_HUMAN_MELEE)
+				pTab_Recruit->AddSlotData(C_C_HUMAN_MALE, i, "인간 보병", "", "칼과 방패로 기본적인 병과", 2000);
+			if (i == C_C_HUMAN_BOWMAN)
+				pTab_Recruit->AddSlotData(C_C_HUMAN_MALE, i, "인간 궁병", "", "원거리 공격을 이용한 전술적인 병과", 2000);
+			if (i == C_C_HUMAN_CAVALRY)
+				pTab_Recruit->AddSlotData(C_C_HUMAN_MALE, i, "인간 기병", "", "높은 공격력으로 순간적으로 강한 병과", 3000);
+		}
+	}
+	/// 오크일 경우
+	else if(OBJECT->GetPlayerID() == C_C_ORC_MALE)
+	{
+		for (int i = C_C_ORC_MELEE; i <= C_C_ORC_CAVALRY; i++)
+		{
+			if (i == C_C_ORC_MELEE)
+				pTab_Recruit->AddSlotData(C_C_ORC_MALE, i, "오크 보병", "", "자신의 어깨만을 믿는 힘꾼", 2000);
+			if (i == C_C_ORC_BOWMAN)
+				pTab_Recruit->AddSlotData(C_C_ORC_MALE, i, "오크 궁병", "", "숨어서 적의 매복을 잘하는 힘꾼", 2000);
+			if (i == C_C_ORC_CAVALRY)
+				pTab_Recruit->AddSlotData(C_C_ORC_MALE, i, "그론", "", "자신의 체중을 무기로 쓸 줄 아는 힘꾼", 3000);
+		}
+	}
+
+	pTab_Recruit->SetDef();
+	/// 징집관 종료버튼
+	pTab_Recruit->Setup_exitbtn(D3DXVECTOR3(382, 17, 0),
+		"image/ui/townscene/tab_recruit/btn_idle.png", "image/ui/townscene/tab_recruit/btn_mouseover.png", "image/ui/townscene/tab_recruit/btn_select.png");
+	pTab_Recruit->SetEventID(TOWN_TAB_RECRUIT);
+	m_vecTab.push_back(pTab_Recruit);
+	// <<
+
 	// >> 장비창
 	m_pInven = new cUIInventory;
 	m_pInven->Setup(D3DXVECTOR3(0, 0, 0), UI_INVENTORY);
@@ -466,11 +510,11 @@ void cUIManager::Change(int sceneID)
 	case SCENE_SELECT:
 		Setup_SelectScene();
 		break;
-	case SCENE_BATTLE_HUMAN:
-		Setup_BattleScene_Human();
+	case SCENE_TOWN_HUMAN:
+		Setup_TownScene();
 		break;
-	case SCENE_BATTLE_ORC:
-		Setup_BattleScene_Orc();
+	case SCENE_TOWN_ORC:
+		Setup_TownScene();
 		break;
 	}
 }
@@ -519,12 +563,18 @@ void cUIManager::Update_ConnectedUI()
 
 void cUIManager::SetEvent(int uiID, int order)
 {
+	// 0 : 내 아이템 구매판매창,
+	// 1 : 무기상점 창
+	// 2 : 방어구상점 창
+	// 3 : 내 아이템 창
+	// 4 : 징집관 창
 	switch (uiID)
 	{
 	case TOWN_TAB_SHOP_ATT:
 	{
 		bool bOrder = order;
 		m_vecTab[2]->SetHidden(!bOrder);
+		m_vecTab[4]->SetHidden(!bOrder);
 		m_vecTab[0]->SetHidden(bOrder);
 		m_vecTab[0]->SetDef();
 		m_vecTab[1]->SetHidden(bOrder);
@@ -535,12 +585,23 @@ void cUIManager::SetEvent(int uiID, int order)
 	{
 		bool bOrder = order;
 		m_vecTab[1]->SetHidden(!bOrder);
+		m_vecTab[4]->SetHidden(!bOrder);
 		m_vecTab[0]->SetHidden(bOrder);
 		m_vecTab[0]->SetDef();
 		m_vecTab[2]->SetHidden(bOrder);
 		m_vecTab[2]->SetDef();
 	}
 		break;
+	case TOWN_TAB_RECRUIT:
+	{
+		bool bOrder = order;
+		m_vecTab[1]->SetHidden(!bOrder);
+		m_vecTab[2]->SetHidden(!bOrder);
+		m_vecTab[0]->SetHidden(!bOrder);
+		m_vecTab[4]->SetHidden(bOrder);
+		m_vecTab[4]->SetDef();
+	}
+	break;
 	case TOWN_MINIMAP:
 	{
 		bool bOrder = order;

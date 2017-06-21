@@ -58,11 +58,14 @@ void cMapManager::Init(int sceneID)
 	vector<ST_PNT_VERTEX> vecVertex;
 	vector<DWORD> vecIndex;
 	LPD3DXMESH pMesh = loader.LoadMesh_Map(vecMtlTex, vecVertex, vecIndex, nCellPerRow, fCellSpace, m_vecConstruct, folderPath, filePath, false);
+
 	m_stWeather = ST_WEATHER();
 	m_stWeather = loader.GetWeatherInfo();
 	m_stShadow = ST_SHADOW();
 	m_stShadow = loader.GetShadowInfo();
+	SHADOW->SetAlpha(m_stShadow.GetShadowDiffuseAlpha());
 	m_vecStNPC = loader.GetNPCInfo();
+	NPC->Init(m_vecStNPC);
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
@@ -94,9 +97,14 @@ void cMapManager::Init(int sceneID)
 		break;
 	}
 	// << 
-
+	//position , fRotY, scale , ID
 	// >> : 포지션 좌표 넣어줌 -> 사용 그림자
 	m_vPositionVertex = vecVertex[0];
+
+	for (int i = 0; i < vecVertex.size(); i++)
+	{
+		m_vConstructVertex.push_back(vecVertex[i].p);
+	}
 	// << :
 
 	// >> 노드에 쓸 노드 중점의 위치 만드는 부분
@@ -120,13 +128,16 @@ void cMapManager::Init(int sceneID)
 	ASTAR->Setup(m_vecPosOfNode);
 
 	// >> : 그림자 세팅
+
 	SHADOW->Setup(m_vecConstruct);
+	
 	// << :
 }
 
 void cMapManager::Update()
 {
 	if (m_pSkyBox) m_pSkyBox->Update(CAMERA->GetCamera());
+	NPC->Update(m_vecStNPC);
 }
 
 void cMapManager::Render()
@@ -150,6 +161,9 @@ void cMapManager::Render()
 		if (m_pSkyBox) m_pSkyBox->Render();
 
 		if (m_pMap) m_pMap->Render();
+		
+		if (m_vecStNPC.size() > 0)
+			NPC->Render();
 
 		SHADOW->Render();
 		for (int i = 0; i < m_vecConstruct.size(); i++)
@@ -195,3 +209,4 @@ void cMapManager::Destroy()
 	m_vecConstruct.clear();
 	
 }
+

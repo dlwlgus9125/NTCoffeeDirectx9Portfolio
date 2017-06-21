@@ -190,7 +190,7 @@ void cObjectManager::SellItem(int itemSID)
 
 void cObjectManager::BuyItem(int itemSID)
 {
-	m_player->ByuItem(itemSID);
+	m_player->BuyItem(itemSID);
 }
 
 void cObjectManager::PutOnItem(int itemSID)
@@ -201,4 +201,9 @@ void cObjectManager::PutOnItem(int itemSID)
 void cObjectManager::PutOffItem(int itemSID)
 {
 	m_player->PutOffItem(itemSID);
+}
+
+int cObjectManager::GetPlayerID() 
+{ 
+	return m_player->GetID();
 }
