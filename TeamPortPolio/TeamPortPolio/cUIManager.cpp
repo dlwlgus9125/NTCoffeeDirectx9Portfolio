@@ -510,11 +510,11 @@ void cUIManager::Change(int sceneID)
 	case SCENE_SELECT:
 		Setup_SelectScene();
 		break;
-	case SCENE_BATTLE_HUMAN:
-		Setup_BattleScene_Human();
+	case SCENE_TOWN_HUMAN:
+		Setup_TownScene();
 		break;
-	case SCENE_BATTLE_ORC:
-		Setup_BattleScene_Orc();
+	case SCENE_TOWN_ORC:
+		Setup_TownScene();
 		break;
 	}
 }

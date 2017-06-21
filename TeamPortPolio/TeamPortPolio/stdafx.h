@@ -541,6 +541,7 @@ struct ST_NPC_INFO
 #include "cObject.h"
 #include "cItemDB.h"
 #include "cShadowManager.h"
+#include "cNpcManager.h"
 //<<
 #include "cRay.h"
 
