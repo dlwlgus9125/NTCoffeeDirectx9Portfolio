@@ -5,6 +5,7 @@
 
 cTownScene_Human::cTownScene_Human()
 {
+	SOUND->LoadFile("Town_Human_BGM", "Sound/BGM/TownScene_Human/Stormwind.mp3", true);
 }
 
 
@@ -28,6 +29,8 @@ void cTownScene_Human::OnEnter()
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
+
+	SOUND->Play("LoginBGM", 1.0f);
 }
 
 void cTownScene_Human::OnUpdate()
@@ -79,6 +82,7 @@ void cTownScene_Human::OnExit()
 	MAP->Destroy();
 	UI->Release();
 	EFFECT->Release();
+	SOUND->Stop();
 }
 
 void cTownScene_Human::OnRender()

@@ -31,7 +31,7 @@ void cMapManager::Init(int sceneID)
 		filePath = strdup("TESTTOWN.txt");
 		break;
 
-	case SCENE_TOWN_HUMAN:
+	case SCENE_TOWN_HUMAN:  
 		folderPath = "map";
 		filePath = strdup("TOWNHUMAN.txt");
 		break;
@@ -78,6 +78,7 @@ void cMapManager::Init(int sceneID)
 		break;
 
 	case SCENE_TOWN_HUMAN:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Human", "png");
 		break;
 
 	case SCENE_TOWN_ORC:
