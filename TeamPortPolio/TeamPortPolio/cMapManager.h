@@ -18,7 +18,7 @@ class cMapManager : public Singleton<cMapManager>
 	float                   m_fCellSpace;
 
 	ST_PNT_VERTEX           m_vPositionVertex;
-	
+	   
 	SYNTHESIZE(ST_WEATHER, m_stWeather, Weather);
 	SYNTHESIZE(ST_SHADOW, m_stShadow, Shadow);
 	SYNTHESIZE(vector<ST_NPC_INFO>, m_vecStNPC, VecNPC);
