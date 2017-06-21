@@ -5,7 +5,7 @@ class cTownScene_Human : public cIScene
 {
 	LPD3DXSPRITE			m_pSprite;
 
-	vector<ST_SPHERE*>		m_vecST_Sphere;
+	vector<ST_SPHERE>		m_vecST_Sphere;
 
 	ST_WEATHER				m_stWeather;
 public:
