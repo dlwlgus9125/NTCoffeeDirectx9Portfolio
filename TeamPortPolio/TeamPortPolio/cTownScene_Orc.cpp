@@ -5,7 +5,7 @@
 
 cTownScene_Orc::cTownScene_Orc()
 {
-	SOUND->LoadFile("Town_Orc_BGM", "Sound/BGM/TownScene_Orc/Ogrimmar.mp3", true);
+	SOUND->LoadFile("Town_Orc_BGM", "Sound/BGM/TownScene_Orc/Orgrimmar.mp3", true);
 }
 
 
