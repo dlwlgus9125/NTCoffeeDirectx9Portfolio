@@ -20,8 +20,8 @@ cConstruct::~cConstruct()
 void cConstruct::Setup(char* szFolder, char* szFile, bool isChecked)
 {
 	cObjLoader	l;
-	if (isChecked == true)			m_pObjMesh = l.LoadMesh(vecVertex, m_vecObjMtlTex, szFolder, szFile, true);
-	else if (isChecked == false)	m_pObjMesh = l.LoadMesh(vecVertex, m_vecObjMtlTex, szFolder, szFile);
+	if (isChecked == true)			m_pObjMesh = l.LoadMesh( m_vecObjMtlTex, szFolder, szFile, true);
+	else if (isChecked == false)	m_pObjMesh = l.LoadMesh( m_vecObjMtlTex, szFolder, szFile);
 }
 
 void cConstruct::Update()
