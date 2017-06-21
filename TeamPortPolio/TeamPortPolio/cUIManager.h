@@ -39,8 +39,7 @@ public:
 	void SetEvent(int uiID, int order);
 	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& eventID, OUT int& itemID);
 	void AddItem_Tab(int tabID);
-	void AddItem_Inven(int itemSID);
-	void DeleteItem_Inven(int itemSID);
+	void ResetEquipment(vector<int> vecEquipment);
 
 };
 

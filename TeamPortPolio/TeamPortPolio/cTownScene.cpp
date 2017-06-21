@@ -47,12 +47,14 @@ void cTownScene::OnEnter()
 		m_vecMtlSphere.push_back(m_stMtlNone);
 		m_vecMtlSphere.push_back(m_stMtlPicked);
 
-		ST_SPHERE sphere1 = ST_SPHERE(D3DXVECTOR3(35, 2, 20), 1);
-		ST_SPHERE sphere2 = ST_SPHERE(D3DXVECTOR3(35, 2, 15), 1);
-		ST_SPHERE sphere3 = ST_SPHERE(D3DXVECTOR3(10, 2, 10), 1);
+		ST_SPHERE sphere1 = ST_SPHERE(D3DXVECTOR3(35, 2, 20), 1);	//	무기0
+		ST_SPHERE sphere2 = ST_SPHERE(D3DXVECTOR3(35, 2, 15), 1);	// 방어구1
+		ST_SPHERE sphere3 = ST_SPHERE(D3DXVECTOR3(10, 2, 10), 1);	// 전장가는애3
+		ST_SPHERE sphere4 = ST_SPHERE(D3DXVECTOR3(0, 2, 10), 1);	// 징집관4
 		m_vecST_Sphere.push_back(sphere1);
 		m_vecST_Sphere.push_back(sphere2);
 		m_vecST_Sphere.push_back(sphere3);
+		m_vecST_Sphere.push_back(sphere4);
 	}
 	// << 
 }
@@ -98,8 +100,11 @@ void cTownScene::OnUpdate()
 		break;
 	case TOWN_TAB_INVENTORY_EQUIP:
 		OBJECT->PutOnItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
 	case TOWN_INVENTORY:
+		OBJECT->PutOffItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
