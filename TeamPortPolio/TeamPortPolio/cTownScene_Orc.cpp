@@ -26,13 +26,7 @@ void cTownScene_Orc::OnEnter()
 	// OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	// OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pLeader->SetID(C_C_ORC_MELEE);
-	pLeader->Init();
-	pLeader->SetCamp(CAMP_ENEMY1);
-	pLeader->SetTargetIndex(11581);
-	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+
 }
 
 void cTownScene_Orc::OnUpdate()

@@ -57,7 +57,7 @@ void cAstarManager::DestroyForChangeScene()
 {
 	THREAD->SuspendThreadByKey(HANDLE_ASTAR_FINDINDEX);
 	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
-
+	//
 }
 
 cGraph* cAstarManager::SetupGraph()
