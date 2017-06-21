@@ -525,6 +525,8 @@
     <ClInclude Include="cLoginScene.h">
       <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
+    <ClInclude Include="cNpcManager.h" />
+    <ClInclude Include="cNpcDB.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -861,6 +863,8 @@
     <ClCompile Include="Player_Death.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="cNpcManager.cpp" />
+    <ClCompile Include="cNpcDB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc">

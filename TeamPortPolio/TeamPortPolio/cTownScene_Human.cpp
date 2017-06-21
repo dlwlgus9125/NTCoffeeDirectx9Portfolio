@@ -27,6 +27,9 @@ void cTownScene_Human::OnEnter()
 
 	Setup_DirLight();
 
+	//NPC SCENE 별로 세팅
+	//NPC->Change(SCENE_TOWN_HUMAN);
+	//NPC->Setup(MAP->GetVecNPC());
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
@@ -66,6 +69,21 @@ void cTownScene_Human::OnUpdate()
 		OBJECT->BuyItem(itemID);
 		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
+	case TOWN_TAB_SHOP_DEF:
+		OBJECT->BuyItem(itemID);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_INVENTORY_EQUIP:
+		OBJECT->PutOnItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
+		break;
+	case TOWN_INVENTORY:
+		OBJECT->PutOffItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
+		break;
+	case TOWN_TAB_RECRUIT:
+		int trooptype = itemID;
+		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -73,6 +91,27 @@ void cTownScene_Human::OnUpdate()
 		{
 			m_vecST_Sphere[i].isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]);
 		}
+	}
+
+	if (m_vecST_Sphere[0].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
+		m_vecST_Sphere[0].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[1].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_SHOP_DEF, false);
+		m_vecST_Sphere[1].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[2].isPicked)
+	{
+		UI->SetEvent(TOWN_MINIMAP, false);
+		m_vecST_Sphere[2].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[3].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_RECRUIT, false);
+		m_vecST_Sphere[3].isPicked = false;;;
 	}
 }
 
@@ -113,6 +152,7 @@ void cTownScene_Human::Setup_DirLight()
 	D3DXVECTOR3   vDir(1.0f, 1.0f, 1.0f);
 	D3DXVec3Normalize(&vDir, &vDir);
 	stLight.Direction = vDir;
+	SHADOW->SetLightDir(stLight.Direction);
 	D3DDevice->SetLight(0, &stLight);
 	D3DDevice->LightEnable(0, true);
 }

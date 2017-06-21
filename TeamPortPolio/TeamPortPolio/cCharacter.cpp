@@ -33,6 +33,7 @@ void cCharacter::Init()
 	m_Status = new ST_Character(*CHARACTERDB->GetMapCharacter(m_ID));
 
 	m_pSkinnedMesh = NULL;
+	//m_pSkinnedMesh = new cSkinnedMesh();
 	m_pSkinnedMesh = new cSkinnedMesh(TEXTURE->GetCharacterResource(m_Status->m_szPath, m_Status->m_szFileName));
 }
 
@@ -41,6 +42,12 @@ void cCharacter::Update(float deltaTime)
 	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
+	if (m_ID != C_C_ARROW_ARROW)
+	{
+		
+	}
+	
+	//UpdateNearConstruct();
 
 	if (m_Status->m_HP <= 0.0f&&m_isDeath==false)SetAnimDeath();
 }
@@ -139,5 +146,48 @@ FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 
 	defender->m_Status->SetHP(-attacker->m_Status->m_Damage);
 	return FIGHT_HIT;
+}
+
+void cCharacter::UpdateNearConstruct()
+{
+	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
+	
+	MAP->GetHeight(movePos.x, movePos.y, movePos.z);
+
+
+
+	for(int i=0 ;i< MAP->m_vConstructVertex.size();i++)
+	{
+		/*	for each (ST_LINE_VERTEX k in p->GetLineVertex())
+			{
+					D3DXVECTOR3 vToPoint = movePos - k.a;
+
+		float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(k.b - k.a));
+		if (length < 0)length = 0;
+		if (length > MATH->Distance(k.a, k.b)) length = MATH->Distance(k.a, k.b);
+		D3DXVECTOR3 vPoint = k.a + MATH->Nomalize(k.b - k.a) * length;
+		if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
+		{
+			D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
+			movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
+		}
+			}*/
+		
+		D3DXVECTOR3 vToPoint = movePos - MAP->m_vConstructVertex[i-1];
+
+		float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(MAP->m_vConstructVertex[i - 1] - MAP->m_vConstructVertex[i]));
+		if (length < 0)length = 0;
+		if (length > MATH->Distance(MAP->m_vConstructVertex[i-1], MAP->m_vConstructVertex[i])) length = MATH->Distance(MAP->m_vConstructVertex[i - 1], MAP->m_vConstructVertex[i]);
+		D3DXVECTOR3 vPoint = MAP->m_vConstructVertex[i - 1] + MATH->Nomalize(MAP->m_vConstructVertex[i - 1]) * length;
+		if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
+		{
+			D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
+			movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
+		}
+
+
+	}
+	
+	m_CharacterEntity->SetPos(movePos);
 }
 

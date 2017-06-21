@@ -2,7 +2,7 @@
 #include "cFrustum.h"
 class GraphNode
 {
-	bool m_active;
+	bool m_active;//
 	int m_id;
 	D3DXVECTOR3 m_pos;
 	ST_SPHERE   m_sphere;

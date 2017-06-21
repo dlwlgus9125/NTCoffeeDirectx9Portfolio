@@ -106,6 +106,9 @@ void cTownScene::OnUpdate()
 		OBJECT->PutOffItem(itemID);
 		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
+	case TOWN_TAB_RECRUIT:
+		int trooptype = itemID;
+		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -129,6 +132,11 @@ void cTownScene::OnUpdate()
 	{
 		UI->SetEvent(TOWN_MINIMAP, false);
 		m_vecST_Sphere[2].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[3].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_RECRUIT, false);
+		m_vecST_Sphere[3].isPicked = false;;;
 	}
 	//<< 
 }
@@ -192,6 +200,7 @@ void cTownScene::Setup_DirLight()
 	D3DXVECTOR3   vDir(1.0f, 1.0f, 1.0f);
 	D3DXVec3Normalize(&vDir, &vDir);
 	stLight.Direction = vDir;
+	SHADOW->SetLightDir(stLight.Direction);
 	D3DDevice->SetLight(0, &stLight);
 	D3DDevice->LightEnable(0, true);
 }

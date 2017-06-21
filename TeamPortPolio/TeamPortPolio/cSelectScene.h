@@ -33,5 +33,7 @@ public:
 	void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void MovePosition();
+
+	void Setup_DirLight();
 };
 
