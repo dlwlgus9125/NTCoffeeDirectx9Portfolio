@@ -24,8 +24,8 @@ void cBattleScene_Orc::OnEnter()
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.7, 0, -0.7));
-	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
+//	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.7, 0, -0.7));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
 	D3DXMATRIXA16 matR;
 	D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
 	D3DXMatrixIdentity(&matR);
