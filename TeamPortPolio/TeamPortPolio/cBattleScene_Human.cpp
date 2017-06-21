@@ -26,13 +26,13 @@ void cBattleScene_Human::OnEnter()
 
 
 
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+	OBJECT->AddLeader(pLeader);*/
 
 
 

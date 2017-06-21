@@ -5,7 +5,7 @@
 enum HANDLE_KEY
 {
 	HANDLE_ASTAR_FINDINDEX,
-	HANDlE_ATSTAR_FINDPATH,
+	HANDLE_ATSTAR_FINDPATH,
 };
 
 struct ThreadHandle
@@ -22,7 +22,9 @@ class cThreadManager : public Singleton<cThreadManager>
 public:
 	void Init();
 	void CreateFindPathThread(int key);
+	void CreateFindIndexThread(int key);
 	void TerminateThreadByKey(int key);
+	void SuspendThreadByKey(int key);
 	bool IsReCreateFindPathThread(int key);
 	void Destroy();
 	void CloseThreadManager();

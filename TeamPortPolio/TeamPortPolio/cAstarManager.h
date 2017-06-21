@@ -10,8 +10,7 @@ class cAstarManager :
 	public Singleton<cAstarManager>
 {
 	cGraph*            m_graph;
-	vector<int> m_path;
-	vector<int> vecRoad;
+	cGraph*            m_PathGraph;
 
 	vector<D3DXVECTOR3> m_vecPosOfNode;
 
@@ -19,11 +18,10 @@ class cAstarManager :
 	bool                    m_isMapLoadingComplete;
 public:
 	void Setup(vector<D3DXVECTOR3> vecPosOfNode);
-	void SetupThread();
+	void DestroyForChangeScene();
 	cGraph* SetupGraph();
 
 	void AddEdge(int from, int col, int row);
-	void AddEdgeTest(cGraph * pGraph, int from, int col, int row);
 	vector<int> GetPath(int chrindex, int targetIndex);
 	void Release();
 	void Update();

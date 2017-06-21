@@ -76,7 +76,7 @@ void cGraph::RemoveEdge(int from, int to)
 
 void cGraph::Render()
 {
-	/*D3DXMATRIXA16 out, proj, view;
+	D3DXMATRIXA16 out, proj, view;
 	D3DDevice->GetTransform(D3DTS_VIEW, &view);
 	D3DDevice->GetTransform(D3DTS_PROJECTION, &proj);
 	out = view * proj;
@@ -102,7 +102,7 @@ void cGraph::Render()
 				}
 			}
 		}
-	}*/
+	}
 	
 
 }

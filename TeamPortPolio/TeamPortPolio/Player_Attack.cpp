@@ -29,6 +29,10 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		{
 			state = P_ATTACK1;
 		}
+		else
+		{
+			state = P_ATTACK1;
+		}
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 		{
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
