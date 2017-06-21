@@ -67,6 +67,7 @@ public:
 	void Update(float deltaTime);
 	void Render();
 	
+	void SetRotY(float rotY) { m_fRotY = rotY; }
 	
 	//Scene에서 부대 이동을 관리할 겟함수
 	cLeader*       GetUnitLeader() { return m_unitLeader; }
@@ -78,6 +79,9 @@ public:
 	// >> 인벤토리용 함수
 	void SellItem(int itemSID);
 	void ByuItem(int itemSID);
+	void PutOnItem(int itemSID);
+	void PutOffItem(int itemSID);
+	// <<
 
 	void EquipRightHand(int itemSID);
 	void TestEquip();
@@ -105,5 +109,6 @@ public:
 	void SetAnimBlock() { m_pSkinnedMesh->SetAnimationIndexBlend(P_SHEILDBLOCK); };
 	void SetAnimHit() { m_pSkinnedMesh->SetAnimationIndexBlend(P_HIT); };
 	void SetAnimDeath() { m_pFsm->Play(PLAYER_STATE_DEFEAT); };
+	
 };
 

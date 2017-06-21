@@ -5,6 +5,7 @@
 
 cTownScene_Orc::cTownScene_Orc()
 {
+	SOUND->LoadFile("Town_Orc_BGM", "Sound/BGM/TownScene_Orc/Orgrimmar.mp3", true);
 }
 
 
@@ -16,36 +17,45 @@ void cTownScene_Orc::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN_ORC);
+	UI->Change(SCENE_TOWN_ORC);
+	  
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
+
 	Setup_DirLight();
 
-	// OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
-	// OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pLeader->SetID(C_C_ORC_MELEE);
-	pLeader->Init();
-	pLeader->SetCamp(CAMP_ENEMY1);
-	pLeader->SetTargetIndex(11581);
-	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+	SOUND->Play("Town_Orc_BGM", 1.0f);
 }
 
 void cTownScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	OBJECT->Update(TIME->DeltaTime());
+	EFFECT->Update();
+	UI->Update(TIME->DeltaTime());
 }
 
 void cTownScene_Orc::OnExit()
 {
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
+	OBJECT->Release();
+	EFFECT->Release();
+	UI->Release();
+	SOUND->Stop("Town_Orc_BGM");
 }
 
 void cTownScene_Orc::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
+	EFFECT->Render_End();
 	OBJECT->Render();
+
+	UI->Render(m_pSprite);
 }
 
 void cTownScene_Orc::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

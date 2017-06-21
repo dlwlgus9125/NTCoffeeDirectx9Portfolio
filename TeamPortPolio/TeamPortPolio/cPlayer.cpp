@@ -16,10 +16,9 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_unitLeader->SetID(C_C_HUMAN_BOWMAN);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
-	m_unitLeader->Init();
-	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
-	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);*/
+	m_unitLeader->Init();*/
+	//m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
+	
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -81,6 +80,12 @@ void cPlayer::Init()
 
 void cPlayer::Update(float deltaTime)
 {
+	if (INPUT->IsKeyDown(VK_SPACE))
+	{
+		cout << "pos : " << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
+		cout <<"RotY : "<< MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
+		cout<<"Forward : " << m_CharacterEntity->Forward().x << " " << m_CharacterEntity->Forward().y << " " << m_CharacterEntity->Forward().z << endl;
+	}
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
 	{
@@ -104,24 +109,24 @@ void cPlayer::Update(float deltaTime)
 
 		if (INPUT->IsKeyDown('1'))EquipLeftHand(1);
 		if (INPUT->IsKeyDown('2'))EquipRightHand(1);
-		if (INPUT->IsKeyDown('3'))TestEquip();
+if (INPUT->IsKeyDown('3'))TestEquip();
 
-		//화살처리
+//화살처리
 
-		D3DXMATRIXA16 matR;
-		D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
-		D3DXMatrixIdentity(&matR);
-		D3DXMatrixRotationY(&matR, m_fRotY);
+D3DXMATRIXA16 matR;
+D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+D3DXMatrixIdentity(&matR);
+D3DXMatrixRotationY(&matR, m_fRotY);
 
-		D3DXVec3TransformCoord(&forward, &forward, &matR);
-		m_CharacterEntity->SetForward(forward);
+D3DXVec3TransformCoord(&forward, &forward, &matR);
+m_CharacterEntity->SetForward(forward);
 
-		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
 
-		
+
 	}
 	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-	
+
 }
 
 void cPlayer::Render()
@@ -132,8 +137,8 @@ void cPlayer::Render()
 		m_pSkinnedMesh->UpdateAndRender(m_isPull);
 
 		//>>아이템착용 출력단
-		if (m_RightWeaponMesh!=NULL)m_RightWeaponMesh->UpdateAndRenderForItem(m_isDeath, m_rightHand->CombinedTransformationMatrix);
-		if (m_LeftWeaponMesh!=NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
+		if (m_RightWeaponMesh != NULL)m_RightWeaponMesh->UpdateAndRenderForItem(m_isDeath, m_rightHand->CombinedTransformationMatrix);
+		if (m_LeftWeaponMesh != NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
 		//<<
 
 
@@ -162,7 +167,8 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
-			if (!THREAD->IsReCreateFindPathThread(HANDlE_ATSTAR_FINDPATH))
+			THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
+			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
 
 				m_unitLeader->PathClear();
@@ -172,66 +178,162 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 
 	}
 }
-	void cPlayer::SellItem(int itemSID)
+void cPlayer::SellItem(int itemSID)
+{
+	for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
 	{
-		for (vector<int>::iterator it = m_vecInventory.begin(); it != m_vecInventory.end(); )
+		if (*it == itemSID)
 		{
-			if (*it == itemSID)
+			it = m_vecInventory.erase(it);
+			break;
+		}
+		else it++;
+	}
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::ByuItem(int itemSID)
+{
+	m_vecInventory.push_back(itemSID);
+
+	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
+}
+
+void cPlayer::PutOnItem(int itemSID)
+{
+	int itemMID = ITEMDB->GetItem(itemSID)->eMiddleID;
+
+	switch (itemMID)
+	{
+		case I_M_SWORD:
+		case I_M_AXE:
+		{
+			// 먼저 오른손 아이템 빼는 부분
+			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
 			{
-				it = m_vecInventory.erase(it);
-				break;
+				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW)
+				{
+					it = m_vecEquipment.erase(it);
+				}
+				else
+				{
+					it++;
+				}
 			}
-			else it++;
+			m_vecEquipment.push_back(itemSID);
 		}
+		break;
 
-		// 제대로 작동하면 버블정렬 Math꺼 사용하기.
-	}
-
-	void cPlayer::ByuItem(int itemSID)
-	{
-		m_vecInventory.push_back(itemSID);
-
-		// 제대로 작동하면 버블정렬 Math꺼 사용하기.
-	}
-
-	void cPlayer::EquipRightHand(int itemSID)
-	{
-		m_AttackType = ATTACK_BOW;
-		m_RightWeaponMesh = NULL;
-		m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName);
-
-	}
-
-	void cPlayer::TestEquip()
-	{
-		m_AttackType = ATTACK_MELEE;
-		m_RightWeaponMesh = NULL;
-		m_LeftWeaponMesh = NULL;
-	}
-	void cPlayer::EquipLeftHand(int itemSID)
-	{
-		m_AttackType = ATTACK_MELEE;
-		//Add(new ST_Character(C_R_END, C_G_END, C_C_BOW_BOW, 100.0f, 100.f, 100.0f, 4, "Character/Weapon/", "WeaponBow.x", "Weapon_Attack_Bone_Col_root"));
-		m_RightWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName);
-		m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName);
-		
-	}
-
-	void cPlayer::SetAttackColliderPos()
-	{
-		if (m_RightWeaponMesh == NULL&&m_LeftWeaponMesh == NULL)
+		case I_M_BOW:
 		{
-			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
-			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_rightHand->CombinedTransformationMatrix);
+			// 먼저 양손의 아이템 빼는 부분
+			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+			{
+				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
+				{
+					it = m_vecEquipment.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
+			m_vecEquipment.push_back(itemSID);
 		}
-		else if (m_RightWeaponMesh != NULL)
+		break;
+		case I_M_SHIELD:
 		{
-			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
-			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_RightWeaponMesh->GetAttackBoneMat());
+			// 먼저 왼손의 아이템 빼는 부분
+			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+			{
+				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
+					ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
+				{
+					it = m_vecEquipment.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
+			m_vecEquipment.push_back(itemSID);
 		}
-		else if (m_LeftWeaponMesh != NULL&&m_RightWeaponMesh == NULL)
+		break;
+		case I_M_ARMOR:
 		{
-			m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
-			D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_LeftWeaponMesh->GetAttackBoneMat());
+			// 먼저 갑옷 빼는 부분
+			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+			{
+				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_ARMOR)
+				{
+					it = m_vecEquipment.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
+			m_vecEquipment.push_back(itemSID);
 		}
+		break;
 	}
+}
+
+void cPlayer::PutOffItem(int itemSID)
+{
+	for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+	{
+		int itemMID = ITEMDB->GetItem(itemSID)->eMiddleID;
+		int currrentItemMID = ITEMDB->GetItem(*it)->eMiddleID;
+		if(itemMID == currrentItemMID)	it = m_vecEquipment.erase(it);
+		else it++;
+	}
+}
+
+void cPlayer::EquipRightHand(int itemSID)
+{
+	m_AttackType = ATTACK_BOW;
+	m_RightWeaponMesh = NULL;
+	m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName);
+
+}
+
+void cPlayer::TestEquip()
+{
+	m_AttackType = ATTACK_MELEE;
+	m_RightWeaponMesh = NULL;
+	m_LeftWeaponMesh = NULL;
+}
+void cPlayer::EquipLeftHand(int itemSID)
+{
+	m_AttackType = ATTACK_MELEE;
+	//Add(new ST_Character(C_R_END, C_G_END, C_C_BOW_BOW, 100.0f, 100.f, 100.0f, 4, "Character/Weapon/", "WeaponBow.x", "Weapon_Attack_Bone_Col_root"));
+	m_RightWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName);
+	m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName);
+	
+}
+
+void cPlayer::SetAttackColliderPos()
+{
+	if (m_RightWeaponMesh == NULL&&m_LeftWeaponMesh == NULL)
+	{
+		m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_rightHand->CombinedTransformationMatrix);
+	}
+	else if (m_RightWeaponMesh != NULL)
+	{
+		m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_RightWeaponMesh->GetAttackBoneMat());
+	}
+	else if (m_LeftWeaponMesh != NULL&&m_RightWeaponMesh == NULL)
+	{
+		m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_LeftWeaponMesh->GetAttackBoneMat());
+	}
+}

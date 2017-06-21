@@ -4,6 +4,7 @@
 class cBattleScene_Orc : public cIScene
 {
 	LPD3DXSPRITE			m_pSprite;
+	ST_WEATHER				m_stWeather;
 
 public:
 	cBattleScene_Orc();

@@ -70,7 +70,6 @@ enum I_S_ITEMID
 	I_S_END,
 };
 
-
 struct ST_ITEM
 {
 	I_L_ITEMID eLargeID;

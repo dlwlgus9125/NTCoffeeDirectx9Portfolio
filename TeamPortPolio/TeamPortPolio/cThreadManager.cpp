@@ -29,16 +29,16 @@ void cThreadManager::Init()
 	m_mapHandle[HANDLE_ASTAR_FINDINDEX].m_dwThl = 0;
 	m_mapHandle[HANDLE_ASTAR_FINDINDEX].m_handle = NULL;
 
-	m_mapHandle[HANDlE_ATSTAR_FINDPATH].m_dwThl = 0;
-	m_mapHandle[HANDlE_ATSTAR_FINDPATH].m_handle = NULL;
+	m_mapHandle[HANDLE_ATSTAR_FINDPATH].m_dwThl = 0;
+	m_mapHandle[HANDLE_ATSTAR_FINDPATH].m_handle = NULL;
 
 	InitializeCriticalSection(&m_cs);
 
-	m_mapHandle[HANDLE_ASTAR_FINDINDEX].m_handle=
+	/*m_mapHandle[HANDLE_ASTAR_FINDINDEX].m_handle=
 		(HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))Thread_Astar_Update, NULL, 0, (unsigned*)& m_mapHandle[HANDLE_ASTAR_FINDINDEX].m_dwThl);
-	m_mapHandle[HANDlE_ATSTAR_FINDPATH].m_handle =
-		(HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))Thread_Astar_FindPath, NULL, CREATE_SUSPENDED, (unsigned*)& m_mapHandle[HANDlE_ATSTAR_FINDPATH].m_dwThl);
-
+	m_mapHandle[HANDLE_ATSTAR_FINDPATH].m_handle =
+		(HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))Thread_Astar_FindPath, NULL, CREATE_SUSPENDED, (unsigned*)& m_mapHandle[HANDLE_ATSTAR_FINDPATH].m_dwThl);
+*/
 }
 
 void cThreadManager::CreateFindPathThread(int key)
@@ -47,7 +47,12 @@ void cThreadManager::CreateFindPathThread(int key)
 		(HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))Thread_Astar_FindPath, NULL, 0, (unsigned*)& m_mapHandle[key].m_dwThl);
 
 }
+void cThreadManager::CreateFindIndexThread(int key)
+{
+	m_mapHandle[key].m_handle =
+		(HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))Thread_Astar_Update, NULL, 0, (unsigned*)& m_mapHandle[key].m_dwThl);
 
+}
 void cThreadManager::TerminateThreadByKey(int key)
 {
 	if (TerminateThread(m_mapHandle[key].m_handle, 0))
@@ -55,6 +60,11 @@ void cThreadManager::TerminateThreadByKey(int key)
 		CloseHandle(m_mapHandle[key].m_handle);
 	}
 	
+}
+
+void cThreadManager::SuspendThreadByKey(int key)
+{
+	SuspendThread(m_mapHandle[key].m_handle);
 }
 
 bool cThreadManager::IsReCreateFindPathThread(int key)

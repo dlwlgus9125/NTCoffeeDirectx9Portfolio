@@ -48,34 +48,20 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 	// >> 슬롯 이미지	
 	for (int i = 0; i < m_vecShownData.size(); i++)
 	{
+		if (!m_vecShownData[i]) continue;
+
 		pSprite->SetTransform(&m_matWorld);
 		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
 	
 		D3DXIMAGE_INFO imageInfo;
-		if (m_vecShownData.size() - 1 >= i)
-		{
-			LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
-			SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
+		LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(m_vecShownData[i]->imagePath, imageInfo);
+		SetRect(&rc, 0, 0, imageInfo.Width, imageInfo.Height);
 
-			pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-		}
+		pSprite->Draw(texture, &rc, &D3DXVECTOR3(0, 0, 0), &(m_vecSlotInfo[i].rectPos + m_vecSlotInfo[i].imagePos), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	
 		pSprite->End();
 	}
 	// << 
-	
-	//// >> 품명, 설명 인쇄
-	//for (int i = 0; i < m_vecShownData.size(); i++)
-	//{
-	//	pSprite->SetTransform(&m_matWorld);
-	//	LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
-	//	SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
-	//		m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
-	//
-	//	string text = m_vecShownData[i]->name;
-	//	pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
-	//}
-	//// << 
 
 	cUIObject::Render(pSprite);
 }
@@ -105,65 +91,51 @@ void cUIInventory::Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR
 	m_vecSlotInfo.push_back(slot);
 }
 
-void cUIInventory::AddShownData(int itemSID)
+void cUIInventory::ResetItems(vector<int> vecEquipment)
 {
-	ST_ITEM* currentItem = NULL;
-	currentItem = ITEMDB->GetItem(itemSID);
+	// >> 기존 장비창 깨끗히!
+	for (vector<ST_SLOTDATA*>::iterator	 it = m_vecShownData.begin(); it != m_vecShownData.end(); )
+	{
+		it = m_vecShownData.erase(it);
+	}
+	m_vecShownData.resize(3, 0);
+	// <<
 
-	if (!currentItem) return;		// itemDB에서 아이템 못불러오면 종료
+	// 0 : 오른손, 1 : 왼손, 2 : 몸
+	// >> 아이템 착용
+	for (int i = 0; i < vecEquipment.size(); i++)
+	{
+		ST_SLOTDATA* newData = NULL;
+		ST_ITEM* currentItem = NULL;
+		currentItem = ITEMDB->GetItem(vecEquipment[i]);
 
-	int itemMID = currentItem->eMiddleID;
+		if (!currentItem) continue;			// 아이템DB에서 불러올 것이 없으면 안함
 
-	// 벡터 인덱스 - 아이템 매칭
-	/*
-			0 : 오른손
-			1 : 왼손
-			2 : 몸
-	
-	*/
-	switch (itemMID)
-	{
-	case I_M_SWORD:
-	case I_M_AXE:
-	{
-		if (m_vecShownData[0]) SAFE_DELETE(m_vecShownData[0]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
-		m_vecShownData[0] = newData;
-	}
-		break;
-	case I_M_BOW:
-	{
-		if (m_vecShownData[0]) SAFE_DELETE(m_vecShownData[0]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
-		m_vecShownData[0] = newData;
-		if (m_vecShownData[1]) SAFE_DELETE(m_vecShownData[1]);
-		ST_SLOTDATA* newData2 = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
-		m_vecShownData[1] = newData2;
-	}
-		break;
-	case I_M_SHIELD:
-	{
-		if (m_vecShownData[1]) SAFE_DELETE(m_vecShownData[1]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
-		m_vecShownData[1] = newData;
-	}
-		break;
-	case I_M_ARMOR:
-	{
-		if (m_vecShownData[2]) SAFE_DELETE(m_vecShownData[2]);
-		ST_SLOTDATA* newData = new ST_SLOTDATA(currentItem->eSmallID, currentItem->name, currentItem->szImagePath, "", 0);
-		m_vecShownData[2] = newData;
-	}
-		break;
-	}
-}
+		int itemSID = currentItem->eSmallID;
+		int itemMID = currentItem->eMiddleID;
+		string name = currentItem->name;
+		string imagePath = currentItem->szImagePath;
+		newData = new ST_SLOTDATA(itemSID, name, imagePath, "", 0);
 
-void cUIInventory::DeleteShownData(int itemSID)
-{
-	for (int i = 0; i < m_vecShownData.size(); i++)
-	{
-		if (m_vecShownData[i]->itemID == itemSID) SAFE_DELETE(m_vecShownData[i]);
+		switch (itemMID)
+		{
+		case I_M_SWORD:
+		case I_M_AXE:
+			m_vecShownData[0] = newData;
+			break;
+		case I_M_ARMOR:
+			m_vecShownData[2] = newData;
+			break;
+		case I_M_SHIELD:
+			m_vecShownData[1] = newData;
+			break;
+		case I_M_BOW:
+			m_vecShownData[0] = newData;
+			m_vecShownData[1] = newData;
+			break;
+		}
 	}
+	// <<
 }
 
 // 현재 탭의 아이디와, 선택된 아이템 아이디를 반환하는 함수
