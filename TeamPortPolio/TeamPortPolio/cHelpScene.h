@@ -1,18 +1,14 @@
 #pragma once
 #include "cSceneManager.h"
 
-class cUIImage;
-class cUIProgressBar;
-
-class cLoadingScene : public cIScene
+class cHelpScene : public cIScene
 {
 	cUIImage*			m_pImage;
-	cUIProgressBar*		m_pProgressBar;
 	LPD3DXSPRITE		m_pSprite;
 
 public:
-	cLoadingScene();
-	~cLoadingScene();
+	cHelpScene();
+	~cHelpScene();
 
 	virtual void OnEnter();
 	virtual void OnUpdate();

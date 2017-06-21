@@ -1,5 +1,8 @@
 #pragma once
 #include "cUIObject.h"
+
+class cUIButton;
+
 class cUIMiniMap :
 	public cUIObject
 {
@@ -7,6 +10,10 @@ class cUIMiniMap :
 	SYNTHESIZE(int, m_nAlpha, Alpha);
 	int m_nCellPerRow;
 
+	// >>  끄는 버튼					버튼 수정해야 함
+	D3DXVECTOR3					m_vBtnPos;
+	cUIButton*					m_pBtn_Exit;
+	// <<
 public:
 	cUIMiniMap();
 	~cUIMiniMap();
@@ -17,5 +24,7 @@ public:
 
 	void Setup_Image(string imagePath, int nCellPerRow);
 	int GetIndex();
+
+	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 };
 

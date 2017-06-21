@@ -212,27 +212,29 @@ void cUIManager::Setup_TownScene()
 	// ¹Ì´Ï¸Ê
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
-	m_pMiniMap->SetAlpha(150);
+	if(OBJECT->GetPlayerID() == C_C_HUMAN_MALE) m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap_human.png", 150);
+	else if (OBJECT->GetPlayerID() == C_C_ORC_MALE)  m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap_orc.png", 150);
+	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
+		"image/ui/townscene/minimap/btn_idle.png", "image/ui/townscene/minimap/btn_mouseover.png", "image/ui/townscene/minimap/btn_select.png");
 	m_pMiniMap->SetEventID(TOWN_MINIMAP);
 
 	// ¹Ì´Ï¸Ê ¿ÀÅ©ÀüÀå ¹öÆ°
-	cUIButton* pBtn_Battle_Human = new cUIButton;
-	pBtn_Battle_Human->Setup(D3DXVECTOR3(50, 150, 0), UI_BUTTON);
-	pBtn_Battle_Human->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
-		"Image/UI/titlescene/button/formation_rect/mouseover.png",
-		"Image/UI/titlescene/button/formation_rect/selected.png", TOWN_BTN_BATTLE_ORC);
-	m_vecEventBtn.push_back(pBtn_Battle_Human);
-	m_pMiniMap->AddChild(pBtn_Battle_Human);
-
-	// ¹Ì´Ï¸Ê ÈÞ¸ÕÀüÀå ¹öÆ°
 	cUIButton* pBtn_Battle_Orc = new cUIButton;
-	pBtn_Battle_Orc->Setup(D3DXVECTOR3(300, 300, 0), UI_BUTTON);
-	pBtn_Battle_Orc->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
-		"Image/UI/titlescene/button/formation_tri/mouseover.png",
-		"Image/UI/titlescene/button/formation_tri/selected.png", TOWN_BTN_BATTLE_HUMAN);
+	pBtn_Battle_Orc->Setup(D3DXVECTOR3(205, 55, 0), UI_BUTTON);
+	pBtn_Battle_Orc->Setup_Button("Image/UI/townscene/minimap/idle.png",
+		"Image/UI/townscene/minimap/mouseover.png",
+		"Image/UI/townscene/minimap/selected.png", TOWN_BTN_BATTLE_ORC);
 	m_vecEventBtn.push_back(pBtn_Battle_Orc);
 	m_pMiniMap->AddChild(pBtn_Battle_Orc);
+
+	// ¹Ì´Ï¸Ê ÈÞ¸ÕÀüÀå ¹öÆ°
+	cUIButton* pBtn_Battle_Human = new cUIButton;
+	pBtn_Battle_Human->Setup(D3DXVECTOR3(370, 215, 0), UI_BUTTON);
+	pBtn_Battle_Human->Setup_Button("Image/UI/townscene/minimap/idle.png",
+		"Image/UI/townscene/minimap/mouseover.png",
+		"Image/UI/townscene/minimap/selected.png", TOWN_BTN_BATTLE_HUMAN);
+	m_vecEventBtn.push_back(pBtn_Battle_Human);
+	m_pMiniMap->AddChild(pBtn_Battle_Human);
 }
 
 void cUIManager::Setup_LoginScene()
@@ -315,14 +317,12 @@ void cUIManager::Setup_SelectScene()
 	cUIMsgBox* pMsgBox_Human = new cUIMsgBox;
 	pMsgBox_Human->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Human->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_human_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_ORC, FONT_SHOP);
-	//pMsgBox_Human->Setup_Text("ÀÎ°£ÀÌ´Ù\n¾ó±¼ÀÌ Àß»ý°å´ÂÁö´Â\n±Ùµ¥ ÈûÀÌ ¼¼³Ä ÀÌ³ðµµ?");
 	m_vecMsg.push_back(pMsgBox_Human);
 
 	// ÈÞ¸Õ ¼³¸í Ã¢
 	cUIMsgBox* pMsgBox_Orc = new cUIMsgBox;
 	pMsgBox_Orc->Setup(D3DXVECTOR3(930, 50, 0), UI_MSGBOX);
 	pMsgBox_Orc->Setup_MsgBox("image/ui/selectscene/msgbox_orc/msgbox_orc_bg.png", D3DXVECTOR3(50, 50, 0), ST_SIZEN(250, 500), SELECT_MSGBOX_HUMAN, FONT_SHOP);
-	//pMsgBox_Orc->Setup_Text("¿ÀÅ©´Â ¶Ù¾î´Ù´Ï´Â µÅÁö\n²Ü²Ü°Å¸®¸é¼­\n´Þ·Á°¡¼­ µµ³¢·Î ²á\n¿ÏÀü ¼¼´Ù.");
 	m_vecMsg.push_back(pMsgBox_Orc);
 }
 
@@ -420,6 +420,10 @@ void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
 	m_pInven = NULL;
+	m_pAim = new cUIImage();
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	m_pAim->SetHidden(false);
 }
 
 void cUIManager::Release()
@@ -681,4 +685,10 @@ void cUIManager::AddItem_Tab(int tabID)
 void cUIManager::ResetEquipment(vector<int> vecEquipment)
 {
 	m_pInven->ResetItems(vecEquipment);
+}
+
+void cUIManager::DrawAim(LPD3DXSPRITE pSprite)
+{
+	m_pAim->Update(0);
+	m_pAim->Render(pSprite);
 }
