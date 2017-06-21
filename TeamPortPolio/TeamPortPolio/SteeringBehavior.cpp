@@ -5,7 +5,7 @@
 SteeringBehavior::SteeringBehavior(IEntity* pEntity)
 {
 	m_pEntity = pEntity;
-	
+
 }
 
 IEntity* SteeringBehavior::Entity() { return m_pEntity; }
@@ -16,14 +16,17 @@ void SteeringBehavior::Arrive(D3DXVECTOR3 targetPos)
 	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
 	vToTarget.y = 0;
 	float distance = MATH->Magnitude(vToTarget);
-	float speedMultiplier = 3;
+	float speedMultiplier = 5;
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
+		if (speed > 0.08)speed = 0.08;
+
 
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
-		Entity()->SetSpeed(speed);
+		Entity()->SetSpeed(speed * 2);
+
 	}
 }
 void SteeringBehavior::LeaderArrive(D3DXVECTOR3 targetPos)
@@ -31,13 +34,13 @@ void SteeringBehavior::LeaderArrive(D3DXVECTOR3 targetPos)
 	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
 	vToTarget.y = 0;
 	float distance = MATH->Magnitude(vToTarget);
-	float speedMultiplier = 3;
+	float speedMultiplier = 9;
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-
+		if (speed > 0.12)speed = 0.12;
 		Entity()->SetForward(vToTarget);
-		Entity()->AddPos(Entity()->Forward()*speed);
+		Entity()->AddPos(Entity()->Forward() / 17);
 		Entity()->SetSpeed(speed);
 	}
 }
@@ -47,13 +50,14 @@ void SteeringBehavior::CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity
 	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
 	vToTarget.y = 0;
 	float distance = MATH->Magnitude(vToTarget);
-	float speedMultiplier = 3;
+	float speedMultiplier = 9;
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-	
+
+
 		Entity()->SetForward(vToTarget);
-		Entity()->AddPos(Entity()->Forward()*(speed+velocity));
+		Entity()->AddPos(Entity()->Forward()*(speed + velocity));
 		Entity()->SetSpeed(speed + velocity);
 	}
 }
@@ -62,18 +66,19 @@ void SteeringBehavior::UnitArrive(D3DXVECTOR3 targetPos)
 {
 	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
 	float distance = MATH->Magnitude(vToTarget);
-	float speedMultiplier = 3;
+	float speedMultiplier = 9;
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-	
+		if (speed > 0.12)speed = 0.12;
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
-		Entity()->SetSpeed(speed);
+		Entity()->SetSpeed(speed * 2);
+
 	}
 }
 
-void SteeringBehavior::CavalryUnitArrive(D3DXVECTOR3 targetPos,float velocity)
+void SteeringBehavior::CavalryUnitArrive(D3DXVECTOR3 targetPos, float velocity)
 {
 	D3DXVECTOR3 vToTarget = targetPos - Entity()->Pos();
 	float distance = MATH->Magnitude(vToTarget);
@@ -81,10 +86,10 @@ void SteeringBehavior::CavalryUnitArrive(D3DXVECTOR3 targetPos,float velocity)
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-	
+
 
 		Entity()->SetForward(vToTarget);
-		Entity()->AddPos(Entity()->Forward()*(speed+velocity));
+		Entity()->AddPos(Entity()->Forward()*(speed + velocity));
 		Entity()->SetSpeed(speed + velocity);
 	}
 }
@@ -101,35 +106,35 @@ void SteeringBehavior::Evade(IEntity* pTarget)
 // 배회
 void SteeringBehavior::Wander(float distance, float radius, float jitter)
 {
-//	float randomX = MATH->Random(-1.0f, 1.0f) * jitter;
-//	float randomY = MATH->Random(-1.0f, 1.0f) * jitter;
-//	m_wander += Vector(randomX, randomY);
-//	m_wander = m_wander.Normalize() * radius;
-//
-//	Vector targetPos = Entity()->Pos() + Entity()->Forward() * distance + m_wander;
-//	AddForce(targetPos - Entity()->Pos());
-//
-//	D3DXVECTOR3 vPos = Entity()->Pos();
-//
-//	D3DXVECTOR3 targetPos((-1 + rand() % 2 + 1), (-1 + rand() % 2 + 1), (-1 + rand() % 2 + 1));
-//
-//	Entity()->SetForward(targetPos);
-//	if (MATH->Distance(Entity()->Pos(), PosOrigin) > distance)Entity()->SetForward(-targetPos);
-//
-//	Entity()->AddPos(Entity()->Forward());
-//	Entity()->SetForward(vPos);
-//	Entity()->AddPos(Entity()->Forward);
+	//	float randomX = MATH->Random(-1.0f, 1.0f) * jitter;
+	//	float randomY = MATH->Random(-1.0f, 1.0f) * jitter;
+	//	m_wander += Vector(randomX, randomY);
+	//	m_wander = m_wander.Normalize() * radius;
+	//
+	//	Vector targetPos = Entity()->Pos() + Entity()->Forward() * distance + m_wander;
+	//	AddForce(targetPos - Entity()->Pos());
+	//
+	//	D3DXVECTOR3 vPos = Entity()->Pos();
+	//
+	//	D3DXVECTOR3 targetPos((-1 + rand() % 2 + 1), (-1 + rand() % 2 + 1), (-1 + rand() % 2 + 1));
+	//
+	//	Entity()->SetForward(targetPos);
+	//	if (MATH->Distance(Entity()->Pos(), PosOrigin) > distance)Entity()->SetForward(-targetPos);
+	//
+	//	Entity()->AddPos(Entity()->Forward());
+	//	Entity()->SetForward(vPos);
+	//	Entity()->AddPos(Entity()->Forward);
 }
 
 // 장애물 회피
 void SteeringBehavior::AvoidObstacle(ST_SPHERE pObstacle)
 {
 	float distance = MATH->Distance(Entity()->Pos(), pObstacle.vCenter);
-	float length= distance - (Entity()->Radius() + pObstacle.fRadius);
+	float length = distance - (Entity()->Radius() + pObstacle.fRadius);
 	if (length < 0)
 	{
 		D3DXVECTOR3 vDir = Entity()->Pos() - pObstacle.vCenter;
-		Entity()->AddPos(vDir/TIME->FPS());
+		Entity()->AddPos(vDir / TIME->FPS());
 	}
 }
 
@@ -171,27 +176,59 @@ void SteeringBehavior::ConstrainOverlap(vector<IEntity*> targets)
 
 void SteeringBehavior::OffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
 {
-	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, pLeader->Forward());
-	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
-	targetPos.y=0;
-	float distance = MATH->Distance(Entity()->Pos(), targetPos);
-	float arrivalTime = distance / Entity()->MaxSpeed();
-	Arrive(targetPos + pLeader->Velocity() * arrivalTime);
-}
+	D3DXVECTOR3 forward;
+	static int count = 0;
+	D3DXVECTOR3 prevPos = pLeader->Pos();
 
-void SteeringBehavior::CavalryOffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
-{
-	D3DXVECTOR3 forward = pLeader->Forward();
-	float minus = -1;
-	float plus = 1;
-	forward.x > 0 ? plus : minus;
-	forward.z > 0 ? plus : minus;
-	forward = MATH->Nomalize(forward);
+	D3DXVECTOR3 currentPos = pLeader->Pos();
+
+
+	forward = pLeader->Forward();
+
+
+
 
 	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, forward);
 	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
 	targetPos.y = 0;
 	float distance = MATH->Distance(Entity()->Pos(), targetPos);
 	float arrivalTime = distance / Entity()->MaxSpeed();
-	CavalryUnitArrive(targetPos + pLeader->Velocity() * arrivalTime, (pLeader->Speed()*0.8f));
+	Arrive(targetPos);
+}
+
+void SteeringBehavior::CavalryOffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
+{
+	D3DXVECTOR3 forward = pLeader->Forward();
+
+	if (forward.x > 0)
+	{
+		if (forward.z > 0)
+		{
+			forward = MATH->Nomalize(D3DXVECTOR3(1, 0, 1));
+		}
+		if (forward.z < 0)
+		{
+			forward = MATH->Nomalize(D3DXVECTOR3(1, 0, -1));
+		}
+	}
+	if (forward.x < 0)
+	{
+		if (forward.z > 0)
+		{
+			forward = MATH->Nomalize(D3DXVECTOR3(-1, 0, 1));
+		}
+		if (forward.z < 0)
+		{
+			forward = MATH->Nomalize(D3DXVECTOR3(-1, 0, -1));
+		}
+	}
+
+
+
+	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, forward);
+	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
+	targetPos.y = 0;
+	float distance = MATH->Distance(Entity()->Pos(), targetPos);
+	float arrivalTime = distance / Entity()->MaxSpeed();
+	CavalryUnitArrive(targetPos, (pLeader->Speed()*0.8f));
 }

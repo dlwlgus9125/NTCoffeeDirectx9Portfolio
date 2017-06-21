@@ -27,6 +27,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 cPlayer::~cPlayer()
 {
 	SAFE_DELETE(m_pFsm);
+	
 }
 
 void cPlayer::Init()
@@ -75,6 +76,8 @@ void cPlayer::Init()
 	m_pFsm->Play(PLAYER_STATE_IDLE);
 	m_isPull = false;
 	m_MeleeCollider.fRadius = 0.2f;
+
+
 }
 
 void cPlayer::Update(float deltaTime)
@@ -124,7 +127,21 @@ m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward
 
 
 	}
-	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+	RECT rc;
+	GetClientRect(g_hWnd, &rc);
+	D3DXVECTOR3 vCenter(rc.right / 2, rc.bottom / 2, 0);
+	if (GetMesh()->GetIndex() != P_BOWATTACK1)
+	{
+		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+		CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.222);
+		if (CAMERA->GetCameraDitance() >4) CAMERA->SetCameraDistance(4);
+	}
+	else
+	{
+		CAMERA->SetLookAt(m_CharacterEntity->Pos()+D3DXVECTOR3(0,0.5,0), 0);
+		m_fRotY = CAMERA->GetCamRotAngle().y;
+	}
+
 
 }
 
@@ -154,6 +171,7 @@ void cPlayer::Render()
 		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
+
 }
 
 
