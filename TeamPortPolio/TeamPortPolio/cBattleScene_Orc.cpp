@@ -24,7 +24,8 @@ void cBattleScene_Orc::OnEnter()
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
-	OBJECT->GetPlayer()->SetRotY(D3DX_PI);
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
+	//OBJECT->GetPlayer()->SetRotY(D3DX_PI);
 
 	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	//pPlayer->SetID(C_C_HUMAN_MALE);
@@ -62,7 +63,7 @@ void cBattleScene_Orc::OnUpdate()
 	UI->Update(TIME->DeltaTime());
 	EFFECT->Update();
 
-	if (INPUT->IsKeyDown(VK_SPACE))cout << MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
+
 
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;

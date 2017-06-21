@@ -88,24 +88,23 @@ cGraph* cAstarManager::SetupGraph()
 		int x = i % col;	// 열 번호
 		int z = i / col;	// 줄 번호	
 
-		AddEdgeTest(pGraph, i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
-		AddEdgeTest(pGraph, i, x + 1, z + 0);
-		AddEdgeTest(pGraph, i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후
-		AddEdgeTest(pGraph, i, x + 0, z + 1);
-		AddEdgeTest(pGraph, i, x - 1, z - 1);
-		AddEdgeTest(pGraph, i, x - 1, z + 1);
-		AddEdgeTest(pGraph, i, x + 1, z - 1);
-		AddEdgeTest(pGraph, i, x + 1, z + 1);
+		AddEdge(i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
+		AddEdge(i, x + 1, z + 0);
+		AddEdge(i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후
+		AddEdge(i, x + 0, z + 1);
+		AddEdge(i, x - 1, z - 1);
+		AddEdge(i, x - 1, z + 1);
+		AddEdge(i, x + 1, z - 1);
+		AddEdge(i, x + 1, z + 1);
 	}
 	return pGraph;
 }
 
 void cAstarManager::AddEdge(int from, int col, int row)
 {
-	if (col >= 0 && col < 150 && row >= 0 && row < 150)
-		//if (col >= 0 && col < 15 && row >= 0 && row < 15)
+	if (col >= 0 && col < sqrt(m_vecPosOfNode.size()) && row >= 0 && row <  sqrt(m_vecPosOfNode.size()))
 	{
-		int to = col + row * 150;
+		int to = col + row *  sqrt(m_vecPosOfNode.size());
 		D3DXVECTOR3 fromPos = m_graph->GetNode(from)->Pos();//get노드로 처리해서 엣지추가여부 결정하기
 		D3DXVECTOR3 toPos = m_graph->GetNode(to)->Pos();
 
@@ -118,23 +117,6 @@ void cAstarManager::AddEdge(int from, int col, int row)
 	}
 }
 
-void cAstarManager::AddEdgeTest(cGraph* pGraph, int from, int col, int row)
-{
-	if (col >= 0 && col < 150 && row >= 0 && row < 150)
-		//if (col >= 0 && col < 15 && row >= 0 && row < 15)
-	{
-		int to = col + row * 150;
-		D3DXVECTOR3 fromPos = pGraph->GetNode(from)->Pos();//get노드로 처리해서 엣지추가여부 결정하기
-		D3DXVECTOR3 toPos = pGraph->GetNode(to)->Pos();
-
-		if (abs(fromPos.y - toPos.y) <= 1.0f&&pGraph->GetNode(from)->Active() == true && pGraph->GetNode(to)->Active() == true)
-		{
-			D3DXVECTOR3 length = toPos - fromPos;
-
-			pGraph->AddEdge(from, to, sqrt(pow(length.x, 2) + pow(length.z, 2)));
-		}
-	}
-}
 
 vector<int> cAstarManager::GetPath(int chrindex, int targetIndex)
 {
