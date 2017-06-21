@@ -22,7 +22,6 @@ public:
 	cGraph* SetupGraph();
 
 	void AddEdge(int from, int col, int row);
-	void AddEdgeTest(cGraph * pGraph, int from, int col, int row);
 	vector<int> GetPath(int chrindex, int targetIndex);
 	void Release();
 	void Update();

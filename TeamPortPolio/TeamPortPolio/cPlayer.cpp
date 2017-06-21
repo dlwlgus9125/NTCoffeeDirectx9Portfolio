@@ -81,7 +81,9 @@ void cPlayer::Update(float deltaTime)
 {
 	if (INPUT->IsKeyDown(VK_SPACE))
 	{
-		cout << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
+		cout << "pos : " << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
+		cout <<"RotY : "<< MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
+		cout<<"Forward : " << m_CharacterEntity->Forward().x << " " << m_CharacterEntity->Forward().y << " " << m_CharacterEntity->Forward().z << endl;
 	}
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
