@@ -67,7 +67,7 @@ void cLoginScene::OnUpdate()
 		SCENE->ChangeScene(SCENE_SELECT);
 		break;
 	case LOGIN_BTN_HELP:
-		
+		SCENE->ChangeScene(SCENE_HELP);
 		break;
 	case LOGIN_BTN_EXIT:
 		m_isClosed = true;

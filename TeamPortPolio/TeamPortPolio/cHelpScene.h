@@ -4,6 +4,11 @@
 class cHelpScene : public cIScene
 {
 	cUIImage*			m_pImage;
+	cUIButton*			m_pExitButton;
+	cUIButton*			m_pExplainButton_Play;
+	cUIButton*			m_pExplainButton_Town1;
+	cUIButton*			m_pExplainButton_Town2;
+
 	LPD3DXSPRITE		m_pSprite;
 
 public:
