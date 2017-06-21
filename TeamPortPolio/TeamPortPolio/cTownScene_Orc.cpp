@@ -17,7 +17,7 @@ void cTownScene_Orc::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN_ORC);
 	UI->Change(SCENE_TOWN_ORC);
-
+	  
 	m_stWeather = MAP->GetWeather();
 	EFFECT->Init(m_stWeather);
 
