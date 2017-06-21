@@ -202,3 +202,8 @@ void cObjectManager::PutOffItem(int itemSID)
 {
 	m_player->PutOffItem(itemSID);
 }
+
+int cObjectManager::GetPlayerID() 
+{ 
+	return m_player->GetID();
+}

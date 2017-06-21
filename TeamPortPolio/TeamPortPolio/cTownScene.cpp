@@ -106,6 +106,9 @@ void cTownScene::OnUpdate()
 		OBJECT->PutOffItem(itemID);
 		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
+	case TOWN_TAB_RECRUIT:
+		int trooptype = itemID;
+		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -129,6 +132,11 @@ void cTownScene::OnUpdate()
 	{
 		UI->SetEvent(TOWN_MINIMAP, false);
 		m_vecST_Sphere[2].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[3].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_RECRUIT, false);
+		m_vecST_Sphere[3].isPicked = false;;;
 	}
 	//<< 
 }

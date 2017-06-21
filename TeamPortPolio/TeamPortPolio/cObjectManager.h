@@ -66,5 +66,7 @@ public:
 	void BuyItem(int itemSID);
 	void PutOnItem(int itemSID);
 	void PutOffItem(int itemSID);
+
+	int GetPlayerID();
 };
 
