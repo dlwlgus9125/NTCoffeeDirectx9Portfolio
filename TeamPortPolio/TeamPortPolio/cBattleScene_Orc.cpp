@@ -23,6 +23,8 @@ void cBattleScene_Orc::OnEnter()
 	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
 
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
+	OBJECT->GetPlayer()->SetRotY(D3DX_PI);
 
 	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	//pPlayer->SetID(C_C_HUMAN_MALE);
@@ -33,7 +35,13 @@ void cBattleScene_Orc::OnEnter()
 
 	//OBJECT->AddObject(pPlayer);
 	//OBJECT->SetPlayer(pPlayer);
-
+	//OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
+	//OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
+	/*OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetCharacterEntity()->Pos());
+	for each(auto c in OBJECT->GetPlayer()->GetUnitLeader()->GetUnits())
+	{
+		c->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->Pos());
+	}
 
 	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
@@ -41,7 +49,7 @@ void cBattleScene_Orc::OnEnter()
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+	OBJECT->AddLeader(pLeader);*/
 
 
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
@@ -53,6 +61,8 @@ void cBattleScene_Orc::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	EFFECT->Update();
+
+	if (INPUT->IsKeyDown(VK_SPACE))cout << MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
 
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;

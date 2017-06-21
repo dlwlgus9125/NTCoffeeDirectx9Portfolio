@@ -48,11 +48,16 @@ void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 		AddEdge(i, x + 1, z - 1);
 		AddEdge(i, x + 1, z + 1);
 	}
-
+	m_PathGraph = SetupGraph();
+	THREAD->CreateFindIndexThread(HANDLE_ASTAR_FINDINDEX);
+	THREAD->CreateFindPathThread(HANDLE_ATSTAR_FINDPATH);
 }
 
-void cAstarManager::SetupThread()
+void cAstarManager::DestroyForChangeScene()
 {
+	THREAD->SuspendThreadByKey(HANDLE_ASTAR_FINDINDEX);
+	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
+
 }
 
 cGraph* cAstarManager::SetupGraph()
@@ -135,13 +140,13 @@ vector<int> cAstarManager::GetPath(int chrindex, int targetIndex)
 {
 	if (chrindex != targetIndex)
 	{
-		cGraph* pGraph = SetupGraph();
-		cAstar as(pGraph, chrindex, targetIndex);
+	/*	cGraph* pGraph = SetupGraph();*/
+		cAstar as(m_PathGraph, chrindex, targetIndex);
 		if (as.Search())
 		{
 			return as.GetPath();
 		}
-		SAFE_DELETE(pGraph);
+		/*SAFE_DELETE(pGraph);*/
 	}
 	return vector<int>();
 }
@@ -160,15 +165,20 @@ void cAstarManager::PathUpdate()
 	if (m_isMapLoadingComplete == true)
 	{		
 		SetLeaderPath();
-	THREAD->TerminateThreadByKey(HANDlE_ATSTAR_FINDPATH);
+	THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
 	}
 }
 
 void cAstarManager::Release()
 {
+	THREAD->TerminateThreadByKey(HANDLE_ASTAR_FINDINDEX);
+	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 	m_isMapLoadingComplete = false;
+	if (m_PathGraph)SAFE_DELETE(m_PathGraph);
+	m_PathGraph = NULL;
 	if (m_graph)SAFE_DELETE(m_graph);
-
+	m_graph = NULL;
+	m_vecPosOfNode.clear();
 }
 
 void cAstarManager::Render()

@@ -43,7 +43,7 @@ void cCamera::Update()
 
 	matR = matRX * matRY;
 
-	m_fCameraDistance = MATH->Clamp(m_fCameraDistance, 1.0f, 4.0f);
+	m_fCameraDistance = MATH->Clamp(m_fCameraDistance, 1.0f, m_fCameraDistance);
 
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCameraDistance);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);

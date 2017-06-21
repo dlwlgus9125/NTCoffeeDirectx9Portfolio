@@ -18,6 +18,8 @@ void cTownScene_Human::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
 	MAP->Init(SCENE_TOWN_HUMAN);
+
+	
 	UI->Change(SCENE_TOWN_HUMAN);
 
 	m_stWeather = MAP->GetWeather();
