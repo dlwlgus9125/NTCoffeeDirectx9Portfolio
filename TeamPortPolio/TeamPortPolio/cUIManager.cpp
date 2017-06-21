@@ -235,6 +235,18 @@ void cUIManager::Setup_TownScene()
 		"Image/UI/townscene/minimap/selected.png", TOWN_BTN_BATTLE_HUMAN);
 	m_vecEventBtn.push_back(pBtn_Battle_Human);
 	m_pMiniMap->AddChild(pBtn_Battle_Human);
+
+	// >> 체력 상태 표시 막대
+	m_pStatus = new cUIProgressBar;
+	m_pStatus->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_PROGRESSBAR);
+	if (OBJECT->GetPlayerID() == C_C_HUMAN_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_human.png", "", D3DXVECTOR3(30, 20, 0));
+	else if (OBJECT->GetPlayerID() == C_C_ORC_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_orc.png", "", D3DXVECTOR3(30, 20, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/life.png", D3DXVECTOR3(148, 33, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/mana.png", D3DXVECTOR3(148, 61, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/exp.png", D3DXVECTOR3(153, 76, 0));
+	m_pStatus->SetScaleOutline(1.0f);
+	m_pStatus->SetHidden(false);
+	// << 
 }
 
 void cUIManager::Setup_LoginScene()
@@ -420,10 +432,14 @@ void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
 	m_pInven = NULL;
+	m_pStatus = NULL;
+
+	// >> 활 쏠 때 쓰는 목표점
 	m_pAim = new cUIImage();
 	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
 	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
 	m_pAim->SetHidden(false);
+	// <<
 }
 
 void cUIManager::Release()
@@ -446,6 +462,8 @@ void cUIManager::Release()
 	m_vecMsg.clear();
 	
 	SAFE_DELETE(m_pMiniMap);
+	SAFE_DELETE(m_pAim);
+	SAFE_DELETE(m_pStatus);
 }
 
 void cUIManager::Update(float deltaTime)
@@ -475,6 +493,8 @@ void cUIManager::Update(float deltaTime)
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
 {
+	if(m_pStatus) m_pStatus->Render(pSprite);
+
 	for (int i = 0; i < m_vecTab.size(); i++)
 	{
 		m_vecTab[i]->Render(pSprite);

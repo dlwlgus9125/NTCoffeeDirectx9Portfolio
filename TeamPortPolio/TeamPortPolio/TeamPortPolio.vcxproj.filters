@@ -254,11 +254,11 @@
     <Filter Include="07. UI\02. cUIText">
       <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. UI\09. cInventory">
-      <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. cScene\06. cHelpScene">
       <UniqueIdentifier>{471b3d7e-629c-42e9-8ffc-d630adc2f282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\09. cUIInventory">
+      <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -504,9 +504,6 @@
     <ClInclude Include="cBattleScene_Human.h">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
     </ClInclude>
-    <ClInclude Include="cArrowMaker.h">
-      <Filter>02. cCharacter\04.cArrow</Filter>
-    </ClInclude>
     <ClInclude Include="cLoadingScene.h">
       <Filter>03. cScene\05. cLoadingScene</Filter>
     </ClInclude>
@@ -523,7 +520,7 @@
       <Filter>00. Manager\14. cThreadManager</Filter>
     </ClInclude>
     <ClInclude Include="cUIInventory.h">
-      <Filter>07. UI\09. cInventory</Filter>
+      <Filter>07. UI\09. cUIInventory</Filter>
     </ClInclude>
     <ClInclude Include="cLoginScene.h">
       <Filter>03. cScene\01. cLoginScene</Filter>
@@ -842,9 +839,6 @@
     <ClCompile Include="Cavalry_Battle.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
     </ClCompile>
-    <ClCompile Include="cArrowMaker.cpp">
-      <Filter>02. cCharacter\04.cArrow</Filter>
-    </ClCompile>
     <ClCompile Include="cLoadingScene.cpp">
       <Filter>03. cScene\05. cLoadingScene</Filter>
     </ClCompile>
@@ -861,7 +855,7 @@
       <Filter>00. Manager\14. cThreadManager</Filter>
     </ClCompile>
     <ClCompile Include="cUIInventory.cpp">
-      <Filter>07. UI\09. cInventory</Filter>
+      <Filter>07. UI\09. cUIInventory</Filter>
     </ClCompile>
     <ClCompile Include="Player_BowAttack.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
