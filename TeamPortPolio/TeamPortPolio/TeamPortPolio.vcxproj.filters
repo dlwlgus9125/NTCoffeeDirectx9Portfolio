@@ -179,9 +179,6 @@
     <Filter Include="07. UI\01. cUIImage">
       <UniqueIdentifier>{6884dbb3-27ca-4b65-b5e7-3408c15782a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. UI\02. cUIText">
-      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. UI\03. cUIButton">
       <UniqueIdentifier>{5fcd1a10-77ee-4001-9081-5dbfb58f3f4b}</UniqueIdentifier>
     </Filter>
@@ -238,6 +235,27 @@
     </Filter>
     <Filter Include="00. Manager\02. cInputManager\03. cTextureManager">
       <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\05. cLoadingScene">
+      <UniqueIdentifier>{76575df6-c18c-4fbd-8a42-bf45dd70131f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\08. cUIProgressBar">
+      <UniqueIdentifier>{3dd28048-469c-4a24-b313-0e505f38890a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Orc">
+      <UniqueIdentifier>{529f369e-c9f8-459c-917d-e99eef3b980c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Human">
+      <UniqueIdentifier>{0662adf5-8ea6-4dc9-82a3-df5f98f5a4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\14. cThreadManager">
+      <UniqueIdentifier>{7ff44b9c-1a68-4b89-967d-78c6225897b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\02. cUIText">
+      <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\09. cInventory">
+      <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -414,9 +432,6 @@
     <ClInclude Include="cShadowManager.h">
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClInclude>
-    <ClInclude Include="cLoginScene.h">
-      <Filter>03. cScene\01. cLoginScene</Filter>
-    </ClInclude>
     <ClInclude Include="cSelectScene.h">
       <Filter>03. cScene\02. cSelectScene</Filter>
     </ClInclude>
@@ -485,6 +500,30 @@
     </ClInclude>
     <ClInclude Include="cBattleScene_Human.h">
       <Filter>03. cScene\04. cBattleScene\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="cArrowMaker.h">
+      <Filter>02. cCharacter\04.cArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoadingScene.h">
+      <Filter>03. cScene\05. cLoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIProgressBar.h">
+      <Filter>07. UI\08. cUIProgressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="cTownScene_Orc.h">
+      <Filter>03. cScene\03. cTownScene\Orc</Filter>
+    </ClInclude>
+    <ClInclude Include="cTownScene_Human.h">
+      <Filter>03. cScene\03. cTownScene\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="cThreadManager.h">
+      <Filter>00. Manager\14. cThreadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIInventory.h">
+      <Filter>07. UI\09. cInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoginScene.h">
+      <Filter>03. cScene\01. cLoginScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -794,6 +833,33 @@
     </ClCompile>
     <ClCompile Include="Cavalry_Battle.cpp">
       <Filter>02. cCharacter\02. cUnit\02. cCavalryUnit\00. CavalryState</Filter>
+    </ClCompile>
+    <ClCompile Include="cArrowMaker.cpp">
+      <Filter>02. cCharacter\04.cArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoadingScene.cpp">
+      <Filter>03. cScene\05. cLoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIProgressBar.cpp">
+      <Filter>07. UI\08. cUIProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="cTownScene_Orc.cpp">
+      <Filter>03. cScene\03. cTownScene\Orc</Filter>
+    </ClCompile>
+    <ClCompile Include="cTownScene_Human.cpp">
+      <Filter>03. cScene\03. cTownScene\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="cThreadManager.cpp">
+      <Filter>00. Manager\14. cThreadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIInventory.cpp">
+      <Filter>07. UI\09. cInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_BowAttack.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Death.cpp">
+      <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

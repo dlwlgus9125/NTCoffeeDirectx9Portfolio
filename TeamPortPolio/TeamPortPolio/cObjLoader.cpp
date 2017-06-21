@@ -5,6 +5,8 @@
 
 cObjLoader::cObjLoader()
 {
+	m_stWeather = ST_WEATHER();
+	m_stShadow = ST_SHADOW();
 }
 
 cObjLoader::~cObjLoader()
@@ -590,7 +592,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 {
 	ST_PNT_VERTEX		vertex = ST_PNT_VERTEX();
 	vector<DWORD>		vecAttrBuf;
-
+	ST_NPC_INFO npcInfo;
 	string sFullPath(szFolder);
 	sFullPath += (string("/") + string(szFile));
 
@@ -669,6 +671,52 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 				sscanf_s(szTemp, "%*s %d", &cellPerRow);
 			}
 		}
+		else if (szTemp[0] == 'w')
+		{
+			if (szTemp[1] == 's')
+			{
+				int isOn;
+				int count;
+				float move;
+				float speed;
+				sscanf_s(szTemp, "%*s %d %d %f %f", &isOn, &count, &move, &speed);
+				m_stWeather.SetSnowOn(isOn);
+				m_stWeather.SetCount_Snow(count);
+				m_stWeather.SetMove_Snow(move);
+				m_stWeather.SetSpeed_Snow(speed);
+			}
+			if (szTemp[1] == 'r')
+			{
+				int isOn;
+				int count;
+				float move;
+				float speed;
+				sscanf_s(szTemp, "%*s %d %d %f %f", &isOn, &count, &move, &speed);
+				m_stWeather.SetRainOn(isOn);
+				m_stWeather.SetCount_Rain(count);
+				m_stWeather.SetMove_Rain(move);
+				m_stWeather.SetSpeed_Rain(speed);
+			}
+			if (szTemp[1] == 'f')
+			{
+				int isOn;
+				int index;
+				sscanf_s(szTemp, "%*s %d %d", &isOn, &index);
+				m_stWeather.SetFogOn(isOn);
+				m_stWeather.SetFogPassIndex(index);
+			}
+		}
+		else if (szTemp[0] == 'e')
+		{
+			if (szTemp[1] == 's')
+			{
+				int isOn;
+				float diffuseAlpha;
+				sscanf_s(szTemp, "%*s %d %f", &isOn, &diffuseAlpha);
+				m_stShadow.SetShadowOn(isOn);
+				m_stShadow.SetShadowDiffuseAlpha(diffuseAlpha);
+			}
+		}
 		else if (szTemp[0] == 'o')
 		{
 			int nSID = -1;
@@ -707,6 +755,24 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 			if (createMesh == true) pConstruct->Create(nSID);
 
 			vecConstruct.push_back(pConstruct);
+		}
+		else if (szTemp[0] == 'p')
+		{
+			int nSID = -1;
+			D3DXVECTOR3 vPos = D3DXVECTOR3(0, 0, 0);
+			D3DXVECTOR3 vScale = D3DXVECTOR3(0, 0, 0);
+			float fRotX = 0.0f;
+			float fRotY = 0.0f;
+			float fRotZ = 0.0f;
+
+			sscanf_s(szTemp, "%*s %d %f %f %f %f %f %f %f %f %f",
+				&nSID,
+				&vPos.x, &vPos.y, &vPos.z,
+				&vScale.x, &vScale.y, &vScale.z,
+				&fRotX, &fRotY, &fRotZ);
+
+			npcInfo = ST_NPC_INFO(nSID, vPos, vScale, fRotX, fRotY, fRotZ);
+			m_vecStNPC.push_back(npcInfo);
 		}
 	}
 
@@ -747,3 +813,17 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 	return pMesh;
 }
 
+ST_WEATHER& cObjLoader::GetWeatherInfo()
+{
+	return m_stWeather;
+}
+
+ST_SHADOW& cObjLoader::GetShadowInfo()
+{
+	return m_stShadow;
+}
+
+vector<ST_NPC_INFO>& cObjLoader::GetNPCInfo()
+{
+	return m_vecStNPC;
+}

@@ -19,7 +19,6 @@ class cHeightMap :
 	SYNTHESIZE(float, m_fMaxX, MaxX);
 	SYNTHESIZE(float, m_fMaxZ, MaxZ);
 	SYNTHESIZE(float, m_fMinZ, MinZ);
-	
 public:
 	cHeightMap();
 	~cHeightMap();

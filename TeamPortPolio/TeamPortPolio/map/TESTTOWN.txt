@@ -1,5 +1,9 @@
 cs 1
 cr 150
+ws 0 1500 0 0
+wr 0 3000 0 0
+wf 0 2
+es 0 0.5
 mtllib TESTTOWN_mtl.txt
 v -75 0 -75
 vt 0 0 

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player_State.h"
+#include "cCharacter.h"
 
 
 void Player_Attack::OnBegin(cPlayer* pPlayer)
@@ -11,8 +12,8 @@ void Player_Attack::OnBegin(cPlayer* pPlayer)
 void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 {
 	P_STATE state;
-	if (pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
-	{
+	FindBattleTarget(pPlayer);
+
 
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
@@ -28,17 +29,31 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		{
 			state = P_ATTACK1;
 		}
-
+		else
+		{
+			state = P_ATTACK1;
+		}
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 		{
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
+			if (BattleTarget && ((cCharacter*)BattleTarget)->GetCharacterEntity()->IsDeath() == false
+				&& ((cCharacter*)BattleTarget)->GetCharacterEntity()->IsDeath() == false)
+			{				
+				((cCharacter*)BattleTarget)->SetAnimHit();
+				pPlayer->Fight(pPlayer, (cCharacter*)BattleTarget);
+
+			}
 		}
 	}
 	else if (INPUT->IsKeyPress(MOUSE_RIGHT) && pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 	{
 		pPlayer->FSM()->Play(PLAYER_STATE_DEFENCE);
+		pPlayer->GetStatus()->m_defence = 10.0f;
 	}
-
+	else if (INPUT->IsKeyUp(MOUSE_RIGHT))
+	{
+		pPlayer->GetStatus()->m_defence = 4.0f;
+	}
 	else
 	{
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.25f)
@@ -47,37 +62,21 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		}
 	}
 	// 충돌 처리 및 공격 카운트 후 죽는 모션까지..
-	  for (int i = 0; i < OBJECT->GetLeader().size(); i++)
-         {
-            if (OBJECT->GetLeader()[i]->GetCamp() == CAMP_PLAYER)return;
-            
-            for each(auto p in OBJECT->GetLeader()[i]->GetUnits())
-            {
-				int attackCount = 0;
-               if (MATH->IsCollided(pPlayer->GetAttackCollider(), p->GetSphere()))
-               {
-                  p->GetMesh()->SetAnimationIndexBlend(FG_HIT);
-
-				  if (p->GetMesh()->GetPassedTime() > p->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.25f)
-				  {
-					  attackCount++;
-				  }
-               }
-			   else if (attackCount > 5)
-			   {
-				   p->SetDeath(true);
-				   attackCount = 0;
-			   }
-
-			   if (p->GetLeader()->IsDeath() == true)
-			   {
-				   p->GetMesh()->SetAnimationIndexBlend(FG_DEATH);
-			   }
-			}
-         }
-	}
 }
 
 void Player_Attack::OnEnd(cPlayer* pPlayer)
 {
+}
+
+void Player_Attack::FindBattleTarget(cPlayer * pPlayer)
+{
+	BattleTarget = NULL;
+	for each(auto t in OBJECT->GetCharacter())
+	{
+		if (t->GetCharacterEntity()->IsDeath() == false && t->GetCamp() != pPlayer->GetCamp() && MATH->IsCollided(t->GetSphere(), pPlayer->GetMeleeCollider()))
+		{
+			BattleTarget = t;
+			break;
+		}
+	}
 }

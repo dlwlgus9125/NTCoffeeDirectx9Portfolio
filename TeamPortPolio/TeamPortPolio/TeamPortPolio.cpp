@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "TeamPortPolio.h"
 #include "cGameManager.h"
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#define new new( _CLIENT_BLOCK, __FILE__, __LINE__ )
+#endif
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -19,31 +24,6 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 HCURSOR g_Cursor;
 LPD3DXSPRITE g_Sprite;
 HWND			g_hWnd;
-CRITICAL_SECTION cs;
-
-unsigned __stdcall UpdateThread(LPVOID lpParam)
-{
-	while (1)
-	{
-		EnterCriticalSection(&cs);
-		if (OBJECT->GetPlayer() != NULL)ASTAR->Update();
-		LeaveCriticalSection(&cs);
-	}
-	return 0;
-}
-
-unsigned __stdcall TestThread(LPVOID lpParam)
-{
-	while (1)
-	{
-		EnterCriticalSection(&cs);
-		//OBJECT->AddArmy();
-		LeaveCriticalSection(&cs);
-	}
-	return 0;
-}
-
-
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -67,28 +47,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TEAMPORTPOLIO));
-
+	GAMEMAIN->Init();
 	MSG msg;
 	//>>thread
-	DWORD dwThlD1, dwThlD2;
-	HANDLE hThread[2];
+	THREAD->Init();
 
-	unsigned long uiStackSize = 0;
-
-	dwThlD1 = dwThlD2 = 0;
-
-	hThread[0] = hThread[1] = NULL;
-	InitializeCriticalSection(&cs);
-	//<<
-
-
-
-	GAMEMAIN->Init();
-	//GAMEMAIN->Init();
-
-	hThread[0] = (HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))UpdateThread, NULL, 0, (unsigned*)& dwThlD1);
-	hThread[1] = (HANDLE)_beginthreadex(NULL, 0, (unsigned(__stdcall *)(void*))TestThread, NULL, 0, (unsigned*)& dwThlD2);
-
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// 기본 메시지 루프입니다.
 	while (true)
@@ -114,10 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		}
 	}
-	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
-
-	CloseHandle(hThread[0]);
-	CloseHandle(hThread[1]);
+	THREAD->CloseThreadManager();
 
 	GAMEMAIN->Release();
 

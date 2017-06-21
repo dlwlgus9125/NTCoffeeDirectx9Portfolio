@@ -15,11 +15,13 @@ public:
 	void ArrowUpdate();
 private:
 	BallisticMotion* m_pArrow;
-	IEntity* pEntity;
+	
 	ST_SPHERE		m_ArrowSphere;
 	LPD3DXMESH      m_pMeshSphere;
 	D3DMATERIAL9    m_stMtlSphere;
 
 	D3DXVECTOR3 m_vTarget;
 	D3DXVECTOR3 m_vDir;
+
+	bool         m_isHit;
 };

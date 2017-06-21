@@ -81,12 +81,12 @@ void cUISlot::Setup_Slot(int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN r
 	m_eFont = eFont;
 }
 
-void cUISlot::AddSlotData(int itemID, string name, string imagePath, string info)
+void cUISlot::AddSlotData(int itemID, string name, string imagePath, string info, int cost)
 {
 	D3DXIMAGE_INFO imageinfo;
 	LPDIRECT3DTEXTURE9 texture = TEXTURE->GetTexture(imagePath, imageinfo);
 	
-	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info);
+	ST_SLOTDATA* data = new ST_SLOTDATA(itemID, name, imagePath, info, cost);
 	m_vecSlotData.push_back(data);
 }
 

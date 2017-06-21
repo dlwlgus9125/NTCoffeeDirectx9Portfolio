@@ -43,12 +43,14 @@ void cCamera::Update()
 
 	matR = matRX * matRY;
 
+	m_fCameraDistance = MATH->Clamp(m_fCameraDistance, 1.0f, m_fCameraDistance);
+
 	m_vEye = D3DXVECTOR3(0, 0, -m_fCameraDistance);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matR);
 
 	//cout << m_vCamRotAngle.x << " " << m_vCamRotAngle.y << " " << m_vCamRotAngle.z << endl;
 	//m_vEye = m_vEye + m_vLookAt;
-
+	m_vLookAt.y += 1.0f;
 	
 		//m_vLookAt = m_LookAtPos;
 	//m_vLookAt += D3DXVECTOR3(0, 1.0f, 0);

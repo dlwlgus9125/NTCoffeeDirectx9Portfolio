@@ -65,6 +65,9 @@ void cShadowManager::Render()
 			&lightTest,
 			&groundPlane);
 
+		D3DXMATRIXA16 matRY;
+		D3DXMatrixRotationY(&matRY, m_vecConstruct[i]->GetRotationY());
+
 		D3DXMATRIX T;
 		D3DXMatrixTranslation(
 			&T,
@@ -73,7 +76,7 @@ void cShadowManager::Render()
 		D3DXMATRIXA16 matS;
 		D3DXMatrixScaling(&matS, m_vecConstruct[i]->GetScale().x, m_vecConstruct[i]->GetScale().y, m_vecConstruct[i]->GetScale().z);
 
-		D3DXMATRIX W = matS *T * S;
+		D3DXMATRIX W = matS*matRY *T * S;
 
 		D3DDevice->SetTransform(D3DTS_WORLD, &W);
 

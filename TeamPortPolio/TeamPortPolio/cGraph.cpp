@@ -30,6 +30,8 @@ cGraph::~cGraph()
 		m_edges[i].clear();
 	}
 	m_edges.clear();
+	
+	SAFE_RELEASE(m_line);
 }
 
 int cGraph::NodeCount() { return m_nodes.size(); }

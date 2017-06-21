@@ -103,12 +103,12 @@ using namespace std;
 enum SCENE_TAG
 {
 	SCENE_NONE, SCENE_TITLE, SCENE_LOADING, SCENE_TOWN, SCENE_LOGIN, SCENE_SELECT,
-	SCENE_BATTLE_HUMAN, SCENE_BATTLE_ORC,
+	SCENE_TOWN_HUMAN, SCENE_TOWN_ORC, SCENE_BATTLE_HUMAN, SCENE_BATTLE_ORC, 
 };
 
 enum UI_TAG
 {
-	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT, UI_MSGBOX,
+	UI_NONE, UI_OBJECT, UI_IMAGE, UI_TEXT, UI_BUTTON, UI_MINIMAP, UI_TAB,UI_SLOT, UI_MSGBOX, UI_PROGRESSBAR, UI_INVENTORY,
 };
 
 enum UI_STATE
@@ -119,6 +119,13 @@ enum UI_STATE
 enum FONT_TAG
 {
 	FONT_DEF, FONT_SHOP,
+};
+
+enum FONT_BOWMOTION
+{
+	BOW_NORMAL,
+	BOW_PULL,
+	BOW_PUSH,
 };
 
 //>> define 및 구조체
@@ -149,6 +156,28 @@ extern LPD3DXSPRITE g_Sprite;
 #define WND_HEIGHT 768
 
 #define MAX_LOADSTRING 100
+
+
+#define SYNTHESIZE(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType Get##funName(void) const { return varName; }\
+public: inline void Set##funName(varType var){ varName = var; }
+
+#define SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
+protected: varType varName;\
+public: inline varType& Get##funName(void) { return varName; }\
+public: inline void Set##funName(varType& var){ varName = var; }
+
+#define SYNTHESIZE_ADD_REF(varType, varName, funName)    \
+protected: varType varName; \
+public: virtual varType Get##funName(void) const { return varName; } \
+public: virtual void Set##funName(varType var){\
+	if (varName != var) {\
+	SAFE_ADD_REF(var);\
+	SAFE_RELEASE(varName);\
+	varName = var;\
+	}\
+}
 
 struct ST_PN_VERTEX
 {
@@ -295,15 +324,19 @@ struct ST_SLOTDATA
 	string imagePath;
 	string info;
 	string name;
+	int cost;
 
-	ST_SLOTDATA(int itemID, string name, string imagePath, string info)
+	ST_SLOTDATA(int itemID, string name, string imagePath, string info, int cost)
 	{
 		this->itemID = itemID;
 		this->name = name;
 		this->imagePath = imagePath;
 		this->info = info;
+		this->cost = cost;
 	}
 };
+
+
 
 enum MODE_STATE
 {
@@ -327,15 +360,15 @@ enum P_STATE // P: Player
 	P_ATTACK1,
 	P_ATTACK2,
 	P_ATTACK3,
+	P_BOWATTACK1,
+	P_BOWATTACK2,
 	P_SHEILDBLOCK,
 	P_SHEILDUP,
 	P_HIT,
 	P_BATTLECRY,
 	P_KNOCKDOWN,
 	P_DEATH,
-	//추후 모션 추가.
-	//P_BOWATTACK1,
-	//P_BOWATTACK2,
+
 };
 
 
@@ -396,7 +429,7 @@ enum EVENTID
 
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
-	TOWN_TAB_SHOP_ATT = 200, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
+	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_TAB_INVENTORY_EQUIP, TOWN_INVENTORY, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
 
 	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 };
@@ -427,30 +460,66 @@ enum CAMP_STATE
 	CAMP_NONE,
 };
 
-#define SYNTHESIZE(varType, varName, funName)\
-protected: varType varName;\
-public: inline varType Get##funName(void) const { return varName; }\
-public: inline void Set##funName(varType var){ varName = var; }
+struct ST_WEATHER
+{
+	SYNTHESIZE(bool, m_isSnowOn, SnowOn);
+	SYNTHESIZE(float, m_fMove_Snow, Move_Snow);
+	SYNTHESIZE(float, m_fSpeed_Snow, Speed_Snow);
+	SYNTHESIZE(int, m_nCount_Snow, Count_Snow);
 
-#define SYNTHESIZE_PASS_BY_REF(varType, varName, funName)\
-protected: varType varName;\
-public: inline varType& Get##funName(void) { return varName; }\
-public: inline void Set##funName(varType& var){ varName = var; }
+	SYNTHESIZE(bool, m_isRainOn, RainOn);
+	SYNTHESIZE(float, m_fMove_Rain, Move_Rain);
+	SYNTHESIZE(float, m_fSpeed_Rain, Speed_Rain);
+	SYNTHESIZE(int, m_nCount_Rain, Count_Rain);
 
-#define SYNTHESIZE_ADD_REF(varType, varName, funName)    \
-protected: varType varName; \
-public: virtual varType Get##funName(void) const { return varName; } \
-public: virtual void Set##funName(varType var){\
-	if (varName != var) {\
-	SAFE_ADD_REF(var);\
-	SAFE_RELEASE(varName);\
-	varName = var;\
-	}\
-}
+	SYNTHESIZE(int, m_nPassIndex, FogPassIndex);
+	SYNTHESIZE(bool, m_isFogOn, FogOn);
 
+	ST_WEATHER()
+	{
+		m_isSnowOn = false;
+		m_fMove_Snow = 0;
+		m_fSpeed_Snow = 0;
+		m_nCount_Snow = 0;
+
+		m_isRainOn = false;
+		 m_fMove_Rain = 0;
+		m_fSpeed_Rain = 0;
+		m_nCount_Rain = 0;
+
+		m_nPassIndex = 0;
+		m_isFogOn = false;
+	}
+};
+
+struct ST_SHADOW
+{
+	SYNTHESIZE(bool, m_isShadowOn, ShadowOn);
+	SYNTHESIZE(float, m_diffuseAlpha, ShadowDiffuseAlpha);
+};
+
+struct ST_NPC_INFO
+{
+	int nSID;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 scale;
+	float fRotX, fRotY, fRotZ;
+	ST_NPC_INFO() {}
+	ST_NPC_INFO(int nSID, D3DXVECTOR3 pos, D3DXVECTOR3 scale, float fRotX, float fRotY, float fRotZ)
+	{
+		this->nSID= nSID;
+		this->pos = pos;
+		this->scale = scale;
+		this->fRotX = fRotX;
+		this->fRotY = fRotY;
+		this->fRotZ = fRotZ;
+	}
+
+};
 
 //>>include
 #include "cEffectManager.h"
+#include "cThreadManager.h"
 #include "cDeviceManager.h"
 #include "cInputManager.h"
 #include "cObjectManager.h"
@@ -461,6 +530,7 @@ public: virtual void Set##funName(varType var){\
 #include "cUIManager.h"
 #include "cFontManager.h"
 #include "cSoundManager.h"
+#include "cSceneManager.h"
 
 #include "Singleton.h"
 #include "cCamera.h"

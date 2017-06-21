@@ -16,13 +16,17 @@ void cTownScene::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN);
+	vector<ST_NPC_INFO> vecNPC = MAP->GetVecNPC();
 	UI->Change(SCENE_TOWN);
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
+
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	EFFECT->Init(false, 0, true, true);
+
 
 	// >> 테스트용 
 	m_pMeshSphere = NULL;
@@ -43,12 +47,14 @@ void cTownScene::OnEnter()
 		m_vecMtlSphere.push_back(m_stMtlNone);
 		m_vecMtlSphere.push_back(m_stMtlPicked);
 
-		ST_SPHERE sphere1 = ST_SPHERE(D3DXVECTOR3(35, 2, 20), 1);
-		ST_SPHERE sphere2 = ST_SPHERE(D3DXVECTOR3(35, 2, 15), 1);
-		ST_SPHERE sphere3 = ST_SPHERE(D3DXVECTOR3(10, 2, 10), 1);
+		ST_SPHERE sphere1 = ST_SPHERE(D3DXVECTOR3(35, 2, 20), 1);	//	무기0
+		ST_SPHERE sphere2 = ST_SPHERE(D3DXVECTOR3(35, 2, 15), 1);	// 방어구1
+		ST_SPHERE sphere3 = ST_SPHERE(D3DXVECTOR3(10, 2, 10), 1);	// 전장가는애3
+		ST_SPHERE sphere4 = ST_SPHERE(D3DXVECTOR3(0, 2, 10), 1);	// 징집관4
 		m_vecST_Sphere.push_back(sphere1);
 		m_vecST_Sphere.push_back(sphere2);
 		m_vecST_Sphere.push_back(sphere3);
+		m_vecST_Sphere.push_back(sphere4);
 	}
 	// << 
 }
@@ -82,11 +88,23 @@ void cTownScene::OnUpdate()
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
-		UI->Setup_Inventory();
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory();
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_SHOP_DEF:
+		OBJECT->BuyItem(itemID);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_INVENTORY_EQUIP:
+		OBJECT->PutOnItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
+		break;
+	case TOWN_INVENTORY:
+		OBJECT->PutOffItem(itemID);
+		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
@@ -102,6 +120,16 @@ void cTownScene::OnUpdate()
 		UI->SetEvent(TOWN_TAB_SHOP_ATT, false);
 		m_vecST_Sphere[0].isPicked = false;;;
 	}
+	if (m_vecST_Sphere[1].isPicked)
+	{
+		UI->SetEvent(TOWN_TAB_SHOP_DEF, false);
+		m_vecST_Sphere[1].isPicked = false;;;
+	}
+	if (m_vecST_Sphere[2].isPicked)
+	{
+		UI->SetEvent(TOWN_MINIMAP, false);
+		m_vecST_Sphere[2].isPicked = false;;;
+	}
 	//<< 
 }
 
@@ -109,6 +137,7 @@ void cTownScene::OnExit()
 {
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
+	EFFECT->Release();
 	UI->Release();
 
 	SAFE_RELEASE(m_pMeshSphere);
@@ -116,10 +145,11 @@ void cTownScene::OnExit()
 
 void cTownScene::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
-	EFFECT->Render();
-	UI->Render(m_pSprite);
 	OBJECT->Render();
+	EFFECT->Render_End();
+	UI->Render(m_pSprite);
 
 	// >> 테스트용
 	D3DXMATRIXA16 matWorld;

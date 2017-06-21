@@ -58,5 +58,8 @@ void cCavalryUnit::Update(float deltaTime)
 void cCavalryUnit::Render()
 {
 	cUnit::Render();
-
+	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
+	{
+		m_pSkinnedMesh->UpdateAndRender(m_isDeath);
+	}
 }

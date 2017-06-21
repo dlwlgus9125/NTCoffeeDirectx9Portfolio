@@ -115,6 +115,25 @@ void cObjectDB::Setup()
 	Add(new ST_OBJECTDATA(E_L_OBJECTID_VILLAGE, E_M_OBJECTID_V_VILLAGE, E_S_OBJECTID_V_STORMWIND, "obj/Village/Stormwind", "stormwind.obj", 0, (float)13 / 16));;
 	Add(new ST_OBJECTDATA(E_L_OBJECTID_VILLAGE, E_M_OBJECTID_V_VILLAGE, E_S_OBJECTID_V_TOLVIR, "obj/Village/Tolvir", "tolvir_city_01.obj", (float)1 / 8, (float)13 / 16));;
 
+	// NPC
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC, E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC1,						"obj/Npc/Human/Weapon",								"Human_weapon.obj",											0,			(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC, E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC2,						"obj/Npc/Human/Armor",								"Human_armor.obj",									(float)1 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC, E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC3,						"obj/Npc/Human/Stuff",								"humanfemalepeasant.obj",							(float)2 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC4,						"obj/Npc/Human/Inn",								"humanfemalemerchantthin.obj",						(float)3 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC5,						"obj/Npc/Human/Recruit",							"humanmalewarriormedium.obj",						(float)4 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC6,						"obj/Npc/Human/Resident1",							"humanmalefarmer.obj",								(float)4 / 8,		(float)13 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC7,						"obj/Npc/Human/Resident2",							"humanfemalekid.obj",								(float)5 / 8,		(float)13 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC8,						"obj/Npc/Human/Resident3",							"humanmalepeasantgold.obj",							(float)6 / 8,		(float)13 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_HUMAN,	E_S_OBJECTID_N_H_NPC9,						"obj/Npc/Human/Resident4",							"humanmalekid.obj",									(float)7 / 8,		(float)13 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC1,						"obj/Npc/Orc/Weapon",								"felorc_sword.obj",											0,			(float)15 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC2,						"obj/Npc/Orc/Armor",								"orcmalewarriorlight.obj",							(float)1 / 8,		(float)15 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC3,						"obj/Npc/Orc/Stuff",								"orcmalekidgruntling_bp.obj",						(float)2 / 8,		(float)15 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC4,						"obj/Npc/Orc/Inn",									"orcmalemerchantlight.obj",							(float)3 / 8,		(float)15 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC5,						"obj/Npc/Orc/Recruit",								"rexxar.obj",										(float)4 / 8,		(float)15 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC6,						"obj/Npc/Orc/Resident1",							"orcfemalekid.obj",									(float)5 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC7,						"obj/Npc/Orc/Resident2",							"orcmalekid.obj",									(float)6 / 8,		(float)14 / 16));
+	Add(new ST_OBJECTDATA(E_L_OBJECTID_NPC,	E_M_OBJECTID_N_ORC, 	E_S_OBJECTID_N_O_NPC8,						"obj/Npc/Orc/Resident3",							"shaman_thrall.obj",								(float)7 / 8,		(float)14 / 16));
+
 
 	// 쓰레기값																																																
 	Add(new ST_OBJECTDATA(E_L_OBJECTID_START, E_M_OBJECTID_H_START, E_S_OBJECTID_BLANK, " ", " ", (float)7 / 8, (float)7 / 16));

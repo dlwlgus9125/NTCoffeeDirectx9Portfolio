@@ -13,13 +13,13 @@ class cEffectManager : public Singleton<cEffectManager>
 	cWeather*	m_pRain;
 
 	int			m_nFogPassIndex;
+	ST_WEATHER	m_stWeather;
 
 public:
-	void Init(bool isFogOn, int fogPassIndex, bool isSnowOn, bool isRainOn);
+	void Init(ST_WEATHER weather);
 	void Update();
-	void Render();
-	void Render_Fog_Begin();
-	void Render_Fog_End();
+	void Render_Begin();
+	void Render_End();
 	void Release();
 };
 

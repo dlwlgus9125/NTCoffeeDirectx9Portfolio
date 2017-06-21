@@ -12,7 +12,7 @@ cConstruct::cConstruct()
 {
 }
 
-
+  
 cConstruct::~cConstruct()
 {
 }
@@ -130,7 +130,9 @@ void cConstruct::Create(int sIndex)
 
 	m_nSObjID = sIndex;
 
-	if (sIndex >= E_S_OBJECTID_P_DW_START && sIndex <= E_S_OBJECTID_P_ETC_END) Setup(folder, file, false);
+	if (sIndex >= E_S_OBJECTID_P_DW_START && sIndex <= E_S_OBJECTID_P_ETC_END
+		|| sIndex >= E_S_OBJECTID_N_H_START && sIndex <= E_S_OBJECTID_N_O_END)
+		Setup(folder, file, false);
 	else Setup(folder, file, true);
 
 	Update();

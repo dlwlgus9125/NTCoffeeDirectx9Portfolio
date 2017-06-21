@@ -18,7 +18,7 @@ public:
 
 	void Setup_Slot(int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize, 
 		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
-	void AddSlotData(int itemID, string name, string imagePath, string info);
+	void AddSlotData(int itemID, string name, string imagePath, string info, int cost);
 	void SetShownData(int startIndex);
 	int GetClickedItemID();
 };

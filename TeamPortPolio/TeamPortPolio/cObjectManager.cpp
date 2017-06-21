@@ -71,6 +71,7 @@ void cObjectManager::Render()
 {
 	//LPD3DXFRAME test = new D3DXFRAME;
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	D3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
 	
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
@@ -124,16 +125,21 @@ list<cBallisticArrow*> cObjectManager::GetUnitArrows()
 void cObjectManager::AddPlayerArrow(IEntity * pos, D3DXVECTOR3 forward)
 {
 	cBallisticArrow* pArrow = new cBallisticArrow(pos->Pos(), D3DXVECTOR3(), forward);
+	pArrow->SetCamp(CAMP_PLAYER);
+	//pArrow->SetID(C_C_ARROW_ARROW);
 	PlayerArrow(pArrow);
 
 }
 
-void cObjectManager::AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget)
+void cObjectManager::AddUnitArrow(D3DXVECTOR3 PosOrigin, D3DXVECTOR3 PosTarget, CAMP_STATE camp)
 {
-	PosTarget.x=  PosTarget.x+ (-5.0f + (rand() % 10)+1.0f) / 10.0f;
-	PosTarget.z= PosTarget.z + (-5.0f+(rand() % 10)+1.0f) / 10.0f;
-	PosTarget.y = PosTarget.y + (-5.0f + (rand() % 10) + 1.0f) / 10.0f;
+	//cout << PosTarget.x << "  " << PosTarget.y << " " << PosTarget.z << endl;
+	PosTarget.x=  PosTarget.x+ (-5.0f + (rand() % 10)+1.0f) / 5.0f;
+	PosTarget.z= PosTarget.z + (-5.0f+(rand() % 10)+1.0f) / 5.0f;
+	PosTarget.y = PosTarget.y + (-5.0f + (rand() % 10) + 1.0f) / 5.0f;
 	cBallisticArrow* pArrow = new cBallisticArrow(PosOrigin, PosTarget, D3DXVECTOR3());
+	pArrow->SetCamp(camp);
+	
 	UnitArrow(pArrow);
 }
 
@@ -172,6 +178,11 @@ vector<int> cObjectManager::GetInventory()
 	return m_player->GetInventory();
 }
 
+vector<int> cObjectManager::GetEquipment()
+{
+	return m_player->GetEquipment();
+}
+
 void cObjectManager::SellItem(int itemSID)
 {
 	m_player->SellItem(itemSID);
@@ -179,5 +190,15 @@ void cObjectManager::SellItem(int itemSID)
 
 void cObjectManager::BuyItem(int itemSID)
 {
-	m_player->BuyItem(itemSID);
+	m_player->ByuItem(itemSID);
+}
+
+void cObjectManager::PutOnItem(int itemSID)
+{
+	m_player->PutOnItem(itemSID);
+}
+
+void cObjectManager::PutOffItem(int itemSID)
+{
+	m_player->PutOffItem(itemSID);
 }

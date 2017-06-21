@@ -9,7 +9,7 @@ void Bow_Battle::OnBegin(cBowUnit * pUnit)
 
 void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 {
-	
+	FindNearTarget(pUnit);
 	if (pUnit->GetTargetObject() != NULL)
 	{
 		if (pUnit->GetMesh()->GetPassedTime() > pUnit->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.3f)
@@ -18,9 +18,8 @@ void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 			{
 			case B_BOWATTACK1:
 				pUnit->GetMesh()->SetAnimationIndexBlend(B_BOWATTACK2);
-				//>>화살쏘는 생성자 넣을자리
-				//OBJECT->AddArrowByUnit(new cBallisticArrow(pUnit->GetCharacterEntity()->Pos(), pUnit->GetTargetObject()->GetCharacterEntity()->Pos(), 0.1f, D3DXVECTOR3(0, 0, 1), 0, 0), pUnit->GetCamp());
-				//<<
+				OBJECT->AddUnitArrow(pUnit->GetCharacterEntity()->Pos() , pUnit->GetTargetObject()->GetCharacterEntity()->Pos(), pUnit->GetCamp());
+				
 				break;
 			default:
 				pUnit->GetMesh()->SetAnimationIndexBlend(B_BOWATTACK1);
@@ -31,10 +30,42 @@ void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 	else//거리로 계산해서 못쏘게 해야할 듯함
 	{
 		pUnit->GetMesh()->SetAnimationIndexBlend(B_READYATTACK);
+		
 	}
 }
 
 void Bow_Battle::OnEnd(cBowUnit * pUnit)
 {
 	pUnit->SetTargetObject(NULL);
+}
+
+void Bow_Battle::FindNearTarget(cBowUnit * pUnit)
+{
+	if (TIME->UpdateOneSecond())
+	{
+		D3DXVECTOR3 nextTargetPos, prevTargetPos;
+		D3DXVECTOR3 pos = pUnit->GetCharacterEntity()->Pos();
+		if (OBJECT->GetCharacter()[0]->GetCharacterEntity()->IsDeath() == false && OBJECT->GetCharacter()[0]->GetCamp() != pUnit->GetCamp() && MATH->IsCollided(pUnit->GetArrangeSphere(), OBJECT->GetCharacter()[0]->GetArrangeSphere()))
+		{
+			pUnit->SetTargetObject(OBJECT->GetCharacter()[0]);
+		}
+
+		for (int i = 1; i < OBJECT->GetCharacter().size(); i++)
+		{
+			if (OBJECT->GetCharacter()[i]->GetCharacterEntity()->IsDeath() == false && OBJECT->GetCharacter()[i]->GetCamp() != pUnit->GetCamp() && MATH->IsCollided(pUnit->GetArrangeSphere(), OBJECT->GetCharacter()[i]->GetArrangeSphere()))
+			{
+				prevTargetPos = OBJECT->GetCharacter()[i - 1]->GetCharacterEntity()->Pos();
+				nextTargetPos = OBJECT->GetCharacter()[i]->GetCharacterEntity()->Pos();
+
+				if (MATH->Distance(pos, prevTargetPos) > MATH->Distance(pos, nextTargetPos))
+				{
+					pUnit->SetTargetObject(OBJECT->GetCharacter()[i]);
+				}
+				else
+				{
+					pUnit->SetTargetObject(OBJECT->GetCharacter()[i - 1]);
+				}
+			}
+		}
+	}
 }
