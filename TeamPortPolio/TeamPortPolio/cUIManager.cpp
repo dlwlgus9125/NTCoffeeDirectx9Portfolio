@@ -11,40 +11,40 @@ void cUIManager::Setup_TitleScene()
 	m_pMiniMap->SetAlpha(150);
 
 	// 미니맵버튼 1
-	cUIButton* pBtn_start = new cUIButton;
-	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_start->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png", 
+	cUIButton* pBtn_rect = new cUIButton;
+	pBtn_rect->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_rect->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
 		"Image/UI/titlescene/button/formation_rect/mouseover.png", 
 		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
-	m_vecEventBtn.push_back(pBtn_start);
-	m_pMiniMap->AddChild(pBtn_start);
+	m_vecEventBtn.push_back(pBtn_rect);
+	pBtn_rect->AddChild(pBtn_rect);
 
 	// 미니맵버튼 2
-	cUIButton* pBtn_Help = new cUIButton;
-	pBtn_Help->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_Help->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
+	cUIButton* pBtn_tri = new cUIButton;
+	pBtn_tri->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_tri->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
 		"Image/UI/titlescene/button/formation_tri/mouseover.png",
 		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
-	m_vecEventBtn.push_back(pBtn_Help);
-	m_pMiniMap->AddChild(pBtn_Help);
+	m_vecEventBtn.push_back(pBtn_tri);
+	m_pMiniMap->AddChild(pBtn_tri);
 
 	// 미니맵버튼 3
-	cUIButton* pBtn_Exit = new cUIButton;
-	pBtn_Exit->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_Exit->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
+	cUIButton* pBtn_atk = new cUIButton;
+	pBtn_atk->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_atk->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
 		"Image/UI/titlescene/button/state_att/mouseover.png",
 		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
-	m_vecEventBtn.push_back(pBtn_Exit);
-	m_pMiniMap->AddChild(pBtn_Exit);
+	m_vecEventBtn.push_back(pBtn_atk);
+	m_pMiniMap->AddChild(pBtn_atk);
 
 	// 미니맵버튼 4
-	cUIButton* pButton4 = new cUIButton;
-	pButton4->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pButton4->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
+	cUIButton* pBtn_def = new cUIButton;
+	pBtn_def->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_def->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
 		"Image/UI/titlescene/button/state_def/mouseover.png",
 		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
-	m_vecEventBtn.push_back(pButton4);
-	m_pMiniMap->AddChild(pButton4);
+	m_vecEventBtn.push_back(pBtn_def);
+	m_pMiniMap->AddChild(pBtn_def);
 }
 
 void cUIManager::Setup_TownScene()
@@ -549,7 +549,7 @@ void cUIManager::PressKey()
 	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap)
 	{
 		int sceneTag = SCENE->GetCurrentSceneTag();
-		if (sceneTag < SCENE_BATTLE_HUMAN || sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
+		if (sceneTag == SCENE_BATTLE_HUMAN || sceneTag == SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
 		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
 	}
 
