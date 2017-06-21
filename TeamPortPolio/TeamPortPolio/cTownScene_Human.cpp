@@ -15,8 +15,13 @@ cTownScene_Human::~cTownScene_Human()
 void cTownScene_Human::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
+
 	MAP->Init(SCENE_TOWN_HUMAN);
 	UI->Change(SCENE_TOWN_HUMAN);
+
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
+
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
@@ -28,8 +33,7 @@ void cTownScene_Human::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	OBJECT->Update(TIME->DeltaTime());
-
-	// >> 테스트용
+	EFFECT->Update();
 
 	int indexInMiniMap;
 	int buttonIndex;
@@ -72,13 +76,17 @@ void cTownScene_Human::OnExit()
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	UI->Release();
+	EFFECT->Release();
 }
 
 void cTownScene_Human::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
-	UI->Render(m_pSprite);
+	EFFECT->Render_End();
 	OBJECT->Render();
+
+	UI->Render(m_pSprite);
 }
 
 void cTownScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

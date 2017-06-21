@@ -16,6 +16,11 @@ void cTownScene_Orc::OnEnter()
 {
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_TOWN_ORC);
+	UI->Change(SCENE_TOWN_ORC);
+
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
+
 	Setup_DirLight();
 
 	// OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
@@ -34,18 +39,27 @@ void cTownScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	OBJECT->Update(TIME->DeltaTime());
+	EFFECT->Update();
+	UI->Update(TIME->DeltaTime());
 }
 
 void cTownScene_Orc::OnExit()
 {
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
+	OBJECT->Release();
+	EFFECT->Release();
+	UI->Release();
 }
 
 void cTownScene_Orc::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
+	EFFECT->Render_End();
 	OBJECT->Render();
+
+	UI->Render(m_pSprite);
 }
 
 void cTownScene_Orc::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

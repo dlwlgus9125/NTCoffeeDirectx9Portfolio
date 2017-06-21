@@ -18,13 +18,15 @@ void cTownScene::OnEnter()
 	MAP->Init(SCENE_TOWN);
 	vector<ST_NPC_INFO> vecNPC = MAP->GetVecNPC();
 	UI->Change(SCENE_TOWN);
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
+
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+
 
 	// >> 테스트용 
 	m_pMeshSphere = NULL;
@@ -138,11 +140,10 @@ void cTownScene::OnExit()
 
 void cTownScene::OnRender()
 {
-	EFFECT->Render_Fog_Begin();
+	EFFECT->Render_Begin();
 	MAP->Render();
-	EFFECT->Render();
 	OBJECT->Render();
-	EFFECT->Render_Fog_End();
+	EFFECT->Render_End();
 	UI->Render(m_pSprite);
 
 	// >> 테스트용

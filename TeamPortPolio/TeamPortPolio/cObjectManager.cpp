@@ -71,6 +71,7 @@ void cObjectManager::Render()
 {
 	//LPD3DXFRAME test = new D3DXFRAME;
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	D3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
 	
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{

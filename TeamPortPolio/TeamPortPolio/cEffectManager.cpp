@@ -40,24 +40,20 @@ void cEffectManager::Update()
 	if (m_pRain) m_pRain->Update(m_stWeather.GetMove_Rain(), m_stWeather.GetSpeed_Rain());
 }
 
-void cEffectManager::Render()
-{
-	if (m_pSnow) m_pSnow->Render("obj/Effect/Snow/Snow.tga");
-	if (m_pRain) m_pRain->Render("obj/Effect/Rain/Rain.tga");
-}
-
 void cEffectManager::Release()
 {
 	if (m_pFog) SAFE_DELETE(m_pFog);
 	if (m_pSnow) SAFE_DELETE(m_pSnow);
 }
 
-void cEffectManager::Render_Fog_Begin()
+void cEffectManager::Render_Begin()
 {
 	if (m_pFog) m_pFog->Render_Begin(m_stWeather.GetFogPassIndex());
+	if (m_pSnow) m_pSnow->Render("obj/Effect/Snow/Snow.tga");
+	if (m_pRain) m_pRain->Render("obj/Effect/Rain/Rain.tga");
 }
 
-void cEffectManager::Render_Fog_End()
+void cEffectManager::Render_End()
 {
 	if (m_pFog) m_pFog->Render_End();
 }
