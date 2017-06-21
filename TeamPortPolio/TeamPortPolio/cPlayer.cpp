@@ -16,10 +16,9 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_unitLeader->SetID(C_C_HUMAN_BOWMAN);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
-	m_unitLeader->Init();
-	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
-	OBJECT->AddObject(m_unitLeader);
-	OBJECT->AddLeader(m_unitLeader);*/
+	m_unitLeader->Init();*/
+	//m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
+	
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -81,6 +80,10 @@ void cPlayer::Init()
 
 void cPlayer::Update(float deltaTime)
 {
+	if (INPUT->IsKeyDown(VK_SPACE))
+	{
+		cout << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
+	}
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
 	{
@@ -162,7 +165,8 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
-			if (!THREAD->IsReCreateFindPathThread(HANDlE_ATSTAR_FINDPATH))
+			THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
+			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
 
 				m_unitLeader->PathClear();

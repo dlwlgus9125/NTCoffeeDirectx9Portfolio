@@ -23,24 +23,15 @@ void cBattleScene_Human::OnEnter()
 
 
 
-	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	//pPlayer->SetID(C_C_HUMAN_MALE);
-	//pPlayer->Init();
-	//OBJECT->AddCharacter(pPlayer);
 
 
-
-	//OBJECT->AddObject(pPlayer);
-	//OBJECT->SetPlayer(pPlayer);
-
-
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+	OBJECT->AddLeader(pLeader);*/
 
 
 
@@ -54,7 +45,7 @@ void cBattleScene_Human::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
-
+	if (INPUT->IsKeyDown(VK_SPACE))cout << "here" << endl;
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
 	int buttonIndex;
