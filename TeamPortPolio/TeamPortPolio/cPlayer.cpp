@@ -283,16 +283,10 @@ void cPlayer::PutOffItem(int itemSID)
 {
 	for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
 	{
-		if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
-			ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
-			ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW)
-		{
-			it = m_vecEquipment.erase(it);
-		}
-		else
-		{
-			it++;
-		}
+		int itemMID = ITEMDB->GetItem(itemSID)->eMiddleID;
+		int currrentItemMID = ITEMDB->GetItem(*it)->eMiddleID;
+		if(itemMID == currrentItemMID)	it = m_vecEquipment.erase(it);
+		else it++;
 	}
 }
 

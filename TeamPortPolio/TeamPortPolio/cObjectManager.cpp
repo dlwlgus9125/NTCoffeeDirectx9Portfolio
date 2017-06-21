@@ -177,6 +177,11 @@ vector<int> cObjectManager::GetInventory()
 	return m_player->GetInventory();
 }
 
+vector<int> cObjectManager::GetEquipment()
+{
+	return m_player->GetEquipment();
+}
+
 void cObjectManager::SellItem(int itemSID)
 {
 	m_player->SellItem(itemSID);

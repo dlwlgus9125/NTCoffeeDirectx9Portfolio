@@ -617,12 +617,7 @@ void cUIManager::AddItem_Tab(int tabID)
 	m_vecTab[index]->SetDef();
 }
 
-void cUIManager::AddItem_Inven(int itemSID)
+void cUIManager::ResetEquipment(vector<int> vecEquipment)
 {
-	m_pInven->AddShownData(itemSID);
-}
-
-void cUIManager::DeleteItem_Inven(int itemSID)
-{
-	m_pInven->DeleteShownData(itemSID);
+	m_pInven->ResetItems(vecEquipment);
 }

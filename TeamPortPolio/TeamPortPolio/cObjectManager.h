@@ -61,6 +61,7 @@ public:
 	void ClearArrow();
 
 	vector<int> GetInventory();
+	vector<int> GetEquipment();
 	void SellItem(int itemSID);
 	void BuyItem(int itemSID);
 	void PutOnItem(int itemSID);

@@ -93,22 +93,49 @@ void cUIInventory::Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize, D3DXVECTOR
 
 void cUIInventory::ResetItems(vector<int> vecEquipment)
 {
+	// >> 기존 장비창 깨끗히!
+	for (vector<ST_SLOTDATA*>::iterator	 it = m_vecShownData.begin(); it != m_vecShownData.end(); )
+	{
+		it = m_vecShownData.erase(it);
+	}
+	m_vecShownData.resize(3, 0);
+	// <<
+
+	// 0 : 오른손, 1 : 왼손, 2 : 몸
+	// >> 아이템 착용
 	for (int i = 0; i < vecEquipment.size(); i++)
 	{
-		int itemMID = ITEMDB->GetItem(vecEquipment[i])->eMiddleID;
+		ST_SLOTDATA* newData = NULL;
+		ST_ITEM* currentItem = NULL;
+		currentItem = ITEMDB->GetItem(vecEquipment[i]);
+
+		if (!currentItem) continue;			// 아이템DB에서 불러올 것이 없으면 안함
+
+		int itemSID = currentItem->eSmallID;
+		int itemMID = currentItem->eMiddleID;
+		string name = currentItem->name;
+		string imagePath = currentItem->szImagePath;
+		newData = new ST_SLOTDATA(itemSID, name, imagePath, "", 0);
+
 		switch (itemMID)
 		{
 		case I_M_SWORD:
 		case I_M_AXE:
+			m_vecShownData[0] = newData;
 			break;
 		case I_M_ARMOR:
+			m_vecShownData[2] = newData;
 			break;
 		case I_M_SHIELD:
+			m_vecShownData[1] = newData;
 			break;
 		case I_M_BOW:
+			m_vecShownData[0] = newData;
+			m_vecShownData[1] = newData;
 			break;
 		}
 	}
+	// <<
 }
 
 // 현재 탭의 아이디와, 선택된 아이템 아이디를 반환하는 함수

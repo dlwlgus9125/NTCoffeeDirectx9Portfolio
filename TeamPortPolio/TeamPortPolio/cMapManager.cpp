@@ -41,7 +41,6 @@ void cMapManager::Init(int sceneID)
 		filePath = strdup("TOWNORC.txt");
 		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
 		break;
-		break;
 
 	case SCENE_BATTLE_HUMAN:
 		folderPath = "map";
