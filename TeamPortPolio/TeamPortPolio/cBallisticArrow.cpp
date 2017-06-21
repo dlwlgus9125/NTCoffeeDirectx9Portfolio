@@ -50,7 +50,7 @@ void cBallisticArrow::Render()
 	D3DDevice->SetMaterial(&m_stMtlSphere);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pMeshSphere->DrawSubset(0);
+	//m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	//cCharacter::Render();
 	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))

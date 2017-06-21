@@ -44,12 +44,12 @@ void cCharacter::Update(float deltaTime)
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	if (m_ID != C_C_ARROW_ARROW)
 	{
-		
+
 	}
-	
+	UpdateNearConstruct();
 	//UpdateNearConstruct();
 
-	if (m_Status->m_HP <= 0.0f&&m_isDeath==false)SetAnimDeath();
+	if (m_Status->m_HP <= 0.0f&&m_isDeath == false)SetAnimDeath();
 }
 
 void cCharacter::Render()
@@ -113,15 +113,15 @@ void cCharacter::Render()
 		D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 
 
-		
+
 	}
 
-	RenderSphere();		
+	RenderSphere();
 }
 
 void cCharacter::RenderSphere()
 {
-	
+
 }
 
 void cCharacter::SetAttackColliderPos()
@@ -137,7 +137,7 @@ void cCharacter::SetAttackColliderPos()
 FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 {
 
-	int randCount = rand() % 10+1;
+	int randCount = rand() % 10 + 1;
 
 	if (randCount <= defender->m_Status->m_defence)
 	{
@@ -151,43 +151,32 @@ FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 void cCharacter::UpdateNearConstruct()
 {
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
-	
+
 	//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 
-
-
-	for(int i=1;i< MAP->m_vConstructVertex.size();i++)
+	for each (auto p in MAP->GetvecConstruct())
 	{
-		/*	for each (ST_LINE_VERTEX k in p->GetLineVertex())
+
+		vector<ST_LINE_VERTEX> vecLine;
+		for (size_t i = 0; i < vecLine.size(); i++)
+		{
+
+			D3DXVECTOR3 vToPoint = movePos - vecLine[i].a;
+
+			float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(vecLine[i].b - vecLine[i].a));
+			if (length < 0)length = 0;
+			if (length > MATH->Distance(vecLine[i].a, vecLine[i].b)) length = MATH->Distance(vecLine[i].a, vecLine[i].b);
+			D3DXVECTOR3 vPoint = vecLine[i].a + MATH->Nomalize(vecLine[i].b - vecLine[i].a) * length;
+			if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
 			{
-					D3DXVECTOR3 vToPoint = movePos - k.a;
+				D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
+				movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
+			}
 
-		float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(k.b - k.a));
-		if (length < 0)length = 0;
-		if (length > MATH->Distance(k.a, k.b)) length = MATH->Distance(k.a, k.b);
-		D3DXVECTOR3 vPoint = k.a + MATH->Nomalize(k.b - k.a) * length;
-		if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
-		{
-			D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
-			movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
-		}
-			}*/
-		
-		/*D3DXVECTOR3 vToPoint = movePos - MAP->m_vConstructVertex[i-1];
-
-		float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(MAP->m_vConstructVertex[i - 1] - MAP->m_vConstructVertex[i]));
-		if (length < 0)length = 0;
-		if (length > MATH->Distance(MAP->m_vConstructVertex[i-1], MAP->m_vConstructVertex[i])) length = MATH->Distance(MAP->m_vConstructVertex[i - 1], MAP->m_vConstructVertex[i]);
-		D3DXVECTOR3 vPoint = MAP->m_vConstructVertex[i - 1] + MATH->Nomalize(MAP->m_vConstructVertex[i - 1]) * length;
-		if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
-		{
-			D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
-			movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
 		}
 
-*/
+
 	}
-	
 	m_CharacterEntity->SetPos(movePos);
 }
 
