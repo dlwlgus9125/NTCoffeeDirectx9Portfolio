@@ -23,6 +23,7 @@ void cTownScene::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
+	
 	EFFECT->Init(false, 0, true, true);
 
 	// >> 테스트용 
@@ -83,15 +84,18 @@ void cTownScene::OnUpdate()
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_DEF:
 		OBJECT->BuyItem(itemID);
-		UI->Setup_Inventory(TOWN_TAB_INVENTORY);
+		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
+		break;
+	case TOWN_TAB_INVENTORY_EQUIP:
+		UI->AddItem_Inven(itemID);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

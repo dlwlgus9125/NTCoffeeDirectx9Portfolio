@@ -20,8 +20,6 @@ void Player_Idle::OnUpdate(cPlayer* pPlayer, float deltaTime)
 
 	if (INPUT->IsKeyDown(VK_E))
 	{
-		cout << "Mode:" << pPlayer->GetMode() << endl;
-
 		if ((PLAYER_MODE_STATE)pPlayer->GetMode() != IDLE_PLAYER_MODE)
 		{
 			pPlayer->SetMode(IDLE_PLAYER_MODE);
