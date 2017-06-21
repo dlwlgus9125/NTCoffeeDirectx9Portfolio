@@ -41,7 +41,7 @@ void cLoginScene::OnEnter()
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
-	SOUND->Play("LoginBGM", 1.0f);
+	if(!SCENE->GetIsSoundPlayed())SOUND->Play("LoginBGM", 1.0f);
 
 	UI->Change(SCENE_LOGIN);
 }

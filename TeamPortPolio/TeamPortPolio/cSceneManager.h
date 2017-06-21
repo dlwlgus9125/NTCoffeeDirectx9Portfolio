@@ -24,6 +24,7 @@ private:
 	map<int, cIScene*> m_scenes;
 	cIScene* m_currentScene;
 	int                m_current;
+	SYNTHESIZE(bool, m_isSoundPlayed, IsSoundPlayed);
 	 
 public:
 	cSceneManager();

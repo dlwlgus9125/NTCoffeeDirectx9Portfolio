@@ -8,6 +8,7 @@ class cHelpScene : public cIScene
 	cUIButton*			m_pExplainButton_Play;
 	cUIButton*			m_pExplainButton_Town1;
 	cUIButton*			m_pExplainButton_Town2;
+	cUIButton*			m_pExplainButton_Battle;
 
 	LPD3DXSPRITE		m_pSprite;
 
