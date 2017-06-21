@@ -211,7 +211,16 @@ struct ST_PNT_VERTEX
 	bool operator == (ST_PNT_VERTEX pnt) { return p == pnt.p&&n == pnt.n	&&t == pnt.t; }
 };
 
-
+struct ST_LINE_VERTEX
+{
+	D3DXVECTOR3 a;
+	D3DXVECTOR3 b;
+	ST_LINE_VERTEX(D3DXVECTOR3 a, D3DXVECTOR3 b)
+	{
+		this->a = a;
+		this->b = b;
+	}
+};
 struct ST_POS_SAMPLE
 {
 	int			n;
@@ -534,5 +543,5 @@ struct ST_NPC_INFO
 #include "cShadowManager.h"
 //<<
 #include "cRay.h"
-#include "cArrowMaker.h"
+
 

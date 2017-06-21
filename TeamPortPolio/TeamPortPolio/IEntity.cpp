@@ -28,7 +28,11 @@ float IEntity::Radius() { return m_radius; }
 float IEntity::Mass() { return m_mass; }
 float IEntity::Speed() { return m_currentSpeed; }
 float IEntity::MaxSpeed() { return m_maxSpeed; }
-void IEntity::SetSpeed(float speed) { m_currentSpeed = speed; }
+void IEntity::SetSpeed(float speed)
+{
+	if (m_currentSpeed < m_maxSpeed) m_currentSpeed = m_maxSpeed;
+	else							 m_currentSpeed = speed;
+}
 void IEntity::SetPos(D3DXVECTOR3 pos) { m_pos = pos; }
 void IEntity::AddPos(D3DXVECTOR3 pos) { SetPos(m_pos + pos); }
 void IEntity::SetForward(D3DXVECTOR3 forward)
