@@ -15,15 +15,12 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
-	
-
-
-
-
-
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_ORC);
 	UI->Change(SCENE_BATTLE_ORC);
+
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
@@ -63,6 +60,7 @@ void cBattleScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
+	EFFECT->Update();
 
 	if (INPUT->IsKeyDown(VK_SPACE))cout << MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
 
@@ -102,11 +100,14 @@ void cBattleScene_Orc::OnExit()
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
+	EFFECT->Release();
 }
 
 void cBattleScene_Orc::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
+	EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
 }

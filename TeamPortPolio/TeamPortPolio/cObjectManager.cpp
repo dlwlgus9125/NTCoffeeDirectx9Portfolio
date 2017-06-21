@@ -71,6 +71,7 @@ void cObjectManager::Render()
 {
 	//LPD3DXFRAME test = new D3DXFRAME;
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	D3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
 	
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
@@ -177,6 +178,11 @@ vector<int> cObjectManager::GetInventory()
 	return m_player->GetInventory();
 }
 
+vector<int> cObjectManager::GetEquipment()
+{
+	return m_player->GetEquipment();
+}
+
 void cObjectManager::SellItem(int itemSID)
 {
 	m_player->SellItem(itemSID);
@@ -185,4 +191,14 @@ void cObjectManager::SellItem(int itemSID)
 void cObjectManager::BuyItem(int itemSID)
 {
 	m_player->ByuItem(itemSID);
+}
+
+void cObjectManager::PutOnItem(int itemSID)
+{
+	m_player->PutOnItem(itemSID);
+}
+
+void cObjectManager::PutOffItem(int itemSID)
+{
+	m_player->PutOffItem(itemSID);
 }

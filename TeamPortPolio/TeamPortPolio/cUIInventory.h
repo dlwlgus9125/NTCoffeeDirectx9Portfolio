@@ -28,8 +28,7 @@ public:
 
 	void Setup_Tap(string sPath_body, D3DXVECTOR3 pos_body);
 	void Setup_Slot(D3DXVECTOR3 rectPos, ST_SIZEN rectSize,	D3DXVECTOR3 imagePos, ST_SIZEN imageSize);
-	void AddShownData(int itemSID);
-	void DeleteShownData(int itemSID);
+	void ResetItems(vector<int> vecEquipment);
 	HRESULT GetClickedItemID(OUT int& eventID, OUT int& itemID);
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 };

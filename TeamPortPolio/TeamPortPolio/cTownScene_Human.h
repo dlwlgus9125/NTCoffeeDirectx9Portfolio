@@ -5,11 +5,11 @@ class cTownScene_Human : public cIScene
 {
 	LPD3DXSPRITE			m_pSprite;
 
-	// >> 테스트용
 	vector<ST_SPHERE>		m_vecST_Sphere;
 	LPD3DXMESH				m_pMeshSphere;
 	vector<D3DMATERIAL9>	m_vecMtlSphere;
-	// << 
+
+	ST_WEATHER				m_stWeather;
 public:
 	cTownScene_Human();
 	~cTownScene_Human();

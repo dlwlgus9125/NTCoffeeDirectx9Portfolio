@@ -42,8 +42,6 @@ void cUITab::SetDef()
 	for (int i = 1; i < m_vecTabInfo.size(); i++)
 	{
 		m_vecTabInfo[i].state = UI_IDLE;
-		//if (m_vecTabInfo[i].state == UI_SELECTED) break;
-		//if (i == m_vecTabInfo.size() - 1) m_vecTabInfo[0].state = UI_SELECTED;
 	}
 	// << 
 }

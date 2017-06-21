@@ -18,9 +18,10 @@ void cBattleScene_Human::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);
 	UI->Change(SCENE_BATTLE_HUMAN);
+
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
-
-
 
 
 
@@ -45,7 +46,8 @@ void cBattleScene_Human::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
-	if (INPUT->IsKeyDown(VK_SPACE))cout << "here" << endl;
+	EFFECT->Update();
+
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
 	int buttonIndex;
@@ -82,12 +84,16 @@ void cBattleScene_Human::OnExit()
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
+	EFFECT->Release();
 }
 
 void cBattleScene_Human::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
+	EFFECT->Render_End();
 	OBJECT->Render();
+
 	UI->Render(m_pSprite);
 }
 void cBattleScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
