@@ -186,3 +186,13 @@ void cObjectManager::BuyItem(int itemSID)
 {
 	m_player->ByuItem(itemSID);
 }
+
+void cObjectManager::PutOnItem(int itemSID)
+{
+	m_player->PutOnItem(itemSID);
+}
+
+void cObjectManager::PutOffItem(int itemSID)
+{
+	m_player->PutOffItem(itemSID);
+}

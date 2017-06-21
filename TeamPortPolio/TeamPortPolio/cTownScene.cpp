@@ -94,7 +94,10 @@ void cTownScene::OnUpdate()
 		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_INVENTORY_EQUIP:
-		UI->AddItem_Inven(itemID);
+		OBJECT->PutOnItem(itemID);
+		break;
+	case TOWN_INVENTORY:
+		UI->DeleteItem_Inven(itemID);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

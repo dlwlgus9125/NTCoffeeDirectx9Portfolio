@@ -157,9 +157,9 @@ void cUIManager::Setup_TownScene()
 	m_pInven = new cUIInventory;
 	m_pInven->Setup(D3DXVECTOR3(0, 0, 0), UI_INVENTORY);
 	m_pInven->Setup_Tap("image/ui/townscene/inventory/body.png", D3DXVECTOR3(0, 0, 0));
-	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 55), D3DXVECTOR3(236, 258, 0), ST_SIZEN(50, 50));
-	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 5), D3DXVECTOR3(38, 258, 0), ST_SIZEN(50, 50));
-	m_pInven->Setup_Slot(D3DXVECTOR3(0, 0, 0), ST_SIZEN(55, 5), D3DXVECTOR3(137, 153, 0), ST_SIZEN(50, 50));
+	m_pInven->Setup_Slot(D3DXVECTOR3(236, 258, 0), ST_SIZEN(55, 55), D3DXVECTOR3(0,0,0), ST_SIZEN(50, 50));
+	m_pInven->Setup_Slot(D3DXVECTOR3(38, 258, 0), ST_SIZEN(55, 55), D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50));
+	m_pInven->Setup_Slot(D3DXVECTOR3(137, 153, 0), ST_SIZEN(55, 55), D3DXVECTOR3(0, 0, 0), ST_SIZEN(50, 50));
 	m_pInven->Setup_exitbtn(D3DXVECTOR3(205, 467, 0),
 		"image/ui/townscene/inventory/btn_idle.png", "image/ui/townscene/inventory/btn_mouseover.png", "image/ui/townscene/inventory/btn_select.png");
 	m_pInven->SetEventID(TOWN_INVENTORY);
@@ -620,4 +620,9 @@ void cUIManager::AddItem_Tab(int tabID)
 void cUIManager::AddItem_Inven(int itemSID)
 {
 	m_pInven->AddShownData(itemSID);
+}
+
+void cUIManager::DeleteItem_Inven(int itemSID)
+{
+	m_pInven->DeleteShownData(itemSID);
 }
