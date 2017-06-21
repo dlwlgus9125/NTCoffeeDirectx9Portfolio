@@ -29,7 +29,8 @@ void cTownScene_Human::OnEnter()
 	//NPC SCENE º°·Î ¼¼ÆÃ
 	//NPC->Change(SCENE_TOWN_HUMAN);
 	//NPC->Setup(MAP->GetVecNPC());
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-6, 0, 0));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	SOUND->Play("LoginBGM", 1.0f);
@@ -82,6 +83,17 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
+
+		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
+		{
+			cout << "»ï!" << endl;
+		}
+		else
+		{
+			cout << "¸ø»ï!" << endl;
+		}
+
+		//cout <<"º´Á¾ : "<< trooptype << endl;
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

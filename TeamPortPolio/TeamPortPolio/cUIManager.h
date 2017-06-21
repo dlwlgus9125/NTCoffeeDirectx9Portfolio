@@ -10,6 +10,7 @@
 #include "cUIMsgBox.h"
 #include "cUIInventory.h"
 #include "cUIImage.h"
+#include "cUIProgressBar.h"
 
 #define UI cUIManager::Instance()
 
@@ -22,6 +23,7 @@ class cUIManager : public Singleton<cUIManager>
 	cUIInventory*				m_pInven;
 	cUIMiniMap*					m_pMiniMap;
 	cUIImage*					m_pAim;
+	cUIProgressBar*				m_pStatus;
 
 	void Setup_TitleScene();
 	void Setup_TownScene();

@@ -37,8 +37,9 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
 	pSprite->Draw(m_pTexture, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-	m_pBtn_Exit->Render(pSprite);
 	pSprite->End();
+
+	m_pBtn_Exit->Render(pSprite);
 
 	cUIObject::Render(pSprite);
 }

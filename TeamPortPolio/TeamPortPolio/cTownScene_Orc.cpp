@@ -24,9 +24,9 @@ void cTownScene_Orc::OnEnter()
 
 	Setup_DirLight();
 
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
-
+	
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(5.5f, 0, -5.6f));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-0.5f, 0, -0.87f)));
 	SOUND->Play("Town_Orc_BGM", 1.0f);
 }
 
@@ -77,6 +77,7 @@ void cTownScene_Orc::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
+		cout << "º´Á¾ : " << trooptype << endl;
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
