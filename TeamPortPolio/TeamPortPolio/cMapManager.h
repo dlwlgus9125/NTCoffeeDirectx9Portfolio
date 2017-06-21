@@ -10,12 +10,13 @@
 
 class cMapManager : public Singleton<cMapManager>
 {
-	cSkyBox*				m_pSkyBox;
-	cHeightMap*			    m_pMap;
-	vector<cConstruct*>		m_vecConstruct;
-	vector<D3DXVECTOR3>     m_vecPosOfNode;
-	int                     m_CellPerRow;
-	float                   m_fCellSpace;
+	cSkyBox*				          m_pSkyBox;
+	cHeightMap*			              m_pMap;
+	vector<cConstruct*>		          m_vecConstruct;
+
+	vector<D3DXVECTOR3>               m_vecPosOfNode;
+	int                               m_CellPerRow;
+	float                             m_fCellSpace;
 
 	ST_PNT_VERTEX           m_vPositionVertex;
 	   

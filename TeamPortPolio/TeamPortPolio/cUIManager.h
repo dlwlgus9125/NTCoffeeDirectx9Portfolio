@@ -9,6 +9,7 @@
 #include "cUISlot.h"
 #include "cUIMsgBox.h"
 #include "cUIInventory.h"
+#include "cUIImage.h"
 
 #define UI cUIManager::Instance()
 
@@ -20,6 +21,7 @@ class cUIManager : public Singleton<cUIManager>
 	vector<cUIMsgBox*>			m_vecMsg;
 	cUIInventory*				m_pInven;
 	cUIMiniMap*					m_pMiniMap;
+	cUIImage*					m_pAim;
 
 	void Setup_TitleScene();
 	void Setup_TownScene();
@@ -41,5 +43,6 @@ public:
 	void AddItem_Tab(int tabID);
 	void ResetEquipment(vector<int> vecEquipment);
 
+	void DrawAim(LPD3DXSPRITE pSprite);
 };
 

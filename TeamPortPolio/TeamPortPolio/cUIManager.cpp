@@ -212,8 +212,9 @@ void cUIManager::Setup_TownScene()
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
-	m_pMiniMap->SetAlpha(150);
+	m_pMiniMap->Setup_Image("image/UI/townscene/minimap/minimap.png", 150);
+	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(382, 400, 0),
+		"image/ui/townscene/minimap/btn_idle.png", "image/ui/townscene/minimap/btn_mouseover.png", "image/ui/townscene/minimap/btn_select.png");
 	m_pMiniMap->SetEventID(TOWN_MINIMAP);
 
 	// 미니맵 오크전장 버튼
@@ -420,6 +421,10 @@ void cUIManager::Setup()
 {
 	m_pMiniMap = NULL;
 	m_pInven = NULL;
+	m_pAim = new cUIImage();
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	m_pAim->SetHidden(false);
 }
 
 void cUIManager::Release()
@@ -510,11 +515,11 @@ void cUIManager::Change(int sceneID)
 	case SCENE_SELECT:
 		Setup_SelectScene();
 		break;
-	case SCENE_BATTLE_HUMAN:
-		Setup_BattleScene_Human();
+	case SCENE_TOWN_HUMAN:
+		Setup_TownScene();
 		break;
-	case SCENE_BATTLE_ORC:
-		Setup_BattleScene_Orc();
+	case SCENE_TOWN_ORC:
+		Setup_TownScene();
 		break;
 	}
 }
@@ -681,4 +686,10 @@ void cUIManager::AddItem_Tab(int tabID)
 void cUIManager::ResetEquipment(vector<int> vecEquipment)
 {
 	m_pInven->ResetItems(vecEquipment);
+}
+
+void cUIManager::DrawAim(LPD3DXSPRITE pSprite)
+{
+	m_pAim->Update(0);
+	m_pAim->Render(pSprite);
 }

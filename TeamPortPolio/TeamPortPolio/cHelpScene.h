@@ -1,24 +1,19 @@
 #pragma once
 #include "cSceneManager.h"
 
-class cTownScene_Human : public cIScene
+class cHelpScene : public cIScene
 {
-	LPD3DXSPRITE			m_pSprite;
+	cUIImage*			m_pImage;
+	LPD3DXSPRITE		m_pSprite;
 
-	vector<ST_SPHERE>		m_vecST_Sphere;
-
-	ST_WEATHER				m_stWeather;
 public:
-	cTownScene_Human();
-	~cTownScene_Human();
+	cHelpScene();
+	~cHelpScene();
 
 	virtual void OnEnter();
 	virtual void OnUpdate();
 	virtual void OnExit();
 	virtual void OnRender();
 	virtual void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void Setup_DirLight();
-	void ConnectSpere();
 };
 
