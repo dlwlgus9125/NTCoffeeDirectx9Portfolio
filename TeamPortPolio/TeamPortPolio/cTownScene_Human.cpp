@@ -83,6 +83,17 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
+
+		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
+		{
+			cout << "»ï!" << endl;
+		}
+		else
+		{
+			cout << "¸ø»ï!" << endl;
+		}
+
+		//cout <<"º´Á¾ : "<< trooptype << endl;
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

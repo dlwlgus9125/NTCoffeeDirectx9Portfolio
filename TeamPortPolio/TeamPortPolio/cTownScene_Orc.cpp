@@ -77,6 +77,7 @@ void cTownScene_Orc::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
+		cout << "º´Á¾ : " << trooptype << endl;
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))

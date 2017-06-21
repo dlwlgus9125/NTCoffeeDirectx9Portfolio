@@ -33,7 +33,12 @@ class cPlayer :
 	public cCharacter
 {
 private:
-	cLeader*       m_unitLeader;//부대이동을 담당할 멤버변수
+	cLeader*       m_currentLeader;//부대이동을 담당할 멤버변수
+
+	//각 병종을 담을 맵
+	map<int, cLeader*> m_mapLeader;
+	LEADER_TYPE m_currentLeaderType;
+
 	cSkinnedMesh*  m_SkinnedMesh;
 	float          m_fRotY;
 	cStateMachine<cPlayer*>* m_pFsm;
@@ -70,7 +75,8 @@ public:
 	void SetRotY(float rotY) { m_fRotY = rotY; }
 	float GetRotY() { return m_fRotY; }
 	//Scene에서 부대 이동을 관리할 겟함수
-	cLeader*       GetUnitLeader() { return m_unitLeader; }
+	cLeader*       GetUnitLeader() { return m_currentLeader; }
+	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[m_currentLeaderType]; }
 
 	// 추가
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }
@@ -102,6 +108,8 @@ public:
 
 	CURRENT_ATTACKTYPE GetAttackType() { return m_AttackType; }
 	void SetAttackColliderPos();
+
+	bool AddUnitInTown(C_C_ID ID);
 
 
 

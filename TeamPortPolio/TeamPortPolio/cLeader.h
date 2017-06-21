@@ -57,7 +57,11 @@ public:
 	void Init();
 	void Update(float deltaTime);
 	void Render();
-	void AddUnit(cUnit* pUnit);//부대 추가
+	void AddUnit(cUnit* pUnit);
+	bool AddUnitInTown(C_C_ID ID);
+	void AddUnitInManager();
+	void DeleteDeathUnitInExitScene();
+	//부대 추가
 	void DeleteUnit(int key);
 
 	void SetRectOffset();
