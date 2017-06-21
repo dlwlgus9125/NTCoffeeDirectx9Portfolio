@@ -22,12 +22,7 @@ enum LEADER_STATE
 };
 
 
-enum LEADER_TYPE
-{
-	LEADER_MELEE,
-	LEADER_BOW,
-	LEADER_CAVALRY,
-};
+
 
 class cUnit;
 class cMeleeUnit;

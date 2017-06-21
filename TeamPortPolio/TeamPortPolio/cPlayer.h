@@ -76,7 +76,7 @@ public:
 	float GetRotY() { return m_fRotY; }
 	//Scene에서 부대 이동을 관리할 겟함수
 	cLeader*       GetUnitLeader() { return m_currentLeader; }
-	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[m_currentLeaderType]; }
+	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
 
 	// 추가
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }
