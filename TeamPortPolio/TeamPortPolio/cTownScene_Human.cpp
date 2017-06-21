@@ -103,7 +103,8 @@ void cTownScene_Human::OnUpdate()
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
 		{
-			m_vecST_Sphere[i].isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]);
+			m_vecST_Sphere[i].isPicked = (cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]) &&
+				MATH->SqrDistance(OBJECT->GetPlayer()->GetCharacterEntity()->Pos(), m_vecST_Sphere[i].vCenter) <= DIST_LIMITS);
 		}
 	}
 

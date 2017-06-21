@@ -56,6 +56,7 @@ using namespace std;
 // Mouse Whell
 #define VK_WHELLUP		120
 #define VK_WHELLDOWN	-120
+#define DIST_LIMITS	  4.0f
 
 // <<: KEY 
 // Getkeysate "0x8000" == "KF_UP"
