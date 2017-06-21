@@ -24,7 +24,21 @@ void cBattleScene_Orc::OnEnter()
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
+	OBJECT->GetPlayer()->SetCurrentLeader();
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(30, 0, -50));
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.35, 0, 0.9));
+
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
+	OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
+	
+	
+	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
+	
+	
+	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
 	//OBJECT->GetPlayer()->SetRotY(D3DX_PI);
 
 	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
@@ -42,9 +56,9 @@ void cBattleScene_Orc::OnEnter()
 	for each(auto c in OBJECT->GetPlayer()->GetUnitLeader()->GetUnits())
 	{
 		c->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->Pos());
-	}
+	}*/
 
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
@@ -94,10 +108,33 @@ void cBattleScene_Orc::OnUpdate()
 	}
 	// <<
 	OBJECT->Update(TIME->DeltaTime());
+	if (TIME->UpdateOneSecond())
+	{
+		for each(auto L in OBJECT->GetLeader())
+		{
+			if (L->IsDeath() == true)
+			{
+				if (L->GetCamp() == CAMP_ENEMY1)
+				{
+					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
+					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
+				}
+				else if(L->GetCamp() == CAMP_PLAYER)/*&&OBJECT->GetPlayer()->IsDeath()==true)*/
+				{
+					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
+					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
+				}
+			}
+		}
+
+	}
 }
 
 void cBattleScene_Orc::OnExit()
 {
+	OBJECT->ClearToChangeScene();
+	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
+
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
@@ -106,9 +143,9 @@ void cBattleScene_Orc::OnExit()
 
 void cBattleScene_Orc::OnRender()
 {
-	EFFECT->Render_Begin();
+	//EFFECT->Render_Begin();
 	MAP->Render();
-	EFFECT->Render_End();
+	//EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
 }

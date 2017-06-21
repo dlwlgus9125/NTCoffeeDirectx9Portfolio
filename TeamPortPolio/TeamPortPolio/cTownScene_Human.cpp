@@ -29,10 +29,14 @@ void cTownScene_Human::OnEnter()
 	//NPC SCENE 별로 세팅
 	//NPC->Change(SCENE_TOWN_HUMAN);
 	//NPC->Setup(MAP->GetVecNPC());
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-6, 0, 0));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	SOUND->Play("LoginBGM", 1.0f);
+
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
 }
 
 void cTownScene_Human::OnUpdate()
@@ -82,13 +86,25 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
+
+		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
+		{
+			cout << "삼!" << endl;
+		}
+		else
+		{
+			cout << "못삼!" << endl;
+		}
+		cout << "병사수 : " << OBJECT->GetPlayer()->GetUnitLeader()->GetUnits().size() << endl;
+		//cout <<"병종 : "<< trooptype << endl;
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
 		{
-			m_vecST_Sphere[i].isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]);
+			m_vecST_Sphere[i].isPicked = (cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]) &&
+				MATH->SqrDistance(OBJECT->GetPlayer()->GetCharacterEntity()->Pos(), m_vecST_Sphere[i].vCenter) <= DIST_LIMITS);
 		}
 	}
 
@@ -116,6 +132,7 @@ void cTownScene_Human::OnUpdate()
 
 void cTownScene_Human::OnExit()
 {
+	OBJECT->ClearToChangeScene();
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	UI->Release();

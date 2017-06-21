@@ -56,6 +56,7 @@ using namespace std;
 // Mouse Whell
 #define VK_WHELLUP		120
 #define VK_WHELLDOWN	-120
+#define DIST_LIMITS	  4.0f
 
 // <<: KEY 
 // Getkeysate "0x8000" == "KF_UP"
@@ -127,6 +128,13 @@ enum FONT_BOWMOTION
 	BOW_NORMAL,
 	BOW_PULL,
 	BOW_PUSH,
+};
+
+enum LEADER_TYPE
+{
+	LEADER_MELEE,
+	LEADER_BOW,
+	LEADER_CAVALRY,
 };
 
 //>> define 및 구조체

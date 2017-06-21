@@ -1,9 +1,9 @@
 cs 1
 cr 70
-ws 0 1500 0 0
+ws 1 1500 0.1 0.1
 wr 0 3000 0 0
 wf 0 2
-es 0 0.5
+es 1 0.4
 mtllib TOWNHUMAN_mtl.txt
 v -35 0 -35
 vt 0 0 

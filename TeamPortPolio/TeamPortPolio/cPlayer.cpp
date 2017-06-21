@@ -15,9 +15,13 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 	m_unitLeader->SetID(C_C_HUMAN_BOWMAN);
 
 	m_unitLeader->SetCamp(CAMP_PLAYER);
-	m_unitLeader->Init();*/
-	//m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());
-	
+	m_unitLeader->Init();
+	m_unitLeader->SetTargetIndex(ASTAR->GetGraph()->GetNode(16001)->Id());*/
+
+
+
+
+
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -27,11 +31,35 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 cPlayer::~cPlayer()
 {
 	SAFE_DELETE(m_pFsm);
+	for each(auto c in m_mapLeader)
+	{
+		SAFE_DELETE(c.second);
+	}
+	m_mapLeader.clear();
+}
 	
 }
 
 void cPlayer::Init()
 {
+	m_mapLeader[LEADER_MELEE] = new cLeader(D3DXVECTOR3(0, 0, 0), m_CharacterEntity->Radius(), m_CharacterEntity->Forward(), m_CharacterEntity->Mass(), m_CharacterEntity->MaxSpeed());
+	if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_HUMAN)m_mapLeader[LEADER_MELEE]->SetID(C_C_HUMAN_MELEE);
+	else if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_ORC)m_mapLeader[LEADER_MELEE]->SetID(C_C_ORC_MELEE);
+	m_mapLeader[LEADER_MELEE]->SetCamp(CAMP_PLAYER);
+	m_mapLeader[LEADER_MELEE]->Init();
+
+	m_mapLeader[LEADER_BOW] = new cLeader(D3DXVECTOR3(0, 0, 0), m_CharacterEntity->Radius(), m_CharacterEntity->Forward(), m_CharacterEntity->Mass(), m_CharacterEntity->MaxSpeed());
+	if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_HUMAN)m_mapLeader[LEADER_BOW]->SetID(C_C_HUMAN_BOWMAN);
+	else if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_ORC)m_mapLeader[LEADER_BOW]->SetID(C_C_ORC_BOWMAN);
+	m_mapLeader[LEADER_BOW]->SetCamp(CAMP_PLAYER);
+	m_mapLeader[LEADER_BOW]->Init();
+
+	m_mapLeader[LEADER_CAVALRY] = new cLeader(D3DXVECTOR3(0, 0, 0), m_CharacterEntity->Radius(), m_CharacterEntity->Forward(), m_CharacterEntity->Mass(), m_CharacterEntity->MaxSpeed());
+	if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_HUMAN)m_mapLeader[LEADER_CAVALRY]->SetID(C_C_HUMAN_CAVALRY);
+	else if (CHARACTERDB->GetMapCharacter(m_ID)->m_raceID == C_R_ORC)m_mapLeader[LEADER_CAVALRY]->SetID(C_C_ORC_CAVALRY);
+	m_mapLeader[LEADER_CAVALRY]->SetCamp(CAMP_PLAYER);
+	m_mapLeader[LEADER_CAVALRY]->Init();
+
 	m_CollideSphere.fRadius = m_CharacterEntity->Radius();
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 
@@ -60,7 +88,7 @@ void cPlayer::Init()
 	TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName)->FindAttackBone("Weapon_Attack_Bone_Col_root");
 	TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName)->FindAttackBone("Bow_1H_Standard_C_01_Bone00");
 
-	
+
 	/*CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->
 	(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m
 		CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->*/
@@ -76,6 +104,10 @@ void cPlayer::Init()
 	m_pFsm->Play(PLAYER_STATE_IDLE);
 	m_isPull = false;
 	m_MeleeCollider.fRadius = 0.2f;
+	m_currentLeaderType = LEADER_MELEE;
+	SetCurrentLeader();
+
+	m_AttackType = ATTACK_MELEE;
 
 
 }
@@ -85,8 +117,8 @@ void cPlayer::Update(float deltaTime)
 	if (INPUT->IsKeyDown(VK_SPACE))
 	{
 		cout << "pos : " << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
-		cout <<"RotY : "<< MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
-		cout<<"Forward : " << m_CharacterEntity->Forward().x << " " << m_CharacterEntity->Forward().y << " " << m_CharacterEntity->Forward().z << endl;
+		cout << "RotY : " << MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
+		cout << "Forward : " << m_CharacterEntity->Forward().x << " " << m_CharacterEntity->Forward().y << " " << m_CharacterEntity->Forward().z << endl;
 	}
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
@@ -102,28 +134,28 @@ void cPlayer::Update(float deltaTime)
 		m_MeleeCollider.vCenter.y += 0.5f;
 		if (INPUT->IsKeyPress(VK_A))
 		{
-			m_fRotY -= 0.03;
+			m_fRotY -= 0.06;
 		}
 		if (INPUT->IsKeyPress(VK_D))
 		{
-			m_fRotY += 0.03;
+			m_fRotY += 0.06;
 		}
 
-		if (INPUT->IsKeyDown('1'))EquipLeftHand(1);
-		if (INPUT->IsKeyDown('2'))EquipRightHand(1);
-if (INPUT->IsKeyDown('3'))TestEquip();
+		if (INPUT->IsKeyDown('4')) { cout << "보병" << endl; m_currentLeaderType = LEADER_MELEE; SetCurrentLeader(); }
+		if (INPUT->IsKeyDown('5')){ cout << "궁병" << endl; m_currentLeaderType = LEADER_BOW;SetCurrentLeader(); }
+		if (INPUT->IsKeyDown('6')){ cout << "기병" << endl; m_currentLeaderType = LEADER_CAVALRY;SetCurrentLeader(); }
 
-//화살처리
+		//화살처리
 
-D3DXMATRIXA16 matR;
-D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
-D3DXMatrixIdentity(&matR);
-D3DXMatrixRotationY(&matR, m_fRotY);
+		D3DXMATRIXA16 matR;
+		D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+		D3DXMatrixIdentity(&matR);
+		D3DXMatrixRotationY(&matR, m_fRotY);
 
-D3DXVec3TransformCoord(&forward, &forward, &matR);
-m_CharacterEntity->SetForward(forward);
+		D3DXVec3TransformCoord(&forward, &forward, &matR);
+		m_CharacterEntity->SetForward(forward);
 
-m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
 
 
 	}
@@ -158,7 +190,7 @@ void cPlayer::Render()
 		//<<
 
 
-		SetAttackColliderPos();
+		//SetAttackColliderPos();
 		D3DXMATRIXA16 matT;
 		D3DXMatrixIdentity(&matT);
 
@@ -182,7 +214,7 @@ void cPlayer::Render()
 
 void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
-	if (m_unitLeader)
+	if (m_currentLeader)
 	{
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
@@ -191,8 +223,8 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
 
-				m_unitLeader->PathClear();
-				m_unitLeader->SetTargetIndex(index);
+				m_currentLeader->PathClear();
+				m_currentLeader->SetTargetIndex(index);
 			}
 		}
 
@@ -226,83 +258,85 @@ void cPlayer::PutOnItem(int itemSID)
 
 	switch (itemMID)
 	{
-		case I_M_SWORD:
-		case I_M_AXE:
+	case I_M_SWORD:
+	case I_M_AXE:
+	{
+		// 먼저 오른손 아이템 빼는 부분
+		for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
 		{
-			// 먼저 오른손 아이템 빼는 부분
-			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+			if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW)
 			{
-				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW)
-				{
-					it = m_vecEquipment.erase(it);
-				}
-				else
-				{
-					it++;
-				}
+				it = m_vecEquipment.erase(it);
 			}
-			m_vecEquipment.push_back(itemSID);
-		}
-		break;
-
-		case I_M_BOW:
-		{
-			// 먼저 양손의 아이템 빼는 부분
-			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+			else
 			{
-				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
-				{
-					it = m_vecEquipment.erase(it);
-				}
-				else
-				{
-					it++;
-				}
+				it++;
 			}
-			m_vecEquipment.push_back(itemSID);
 		}
-		break;
-		case I_M_SHIELD:
-		{
-			// 먼저 왼손의 아이템 빼는 부분
-			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
-			{
-				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
-					ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
-				{
-					it = m_vecEquipment.erase(it);
-				}
-				else
-				{
-					it++;
-				}
-			}
-			m_vecEquipment.push_back(itemSID);
-		}
-		break;
-		case I_M_ARMOR:
-		{
-			// 먼저 갑옷 빼는 부분
-			for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
-			{
-				if (ITEMDB->GetItem((*it))->eMiddleID == I_M_ARMOR)
-				{
-					it = m_vecEquipment.erase(it);
-				}
-				else
-				{
-					it++;
-				}
-			}
-			m_vecEquipment.push_back(itemSID);
-		}
-		break;
+		m_vecEquipment.push_back(itemSID);
 	}
+	break;
+
+	case I_M_BOW:
+	{
+		// 먼저 양손의 아이템 빼는 부분
+		for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+		{
+			if (ITEMDB->GetItem((*it))->eMiddleID == I_M_SWORD ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_AXE ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
+			{
+				it = m_vecEquipment.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+		m_vecEquipment.push_back(itemSID);
+	}
+	break;
+	case I_M_SHIELD:
+	{
+		// 먼저 왼손의 아이템 빼는 부분
+		for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+		{
+			if (ITEMDB->GetItem((*it))->eMiddleID == I_M_BOW ||
+				ITEMDB->GetItem((*it))->eMiddleID == I_M_SHIELD)
+			{
+				it = m_vecEquipment.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+		m_vecEquipment.push_back(itemSID);
+	}
+	break;
+	case I_M_ARMOR:
+	{
+		// 먼저 갑옷 빼는 부분
+		for (vector<int>::iterator it = m_vecEquipment.begin(); it != m_vecEquipment.end(); )
+		{
+			if (ITEMDB->GetItem((*it))->eMiddleID == I_M_ARMOR)
+			{
+				it = m_vecEquipment.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+		m_vecEquipment.push_back(itemSID);
+	}
+	break;
+	}
+	UnEquip();
+	Equip();
 }
 
 void cPlayer::PutOffItem(int itemSID)
@@ -311,37 +345,56 @@ void cPlayer::PutOffItem(int itemSID)
 	{
 		int itemMID = ITEMDB->GetItem(itemSID)->eMiddleID;
 		int currrentItemMID = ITEMDB->GetItem(*it)->eMiddleID;
-		if(itemMID == currrentItemMID)	it = m_vecEquipment.erase(it);
+		if (itemMID == currrentItemMID)	it = m_vecEquipment.erase(it);
 		else it++;
 	}
+	UnEquip();
+	Equip();
 }
 
-void cPlayer::EquipRightHand(int itemSID)
+void cPlayer::Equip()
 {
-	m_AttackType = ATTACK_BOW;
-	m_RightWeaponMesh = NULL;
-	m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_BOW_BOW)->m_szFileName);
+	for (int i = 0; i < m_vecEquipment.size(); i++)
+	{
+		if (ITEMDB->GetItem(m_vecEquipment[i])->eMiddleID == I_M_SWORD || ITEMDB->GetItem(m_vecEquipment[i])->eMiddleID == I_M_AXE)
+		{
+			m_RightWeaponMesh = TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath, ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName);
+			if (TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath, ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName)->GetAttackBone() == NULL)
+			{
+				TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath,
+					ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName)->FindAttackBone(ITEMDB->GetItem(m_vecEquipment[i])->szColliderBoneName);
+			}
+		}
+		else if (ITEMDB->GetItem(m_vecEquipment[i])->eMiddleID == I_M_BOW ||
+			ITEMDB->GetItem(m_vecEquipment[i])->eMiddleID == I_M_SHIELD)
+		{
+			m_LeftWeaponMesh = TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath, ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName);
+			if (TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath, ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName)->GetAttackBone() == NULL)
+			{
+				TEXTURE->GetCharacterResource(ITEMDB->GetItem(m_vecEquipment[i])->szTexturePath,
+					ITEMDB->GetItem(m_vecEquipment[i])->szTextureFileName)->FindAttackBone(ITEMDB->GetItem(m_vecEquipment[i])->szColliderBoneName);
+			}
+
+			if (ITEMDB->GetItem(m_vecEquipment[i])->eMiddleID == I_M_BOW)
+			{
+				m_AttackType = ATTACK_BOW;
+			}
+		}
+	}
 
 }
 
-void cPlayer::TestEquip()
+void cPlayer::UnEquip()
 {
 	m_AttackType = ATTACK_MELEE;
 	m_RightWeaponMesh = NULL;
 	m_LeftWeaponMesh = NULL;
 }
-void cPlayer::EquipLeftHand(int itemSID)
-{
-	m_AttackType = ATTACK_MELEE;
-	//Add(new ST_Character(C_R_END, C_G_END, C_C_BOW_BOW, 100.0f, 100.f, 100.0f, 4, "Character/Weapon/", "WeaponBow.x", "Weapon_Attack_Bone_Col_root"));
-	m_RightWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SWORD_SWORD)->m_szFileName);
-	m_LeftWeaponMesh = TEXTURE->GetCharacterResource(CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szPath, CHARACTERDB->GetMapCharacter(C_C_SHIELD_SHIELD)->m_szFileName);
-	
-}
+
 
 void cPlayer::SetAttackColliderPos()
 {
-	if (m_RightWeaponMesh == NULL&&m_LeftWeaponMesh == NULL)
+	/*if (m_RightWeaponMesh == NULL&&m_LeftWeaponMesh == NULL)
 	{
 		m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
 		D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_rightHand->CombinedTransformationMatrix);
@@ -355,5 +408,17 @@ void cPlayer::SetAttackColliderPos()
 	{
 		m_AttackCollideSphere.vCenter = D3DXVECTOR3(0, 0, 0);
 		D3DXVec3TransformCoord(&m_AttackCollideSphere.vCenter, &m_AttackCollideSphere.vCenter, &m_LeftWeaponMesh->GetAttackBoneMat());
+	}*/
+}
+
+
+bool cPlayer::AddUnitInTown(C_C_ID ID)
+{
+	switch (ID)
+	{
+	case C_C_HUMAN_MELEE:case C_C_ORC_MELEE:if (m_mapLeader[LEADER_MELEE]->AddUnitInTown(ID))return true; break;
+	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: if (m_mapLeader[LEADER_BOW]->AddUnitInTown(ID))return true;  break;
+	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: if (m_mapLeader[LEADER_CAVALRY]->AddUnitInTown(ID))return true;  break;
 	}
+	return false;
 }

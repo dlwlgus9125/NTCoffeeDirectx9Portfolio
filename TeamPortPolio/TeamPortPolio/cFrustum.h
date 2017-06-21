@@ -13,7 +13,7 @@ private:
 public:
 	void Setup();
 	void Update();
-	bool IsIn(MeshSpere pShere/**/);
+	bool IsIn(MeshSpere pShere/**/);  
 	bool IsIn(ST_SPHERE* pSphere);
 	bool IsIn(D3DXVECTOR3 vec3);
 
