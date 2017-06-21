@@ -37,7 +37,6 @@ enum C_C_ID
 	C_C_BOW_BOW,
 };
 
-
 struct ST_Character
 {
 	C_R_ID     m_raceID;
