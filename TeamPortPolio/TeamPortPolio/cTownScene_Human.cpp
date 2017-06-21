@@ -29,7 +29,8 @@ void cTownScene_Human::OnEnter()
 	//NPC SCENE 별로 세팅
 	//NPC->Change(SCENE_TOWN_HUMAN);
 	//NPC->Setup(MAP->GetVecNPC());
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-6, 0, 0));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
 	SOUND->Play("LoginBGM", 1.0f);
