@@ -2,33 +2,42 @@
 #include "cEffectManager.h"
 
 
-void cEffectManager::Init(bool isFogOn, int fogPassIndex, bool isSnowOn, bool isRainOn)
+void cEffectManager::Init(ST_WEATHER weather)
 {
-	int size = MAP->GetMap()->GetCellPerRow() * MAP->GetMap()->GetCellSpace();
-	if (isFogOn)
+	m_pFog = NULL;
+	m_pSnow = NULL; 
+	m_pRain = NULL;
+
+	m_stWeather = weather;
+
+	int cellPerRow = MAP->GetMap()->GetCellPerRow();
+	int cellSpace = MAP->GetMap()->GetCellSpace();
+	int size = cellPerRow * cellSpace;
+
+	if (weather.GetFogOn())
 	{
 		m_pFog = new cFog();
 		m_pFog->Setup("obj/Effect/Fog/fog.txt");
 	}
 
-	if (isSnowOn)
+	if (weather.GetSnowOn())
 	{
 		m_pSnow = new cWeather();
-		m_pSnow->Setup(size, size, size, 1500);
+		m_pSnow->Setup(size, size, size, weather.GetCount_Snow());
 	}
 
-	if (isRainOn)
+	if (weather.GetMove_Rain())
 	{
 		m_pRain = new cWeather();
-		m_pRain->Setup(size, size, size, 3000);
+		m_pRain->Setup(size, size, size, weather.GetCount_Rain());
 	}
 }
 
 void cEffectManager::Update()
 {
 	if (m_pFog) m_pFog->Update(CAMERA->GetCamera());
-	if (m_pSnow) m_pSnow->Update(0.1f, 0.1f);
-	if (m_pRain) m_pRain->Update(0.1f, 1.0f);
+	if (m_pSnow) m_pSnow->Update(m_stWeather.GetMove_Snow(), m_stWeather.GetSpeed_Snow());
+	if (m_pRain) m_pRain->Update(m_stWeather.GetMove_Rain(), m_stWeather.GetSpeed_Rain());
 }
 
 void cEffectManager::Render()
@@ -45,7 +54,7 @@ void cEffectManager::Release()
 
 void cEffectManager::Render_Fog_Begin()
 {
-	if (m_pFog) m_pFog->Render_Begin(m_nFogPassIndex);
+	if (m_pFog) m_pFog->Render_Begin(m_stWeather.GetFogPassIndex());
 }
 
 void cEffectManager::Render_Fog_End()

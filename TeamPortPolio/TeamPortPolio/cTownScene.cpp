@@ -23,8 +23,8 @@ void cTownScene::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-8, 0, 30));
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	
-	EFFECT->Init(false, 0, true, true);
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
 
 	// >> 테스트용 
 	m_pMeshSphere = NULL;
@@ -98,7 +98,6 @@ void cTownScene::OnUpdate()
 		OBJECT->PutOnItem(itemID);
 		break;
 	case TOWN_INVENTORY:
-		UI->DeleteItem_Inven(itemID);
 		break;
 	}
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
@@ -131,6 +130,7 @@ void cTownScene::OnExit()
 {
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
+	EFFECT->Release();
 	UI->Release();
 
 	SAFE_RELEASE(m_pMeshSphere);
@@ -138,9 +138,11 @@ void cTownScene::OnExit()
 
 void cTownScene::OnRender()
 {
+	EFFECT->Render_Fog_Begin();
 	MAP->Render();
 	EFFECT->Render();
 	OBJECT->Render();
+	EFFECT->Render_Fog_End();
 	UI->Render(m_pSprite);
 
 	// >> 테스트용
