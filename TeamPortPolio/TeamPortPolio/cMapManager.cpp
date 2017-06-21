@@ -24,13 +24,11 @@ void cMapManager::Init(int sceneID)
 	case SCENE_TITLE:
 		folderPath = "map";
 		filePath = strdup("TESTMAP3.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
 		break;
 
 	case SCENE_TOWN:
 		folderPath = "map";
 		filePath = strdup("TESTTOWN.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
 		break;
 
 	case SCENE_TOWN_HUMAN:
@@ -39,19 +37,16 @@ void cMapManager::Init(int sceneID)
 	case SCENE_TOWN_ORC:
 		folderPath = "map";
 		filePath = strdup("TOWNORC.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
 		break;
 
 	case SCENE_BATTLE_HUMAN:
 		folderPath = "map";
 		filePath = strdup("BATTLEHUMAN.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
 		break;
 
 	case SCENE_BATTLE_ORC:
 		folderPath = "map";
 		filePath = strdup("BATTLEORC.txt");
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
 		break;
 	}
 
@@ -69,6 +64,32 @@ void cMapManager::Init(int sceneID)
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
+
+	switch (sceneID)
+	{
+	case SCENE_TITLE:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
+		break;
+
+	case SCENE_TOWN:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
+		break;
+
+	case SCENE_TOWN_HUMAN:
+		break;
+
+	case SCENE_TOWN_ORC:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
+		break;
+
+	case SCENE_BATTLE_HUMAN:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
+		break;
+
+	case SCENE_BATTLE_ORC:
+		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
+		break;
+	}
 	// << 
 
 	// >> : 포지션 좌표 넣어줌 -> 사용 그림자

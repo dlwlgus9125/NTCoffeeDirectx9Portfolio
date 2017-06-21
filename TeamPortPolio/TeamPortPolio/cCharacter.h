@@ -77,6 +77,7 @@ public:
 	virtual void SetAnimHit() {};
 	virtual void SetAnimDeath() {};
 
+	C_C_ID GetID() { return m_ID; }
 	void SetID(C_C_ID id) { m_ID = id; }
 	MeshSpere GetMeshSphere() { return m_MeshSphere; }
 

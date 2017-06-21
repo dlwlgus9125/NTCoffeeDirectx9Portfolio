@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cLoadingScene.h"
+#include "cPlayer.h"
 #include "cUIImage.h"
 #include "cUIProgressBar.h"
 
@@ -37,7 +38,12 @@ void cLoadingScene::OnUpdate()
 	m_pImage->Update(TIME->DeltaTime());
 	m_pProgressBar->Update(TIME->DeltaTime());
 
-	if(m_pProgressBar->GetIsFinished()) SCENE->ChangeScene(SCENE_TOWN);
+	if (m_pProgressBar->GetIsFinished())
+	{
+		cPlayer* player = OBJECT->GetPlayer();
+		if (player->GetID() == C_C_HUMAN_MALE) SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		else if (player->GetID() == C_C_ORC_MALE) SCENE->ChangeScene(SCENE_BATTLE_ORC);
+	}
 }
 
 void cLoadingScene::OnExit()

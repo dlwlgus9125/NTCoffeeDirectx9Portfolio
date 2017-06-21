@@ -8,6 +8,8 @@ class cTownScene_Orc : public cIScene
 	vector<ST_SPHERE>		m_vecST_Sphere;
 	LPD3DXMESH				m_pMeshSphere;
 	vector<D3DMATERIAL9>	m_vecMtlSphere;
+
+	ST_WEATHER				m_stWeather;
 public:
 	cTownScene_Orc();
 	~cTownScene_Orc();

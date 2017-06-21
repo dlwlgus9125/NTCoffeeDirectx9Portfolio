@@ -18,20 +18,12 @@ void cBattleScene_Human::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);
 	UI->Change(SCENE_BATTLE_HUMAN);
+
+	m_stWeather = MAP->GetWeather();
+	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
 
 
-
-
-	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	//pPlayer->SetID(C_C_HUMAN_MALE);
-	//pPlayer->Init();
-	//OBJECT->AddCharacter(pPlayer);
-
-
-
-	//OBJECT->AddObject(pPlayer);
-	//OBJECT->SetPlayer(pPlayer);
 
 
 	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
@@ -54,6 +46,7 @@ void cBattleScene_Human::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
+	EFFECT->Update();
 
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
@@ -91,12 +84,16 @@ void cBattleScene_Human::OnExit()
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
+	EFFECT->Release();
 }
 
 void cBattleScene_Human::OnRender()
 {
+	EFFECT->Render_Begin();
 	MAP->Render();
+	EFFECT->Render_End();
 	OBJECT->Render();
+
 	UI->Render(m_pSprite);
 }
 void cBattleScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
