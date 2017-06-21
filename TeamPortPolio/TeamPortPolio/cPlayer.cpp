@@ -38,7 +38,7 @@ cPlayer::~cPlayer()
 	m_mapLeader.clear();
 }
 	
-}
+
 
 void cPlayer::Init()
 {
