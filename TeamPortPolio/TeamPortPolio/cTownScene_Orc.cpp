@@ -114,6 +114,7 @@ void cTownScene_Orc::OnUpdate()
 
 void cTownScene_Orc::OnExit()
 {
+	OBJECT->ClearToChangeScene();
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	OBJECT->Release();

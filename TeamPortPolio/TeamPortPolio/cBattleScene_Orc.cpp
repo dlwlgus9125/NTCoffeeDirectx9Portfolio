@@ -58,13 +58,13 @@ void cBattleScene_Orc::OnEnter()
 		c->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->Pos());
 	}*/
 
-	cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);
+	OBJECT->AddLeader(pLeader);*/
 
 
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
@@ -132,7 +132,7 @@ void cBattleScene_Orc::OnUpdate()
 
 void cBattleScene_Orc::OnExit()
 {
-
+	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
 
 	SAFE_RELEASE(m_pSprite);

@@ -104,6 +104,8 @@ void cPlayer::Init()
 	m_MeleeCollider.fRadius = 0.2f;
 	m_currentLeaderType = LEADER_MELEE;
 	SetCurrentLeader();
+
+	m_AttackType = ATTACK_MELEE;
 }
 
 void cPlayer::Update(float deltaTime)

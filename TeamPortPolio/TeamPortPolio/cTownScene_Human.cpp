@@ -131,6 +131,7 @@ void cTownScene_Human::OnUpdate()
 
 void cTownScene_Human::OnExit()
 {
+	OBJECT->ClearToChangeScene();
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	UI->Release();
