@@ -164,6 +164,7 @@
     <ClInclude Include="cEffectManager.h" />
     <ClInclude Include="cFog.h" />
     <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cNpcDB.h" />
     <ClInclude Include="cNpcManager.h" />
     <ClInclude Include="cUIInventory.h" />
     <ClInclude Include="cItem.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="cEffectManager.cpp" />
     <ClCompile Include="cFog.cpp" />
     <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cNpcDB.cpp" />
     <ClCompile Include="cNpcManager.cpp" />
     <ClCompile Include="cUIInventory.cpp" />
     <ClCompile Include="cItem.cpp" />

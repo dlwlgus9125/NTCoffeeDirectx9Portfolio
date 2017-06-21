@@ -51,3 +51,8 @@ void cNpcManager::Release()
 	delete &m_vecSphere;
 	SAFE_RELEASE(m_pMesh);
 }
+
+void cNpcManager::SetMtrl()
+{
+	
+}
