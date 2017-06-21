@@ -2,7 +2,6 @@
 #include "cPlayer.h"
 #include "cGameManager.h"
 #include "cLeader.h"
-#include"cArrowMaker.h"
 #include "cCharacterDB.h"
 
 
@@ -193,7 +192,7 @@ void cPlayer::SellItem(int itemSID)
 	// 제대로 작동하면 버블정렬 Math꺼 사용하기.
 }
 
-void cPlayer::ByuItem(int itemSID)
+void cPlayer::BuyItem(int itemSID)
 {
 	m_vecInventory.push_back(itemSID);
 

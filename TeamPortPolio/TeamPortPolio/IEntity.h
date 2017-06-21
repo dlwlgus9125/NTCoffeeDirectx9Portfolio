@@ -15,7 +15,7 @@ class IEntity
 
 	bool  m_isDeath;
 public:
-	IEntity(D3DXVECTOR3 pos, float radius=10, D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1),
+	IEntity(D3DXVECTOR3 pos, float radius=0.1, D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1),
 		float mass = 1, float maxSpeed = 1);
 
 	virtual ~IEntity();

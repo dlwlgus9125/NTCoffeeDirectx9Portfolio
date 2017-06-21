@@ -32,7 +32,7 @@ public:
 	D3DXVECTOR3& GetUp() { return m_vUp; }
 	cCamera* GetCamera() { return this; }
 	// << :
-
+	void SetCaneraRotateAngle(float angle) { m_vCamRotAngle.y = angle; }
 	void SetEye(D3DXVECTOR3 vEye) {m_vEye = vEye;}
 };
 

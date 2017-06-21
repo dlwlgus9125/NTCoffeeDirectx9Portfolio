@@ -39,7 +39,7 @@ void Player_Idle::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		pPlayer->FSM()->Play(PLAYER_STATE_WALK);
 	}
 
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	if (INPUT->IsMouseDown(MOUSE_LEFT) && (PLAYER_MODE_STATE)pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
 	{
 		switch (pPlayer->GetAttackType())
 		{
@@ -49,7 +49,7 @@ void Player_Idle::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		
 	}
 	
-	else if (INPUT->IsKeyPress(MOUSE_RIGHT))
+	else if (INPUT->IsKeyPress(MOUSE_RIGHT)&& (PLAYER_MODE_STATE)pPlayer->GetMode() == FIGHTING_PLAYER_MODE)
 	{
 		switch (pPlayer->GetAttackType())
 		{

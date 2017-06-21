@@ -78,7 +78,7 @@ public:
 
 	// >> 인벤토리용 함수
 	void SellItem(int itemSID);
-	void ByuItem(int itemSID);
+	void BuyItem(int itemSID);
 	void PutOnItem(int itemSID);
 	void PutOffItem(int itemSID);
 	// <<
