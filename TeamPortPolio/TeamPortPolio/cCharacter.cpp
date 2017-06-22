@@ -10,7 +10,8 @@ cCharacter::cCharacter()
 
 cCharacter::~cCharacter()
 {
-	//SAFE_DELETE( m_pSkinnedMesh);
+	SAFE_DELETE(m_pSkinnedMesh);
+	SAFE_DELETE(m_Status);
 }
 
 void cCharacter::Init()

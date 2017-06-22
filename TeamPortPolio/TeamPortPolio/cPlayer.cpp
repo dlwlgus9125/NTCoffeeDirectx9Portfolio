@@ -36,6 +36,7 @@ cPlayer::~cPlayer()
 		SAFE_DELETE(c.second);
 	}
 	m_mapLeader.clear();
+	SAFE_DELETE(m_pSkinnedMesh);
 }
 	
 
@@ -216,10 +217,10 @@ void cPlayer::SetUnitLeaderTargetIndex(int index)
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
+			cout << "here" << endl;
 			THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
-
 				m_currentLeader->PathClear();
 				m_currentLeader->SetTargetIndex(index);
 			}

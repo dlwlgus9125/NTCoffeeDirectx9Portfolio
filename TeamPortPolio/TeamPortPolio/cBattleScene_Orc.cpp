@@ -39,26 +39,6 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
 
 
-	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
-	//OBJECT->GetPlayer()->SetRotY(D3DX_PI);
-
-	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	//pPlayer->SetID(C_C_HUMAN_MALE);
-	//pPlayer->Init();
-	//OBJECT->AddCharacter(pPlayer);
-
-
-
-	//OBJECT->AddObject(pPlayer);
-	//OBJECT->SetPlayer(pPlayer);
-	//OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
-	//OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
-	/*OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetCharacterEntity()->Pos());
-	for each(auto c in OBJECT->GetPlayer()->GetUnitLeader()->GetUnits())
-	{
-		c->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->Pos());
-	}*/
-
 	cLeader* pLeader = new cLeader(D3DXVECTOR3(-33.5f, 0, 23.5f), 1.0f, D3DXVECTOR3(0.35f, 0,0.94f), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
@@ -94,9 +74,9 @@ void cBattleScene_Orc::OnUpdate()
 	if (indexInMiniMap > 0)
 	{
 		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
-		//cout << "UI Index : " << indexInMiniMap << endl;
+		cout << "UI Index : " << indexInMiniMap << endl;
 	}
-
+	cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
 	switch (buttonIndex)
 	{
 	case TITLE_BTN_FMT_RECT:

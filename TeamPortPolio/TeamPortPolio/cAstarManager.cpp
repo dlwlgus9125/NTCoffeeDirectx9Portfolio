@@ -102,7 +102,7 @@ cGraph* cAstarManager::SetupGraph()
 
 void cAstarManager::AddEdge(int from, int col, int row)
 {
-	if (col >= 0 && col < sqrt(m_vecPosOfNode.size()) && row >= 0 && row <  sqrt(m_vecPosOfNode.size()))
+	if (col >= 0 && col < sqrt(m_vecPosOfNode.size()) && row >= 0 && row < sqrt(m_vecPosOfNode.size()))
 	{
 		int to = col + row *  sqrt(m_vecPosOfNode.size());
 		D3DXVECTOR3 fromPos = m_graph->GetNode(from)->Pos();//get노드로 처리해서 엣지추가여부 결정하기
@@ -122,7 +122,7 @@ vector<int> cAstarManager::GetPath(int chrindex, int targetIndex)
 {
 	if (chrindex != targetIndex)
 	{
-	/*	cGraph* pGraph = SetupGraph();*/
+		/*	cGraph* pGraph = SetupGraph();*/
 		cAstar as(m_PathGraph, chrindex, targetIndex);
 		if (as.Search())
 		{
@@ -135,7 +135,7 @@ vector<int> cAstarManager::GetPath(int chrindex, int targetIndex)
 
 void cAstarManager::Update()
 {
-	if (m_isMapLoadingComplete == true && TIME->UpdateOneSecond())
+	if (TIME->UpdateOneSecond())
 	{
 		SetObjectIndex();
 		SetTargetOfLeader();
@@ -144,11 +144,8 @@ void cAstarManager::Update()
 
 void cAstarManager::PathUpdate()
 {
-	if (m_isMapLoadingComplete == true)
-	{		
-		SetLeaderPath();
+	SetLeaderPath();
 	THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
-	}
 }
 
 void cAstarManager::Release()
@@ -167,7 +164,7 @@ void cAstarManager::Release()
 
 void cAstarManager::Render()
 {
-	if(m_graph)m_graph->Render();
+	if (m_graph)m_graph->Render();
 }
 
 bool cAstarManager::GetCursorIndex(int & TargetIndex)
@@ -209,6 +206,7 @@ void cAstarManager::SetLeaderPath()
 		{
 			OBJECT->GetLeader()[i]->PathClear();
 			OBJECT->GetLeader()[i]->SetPath(this->GetPath(OBJECT->GetLeader()[i]->GetIndex(), OBJECT->GetLeader()[i]->GetTargetIndex()));
+			cout << "path size : " << OBJECT->GetLeader()[i]->GetPath().size() << endl;
 		}
 	}
 }

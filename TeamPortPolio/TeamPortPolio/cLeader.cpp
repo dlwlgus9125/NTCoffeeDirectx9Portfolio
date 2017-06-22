@@ -25,6 +25,8 @@ cLeader::~cLeader()
 		SAFE_DELETE(v);
 	}
 	m_vectorUnit.clear();
+	SAFE_DELETE(m_unitLeader);
+	SAFE_DELETE(m_pFsm);
 }
 
 void cLeader::Init()

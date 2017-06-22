@@ -157,6 +157,15 @@ void cGameManager::Render()
 void cGameManager::Release()
 {
 	SOUND->Release();
+	OBJECT->Release();
+	TEXTURE->Destroy();
+	INPUT->Release();
+
+	MAP->Destroy();
+	ASTAR->Release();
+	THREAD->Destroy();
+	DEVICE->Destroy();
+
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

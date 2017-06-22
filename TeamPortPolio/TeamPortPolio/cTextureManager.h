@@ -20,7 +20,7 @@ public:
 	cSkinnedMesh*       GetCharacterResource(string& folder, string& filename);
 	void                SetTexture(char* szFullPath);
 	void                SetTexture(string& sFullPath);
-	void Destroy();
+	void                Destroy();
 
 	LPDIRECT3DTEXTURE9	GetTexture(char* szFullPath, D3DXIMAGE_INFO* pImageInfo);
 	LPDIRECT3DTEXTURE9	GetTexture(string szFullPath, OUT D3DXIMAGE_INFO& pImageInfo);
