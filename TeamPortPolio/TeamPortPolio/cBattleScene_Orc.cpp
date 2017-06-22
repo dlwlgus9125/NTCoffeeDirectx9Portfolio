@@ -133,7 +133,7 @@ void cBattleScene_Orc::OnExit()
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
-	EFFECT->Release();
+	//EFFECT->Release();
 }
 
 void cBattleScene_Orc::OnRender()

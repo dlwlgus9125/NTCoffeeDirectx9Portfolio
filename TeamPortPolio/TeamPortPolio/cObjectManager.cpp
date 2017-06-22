@@ -96,11 +96,16 @@ void cObjectManager::Render()
 void cObjectManager::Release()
 {
 
-	for (int i = 0; i < m_vecObject.size(); i++)
-	{
-		delete m_vecObject[i];
-	}
+	m_vecCharacter.clear();
+	m_vecEntity.clear();
 	m_vecObject.clear();
+	for each(auto c in m_vecLeader)
+	{
+		if (((cCharacter*)c)->GetCamp() == CAMP_PLAYER) { c = NULL; }
+		else { SAFE_DELETE(c); }
+	}
+	m_vecLeader.clear();
+	SAFE_DELETE(m_player);
 	ClearArrow();
 }
 
@@ -214,7 +219,6 @@ int cObjectManager::GetPlayerID()
 
 void cObjectManager::ClearToChangeScene()
 {
-	vector<cCharacter*> n_vecObject;
 	m_vecCharacter.clear();
 	m_vecEntity.clear();
 	m_vecObject.clear();
