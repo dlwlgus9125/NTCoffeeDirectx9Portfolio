@@ -2,10 +2,17 @@
 #include "cEffectManager.h"
 
 
-void cEffectManager::Init(ST_WEATHER weather)
+void cEffectManager::Init()
 {
 	m_pFog = NULL;
 	m_pSnow = NULL; 
+	m_pRain = NULL;
+}
+
+void cEffectManager::OnEnter(ST_WEATHER weather)
+{
+	m_pFog = NULL;
+	m_pSnow = NULL;
 	m_pRain = NULL;
 
 	m_stWeather = weather;
@@ -33,7 +40,7 @@ void cEffectManager::Init(ST_WEATHER weather)
 	}
 }
 
-void cEffectManager::Update()
+void cEffectManager::OnUpdate()
 {
 	if (m_pFog) m_pFog->Update(CAMERA->GetCamera());
 	if (m_pSnow) m_pSnow->Update(m_stWeather.GetMove_Snow(), m_stWeather.GetSpeed_Snow());

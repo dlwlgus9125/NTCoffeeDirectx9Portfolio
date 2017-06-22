@@ -70,6 +70,7 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	EFFECT->Init();
 	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();
@@ -132,6 +133,7 @@ void cGameManager::Update()
 			m_prevTime = m_currentTime;
 			FRUSTUM->Update();
 			INPUT->Update();
+			
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();

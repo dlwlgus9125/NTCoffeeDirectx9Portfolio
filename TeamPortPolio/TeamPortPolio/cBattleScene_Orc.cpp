@@ -6,6 +6,7 @@
 cBattleScene_Orc::cBattleScene_Orc()
 	: m_pSprite(NULL)
 {
+	SOUND->LoadFile("Battle_Orc_BGM", "Sound/BGM/BattleScene_Orc/TourneyBattle2.mp3", true);
 }
 
 
@@ -15,13 +16,16 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
+	SOUND->Play("Battle_Orc_BGM");
+
+	
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_ORC);
 	UI->Change(SCENE_BATTLE_ORC);
 	
 	cout << "size : " << MAP->GetVecPosOfNode().size() << endl;
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
@@ -62,7 +66,7 @@ void cBattleScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 
 	
@@ -121,6 +125,8 @@ void cBattleScene_Orc::OnUpdate()
 
 void cBattleScene_Orc::OnExit()
 {
+	SOUND->Stop("Battle_Orc_BGM");
+
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
 	ASTAR->Release();
