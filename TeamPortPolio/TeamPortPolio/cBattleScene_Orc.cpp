@@ -123,7 +123,6 @@ void cBattleScene_Orc::OnUpdate()
 void cBattleScene_Orc::OnExit()
 {
 	SOUND->Stop("Battle_Orc_BGM");
-	SOUND->Release();
 
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();

@@ -100,7 +100,6 @@ void cBattleScene_Human::OnUpdate()
 void cBattleScene_Human::OnExit()
 {
 	SOUND->Stop("Battle_Scene_Human");
-	SOUND->Release();
 
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
