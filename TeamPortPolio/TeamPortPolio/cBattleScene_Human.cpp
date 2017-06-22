@@ -92,9 +92,29 @@ void cBattleScene_Human::OnUpdate()
 	case TITLE_BTN_DEFSTATE:
 		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonTwo();
 		break;
+	case BATTLE_MINIMAP_RESULT:
+		UI->Update(0);
+		SCENE->ChangeScene((OBJECT->GetPlayerID() == C_C_HUMAN_MALE) ? SCENE_TOWN_HUMAN : SCENE_TOWN_ORC);
+		break;
 	}
 	// <<
-	OBJECT->Update(TIME->DeltaTime());
+	if (TIME->UpdateOneSecond())
+	{
+		for each(auto L in OBJECT->GetLeader())
+		{
+			if (L->IsDeath() == true)
+			{
+				if (L->GetCamp() == CAMP_ENEMY1)
+				{
+					UI->CreateResultMessage(BATTLE_MINIMAP_VICTORY);
+				}
+				else if (OBJECT->GetPlayer()->IsDeath() == true)
+				{
+					UI->CreateResultMessage(BATTLE_MINIMAP_DEFEAT);
+				}
+			}
+		}
+	}
 }
 
 void cBattleScene_Human::OnExit()

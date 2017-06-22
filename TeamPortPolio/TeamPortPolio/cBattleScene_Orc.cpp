@@ -67,8 +67,6 @@ void cBattleScene_Orc::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	EFFECT->OnUpdate();
-
-
 	
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
@@ -98,6 +96,10 @@ void cBattleScene_Orc::OnUpdate()
 	case TITLE_BTN_DEFSTATE:
 		OBJECT->GetPlayer()->GetUnitLeader()->ClickedButtonTwo();
 		break;
+	case BATTLE_MINIMAP_RESULT:
+		UI->Update(0);
+		SCENE->ChangeScene((OBJECT->GetPlayerID() == C_C_HUMAN_MALE) ? SCENE_TOWN_HUMAN : SCENE_TOWN_ORC);
+		break;
 	}
 	// <<
 	
@@ -109,17 +111,14 @@ void cBattleScene_Orc::OnUpdate()
 			{
 				if (L->GetCamp() == CAMP_ENEMY1)
 				{
-					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
-					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
+					UI->CreateResultMessage(BATTLE_MINIMAP_VICTORY);
 				}
-				else if (L->GetCamp() == CAMP_PLAYER&&OBJECT->GetPlayer()->IsDeath()==true)
+				else if (OBJECT->GetPlayer()->IsDeath()==true)
 				{
-					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
-					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
+					UI->CreateResultMessage(BATTLE_MINIMAP_DEFEAT);
 				}
 			}
 		}
-
 	}
 }
 

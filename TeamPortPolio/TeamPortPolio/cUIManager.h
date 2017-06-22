@@ -25,6 +25,7 @@ class cUIManager : public Singleton<cUIManager>
 	cUIImage*					m_pAim;
 	cUIProgressBar*				m_pStatus;
 	cUIMiniMap*					m_pTrooptype;
+	cUIMiniMap*					m_pResultMessage;
 
 	void Setup_TitleScene();
 	void Setup_TownScene();
@@ -45,6 +46,7 @@ public:
 	void GetEvent(OUT int& minimapIndex, OUT int& buttonIndex, OUT int& eventID, OUT int& itemID);
 	void AddItem_Tab(int tabID);
 	void ResetEquipment(vector<int> vecEquipment);
+	void CreateResultMessage(int resultID);
 
 	void DrawAim(LPD3DXSPRITE pSprite);
 };
