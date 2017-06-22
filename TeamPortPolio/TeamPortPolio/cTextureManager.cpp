@@ -55,6 +55,7 @@ void cTextureManager::SetTexture(string & sFullPath)
 
 void cTextureManager::Destroy()
 {
+
 }
 
 LPDIRECT3DTEXTURE9	cTextureManager::GetTexture(char* szFullPath, D3DXIMAGE_INFO* pImageInfo)

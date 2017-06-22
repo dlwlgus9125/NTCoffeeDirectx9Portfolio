@@ -507,7 +507,7 @@ struct ST_NPC_INFO
 	ST_NPC_INFO() {}
 	ST_NPC_INFO(int nSID, D3DXVECTOR3 pos, D3DXVECTOR3 scale, float fRotX, float fRotY, float fRotZ)
 	{
-		this->nSID= nSID;
+		this->nSID= nSID; //smallID
 		this->pos = pos;
 		this->scale = scale;
 		this->fRotX = fRotX;
@@ -541,6 +541,7 @@ struct ST_NPC_INFO
 #include "cObject.h"
 #include "cItemDB.h"
 #include "cShadowManager.h"
+#include "cNpcDB.h"
 //<<
 #include "cRay.h"
 
