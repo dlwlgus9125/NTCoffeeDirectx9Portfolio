@@ -46,7 +46,8 @@ public:
 class Player_BowAttack : public IState<cPlayer*>
 {
 	cObject* BattleTarget;
-
+	float m_fPrevCameraDist;
+	D3DXVECTOR3 m_vPrevview;
 public:
 	void OnBegin(cPlayer* pPlayer);
 

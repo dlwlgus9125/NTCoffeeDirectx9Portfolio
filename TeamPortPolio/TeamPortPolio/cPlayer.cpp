@@ -129,7 +129,7 @@ void cPlayer::Update(float deltaTime)
 		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 		m_pFsm->Update(deltaTime);
 		D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
-		//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
+		MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 		m_CharacterEntity->SetPos(movePos);
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
@@ -159,8 +159,6 @@ void cPlayer::Update(float deltaTime)
 	if (GetMesh()->GetIndex() != P_BOWATTACK1)
 	{
 		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-		CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.222);
-		if (CAMERA->GetCameraDitance() >4) CAMERA->SetCameraDistance(4);
 	}
 	else
 	{

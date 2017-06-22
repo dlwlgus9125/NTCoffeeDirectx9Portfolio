@@ -22,7 +22,7 @@ void cTownScene_Human::OnEnter()
 	UI->Change(SCENE_TOWN_HUMAN);
 	ConnectSpere();
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 
 	Setup_DirLight();
 
@@ -33,7 +33,7 @@ void cTownScene_Human::OnEnter()
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 
-	SOUND->Play("LoginBGM", 1.0f);
+	SOUND->Play("Town_Human_BGM", 1.0f);
 
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer());
@@ -44,7 +44,7 @@ void cTownScene_Human::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	OBJECT->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 	int indexInMiniMap;
 	int buttonIndex;
@@ -160,7 +160,10 @@ void cTownScene_Human::OnRender()
 	EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
-	if (OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)UI->DrawAim(m_pSprite);
+	/*if (OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
+	{
+		UI->DrawAim(m_pSprite);
+	}*/ //나오던건디 ㅠ
 }
 
 void cTownScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

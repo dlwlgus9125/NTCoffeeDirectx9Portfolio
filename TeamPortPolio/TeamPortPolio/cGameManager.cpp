@@ -69,12 +69,16 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	EFFECT->Init();
 	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
 	NPCDB->Setup();
+	CAMERA->Setup();
+	FRUSTUM->Setup();
+	ASTAR->Init();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
@@ -85,8 +89,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_BATTLE_ORC, new cBattleScene_Orc());
 	SCENE->Register(SCENE_LOADING, new cLoadingScene());
 	SCENE->ChangeScene(SCENE_LOGIN);
-	CAMERA->Setup();
-	FRUSTUM->Setup();
+	
 	//
 	srand((unsigned)time(NULL));
 
@@ -129,6 +132,7 @@ void cGameManager::Update()
 			m_prevTime = m_currentTime;
 			FRUSTUM->Update();
 			INPUT->Update();
+			
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();
@@ -163,11 +167,13 @@ void cGameManager::Release()
 	CHARACTERDB->Destroy();
 	OBJECTDB->Destroy();
 	NPCDB->Destroy();
+	OBJECT->Release();
+	TEXTURE->Destroy();
 	NPC->Release();
 	SOUND->Release();
 	INPUT->Release();
-	OBJECT->Release();
-	TEXTURE->Destroy();
+	
+	
 	INPUT->Release();
 	UI->Release();
 	FONT->Destroy();
