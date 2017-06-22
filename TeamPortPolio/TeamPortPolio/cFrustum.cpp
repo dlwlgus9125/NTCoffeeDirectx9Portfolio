@@ -51,12 +51,21 @@ bool cFrustum::IsIn(MeshSpere pShere)
 
 bool cFrustum::IsIn(ST_SPHERE* pSphere)
 {
-	for each(D3DXPLANE p in m_vecPlane)
+	for (int i = 0; i < m_vecPlane.size(); i++)
 	{
-		if (D3DXPlaneDotCoord(&p, &pSphere->vCenter) > pSphere->fRadius)
+		if (D3DXPlaneDotCoord(&m_vecPlane[i], &pSphere->vCenter) + pSphere->fRadius < 0)
+		{
+			// Outside the frustum, reject it!
 			return false;
+		}
 	}
 	return true;
+	/*for each(D3DXPLANE p in m_vecPlane)
+	{
+		if (D3DXPlaneDotCoord(&p, &pSphere->vCenter)+ pSphere->fRadius <0)
+			return false;
+	}
+	return true;*/
 }
 
 bool cFrustum::IsIn(D3DXVECTOR3 vec3)
@@ -67,7 +76,7 @@ bool cFrustum::IsIn(D3DXVECTOR3 vec3)
 	// D3DXPlaneDotCoord(면, 정점, 벡터) = > 거리
 	for (int i = 0; i < m_vecPlane.size(); i++)
 	{
-		if (D3DXPlaneDotCoord(&m_vecPlane[i], &vec3)  > 0)
+		if (D3DXPlaneDotCoord(&m_vecPlane[i], &vec3)  < 0)
 		{
 			// Outside the frustum, reject it!
 			return false;

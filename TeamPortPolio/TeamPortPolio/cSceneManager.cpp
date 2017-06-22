@@ -36,17 +36,24 @@ void cSceneManager::Register(int tag, cIScene * pScene)
 void cSceneManager::ChangeScene(int tag)
 {
 	m_current = tag;
-	//m_currentScene = GetScene(m_current);	// 지워야 할 것들
-	//m_currentScene->OnEnter();				// 지워야 할 것들
 }
 
 void cSceneManager::Update()
 {
 	if (m_currentScene == NULL || m_current != m_currentScene->Tag())
 	{
-		if (m_currentScene != NULL) m_currentScene->OnExit();
+		if (m_currentScene != NULL)
+			m_currentScene->OnExit();
 		m_currentScene = GetScene(m_current);
-		if (m_currentScene != NULL) m_currentScene->OnEnter();
+		if (m_currentScene != NULL)
+		{
+			D3DDevice->Clear(NULL,
+				NULL,
+				D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL,
+				D3DCOLOR_XRGB(47, 121, 112),
+				1.0f, 0);
+			m_currentScene->OnEnter();
+		}
 	}
 
 	if (m_currentScene != NULL) m_currentScene->OnUpdate();
@@ -54,7 +61,8 @@ void cSceneManager::Update()
 
 void cSceneManager::Render()
 {	
-	if (m_currentScene != NULL) m_currentScene->OnRender();
+	if (m_currentScene != NULL) 
+		m_currentScene->OnRender();
 	else
 		::MessageBox(0, TEXT("Render error - currentScene == NULL"), 0, 0);
 	

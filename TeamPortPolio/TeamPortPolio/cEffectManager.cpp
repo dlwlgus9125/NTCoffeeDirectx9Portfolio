@@ -42,8 +42,21 @@ void cEffectManager::Update()
 
 void cEffectManager::Release()
 {
-	if (m_pFog) SAFE_DELETE(m_pFog);
-	if (m_pSnow) SAFE_DELETE(m_pSnow);
+	if (m_pFog)
+	{
+		m_pFog->Destroy();
+		SAFE_DELETE(m_pFog);
+	}
+	if (m_pSnow)
+	{
+		m_pSnow->DeleteParticle(m_pSnow->GetVerParticleVertex().size());
+		SAFE_DELETE(m_pSnow);
+	}
+	if (m_pRain)
+	{
+		m_pRain->DeleteParticle(m_pRain->GetVerParticleVertex().size());
+		SAFE_DELETE(m_pRain);
+	}
 }
 
 void cEffectManager::Render_Begin()

@@ -41,7 +41,11 @@ void cLoginScene::OnEnter()
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 
-	if(!SCENE->GetIsSoundPlayed())SOUND->Play("LoginBGM", 1.0f);
+	if (!SCENE->GetIsSoundPlayed())
+	{
+		SOUND->Play("LoginBGM", 1.0f);
+		SCENE->SetIsSoundPlayed(true);
+	}
 
 	UI->Change(SCENE_LOGIN);
 }
@@ -59,7 +63,11 @@ void cLoginScene::OnUpdate()
 	int eventIDTap;
 	int itemID;
 
-	if (GetKeyState('P') && 0x8000) SOUND->Stop("LoginBGM");
+	if (GetKeyState('P') && 0x8000 )
+	{
+		SOUND->Stop("LoginBGM");
+		SCENE->SetIsSoundPlayed(false);
+	}
 
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
