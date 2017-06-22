@@ -141,10 +141,6 @@ void cPlayer::Update(float deltaTime)
 			m_fRotY += 0.06;
 		}
 
-		if (INPUT->IsKeyDown('4')) { cout << "보병" << endl; m_currentLeaderType = LEADER_MELEE; SetCurrentLeader(); }
-		if (INPUT->IsKeyDown('5')){ cout << "궁병" << endl; m_currentLeaderType = LEADER_BOW;SetCurrentLeader(); }
-		if (INPUT->IsKeyDown('6')){ cout << "기병" << endl; m_currentLeaderType = LEADER_CAVALRY;SetCurrentLeader(); }
-
 		//화살처리
 
 		D3DXMATRIXA16 matR;

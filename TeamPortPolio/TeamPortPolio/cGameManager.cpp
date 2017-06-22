@@ -75,7 +75,6 @@ void cGameManager::Init()
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
-	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
 	SCENE->Register(SCENE_HELP, new cHelpScene());
