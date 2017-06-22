@@ -86,6 +86,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_LOADING, new cLoadingScene());
 	SCENE->ChangeScene(SCENE_LOGIN);
 	CAMERA->Setup();
+	FRUSTUM->Setup();
 	//
 	srand((unsigned)time(NULL));
 
@@ -126,11 +127,13 @@ void cGameManager::Update()
 			//cout << m_player->GetCharacterEntity()->Pos().x << ", " << m_player->GetCharacterEntity()->Pos().y << ", " << m_player->GetCharacterEntity()->Pos().z << endl;
 
 			m_prevTime = m_currentTime;
+			FRUSTUM->Update();
 			INPUT->Update();
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();
 			SOUND->Update();
+
 			//if (OBJECT->GetPlayer() != NULL)ASTAR->Update();	
 		}
 	}
