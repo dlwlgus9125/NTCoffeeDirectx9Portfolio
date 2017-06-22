@@ -88,6 +88,7 @@ void cObjectManager::Release()
 	}
 	m_vecLeader.clear();
 	SAFE_DELETE(m_player);
+	m_player = NULL;
 	ClearArrow();
 }
 
