@@ -4,6 +4,7 @@
 
 cUIButton::cUIButton()
 {
+	SOUND->LoadFile("Button_Clicked", "Sound/Effect/Click_Button.mp3", false);
 }
 
 
@@ -43,6 +44,7 @@ void cUIButton::Update(float deltaTime)
 		break;
 	case UI_CLICKED:
 		m_eCurrentState = UI_IDLE;
+		SOUND->Play("Button_Clicked");
 		break;
 	}
 
