@@ -378,6 +378,18 @@ void cUIManager::Setup_SelectScene()
 
 void cUIManager::Setup_BattleScene_Orc()
 {
+	// >> 체력 상태 표시 막대
+	m_pStatus = new cUIProgressBar;
+	m_pStatus->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_PROGRESSBAR);
+	if (OBJECT->GetPlayerID() == C_C_HUMAN_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_human.png", "", D3DXVECTOR3(30, 20, 0));
+	else if (OBJECT->GetPlayerID() == C_C_ORC_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_orc.png", "", D3DXVECTOR3(30, 20, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/life.png", D3DXVECTOR3(148, 33, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/mana.png", D3DXVECTOR3(148, 61, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/exp.png", D3DXVECTOR3(153, 76, 0));
+	m_pStatus->SetScaleOutline(1.0f);
+	m_pStatus->SetHidden(false);
+	// << 
+
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
@@ -422,11 +434,28 @@ void cUIManager::Setup_BattleScene_Orc()
 	m_vecEventBtn.push_back(pButton4);
 	m_pMiniMap->AddChild(pButton4);
 
-
+	// >> 활 쏠 때 쓰는 목표점
+	m_pAim = new cUIImage();
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	m_pAim->SetHidden(false);
+	// <<
 }
 
 void cUIManager::Setup_BattleScene_Human()
 {
+	// >> 체력 상태 표시 막대
+	m_pStatus = new cUIProgressBar;
+	m_pStatus->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_PROGRESSBAR);
+	if (OBJECT->GetPlayerID() == C_C_HUMAN_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_human.png", "", D3DXVECTOR3(30, 20, 0));
+	else if (OBJECT->GetPlayerID() == C_C_ORC_MALE) m_pStatus->Setup_Progress("Image/UI/townscene/bar_status/status_orc.png", "", D3DXVECTOR3(30, 20, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/life.png", D3DXVECTOR3(148, 33, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/mana.png", D3DXVECTOR3(148, 61, 0));
+	m_pStatus->AddProgressBar("Image/UI/townscene/bar_status/exp.png", D3DXVECTOR3(153, 76, 0));
+	m_pStatus->SetScaleOutline(1.0f);
+	m_pStatus->SetHidden(false);
+
+	// << 
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
@@ -470,6 +499,13 @@ void cUIManager::Setup_BattleScene_Human()
 		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
 	m_vecEventBtn.push_back(pButton4);
 	m_pMiniMap->AddChild(pButton4);
+
+	// >> 활 쏠 때 쓰는 목표점
+	m_pAim = new cUIImage();
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	m_pAim->SetHidden(false);
+	// <<
 }
 
 void cUIManager::Setup()
@@ -479,13 +515,7 @@ void cUIManager::Setup()
 	m_pStatus = NULL;
 	m_pTrooptype = NULL;
 	m_pResultMessage = NULL;
-
-	// >> 활 쏠 때 쓰는 목표점
-	m_pAim = new cUIImage();
-	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
-	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
-	m_pAim->SetHidden(false);
-	// <<
+	m_pAim = NULL;
 }
 
 void cUIManager::Release()
