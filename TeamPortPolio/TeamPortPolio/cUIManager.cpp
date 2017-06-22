@@ -421,6 +421,8 @@ void cUIManager::Setup_BattleScene_Orc()
 		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
 	m_vecEventBtn.push_back(pButton4);
 	m_pMiniMap->AddChild(pButton4);
+
+
 }
 
 void cUIManager::Setup_BattleScene_Human()
@@ -476,6 +478,7 @@ void cUIManager::Setup()
 	m_pInven = NULL;
 	m_pStatus = NULL;
 	m_pTrooptype = NULL;
+	m_pResultMessage = NULL;
 
 	// >> 활 쏠 때 쓰는 목표점
 	m_pAim = new cUIImage();
@@ -508,10 +511,13 @@ void cUIManager::Release()
 	SAFE_DELETE(m_pAim);
 	SAFE_DELETE(m_pStatus);
 	SAFE_DELETE(m_pTrooptype);
+	SAFE_DELETE(m_pResultMessage);
 }
 
 void cUIManager::Update(float deltaTime)
 {
+	if (m_pResultMessage) m_pResultMessage->Update(deltaTime);
+
 	PressKey();
 	Update_ConnectedUI();
 
@@ -561,6 +567,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	{
 		m_vecShownBtn[i]->Render(pSprite);
 	}
+
+	if (m_pResultMessage) m_pResultMessage->Render(pSprite);
 }
 
 // 씬 변경에 따른 UI 전체 변경시키는 함수
@@ -770,4 +778,25 @@ void cUIManager::DrawAim(LPD3DXSPRITE pSprite)
 {
 	m_pAim->Update(0);
 	m_pAim->Render(pSprite);
+}
+
+void cUIManager::CreateResultMessage(int resultID)
+{
+	m_pResultMessage = new cUIMiniMap;
+	m_pResultMessage->Setup(D3DXVECTOR3(0,0, 0), UI_MINIMAP);
+	
+	if (resultID == BATTLE_MINIMAP_VICTORY)
+		m_pResultMessage->Setup_Image("Image/UI/battlescene_human/resultmessage/victory.png", 150);
+	else if (resultID == BATTLE_MINIMAP_DEFEAT)
+		m_pResultMessage->Setup_Image("Image/UI/battlescene_human/resultmessage/defeat.png", 150);
+
+	// 미니맵버튼 1
+	cUIButton* pBnt_Exit = new cUIButton;
+	pBnt_Exit->Setup(D3DXVECTOR3(500, 355, 0), UI_BUTTON);
+	pBnt_Exit->Setup_Button("Image/UI/battlescene_human/resultmessage/btn_idle.png",
+		"Image/UI/battlescene_human/resultmessage/btn_mouseover.png",
+		"Image/UI/battlescene_human/resultmessage/btn_select.png", BATTLE_MINIMAP_RESULT);
+	m_vecEventBtn.push_back(pBnt_Exit);
+	m_pResultMessage->AddChild(pBnt_Exit);
+	m_pResultMessage->SetHiddenAll(false);
 }
