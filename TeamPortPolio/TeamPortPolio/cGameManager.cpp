@@ -127,6 +127,7 @@ void cGameManager::Update()
 
 			m_prevTime = m_currentTime;
 			INPUT->Update();
+			
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();

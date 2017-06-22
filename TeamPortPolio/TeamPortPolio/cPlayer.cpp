@@ -162,8 +162,6 @@ void cPlayer::Update(float deltaTime)
 	if (GetMesh()->GetIndex() != P_BOWATTACK1)
 	{
 		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-		CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.222);
-		if (CAMERA->GetCameraDitance() >4) CAMERA->SetCameraDistance(4);
 	}
 	else
 	{
