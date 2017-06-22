@@ -40,15 +40,18 @@ void cConstruct::Update()
 
 	D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 
-	
+
+	for (int i = 0; i < m_vecObjMtlTex.size(); i++)
+	{
+	D3DXVECTOR3 vOut;
+	D3DXVec3TransformCoord(&vOut, &vOut, &m_matWorld);
+	m_vecVertex.push_back(vOut);
+	}
 
 }
 
 void cConstruct::Render()
 {
-	
-
-
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 

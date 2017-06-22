@@ -154,29 +154,29 @@ void cCharacter::UpdateNearConstruct()
 
 	//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 
-	for each (auto p in MAP->GetvecConstruct())
-	{
-
-		vector<ST_LINE_VERTEX> vecLine;
-		for (size_t i = 0; i < vecLine.size(); i++)
-		{
-
-			D3DXVECTOR3 vToPoint = movePos - vecLine[i].a;
-
-			float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(vecLine[i].b - vecLine[i].a));
-			if (length < 0)length = 0;
-			if (length > MATH->Distance(vecLine[i].a, vecLine[i].b)) length = MATH->Distance(vecLine[i].a, vecLine[i].b);
-			D3DXVECTOR3 vPoint = vecLine[i].a + MATH->Nomalize(vecLine[i].b - vecLine[i].a) * length;
-			if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
-			{
-				D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
-				movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
-			}
-
-		}
-
-
-	}
+	//for each (auto p in MAP->GetvecConstruct())
+	//{
+	//
+	//	vector<ST_LINE_VERTEX> vecLine = p->GetTranfromedVector(p->GetVectorVertex());
+	//	for (size_t i = 0; i < vecLine.size(); i++)
+	//	{
+	//
+	//		D3DXVECTOR3 vToPoint = movePos - vecLine[i].a;
+	//
+	//		float length = D3DXVec3Dot(&vToPoint, &MATH->Nomalize(vecLine[i].b - vecLine[i].a));
+	//		if (length < 0)length = 0;
+	//		if (length > MATH->Distance(vecLine[i].a, vecLine[i].b)) length = MATH->Distance(vecLine[i].a, vecLine[i].b);
+	//		D3DXVECTOR3 vPoint = vecLine[i].a + MATH->Nomalize(vecLine[i].b - vecLine[i].a) * length;
+	//		if (MATH->Distance(vPoint, m_CollideSphere.vCenter) < m_CollideSphere.fRadius)
+	//		{
+	//			D3DXVECTOR3 dir = MATH->Nomalize(m_CollideSphere.vCenter - vPoint);
+	//			movePos += dir*(-MATH->Distance(vPoint, m_CollideSphere.vCenter) + m_CollideSphere.fRadius);
+	//		}
+	//
+	//	}
+	//
+	//
+	//}
 	m_CharacterEntity->SetPos(movePos);
 }
 
