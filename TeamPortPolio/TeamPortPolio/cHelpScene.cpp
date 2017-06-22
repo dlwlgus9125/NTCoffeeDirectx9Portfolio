@@ -111,11 +111,7 @@ void cHelpScene::OnUpdate()
 	if (m_pExplainButton_Town2->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_TOWN2);
 	if (m_pExplainButton_Battle->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_BATTLE);
 
-	if (m_pExitButton->GetCurrentState() == UI_CLICKED)
-	{
-		SCENE->SetIsSoundPlayed(true);
-		SCENE->ChangeScene(SCENE_LOGIN);
-	}
+	if (m_pExitButton->GetCurrentState() == UI_CLICKED) 	SCENE->ChangeScene(SCENE_LOGIN);
 }
 
 void cHelpScene::OnExit()
