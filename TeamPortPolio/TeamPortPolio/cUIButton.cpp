@@ -39,12 +39,15 @@ void cUIButton::Update(float deltaTime)
 		break;
 	case UI_PRESSED:
 		if (!MATH->IsCollided(INPUT->GetMousePosVector2(), LeftTop(), RightBottom())) m_eCurrentState = UI_IDLE;
-		else if (INPUT->IsMouseUp(MOUSE_LEFT) && 
-			MATH->IsCollided(INPUT->GetMousePosVector2(), LeftTop(), RightBottom())) m_eCurrentState = UI_CLICKED;
+		else if (INPUT->IsMouseUp(MOUSE_LEFT) &&
+			MATH->IsCollided(INPUT->GetMousePosVector2(), LeftTop(), RightBottom()))
+		{
+			m_eCurrentState = UI_CLICKED;
+			SOUND->Play("Button_Clicked");
+		}
 		break;
 	case UI_CLICKED:
 		m_eCurrentState = UI_IDLE;
-		SOUND->Play("Button_Clicked");
 		break;
 	}
 
