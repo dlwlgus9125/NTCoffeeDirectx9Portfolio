@@ -113,7 +113,7 @@ void cBattleScene_Orc::OnUpdate()
 				{
 					UI->CreateResultMessage(BATTLE_MINIMAP_VICTORY);
 				}
-				else if (L->GetCamp() == CAMP_PLAYER&&OBJECT->GetPlayer()->IsDeath()==true)
+				else if (OBJECT->GetPlayer()->IsDeath()==true)
 				{
 					UI->CreateResultMessage(BATTLE_MINIMAP_DEFEAT);
 				}
