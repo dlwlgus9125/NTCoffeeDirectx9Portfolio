@@ -498,11 +498,15 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 					pConstruct->SetVecObjMtlTex(vecConstruct[i]->GetVecObjMtlTex());
 					pConstruct->SetSObjID(nSID);
 					createMesh = false;
-					pConstruct->SetVecVertexOrigin(vecConstruct[i]->GetVecVertexOrigin());
+					
 					pConstruct->Update();
 				}
 			}
-			if (createMesh == true) pConstruct->Create(nSID);
+			if (createMesh == true)
+			{
+				pConstruct->Create(nSID);
+				pConstruct->Update();
+			}
 
 			vecConstruct.push_back(pConstruct);
 		}

@@ -4,14 +4,19 @@
 
 cHelpScene::cHelpScene()
 	: m_pImage(NULL), m_pSprite(NULL), m_pExitButton(NULL)
-	, m_pExplainButton_Play(NULL), m_pExplainButton_Town1(NULL), m_pExplainButton_Town2(NULL)
-	, m_pExplainButton_Battle(NULL)
+	, m_pExplainButton_Play(NULL), m_pExplainButton_Town1(NULL), m_pExplainButton_Town2(NULL), m_pExplainButton_Battle(NULL)
+	, m_pImage_Play(NULL), m_pImage_Town1(NULL), m_pImage_Town2(NULL), m_pImage_Battle(NULL)
 {
 }
 
 cHelpScene::~cHelpScene()
 {
 	SAFE_DELETE(m_pImage);
+	SAFE_DELETE(m_pImage_Play);
+	SAFE_DELETE(m_pImage_Town1);
+	SAFE_DELETE(m_pImage_Town2);
+	SAFE_DELETE(m_pImage_Battle);
+
 	SAFE_DELETE(m_pSprite);
 	SAFE_DELETE(m_pExitButton);
 	SAFE_DELETE(m_pExplainButton_Play);
@@ -27,6 +32,27 @@ void cHelpScene::OnEnter()
 	m_pImage->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
 	m_pImage->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight + 30));
 	m_pImage->SetHidden(false);
+
+	m_pImage_Play = new cUIImage();
+	m_pImage_Play->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
+	m_pImage_Play->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
+	m_pImage_Play->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
+
+	m_pImage_Town1 = new cUIImage();
+	m_pImage_Town1->Setup(D3DXVECTOR3(380, 65, 0.0f), UI_IMAGE);
+	m_pImage_Town1->Setup_Image("Image/UI/HelpScene/Image/TextBox_Human.png");
+	m_pImage_Town1->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
+
+	m_pImage_Town2 = new cUIImage();
+	m_pImage_Town2->Setup(D3DXVECTOR3(380, 65, 0.0f), UI_IMAGE);
+	m_pImage_Town2->Setup_Image("Image/UI/HelpScene/Image/TextBox_Orc.png");
+	m_pImage_Town2->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
+
+	m_pImage_Battle = new cUIImage();
+	m_pImage_Battle->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
+	m_pImage_Battle->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
+	m_pImage_Battle->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
+
 
 	m_pExitButton = new cUIButton();
 	m_pExitButton->Setup(D3DXVECTOR3(1220, 3, 0), UI_BUTTON);
@@ -69,11 +95,21 @@ void cHelpScene::OnEnter()
 void cHelpScene::OnUpdate()
 {
 	m_pImage->Update(TIME->DeltaTime());
+	m_pImage_Play->Update(TIME->DeltaTime());
+	m_pImage_Town1->Update(TIME->DeltaTime());
+	m_pImage_Town2->Update(TIME->DeltaTime());
+	m_pImage_Battle->Update(TIME->DeltaTime());
+	
 	m_pExitButton->Update(TIME->DeltaTime());
 	m_pExplainButton_Play->Update(TIME->DeltaTime());
 	m_pExplainButton_Town1->Update(TIME->DeltaTime());
 	m_pExplainButton_Town2->Update(TIME->DeltaTime());
 	m_pExplainButton_Battle->Update(TIME->DeltaTime());
+
+	if (m_pExplainButton_Play->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_PLAY);
+	if (m_pExplainButton_Town1->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_TOWN1);
+	if (m_pExplainButton_Town2->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_TOWN2);
+	if (m_pExplainButton_Battle->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_BATTLE);
 
 	if (m_pExitButton->GetCurrentState() == UI_CLICKED)
 	{
@@ -85,6 +121,11 @@ void cHelpScene::OnUpdate()
 void cHelpScene::OnExit()
 {
 	m_pImage->Destroy();
+	m_pImage_Play->Destroy();
+	m_pImage_Town1->Destroy();
+	m_pImage_Town2->Destroy();
+	m_pImage_Battle->Destroy();
+
 	m_pExitButton->Destroy();
 	m_pExplainButton_Play->Destroy();
 	m_pExplainButton_Town1->Destroy();
@@ -95,6 +136,11 @@ void cHelpScene::OnExit()
 void cHelpScene::OnRender()
 {
 	m_pImage->Render(m_pSprite);
+	m_pImage_Play->Render(m_pSprite);
+	m_pImage_Town1->Render(m_pSprite);
+	m_pImage_Town2->Render(m_pSprite);
+	m_pImage_Battle->Render(m_pSprite);
+	
 	m_pExitButton->Render(m_pSprite);
 	m_pExplainButton_Play->Render(m_pSprite);
 	m_pExplainButton_Town1->Render(m_pSprite);
@@ -105,4 +151,31 @@ void cHelpScene::OnRender()
 void cHelpScene::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
+}
+
+void cHelpScene::ChangeImage(HELPBUTTON buttonID)
+{
+	m_pImage_Play->SetHidden(true);
+	m_pImage_Town1->SetHidden(true);
+	m_pImage_Town2->SetHidden(true);
+	m_pImage_Battle->SetHidden(true);
+
+	switch (buttonID)
+	{
+	case HELPBUTTON_PLAY:
+		m_pImage_Play->SetHidden(false);
+		break;
+
+	case HELPBUTTON_TOWN1:
+		m_pImage_Town1->SetHidden(false);
+		break;
+
+	case HELPBUTTON_TOWN2:
+		m_pImage_Town2->SetHidden(false);
+		break;
+
+	case HELPBUTTON_BATTLE:
+		m_pImage_Battle->SetHidden(false);
+		break;
+	}
 }

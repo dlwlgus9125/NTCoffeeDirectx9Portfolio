@@ -6,7 +6,7 @@ class cUnit;
 class SteeringBehavior
 {
 	IEntity* m_pEntity;
-			// 배회 벡터
+	// 배회 벡터
 
 public:
 	SteeringBehavior(IEntity* pEntity);
@@ -21,7 +21,7 @@ public:
 
 	// 도착 : 부대가 목표점으로 
 	void LeaderArrive(D3DXVECTOR3 targetPos);
-	
+
 	// 도착 : 기병부대가 목표점으로 
 	void CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity);
 
@@ -65,29 +65,29 @@ public:
 	// 길 이동
 	/*void FollowPath(Grid& grid, vector<int>& path, float seekDistance)
 	{
-		if (path.size() == 0) return;
+	if (path.size() == 0) return;
 
-		Vector targetPos = grid.TilePos(path.back());
+	Vector targetPos = grid.TilePos(path.back());
 
-		if (path.size() > 1)
-		{
-			Seek(targetPos);
+	if (path.size() > 1)
+	{
+	Seek(targetPos);
 
-			if (MATH->SqrDistance(Entity()->Pos(), targetPos) < seekDistance * seekDistance)
-			{
-				path.pop_back();
-			}
-		}
-		else
-		{
-			Arrive(targetPos);
+	if (MATH->SqrDistance(Entity()->Pos(), targetPos) < seekDistance * seekDistance)
+	{
+	path.pop_back();
+	}
+	}
+	else
+	{
+	Arrive(targetPos);
 
-			if (MATH->SqrDistance(Entity()->Pos(), targetPos) < 20)
-			{
-				path.pop_back();
-				m_force = Vector(0, 0);
-				Entity()->SetVelocity(Vector(0, 0));
-			}
-		}
+	if (MATH->SqrDistance(Entity()->Pos(), targetPos) < 20)
+	{
+	path.pop_back();
+	m_force = Vector(0, 0);
+	Entity()->SetVelocity(Vector(0, 0));
+	}
+	}
 	}*/
 };

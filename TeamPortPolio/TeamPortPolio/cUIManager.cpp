@@ -344,6 +344,8 @@ void cUIManager::Setup_BattleScene_Orc()
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
 	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/ground.png", 150);
+	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
+		"image/ui/BattleScene_Orc/minimap/btn_idle.png", "image/ui/BattleScene_Orc/minimap/btn_mouseover.png", "image/ui/BattleScene_Orc/minimap/btn_select.png");
 	m_pMiniMap->SetAlpha(150);
 
 	// 미니맵버튼 1
@@ -389,6 +391,8 @@ void cUIManager::Setup_BattleScene_Human()
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
 	m_pMiniMap->Setup_Image("image/UI/BattleScene_Human/minimap/ground3.png", 150);
+	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
+		"image/ui/BattleScene_Human/minimap/btn_idle.png", "image/ui/BattleScene_Human/minimap/btn_mouseover.png", "image/ui/BattleScene_Human/minimap/btn_select.png");
 	m_pMiniMap->SetAlpha(150);
 
 	// 미니맵버튼 1
@@ -540,6 +544,12 @@ void cUIManager::Change(int sceneID)
 	case SCENE_TOWN_ORC:
 		Setup_TownScene();
 		break;
+	case SCENE_BATTLE_HUMAN:
+		Setup_BattleScene_Human();
+		break;
+	case SCENE_BATTLE_ORC:
+		Setup_BattleScene_Orc();
+		break;
 	}
 }
 
@@ -549,7 +559,7 @@ void cUIManager::PressKey()
 	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap)
 	{
 		int sceneTag = SCENE->GetCurrentSceneTag();
-		if (sceneTag == SCENE_BATTLE_HUMAN || sceneTag == SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
+		if (sceneTag < SCENE_BATTLE_HUMAN && sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
 		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
 	}
 
