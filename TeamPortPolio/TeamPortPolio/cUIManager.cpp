@@ -522,6 +522,8 @@ void cUIManager::Update(float deltaTime)
 {
 	if (m_pResultMessage) m_pResultMessage->Update(deltaTime);
 
+	if (m_pStatus) m_pStatus->ResetBarLength(0, OBJECT->GetPlayerHPRate());
+
 	PressKey();
 	Update_ConnectedUI();
 

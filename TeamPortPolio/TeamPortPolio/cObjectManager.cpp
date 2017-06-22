@@ -229,3 +229,9 @@ void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
 		break;
 	}
 }
+
+float cObjectManager::GetPlayerHPRate()
+{
+	ST_Character* stat = m_player->GetStatus();
+	return  (stat->m_HP) / (stat->m_MaxHP);
+}
