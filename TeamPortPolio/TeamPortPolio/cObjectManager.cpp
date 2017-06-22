@@ -214,15 +214,16 @@ int cObjectManager::GetPlayerID()
 
 void cObjectManager::ClearToChangeScene()
 {
+	vector<cCharacter*> n_vecObject;
 	m_vecCharacter.clear();
 	m_vecEntity.clear();
-	m_vecLeader.clear();
-	for each(auto c in m_vecObject)
+	m_vecObject.clear();
+	for each(auto c in m_vecLeader)
 	{
 		if (((cCharacter*)c)->GetCamp()== CAMP_PLAYER) { c = NULL; }
-		else { SAFE_DELETE(c); }
+		else { SAFE_DELETE(c);  }
 	}
-	m_vecObject.clear();
+	m_vecLeader.clear();
 }
 
 void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)

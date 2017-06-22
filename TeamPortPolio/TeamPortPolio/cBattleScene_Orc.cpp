@@ -18,7 +18,7 @@ void cBattleScene_Orc::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_ORC);
 	UI->Change(SCENE_BATTLE_ORC);
-	ASTAR->Setup(MAP->GetVecPosOfNode());
+	
 	cout << "size : " << MAP->GetVecPosOfNode().size() << endl;
 	m_stWeather = MAP->GetWeather();
 	EFFECT->Init(m_stWeather);
@@ -50,8 +50,10 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 
-	vector<cObject*> vecObject = OBJECT->GetObjects();
 
+
+
+	ASTAR->Setup(MAP->GetVecPosOfNode());
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 }
@@ -73,7 +75,8 @@ void cBattleScene_Orc::OnUpdate()
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
-		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
 	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;

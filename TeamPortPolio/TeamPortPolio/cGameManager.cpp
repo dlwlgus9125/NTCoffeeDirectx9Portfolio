@@ -76,6 +76,9 @@ void cGameManager::Init()
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
 	NPCDB->Setup();
+	CAMERA->Setup();
+	FRUSTUM->Setup();
+	ASTAR->Init();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
@@ -86,8 +89,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_BATTLE_ORC, new cBattleScene_Orc());
 	SCENE->Register(SCENE_LOADING, new cLoadingScene());
 	SCENE->ChangeScene(SCENE_LOGIN);
-	CAMERA->Setup();
-	FRUSTUM->Setup();
+	
 	//
 	srand((unsigned)time(NULL));
 

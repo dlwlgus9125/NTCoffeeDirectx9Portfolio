@@ -17,11 +17,13 @@ class cAstarManager :
 
 	bool                    m_isMapLoadingComplete;
 public:
+	void Init();
 	void Setup(vector<D3DXVECTOR3> vecPosOfNode);
 	void DestroyForChangeScene();
-	cGraph* SetupGraph();
+	void SetupGraph();
 
 	void AddEdge(int from, int col, int row);
+	void AddEdgeInPathGraph(int from, int col, int row);
 	vector<int> GetPath(int chrindex, int targetIndex);
 	void Release();
 	void Update();
