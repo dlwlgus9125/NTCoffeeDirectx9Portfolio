@@ -487,6 +487,10 @@ void cUIManager::Setup()
 
 void cUIManager::Release()
 {	
+	for each(auto p in m_vecShownBtn)
+	{
+		p->Destroy();
+	}
 	m_vecShownBtn.clear();
 	for each(auto p in m_vecEventBtn)
 	{

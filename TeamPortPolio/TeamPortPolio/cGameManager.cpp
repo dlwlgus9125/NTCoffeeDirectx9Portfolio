@@ -177,7 +177,6 @@ void cGameManager::Release()
 	INPUT->Release();
 	
 	
-	INPUT->Release();
 	UI->Release();
 	FONT->Destroy();
 	EFFECT->Release();
