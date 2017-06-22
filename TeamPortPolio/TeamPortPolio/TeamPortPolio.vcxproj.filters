@@ -399,9 +399,6 @@
     <ClInclude Include="cTitleScene.h">
       <Filter>03. cScene\00. cTitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="cTownScene.h">
-      <Filter>03. cScene\03. cTownScene</Filter>
-    </ClInclude>
     <ClInclude Include="cUIManager.h">
       <Filter>00. Manager\07. cUIManager</Filter>
     </ClInclude>
@@ -643,9 +640,6 @@
     </ClCompile>
     <ClCompile Include="cTitleScene.cpp">
       <Filter>03. cScene\00. cTitleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="cTownScene.cpp">
-      <Filter>03. cScene\03. cTownScene</Filter>
     </ClCompile>
     <ClCompile Include="cUIManager.cpp">
       <Filter>00. Manager\07. cUIManager</Filter>

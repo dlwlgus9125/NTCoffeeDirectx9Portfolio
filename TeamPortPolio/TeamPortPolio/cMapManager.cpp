@@ -193,7 +193,7 @@ void cMapManager::Destroy()
 {
 
 	m_vecPosOfNode.clear();
-	SAFE_DELETE(m_pSkyBox);
+	//SAFE_DELETE(m_pSkyBox);
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{

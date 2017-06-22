@@ -502,11 +502,8 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 					pConstruct->Update();
 				}
 			}
-			if (createMesh == true)
-			{
-				pConstruct->Create(nSID);
-				pConstruct->Update();
-			}
+			if (createMesh == true)		pConstruct->Create(nSID);
+
 
 			vecConstruct.push_back(pConstruct);
 		}
@@ -537,7 +534,10 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 	{
 		vecMtlTex[it.second->GetAttrID()] = it.second;
 	}
-	 
+	
+
+
+
 	LPD3DXMESH pMesh = NULL;
 	D3DXCreateMeshFVF(vecIndex.size() / 3, vecVertex.size(), D3DXMESH_MANAGED | D3DXMESH_32BIT, ST_PNT_VERTEX::FVF, D3DDevice, &pMesh);
 

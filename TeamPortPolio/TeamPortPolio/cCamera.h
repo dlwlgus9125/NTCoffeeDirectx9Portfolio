@@ -33,6 +33,11 @@ public:
 	cCamera* GetCamera() { return this; }
 	// << :
 	void SetCaneraRotateAngle(float angle) { m_vCamRotAngle.y = angle; }
+	void SetCameraRotateAngle(D3DXVECTOR3 angle)
+	{ 
+		m_vCamRotAngle.x = angle.x;
+		m_vCamRotAngle.z = angle.z;
+	}
 	void SetEye(D3DXVECTOR3 vEye) {m_vEye = vEye;}
 };
 

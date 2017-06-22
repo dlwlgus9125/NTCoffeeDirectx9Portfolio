@@ -9,6 +9,11 @@
 
 
 
+void cAstarManager::Init()
+{
+	m_PathGraph = m_graph = NULL;
+}
+
 void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 {
 	m_vecPosOfNode = vecPosOfNode;
@@ -48,9 +53,9 @@ void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 		AddEdge(i, x + 1, z - 1);
 		AddEdge(i, x + 1, z + 1);
 	}
-	m_PathGraph = SetupGraph();
+	SetupGraph();
 	THREAD->CreateFindIndexThread(HANDLE_ASTAR_FINDINDEX);
-	THREAD->CreateFindPathThread(HANDLE_ATSTAR_FINDPATH);
+	//THREAD->CreateFindPathThread(HANDLE_ATSTAR_FINDPATH);
 }
 
 void cAstarManager::DestroyForChangeScene()
@@ -60,27 +65,27 @@ void cAstarManager::DestroyForChangeScene()
 	//
 }
 
-cGraph* cAstarManager::SetupGraph()
+void cAstarManager::SetupGraph()
 {
-	cGraph* pGraph = new cGraph(m_vecPosOfNode.size());
+	m_PathGraph = new cGraph(m_vecPosOfNode.size());
 	int col = sqrt(m_vecPosOfNode.size());
 	for (int i = 0; i < m_vecPosOfNode.size(); i++)
 	{
-		pGraph->GetNode(i)->SetActive(false);
+		m_PathGraph->GetNode(i)->SetActive(false);
 
 		D3DXVECTOR3 pos;//<-여기에 heightmap연산해서 좌표넣기
 						//그렇게하면 높이값까지 코스트로 적용이 가능하기때문에 오히려 자연스러움
 
-		pGraph->GetNode(i)->SetPos(m_vecPosOfNode[i]);
+		m_PathGraph->GetNode(i)->SetPos(m_vecPosOfNode[i]);
 		int index = 0;
 		MAP->GetMap()->GetIndex(m_vecPosOfNode[i].x, m_vecPosOfNode[i].z, index);
-		pGraph->GetNode(i)->SetID(index);
+		m_PathGraph->GetNode(i)->SetID(index);
 	}
 	for (int i = 0; i < m_vecPosOfNode.size(); i++)
 	{
 		if (m_vecPosOfNode[i].y == 0.0f || m_vecPosOfNode[i].y == 1.0f || m_vecPosOfNode[i].y == 2.0f || m_vecPosOfNode[i].y == 3.0f || m_vecPosOfNode[i].y == 4.0f)
 		{
-			pGraph->GetNode(i)->SetActive(true);
+			m_PathGraph->GetNode(i)->SetActive(true);
 		}
 	}
 	for (int i = 0; i < m_vecPosOfNode.size(); i++)
@@ -88,16 +93,15 @@ cGraph* cAstarManager::SetupGraph()
 		int x = i % col;	// 열 번호
 		int z = i / col;	// 줄 번호	
 
-		AddEdge(i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
-		AddEdge(i, x + 1, z + 0);
-		AddEdge(i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후
-		AddEdge(i, x + 0, z + 1);
-		AddEdge(i, x - 1, z - 1);
-		AddEdge(i, x - 1, z + 1);
-		AddEdge(i, x + 1, z - 1);
-		AddEdge(i, x + 1, z + 1);
+		AddEdgeInPathGraph(i, x - 1, z + 0);//해당 엣지를 만들때 높이에따라서 엣지추가여부 연산
+		AddEdgeInPathGraph(i, x + 1, z + 0);
+		AddEdgeInPathGraph(i, x + 0, z - 1);//엣지는 일단 노드 포지션을 전부 맞춘후
+		AddEdgeInPathGraph(i, x + 0, z + 1);
+		AddEdgeInPathGraph(i, x - 1, z - 1);
+		AddEdgeInPathGraph(i, x - 1, z + 1);
+		AddEdgeInPathGraph(i, x + 1, z - 1);
+		AddEdgeInPathGraph(i, x + 1, z + 1);
 	}
-	return pGraph;
 }
 
 void cAstarManager::AddEdge(int from, int col, int row)
@@ -113,6 +117,23 @@ void cAstarManager::AddEdge(int from, int col, int row)
 			D3DXVECTOR3 length = toPos - fromPos;
 
 			m_graph->AddEdge(from, to, sqrt(pow(length.x, 2) + pow(length.z, 2)));
+		}
+	}
+}
+
+void cAstarManager::AddEdgeInPathGraph(int from, int col, int row)
+{
+	if (col >= 0 && col < sqrt(m_vecPosOfNode.size()) && row >= 0 && row < sqrt(m_vecPosOfNode.size()))
+	{
+		int to = col + row *  sqrt(m_vecPosOfNode.size());
+		D3DXVECTOR3 fromPos = m_graph->GetNode(from)->Pos();//get노드로 처리해서 엣지추가여부 결정하기
+		D3DXVECTOR3 toPos = m_graph->GetNode(to)->Pos();
+
+		if (abs(fromPos.y - toPos.y) <= 1.0f&&m_graph->GetNode(from)->Active() == true && m_graph->GetNode(to)->Active() == true)
+		{
+			D3DXVECTOR3 length = toPos - fromPos;
+
+			m_PathGraph->AddEdge(from, to, sqrt(pow(length.x, 2) + pow(length.z, 2)));
 		}
 	}
 }
@@ -139,6 +160,7 @@ void cAstarManager::Update()
 	{
 		SetObjectIndex();
 		SetTargetOfLeader();
+		//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
 	}
 }
 
@@ -157,8 +179,6 @@ void cAstarManager::Release()
 	m_PathGraph = NULL;
 	if (m_graph)SAFE_DELETE(m_graph);
 	m_graph = NULL;
-	if (m_PathGraph)SAFE_DELETE(m_PathGraph);
-	m_PathGraph = NULL;
 	m_vecPosOfNode.clear();
 }
 
@@ -196,6 +216,10 @@ void cAstarManager::SetObjectIndex()
 		MAP->GetMap()->GetIndex(pos.x, pos.z, index);
 		if (OBJECT->GetLeader()[i]->GetIndex() != index)OBJECT->GetLeader()[i]->SetIndex(index);
 	}
+	D3DXVECTOR3 pos = OBJECT->GetPlayer()->GetCharacterEntity()->Pos();
+	int index = 0;
+	MAP->GetMap()->GetIndex(pos.x, pos.z, index);
+	if (OBJECT->GetPlayer()->GetIndex() != index)OBJECT->GetPlayer()->SetIndex(index);
 }
 
 void cAstarManager::SetLeaderPath()

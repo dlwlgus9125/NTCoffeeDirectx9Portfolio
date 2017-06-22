@@ -21,7 +21,7 @@ void cTownScene_Orc::OnEnter()
 	UI->Change(SCENE_TOWN_ORC);
 	ConnectSpere();
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 
 	Setup_DirLight();
 
@@ -37,7 +37,7 @@ void cTownScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	OBJECT->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 	UI->Update(TIME->DeltaTime());
 
 	int indexInMiniMap;

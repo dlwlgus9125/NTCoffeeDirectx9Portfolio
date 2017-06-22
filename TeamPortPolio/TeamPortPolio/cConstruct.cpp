@@ -9,6 +9,7 @@ cConstruct::cConstruct()
 	, m_vScale(0.5f, 0.5f, 0.5f)
 	, m_fRotX(0.0f), m_fRotY(0.0f), m_fRotZ(0.0f)
 	, m_vPosition(0.0f, 0.0f, 0.0f)
+	, m_fRadius(4.45454545)
 {
 }
 
@@ -109,15 +110,4 @@ void cConstruct::Destroy()
 	}
 
 	// delete this;
-}
-
-vector<ST_LINE_VERTEX> cConstruct::GetTranfromedVector(vector<D3DXVECTOR3> d)
-{
-	vector<ST_LINE_VERTEX>vecLineVertex;
-	for (int i = 1; i < d.size(); i++)
-	{
-		vecLineVertex.push_back(ST_LINE_VERTEX(d[i - 1], d[i]));
-	}
-
-	return vecLineVertex;
 }
