@@ -600,7 +600,7 @@ void cUIManager::PressKey()
 	if (INPUT->IsKeyDown(VK_TAB) && m_pMiniMap)
 	{
 		int sceneTag = SCENE->GetCurrentSceneTag();
-		if (sceneTag < SCENE_BATTLE_HUMAN && sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
+		if (sceneTag < SCENE_BATTLE_HUMAN || sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
 		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
 	}
 
