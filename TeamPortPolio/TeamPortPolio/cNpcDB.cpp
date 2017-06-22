@@ -13,7 +13,6 @@ void cNpcDB::Setup()
 	Add(new ST_Npc(N_R_HUMAN, N_C_HUMAN_RESIDENT3, "obj/NPC/Human/Inn/", "FemaleMerchant.X"));
 	Add(new ST_Npc(N_R_HUMAN, N_C_HUMAN_RESIDENT4, "obj/NPC/Human/Inn/", "FemaleMerchant.X"));
 
-	// >> : 
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_WEAPON, "obj/NPC/Orc/Weapon/", "felorc_sword.X"));
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_WEAPON, "obj/NPC/Orc/Armor/", "orcmalewarriorlight.X"));
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_ARMOR, "obj/NPC/Orc/Armor/", "orcmalewarriorlight.X"));

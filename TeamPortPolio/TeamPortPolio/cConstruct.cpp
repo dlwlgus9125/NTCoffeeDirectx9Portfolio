@@ -104,10 +104,4 @@ void cConstruct::Create(int sIndex)
 void cConstruct::Destroy()
 {
 	SAFE_RELEASE(m_pObjMesh);
-	for each(auto p in m_vecObjMtlTex)
-	{
-		SAFE_RELEASE(p);
-	}
-
-	// delete this;
 }

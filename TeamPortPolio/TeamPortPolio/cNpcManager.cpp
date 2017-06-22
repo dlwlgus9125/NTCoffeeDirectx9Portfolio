@@ -19,15 +19,14 @@ void cNpcManager::FirstInit()
 	m_vecSphere.clear();
 	m_vecNpc.clear();
 	m_pMesh = NULL;
-	m_mtrl = D3DMATERIAL9();
 	m_vecSkin.clear();
 	m_vecST.clear();
 	// >> : Font
-	m_lf = LOGFONT();
 	m_vechdc.clear();
 	m_vechFont.clear();
 	m_vechFontOld.clear();
 	m_vecFont.clear();
+
 }
 
 void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
@@ -41,35 +40,15 @@ void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 		m_vecSphere[i].isPicked = false;
 	}
 	D3DXCreateSphere(D3DDevice, 0.7f, 10, 10, &m_pMesh, NULL);
-	SetMtrl();
 
 	m_vecSkin.resize(m_vecNpc.size());
 	LoadSkinnedMesh();
 	SetupFont();
+	SetMtrl();
 }
 
 void cNpcManager::Render()
 {
-	for (int i = 0; i < m_vecSphere.size(); i++)
-	{
-		D3DXMATRIXA16 matT;
-		D3DXMatrixTranslation(&matT, m_vecSphere[i].vCenter.x, m_vecSphere[i].vCenter.y + 0.7f, m_vecSphere[i].vCenter.z);
-		D3DDevice->SetTransform(D3DTS_WORLD, &matT);
-		D3DDevice->SetTexture(0, NULL);
-		D3DDevice->SetFVF(ST_PN_VERTEX::FVF);
-		D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-		if (i == 0 || i == 1 || i == 3 || i == 4)
-		{
-			m_mtrl.Ambient = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
-			D3DDevice->SetMaterial(&m_mtrl);
-		}
-		else
-		{
-			m_mtrl.Ambient = D3DXCOLOR(0.0F, 1.0F, 0.0F, 1.0F);
-			D3DDevice->SetMaterial(&m_mtrl);
-		}
-		//m_pMesh->DrawSubset(0);
-	}
 
 	for (int i = 0; i < m_vecSkin.size(); i++)
 	{
@@ -111,8 +90,11 @@ void cNpcManager::Release()
 void cNpcManager::SetMtrl()
 {
 	ZeroMemory(&m_mtrl, sizeof(D3DMATERIAL9));
-	m_mtrl.Diffuse = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
-	m_mtrl.Specular = D3DXCOLOR(1.0F, 0.0F, 0.0F, 1.0F);
+	m_mtrl.Diffuse = D3DXCOLOR(255, 255, 0.0F, 1.0F);
+	m_mtrl.Specular = D3DXCOLOR(0.0F, 0.0F, 0.0F, 1.0F);
+	m_mtrl.Ambient = D3DXCOLOR(255, 255, 0.0F, 1.0F);
+	m_mtrl.Emissive = D3DXCOLOR(0.0F, 0.0F, 0.0F, 1.0F);
+	m_mtrl.Power = 5.0f;
 }
 
 void cNpcManager::LoadSkinnedMesh()
@@ -121,11 +103,8 @@ void cNpcManager::LoadSkinnedMesh()
 	{
 
 		m_vecSkin[i] = new cSkinnedMesh(TEXTURE->GetCharacterResource(NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szPath, NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szFileName));
-
 	}
-	//cSkinnedMesh* pSkinnedMesh = TEXTURE->GetCharacterResource(NPCDB->GetMapNpc(m_vecNpc[0].nSID)->m_szPath, NPCDB->GetMapNpc(m_vecNpc[0].nSID)->m_szFileName);
-	//pSkinnedMesh->SetPosition(D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 0, 1));   // >> : 업데이트
-	//pSkinnedMesh->UpdateAndRender(false);  // >> : 렌더
+	
 }
 
 void cNpcManager::SetupFont()
@@ -140,10 +119,11 @@ void cNpcManager::SetupFont()
 	{
 		m_vechdc[i] = CreateCompatibleDC(0);
 	}
+
 	ZeroMemory(&m_lf, sizeof(LOGFONT));
 	m_lf.lfHeight = 25;
 	m_lf.lfWidth = 12;
-	m_lf.lfWeight = FW_NORMAL;
+	m_lf.lfWeight = 800;
 	m_lf.lfItalic = false;
 	m_lf.lfUnderline = false;
 	m_lf.lfStrikeOut = false;
@@ -264,9 +244,18 @@ void cNpcManager::Render_Text()
 		D3DXVECTOR3 rot = c_pos - m_vecNpc[i].pos;
 		D3DXVec3Normalize(&rot, &rot);
 		float rotY = MATH->GetRotY(rot);
-		D3DXMatrixTranslation(&matT, m_vecNpc[i].pos.x, m_vecNpc[i].pos.y + 1.0f, m_vecNpc[i].pos.z);
+		if (m_vecNpc[i].nSID > 127)
+		{
+			D3DXMatrixTranslation(&matT, m_vecNpc[i].pos.x, m_vecNpc[i].pos.y + 1.3f, m_vecNpc[i].pos.z);
+		}
+		else
+		{
+			D3DXMatrixTranslation(&matT, m_vecNpc[i].pos.x, m_vecNpc[i].pos.y + 1.1f, m_vecNpc[i].pos.z);
+		}
 		D3DXMatrixRotationY(&matR, rotY);
 		matWorld = matS* matR* matT;
+		D3DDevice->SetTexture(0, NULL);
+		D3DDevice->SetMaterial(&m_mtrl);
 		D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		m_vecFont[i]->DrawSubset(0);
 	}

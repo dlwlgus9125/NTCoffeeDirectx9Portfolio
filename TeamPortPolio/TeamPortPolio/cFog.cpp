@@ -54,8 +54,6 @@ void cFog::Destroy()
 		m_pErrorBuffer->Release();
 		m_pErrorBuffer = NULL;
 	}
-
-	delete this;
 }
 
 void cFog::Render_Begin(int passIndex)
