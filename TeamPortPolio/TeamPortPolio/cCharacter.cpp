@@ -47,7 +47,6 @@ void cCharacter::Update(float deltaTime)
 	{
 
 	}
-	UpdateNearConstruct();
 	//UpdateNearConstruct();
 
 	if (m_Status->m_HP <= 0.0f&&m_isDeath == false)SetAnimDeath();

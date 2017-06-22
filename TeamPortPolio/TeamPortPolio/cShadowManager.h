@@ -19,7 +19,7 @@ protected:
 public:
 	SINGLETONE(cShadowManager);
 
-	void Setup(std::vector<cConstruct*> vecList);
+	void Setup(std::vector<cConstruct*>& vecList);
 	void SetLightDir(D3DXVECTOR3 dir);
 	void Render();
 	void SetAlpha(float alpha);
