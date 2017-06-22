@@ -23,7 +23,7 @@ void cBattleScene_Human::OnEnter()
 	UI->Change(SCENE_BATTLE_HUMAN);
 
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 	Setup_DirLight();
 
 	ASTAR->Setup(MAP->GetVecPosOfNode());
@@ -64,7 +64,7 @@ void cBattleScene_Human::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;

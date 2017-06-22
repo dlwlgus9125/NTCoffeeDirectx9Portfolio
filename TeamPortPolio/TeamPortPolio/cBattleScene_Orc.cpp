@@ -25,7 +25,7 @@ void cBattleScene_Orc::OnEnter()
 	ASTAR->Setup(MAP->GetVecPosOfNode());
 	cout << "size : " << MAP->GetVecPosOfNode().size() << endl;
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 	Setup_DirLight();
 
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
@@ -64,7 +64,7 @@ void cBattleScene_Orc::OnUpdate()
 {
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 
 	

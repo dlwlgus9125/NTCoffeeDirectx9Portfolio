@@ -70,6 +70,7 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	EFFECT->Init();
 	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();

@@ -19,7 +19,7 @@ void cTownScene::OnEnter()
 	vector<ST_NPC_INFO> vecNPC = MAP->GetVecNPC();
 	UI->Change(SCENE_TOWN);
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 
 	Setup_DirLight();
 
@@ -64,7 +64,7 @@ void cTownScene::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	OBJECT->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 	// >> 테스트용
 

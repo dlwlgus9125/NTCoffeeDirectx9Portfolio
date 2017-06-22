@@ -112,7 +112,6 @@ void cSelectScene::OnExit()
 	}
 
 	UI->Release();
-	SAFE_DELETE(m_pSprite);
 }
 
 void cSelectScene::OnRender()

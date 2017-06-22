@@ -22,7 +22,7 @@ void cTownScene_Human::OnEnter()
 	UI->Change(SCENE_TOWN_HUMAN);
 	ConnectSpere();
 	m_stWeather = MAP->GetWeather();
-	EFFECT->Init(m_stWeather);
+	EFFECT->OnEnter(m_stWeather);
 
 	Setup_DirLight();
 
@@ -44,7 +44,7 @@ void cTownScene_Human::OnUpdate()
 	MAP->Update();
 	UI->Update(TIME->DeltaTime());
 	OBJECT->Update(TIME->DeltaTime());
-	EFFECT->Update();
+	EFFECT->OnUpdate();
 
 	int indexInMiniMap;
 	int buttonIndex;
