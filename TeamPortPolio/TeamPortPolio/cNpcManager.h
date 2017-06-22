@@ -24,6 +24,7 @@ public:
 	cNpcManager();
 	~cNpcManager();
 
+	void FirstInit();
 	void Init(std::vector<ST_NPC_INFO> vecNpc);
 	void Render();
 	void Update(std::vector<ST_NPC_INFO> vecNpc);

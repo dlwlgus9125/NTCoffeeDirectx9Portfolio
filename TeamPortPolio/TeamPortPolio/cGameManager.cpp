@@ -75,6 +75,8 @@ void cGameManager::Init()
 	SOUND->Setup();
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
+	NPC->FirstInit();
+	SHADOW->Init();
 	NPCDB->Setup();
 	CAMERA->Setup();
 	FRUSTUM->Setup();
