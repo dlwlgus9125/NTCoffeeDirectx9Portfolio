@@ -81,7 +81,6 @@ void cObjectManager::Render()
 			m_vecObject[i]->Render(); count++;
 		}
 	}	
-	cout << "renderCount : " << count << endl;
 
 	for each (auto p in OBJECT->GetPlayerArrows())
 	{
