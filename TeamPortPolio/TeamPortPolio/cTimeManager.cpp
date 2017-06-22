@@ -44,7 +44,7 @@ bool cTimeManager::Update()
 		m_previousCount = m_currentCount;
 
 
-		if (m_oneSecond > 0.5f)
+		if (m_oneSecond > 1.0f)
 		{
 			m_oneSecond = 0.0f;
 		}
@@ -57,7 +57,7 @@ bool cTimeManager::Update()
 
 bool cTimeManager::UpdateOneSecond()
 {	
-	if (m_oneSecond >=0.4f)
+	if (m_oneSecond >=0.9f)
 	{
 		return true;
 	}

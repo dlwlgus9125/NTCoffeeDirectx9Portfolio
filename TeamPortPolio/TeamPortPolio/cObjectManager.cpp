@@ -96,11 +96,16 @@ void cObjectManager::Render()
 void cObjectManager::Release()
 {
 
-	for (int i = 0; i < m_vecObject.size(); i++)
-	{
-		delete m_vecObject[i];
-	}
+	m_vecCharacter.clear();
+	m_vecEntity.clear();
 	m_vecObject.clear();
+	for each(auto c in m_vecLeader)
+	{
+		if (((cCharacter*)c)->GetCamp() == CAMP_PLAYER) { c = NULL; }
+		else { SAFE_DELETE(c); }
+	}
+	m_vecLeader.clear();
+	SAFE_DELETE(m_player);
 	ClearArrow();
 }
 
@@ -216,13 +221,13 @@ void cObjectManager::ClearToChangeScene()
 {
 	m_vecCharacter.clear();
 	m_vecEntity.clear();
-	m_vecLeader.clear();
-	for each(auto c in m_vecObject)
+	m_vecObject.clear();
+	for each(auto c in m_vecLeader)
 	{
 		if (((cCharacter*)c)->GetCamp()== CAMP_PLAYER) { c = NULL; }
-		else { SAFE_DELETE(c); }
+		else { SAFE_DELETE(c);  }
 	}
-	m_vecObject.clear();
+	m_vecLeader.clear();
 }
 
 void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)

@@ -9,9 +9,7 @@ class cShadowManager
 {
 protected:
 	vector<cConstruct*>      m_vecConstruct;
-
 	float                    m_alpha;
-	D3DLIGHT9				 m_light;
 	D3DXVECTOR3              m_shadowLight;
 	D3DXMATRIXA16            m_matWorld;
 
@@ -24,5 +22,6 @@ public:
 	void Render();
 	void SetAlpha(float alpha);
 	void Destroy();
+	void Init();
 };
 

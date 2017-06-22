@@ -202,7 +202,6 @@
     <ClInclude Include="cThreadManager.h" />
     <ClInclude Include="cTimeManager.h" />
     <ClInclude Include="cTitleScene.h" />
-    <ClInclude Include="cTownScene.h" />
     <ClInclude Include="cTownScene_Human.h" />
     <ClInclude Include="cTownScene_Orc.h" />
     <ClInclude Include="cUIButton.h" />
@@ -292,7 +291,6 @@
     <ClCompile Include="cThreadManager.cpp" />
     <ClCompile Include="cTimeManager.cpp" />
     <ClCompile Include="cTitleScene.cpp" />
-    <ClCompile Include="cTownScene.cpp" />
     <ClCompile Include="cTownScene_Human.cpp" />
     <ClCompile Include="cTownScene_Orc.cpp" />
     <ClCompile Include="cUIButton.cpp" />
