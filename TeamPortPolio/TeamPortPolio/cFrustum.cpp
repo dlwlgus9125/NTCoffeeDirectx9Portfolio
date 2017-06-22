@@ -53,7 +53,7 @@ bool cFrustum::IsIn(ST_SPHERE* pSphere)
 {
 	for each(D3DXPLANE p in m_vecPlane)
 	{
-		if (D3DXPlaneDotCoord(&p, &pSphere->vCenter) > pSphere->fRadius)
+		if (D3DXPlaneDotCoord(&p, &pSphere->vCenter)+ pSphere->fRadius <0)
 			return false;
 	}
 	return true;
