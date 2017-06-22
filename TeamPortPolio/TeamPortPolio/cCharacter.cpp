@@ -157,7 +157,7 @@ void cCharacter::UpdateNearConstruct()
 	for each (auto p in MAP->GetvecConstruct())
 	{
 
-		vector<ST_LINE_VERTEX> vecLine;
+		vector<ST_LINE_VERTEX> vecLine = p->GetTranfromedVector(p->GetVectorVertex());
 		for (size_t i = 0; i < vecLine.size(); i++)
 		{
 

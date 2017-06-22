@@ -159,9 +159,6 @@ void cPlayer::Update(float deltaTime)
 
 
 	}
-	RECT rc;
-	GetClientRect(g_hWnd, &rc);
-	D3DXVECTOR3 vCenter(rc.right / 2, rc.bottom / 2, 0);
 	if (GetMesh()->GetIndex() != P_BOWATTACK1)
 	{
 		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);

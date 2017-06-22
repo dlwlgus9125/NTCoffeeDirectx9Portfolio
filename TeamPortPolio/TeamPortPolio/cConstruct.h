@@ -18,7 +18,7 @@ private:
 	SYNTHESIZE(float, m_fRotY, RotationY);
 	SYNTHESIZE(float, m_fRotZ, RotationZ);
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
-
+	vector<D3DXVECTOR3> m_vecVertex;
 public:
 	cConstruct();
 	~cConstruct();
@@ -29,7 +29,8 @@ public:
 
 	void Create(int sIndex);
 	void Destroy();
-
+	void SetVertex(vector<D3DXVECTOR3> v) { m_vecVertex = v; }
+	vector<D3DXVECTOR3> GetVectorVertex() { return m_vecVertex; }
 	vector<ST_LINE_VERTEX> GetTranfromedVector(vector<D3DXVECTOR3> d);
 
 };
