@@ -42,8 +42,9 @@ void cEffectManager::Update()
 
 void cEffectManager::Release()
 {
-	if (m_pFog) SAFE_DELETE(m_pFog);
-	if (m_pSnow) SAFE_DELETE(m_pSnow);
+	if (m_pFog) { m_pFog->Destroy(); SAFE_DELETE(m_pFog) };
+	if (m_pSnow) { SAFE_DELETE(m_pSnow) };
+	if (m_pRain) { SAFE_DELETE(m_pRain) };
 }
 
 void cEffectManager::Render_Begin()

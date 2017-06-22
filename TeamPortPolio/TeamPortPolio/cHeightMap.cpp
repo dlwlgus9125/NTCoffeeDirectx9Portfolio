@@ -14,7 +14,7 @@ cHeightMap::~cHeightMap()
 	SAFE_RELEASE(m_pMesh);
 	for each(auto p in m_vecMtlTex)
 	{
-		SAFE_RELEASE(p);
+		SAFE_DELETE(p);
 	}
 }
 

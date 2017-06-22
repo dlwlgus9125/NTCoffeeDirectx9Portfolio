@@ -76,7 +76,7 @@ void cBattleScene_Orc::OnUpdate()
 		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
-	cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
+	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
 	switch (buttonIndex)
 	{
 	case TITLE_BTN_FMT_RECT:
@@ -129,9 +129,9 @@ void cBattleScene_Orc::OnExit()
 
 void cBattleScene_Orc::OnRender()
 {
-	//EFFECT->Render_Begin();
+	EFFECT->Render_Begin();
 	MAP->Render();
-	//EFFECT->Render_End();
+	EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
 }

@@ -96,6 +96,9 @@ void cBattleScene_Human::OnUpdate()
 
 void cBattleScene_Human::OnExit()
 {
+	OBJECT->ClearToChangeScene();
+	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
+	ASTAR->Release();
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
@@ -104,7 +107,6 @@ void cBattleScene_Human::OnExit()
 
 void cBattleScene_Human::OnRender()
 {
-	ASTAR->Release();
 	EFFECT->Render_Begin();
 	MAP->Render();
 	EFFECT->Render_End();

@@ -2,6 +2,7 @@
 #include "cObjectManager.h"
 #include "cTextureManager.h"
 #include "cBallisticArrow.h"
+#include "cCharacter.h"
 #include "cObject.h"
 #include "cPlayer.h"
 #include "cLeader.h"
@@ -72,11 +73,15 @@ void cObjectManager::Render()
 	//LPD3DXFRAME test = new D3DXFRAME;
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 	D3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
-	
+	int count = 0;
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
-		if(FRUSTUM->IsIn(m_vecObject[i]->GetCharacterEntity()->Pos()))m_vecObject[i]->Render();
+		if (FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
+		{
+			m_vecObject[i]->Render(); count++;
+		}
 	}	
+	cout << "renderCount : " << count << endl;
 
 	for each (auto p in OBJECT->GetPlayerArrows())
 	{
