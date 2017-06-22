@@ -23,7 +23,7 @@ D3DMATERIAL9 cShadowManager::InitMtrl(D3DXCOLOR a, D3DXCOLOR d, D3DXCOLOR s, D3D
 	return mtrl;
 }
 
-void cShadowManager::Setup(std::vector<cConstruct*> vecList)
+void cShadowManager::Setup(std::vector<cConstruct*>& vecList)
 {
 	m_vecConstruct = vecList;
 }
