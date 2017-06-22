@@ -70,5 +70,7 @@ public:
 	int GetPlayerID();
 
 	void ClearToChangeScene();
+
+	void SetCurrentLeader(LEADER_TYPE leaderType);
 };
 

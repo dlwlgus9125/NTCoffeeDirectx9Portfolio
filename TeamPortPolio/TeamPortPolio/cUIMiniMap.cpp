@@ -19,8 +19,14 @@ void cUIMiniMap::Update(float deltaTime)
 	if (m_pBtn_Exit) m_pBtn_Exit->SetHidden(m_isHidden);
 	if (m_isHidden) return;
 	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
-	if(m_pBtn_Exit) m_pBtn_Exit->Update(deltaTime);
-	if (m_pBtn_Exit && m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
+	if (m_pBtn_Exit)
+	{
+		m_pBtn_Exit->Update(deltaTime);
+		if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED)
+		{
+			m_isHidden = true;
+		}
+	}	
 	// << 
 
 	cUIObject::Update(deltaTime);

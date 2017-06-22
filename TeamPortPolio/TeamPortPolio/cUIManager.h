@@ -24,6 +24,7 @@ class cUIManager : public Singleton<cUIManager>
 	cUIMiniMap*					m_pMiniMap;
 	cUIImage*					m_pAim;
 	cUIProgressBar*				m_pStatus;
+	cUIMiniMap*					m_pTrooptype;
 
 	void Setup_TitleScene();
 	void Setup_TownScene();
