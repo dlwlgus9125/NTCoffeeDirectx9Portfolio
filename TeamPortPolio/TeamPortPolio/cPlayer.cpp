@@ -128,9 +128,9 @@ void cPlayer::Update(float deltaTime)
 
 		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 		m_pFsm->Update(deltaTime);
-		D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
+	
 		//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
-		m_CharacterEntity->SetPos(movePos);
+		UpdateNearConstruct();
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
 		if (INPUT->IsKeyPress(VK_A))
@@ -156,16 +156,19 @@ void cPlayer::Update(float deltaTime)
 
 
 	}
-	if (GetMesh()->GetIndex() != P_BOWATTACK1)
+	if (GetMesh()->GetIndex() == P_BOWATTACK1)
 	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), 0);
+		m_fRotY = CAMERA->GetCamRotAngle().y;
 	}
 	else
 	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos()+D3DXVECTOR3(0,0.5,0), 0);
-		m_fRotY = CAMERA->GetCamRotAngle().y;
+		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
 	}
-
+	if (INPUT->IsKeyDown(VK_F))
+	{
+		m_fRotY += D3DX_PI;
+	}
 
 }
 
