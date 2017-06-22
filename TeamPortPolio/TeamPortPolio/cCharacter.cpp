@@ -150,7 +150,7 @@ void cCharacter::UpdateNearConstruct()
 {
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
 
-
+	cout << MAP->GetvecConstruct().size() << endl;
 	for each (cConstruct* p in MAP->GetvecConstruct())
 	{
 		if (MATH->Distance(movePos, p->GetPosition()) + m_CollideSphere.fRadius - p->GetRadius() < 0)
