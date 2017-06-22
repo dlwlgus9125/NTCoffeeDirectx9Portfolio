@@ -78,22 +78,6 @@ void cNpcManager::Update(std::vector<ST_NPC_INFO> vecNpc)
 
 void cNpcManager::Release()
 {
-	m_vecNpc.clear();
-	delete &m_vecNpc;
-	m_vecSphere.clear();
-	delete &m_vecSphere;
-	m_vecSkin.clear();
-	delete &m_vecSkin;
-	m_vecST.clear();
-	delete &m_vecST;
-	m_vecFont.clear();
-	delete &m_vecFont;
-	m_vechFont.clear();
-	delete &m_vechFont;
-	m_vechFontOld.clear();
-	delete &m_vechFontOld;
-	m_vechdc.clear();
-	delete &m_vechdc;
 
 	SAFE_RELEASE(m_pMesh);
 }
