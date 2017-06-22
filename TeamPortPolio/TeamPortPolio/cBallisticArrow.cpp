@@ -17,6 +17,7 @@ cBallisticArrow::cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTO
 
 cBallisticArrow::~cBallisticArrow()
 {
+	SAFE_RELEASE(m_pMeshSphere);
 	SAFE_DELETE(m_CharacterEntity);
 	SAFE_DELETE(m_pArrow);
 }

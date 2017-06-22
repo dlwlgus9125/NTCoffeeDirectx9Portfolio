@@ -80,6 +80,7 @@ void cGameManager::Init()
 	NPCDB->Setup();
 	CAMERA->Setup();
 	FRUSTUM->Setup();
+	MAP->StartMain();
 	ASTAR->Init();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());

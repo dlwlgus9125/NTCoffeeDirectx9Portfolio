@@ -26,26 +26,8 @@ void cObjectManager::UnitArrow(cBallisticArrow * pArrow)
 void cObjectManager::Init()
 {
 	
+	m_player = NULL;
 	
-	/*cLeader* pEnemy = new cLeader(D3DXVECTOR3(0, 0, 50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy->Init();
-	m_vecObject.push_back(pEnemy);
-	m_vecEnemyLeader.push_back(pEnemy);
-
-	cLeader* pEnemy1 = new cLeader(D3DXVECTOR3(50, 0, 0), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy1->Init();
-	m_vecObject.push_back(pEnemy1);
-	m_vecEnemyLeader.push_back(pEnemy1);
-
-	cLeader* pEnemy2 = new cLeader(D3DXVECTOR3(-50, 0, 0), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy2->Init();
-	m_vecObject.push_back(pEnemy2);
-	m_vecEnemyLeader.push_back(pEnemy2);
-
-	cLeader* pEnemy3 = new cLeader(D3DXVECTOR3(0, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy3->Init();
-	m_vecObject.push_back(pEnemy3);
-	m_vecEnemyLeader.push_back(pEnemy3);*/
 	for each (auto p in OBJECT->GetPlayerArrows())
 	{
 		p->Init();
