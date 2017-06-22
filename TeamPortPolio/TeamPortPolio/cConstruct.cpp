@@ -37,6 +37,10 @@ void cConstruct::Update()
 	D3DXMatrixRotationYawPitchRoll(&matR, m_fRotY, m_fRotX, m_fRotZ);
 	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	m_matWorld = matS *matR* matT;
+	if(FRUSTUM->IsIn(m_vPosition))
+	{
+
+	}
 
 	D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 
@@ -64,13 +68,15 @@ void cConstruct::Render()
 		D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	}
 
-	for (size_t i = 0; i < m_vecObjMtlTex.size(); i++)
+	if (FRUSTUM->IsIn(m_vPosition))
 	{
-		D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
-		D3DDevice->SetMaterial(&m_vecObjMtlTex[i]->GetMaterial());
-		D3DDevice->SetTexture(0, m_vecObjMtlTex[i]->GetTexture());
-
-		m_pObjMesh->DrawSubset(i);
+		for (size_t i = 0; i < m_vecObjMtlTex.size(); i++)
+		{
+			D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
+			D3DDevice->SetMaterial(&m_vecObjMtlTex[i]->GetMaterial());
+			D3DDevice->SetTexture(0, m_vecObjMtlTex[i]->GetTexture());
+			m_pObjMesh->DrawSubset(i);
+		}
 	}
 
 	D3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);

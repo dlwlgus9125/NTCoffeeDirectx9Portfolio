@@ -34,8 +34,8 @@ void cHelpScene::OnEnter()
 	m_pImage->SetHidden(false);
 
 	m_pImage_Play = new cUIImage();
-	m_pImage_Play->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage_Play->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
+	m_pImage_Play->Setup(D3DXVECTOR3(380, 65, 0.0f), UI_IMAGE);
+	m_pImage_Play->Setup_Image("Image/UI/HelpScene/Image/TextBox_Play.png");
 	m_pImage_Play->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
 
 	m_pImage_Town1 = new cUIImage();
@@ -111,11 +111,7 @@ void cHelpScene::OnUpdate()
 	if (m_pExplainButton_Town2->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_TOWN2);
 	if (m_pExplainButton_Battle->GetCurrentState() == UI_CLICKED) ChangeImage(HELPBUTTON_BATTLE);
 
-	if (m_pExitButton->GetCurrentState() == UI_CLICKED)
-	{
-		SCENE->SetIsSoundPlayed(true);
-		SCENE->ChangeScene(SCENE_LOGIN);
-	}
+	if (m_pExitButton->GetCurrentState() == UI_CLICKED) 	SCENE->ChangeScene(SCENE_LOGIN);
 }
 
 void cHelpScene::OnExit()

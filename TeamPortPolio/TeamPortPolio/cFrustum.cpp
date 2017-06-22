@@ -67,7 +67,7 @@ bool cFrustum::IsIn(D3DXVECTOR3 vec3)
 	// D3DXPlaneDotCoord(면, 정점, 벡터) = > 거리
 	for (int i = 0; i < m_vecPlane.size(); i++)
 	{
-		if (D3DXPlaneDotCoord(&m_vecPlane[i], &vec3)  < 0)
+		if (D3DXPlaneDotCoord(&m_vecPlane[i], &vec3)  > 0)
 		{
 			// Outside the frustum, reject it!
 			return false;

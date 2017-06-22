@@ -13,6 +13,7 @@
 #include "cBattleScene_Human.h"
 #include "cBattleScene_Orc.h"
 #include "cSceneCamera.h"
+#include "cNpcDB.h"
 
 void cGameManager::Init()
 {
@@ -155,6 +156,11 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
+	ITEMDB->Destroy();
+	CHARACTERDB->Destroy();
+	OBJECTDB->Destroy();
+	NPCDB->Destroy();
+	NPC->Release();
 	SOUND->Release();
 	INPUT->Release();
 	OBJECT->Release();
