@@ -49,6 +49,12 @@ void cFog::Destroy()
 		m_pFogEffect = NULL;
 	}
 
+	if (m_pErrorBuffer)
+	{
+		m_pErrorBuffer->Release();
+		m_pErrorBuffer = NULL;
+	}
+
 	delete this;
 }
 
