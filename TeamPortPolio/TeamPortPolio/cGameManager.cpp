@@ -164,15 +164,17 @@ void cGameManager::Release()
 	CHARACTERDB->Destroy();
 	OBJECTDB->Destroy();
 	NPCDB->Destroy();
+	OBJECT->Release();
+	TEXTURE->Destroy();
 	NPC->Release();
 	SOUND->Release();
 	INPUT->Release();
-	OBJECT->Release();
-	TEXTURE->Destroy();
+	
+	
 	INPUT->Release();
 	UI->Release();
 	FONT->Destroy();
-	EFFECT->Release();
+	//EFFECT->Release();
 	MAP->Destroy();
 	ASTAR->Release();
 	THREAD->Destroy();
