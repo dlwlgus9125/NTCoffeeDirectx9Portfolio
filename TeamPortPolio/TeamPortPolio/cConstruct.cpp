@@ -75,7 +75,7 @@ void cConstruct::Render()
 			D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 			D3DDevice->SetMaterial(&m_vecObjMtlTex[i]->GetMaterial());
 			D3DDevice->SetTexture(0, m_vecObjMtlTex[i]->GetTexture());
-			cout << "³ª¿È" << endl;
+		//	cout << "³ª¿È" << endl;
 			m_pObjMesh->DrawSubset(i);
 		}
 	}
