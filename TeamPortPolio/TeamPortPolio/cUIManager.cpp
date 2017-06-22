@@ -247,6 +247,44 @@ void cUIManager::Setup_TownScene()
 	m_pStatus->SetScaleOutline(1.0f);
 	m_pStatus->SetHidden(false);
 	// << 
+
+	// >> 병종 상태 창
+	m_pTrooptype = new cUIMiniMap();
+	m_pTrooptype->Setup(D3DXVECTOR3(WND_WIDTH * 0.2f, WND_HEIGHT * 0.05f, 0), UI_MINIMAP);
+	m_pTrooptype->Setup_Image("image/UI/townscene/trooptype/bg.png", 150);
+	m_pTrooptype->Setup_exitbtn(D3DXVECTOR3(740, 0, 0),
+		"image/ui/townscene/trooptype/btn_idle.png", "image/ui/townscene/trooptype/btn_mouseover.png", "image/ui/townscene/trooptype/btn_select.png");
+	m_pTrooptype->SetEventID(TOWN_MINIMAP_TROOPTYPE);
+
+	/// 병종 선택 버튼 : 밀리
+	cUIButton* pBtn_Battle_Melee = new cUIButton;
+	pBtn_Battle_Melee->Setup(D3DXVECTOR3(52, 93, 0), UI_BUTTON);
+	pBtn_Battle_Melee->Setup_Button("Image/UI/townscene/trooptype/btn_melee_idle.png",
+		"Image/UI/townscene/trooptype/btn_melee_mouseover.png",
+		"Image/UI/townscene/trooptype/btn_melee_selected.png", TOWN_BTN_MELEE);
+	m_vecEventBtn.push_back(pBtn_Battle_Melee);
+	m_pTrooptype->AddChild(pBtn_Battle_Melee);
+	
+	/// 병종 선택 버튼 : 보우
+	cUIButton* pBtn_Battle_Bow = new cUIButton;
+	pBtn_Battle_Bow->Setup(D3DXVECTOR3(280, 93, 0), UI_BUTTON);
+	pBtn_Battle_Bow->Setup_Button("Image/UI/townscene/trooptype/btn_bow_idle.png",
+		"Image/UI/townscene/trooptype/btn_bow_mouseover.png",
+		"Image/UI/townscene/trooptype/btn_bow_selected.png", TOWN_BTN_BOW);
+	m_vecEventBtn.push_back(pBtn_Battle_Bow);
+	m_pTrooptype->AddChild(pBtn_Battle_Bow);
+	
+	/// 병종 선택 버튼 : 카발리
+	cUIButton* pBtn_Battle_Carvaly = new cUIButton;
+	pBtn_Battle_Carvaly->Setup(D3DXVECTOR3(508, 93, 0), UI_BUTTON);
+	pBtn_Battle_Carvaly->Setup_Button("Image/UI/townscene/trooptype/btn_carvaly_idle.png",
+		"Image/UI/townscene/trooptype/btn_carvaly_mouseover.png",
+		"Image/UI/townscene/trooptype/btn_carvaly_selected.png", TOWN_BTN_CARVALY);
+	m_vecEventBtn.push_back(pBtn_Battle_Carvaly);
+	m_pTrooptype->AddChild(pBtn_Battle_Carvaly);
+
+	// <<
+
 }
 
 void cUIManager::Setup_LoginScene()
@@ -437,6 +475,7 @@ void cUIManager::Setup()
 	m_pMiniMap = NULL;
 	m_pInven = NULL;
 	m_pStatus = NULL;
+	m_pTrooptype = NULL;
 
 	// >> 활 쏠 때 쓰는 목표점
 	m_pAim = new cUIImage();
@@ -468,12 +507,15 @@ void cUIManager::Release()
 	SAFE_DELETE(m_pMiniMap);
 	SAFE_DELETE(m_pAim);
 	SAFE_DELETE(m_pStatus);
+	SAFE_DELETE(m_pTrooptype);
 }
 
 void cUIManager::Update(float deltaTime)
 {
 	PressKey();
 	Update_ConnectedUI();
+
+	if (m_pTrooptype) m_pTrooptype->Update(deltaTime);
 
 	if(m_pMiniMap) m_pMiniMap->Update(deltaTime);
 
@@ -513,6 +555,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 
 	if (m_pMiniMap) m_pMiniMap->Render(pSprite);
 
+	if (m_pTrooptype) m_pTrooptype->Render(pSprite);
+
 	for (int i = 0; i < m_vecShownBtn.size(); i++)
 	{
 		m_vecShownBtn[i]->Render(pSprite);
@@ -528,9 +572,6 @@ void cUIManager::Change(int sceneID)
 	{
 	case SCENE_TITLE:
 		Setup_TitleScene();
-		break;
-	case SCENE_TOWN:
-		Setup_TownScene();
 		break;
 	case SCENE_LOGIN:
 		Setup_LoginScene();
@@ -556,10 +597,10 @@ void cUIManager::Change(int sceneID)
 void cUIManager::PressKey()
 {
 	// 전장에서 미니맵 띄우기
-	if (INPUT->IsKeyDown(VK_CONTROL) && m_pMiniMap)
+	if (INPUT->IsKeyDown(VK_TAB) && m_pMiniMap)
 	{
 		int sceneTag = SCENE->GetCurrentSceneTag();
-		if (sceneTag < SCENE_BATTLE_HUMAN && sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
+		if (sceneTag < SCENE_BATTLE_HUMAN || sceneTag > SCENE_BATTLE_ORC) return;		// 전장 씬 아니면 미니맵 안켜지도록 예외처리
 		m_pMiniMap->SetHiddenAll(!(m_pMiniMap->GetHidden()));
 	}
 
@@ -651,6 +692,14 @@ void cUIManager::SetEvent(int uiID, int order)
 		break;
 	case SELECT_MSGBOX_HUMAN:
 		m_vecMsg[1]->SetHidden(order);
+		break;
+	case TOWN_MINIMAP_TROOPTYPE:
+		if(m_pTrooptype) m_pTrooptype->SetHiddenAll(order);
+		if (m_pMiniMap)
+		{
+			m_pMiniMap->Update(0);
+			m_pMiniMap->SetHiddenAll(!order);
+		}
 		break;
 	}
 

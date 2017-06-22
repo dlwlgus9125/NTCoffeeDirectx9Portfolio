@@ -10,7 +10,8 @@ cCharacter::cCharacter()
 
 cCharacter::~cCharacter()
 {
-	//SAFE_DELETE( m_pSkinnedMesh);
+	SAFE_DELETE(m_pSkinnedMesh);
+	SAFE_DELETE(m_Status);
 }
 
 void cCharacter::Init()
@@ -46,7 +47,6 @@ void cCharacter::Update(float deltaTime)
 	{
 
 	}
-	UpdateNearConstruct();
 	//UpdateNearConstruct();
 
 	if (m_Status->m_HP <= 0.0f&&m_isDeath == false)SetAnimDeath();

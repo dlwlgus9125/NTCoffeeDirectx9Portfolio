@@ -36,6 +36,7 @@ cPlayer::~cPlayer()
 		SAFE_DELETE(c.second);
 	}
 	m_mapLeader.clear();
+	SAFE_DELETE(m_pSkinnedMesh);
 }
 	
 
@@ -141,10 +142,6 @@ void cPlayer::Update(float deltaTime)
 			m_fRotY += 0.06;
 		}
 
-		if (INPUT->IsKeyDown('4')) { cout << "보병" << endl; m_currentLeaderType = LEADER_MELEE; SetCurrentLeader(); }
-		if (INPUT->IsKeyDown('5')){ cout << "궁병" << endl; m_currentLeaderType = LEADER_BOW;SetCurrentLeader(); }
-		if (INPUT->IsKeyDown('6')){ cout << "기병" << endl; m_currentLeaderType = LEADER_CAVALRY;SetCurrentLeader(); }
-
 		//화살처리
 
 		D3DXMATRIXA16 matR;
@@ -209,15 +206,15 @@ void cPlayer::Render()
 
 void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
-	if (m_currentLeader)
+	if (m_currentLeader&&0<=index&&index<=MAP->GetVecPosOfNode().size())
 	{
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
+			cout << "here" << endl;
 			THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
-
 				m_currentLeader->PathClear();
 				m_currentLeader->SetTargetIndex(index);
 			}

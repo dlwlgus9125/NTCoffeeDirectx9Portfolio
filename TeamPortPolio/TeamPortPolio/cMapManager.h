@@ -41,7 +41,7 @@ public:
 	vector<cConstruct*>	GetvecConstruct() { return m_vecConstruct; }
 	cHeightMap* GetMap() { return m_pMap; }
 
-	
 
+	vector<D3DXVECTOR3>     GetVecPosOfNode() { return m_vecPosOfNode; }
 };
 

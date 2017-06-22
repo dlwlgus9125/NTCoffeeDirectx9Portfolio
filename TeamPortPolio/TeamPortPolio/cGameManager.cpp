@@ -13,6 +13,7 @@
 #include "cBattleScene_Human.h"
 #include "cBattleScene_Orc.h"
 #include "cSceneCamera.h"
+#include "cNpcDB.h"
 
 void cGameManager::Init()
 {
@@ -74,8 +75,8 @@ void cGameManager::Init()
 	SOUND->Setup();
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
+	NPCDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
-	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
 	SCENE->Register(SCENE_HELP, new cHelpScene());
@@ -86,6 +87,7 @@ void cGameManager::Init()
 	SCENE->Register(SCENE_LOADING, new cLoadingScene());
 	SCENE->ChangeScene(SCENE_LOGIN);
 	CAMERA->Setup();
+	FRUSTUM->Setup();
 	//
 	srand((unsigned)time(NULL));
 
@@ -126,12 +128,14 @@ void cGameManager::Update()
 			//cout << m_player->GetCharacterEntity()->Pos().x << ", " << m_player->GetCharacterEntity()->Pos().y << ", " << m_player->GetCharacterEntity()->Pos().z << endl;
 
 			m_prevTime = m_currentTime;
+			FRUSTUM->Update();
 			INPUT->Update();
 			
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();
 			SOUND->Update();
+
 			//if (OBJECT->GetPlayer() != NULL)ASTAR->Update();	
 		}
 	}
@@ -157,7 +161,24 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
+	ITEMDB->Destroy();
+	CHARACTERDB->Destroy();
+	OBJECTDB->Destroy();
+	NPCDB->Destroy();
+	NPC->Release();
 	SOUND->Release();
+	INPUT->Release();
+	OBJECT->Release();
+	TEXTURE->Destroy();
+	INPUT->Release();
+	UI->Release();
+	FONT->Destroy();
+	EFFECT->Release();
+	MAP->Destroy();
+	ASTAR->Release();
+	THREAD->Destroy();
+	DEVICE->Destroy();
+
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

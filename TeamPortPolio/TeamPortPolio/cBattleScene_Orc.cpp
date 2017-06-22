@@ -18,7 +18,8 @@ void cBattleScene_Orc::OnEnter()
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_ORC);
 	UI->Change(SCENE_BATTLE_ORC);
-
+	ASTAR->Setup(MAP->GetVecPosOfNode());
+	cout << "size : " << MAP->GetVecPosOfNode().size() << endl;
 	m_stWeather = MAP->GetWeather();
 	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
@@ -33,39 +34,23 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->AddObject(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
 	OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
-	
-	
+
+
 	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
-	
-	
-	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(-(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()));
-	//OBJECT->GetPlayer()->SetRotY(D3DX_PI);
-
-	//cPlayer* pPlayer = new cPlayer(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	//pPlayer->SetID(C_C_HUMAN_MALE);
-	//pPlayer->Init();
-	//OBJECT->AddCharacter(pPlayer);
 
 
-
-	//OBJECT->AddObject(pPlayer);
-	//OBJECT->SetPlayer(pPlayer);
-	//OBJECT->AddObject(OBJECT->GetPlayer()->GetUnitLeader());
-	//OBJECT->AddLeader(OBJECT->GetPlayer()->GetUnitLeader());
-	/*OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetCharacterEntity()->Pos());
-	for each(auto c in OBJECT->GetPlayer()->GetUnitLeader()->GetUnits())
-	{
-		c->GetCharacterEntity()->SetPos(OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->Pos());
-	}*/
-
-	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
+	cLeader* pLeader = new cLeader(D3DXVECTOR3(-33.5f, 0, 23.5f), 1.0f, D3DXVECTOR3(0.35f, 0,0.94f), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
+	for (int i = 0; i < 20; i++)pLeader->AddUnitInTown(C_C_ORC_MELEE);
+	pLeader->AddUnitInManager();
+	pLeader->SetRectOffset();
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);*/
+	OBJECT->AddLeader(pLeader);
 
+	vector<cObject*> vecObject = OBJECT->GetObjects();
 
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(50, 0, -50));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
@@ -78,19 +63,20 @@ void cBattleScene_Orc::OnUpdate()
 	EFFECT->Update();
 
 
-
+	
 	// >> UI의 이벤트 정보 
 	int indexInMiniMap;
 	int buttonIndex;
 	int eventIDTap;
 	int itemID;
-
+	OBJECT->Update(TIME->DeltaTime());
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
 		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
+	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
 	switch (buttonIndex)
 	{
 	case TITLE_BTN_FMT_RECT:
@@ -107,7 +93,7 @@ void cBattleScene_Orc::OnUpdate()
 		break;
 	}
 	// <<
-	OBJECT->Update(TIME->DeltaTime());
+	
 	if (TIME->UpdateOneSecond())
 	{
 		for each(auto L in OBJECT->GetLeader())
@@ -119,7 +105,7 @@ void cBattleScene_Orc::OnUpdate()
 					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
 					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
 				}
-				else if(L->GetCamp() == CAMP_PLAYER)/*&&OBJECT->GetPlayer()->IsDeath()==true)*/
+				else if (L->GetCamp() == CAMP_PLAYER&&OBJECT->GetPlayer()->IsDeath()==true)
 				{
 					if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
 					else if (CHARACTERDB->GetMapCharacter(OBJECT->GetPlayer()->GetID())->m_raceID == C_R_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
@@ -134,7 +120,7 @@ void cBattleScene_Orc::OnExit()
 {
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
-
+	ASTAR->Release();
 	SAFE_RELEASE(m_pSprite);
 	UI->Release();
 	MAP->Destroy();
@@ -143,9 +129,9 @@ void cBattleScene_Orc::OnExit()
 
 void cBattleScene_Orc::OnRender()
 {
-	//EFFECT->Render_Begin();
+	EFFECT->Render_Begin();
 	MAP->Render();
-	//EFFECT->Render_End();
+	EFFECT->Render_End();
 	OBJECT->Render();
 	UI->Render(m_pSprite);
 }

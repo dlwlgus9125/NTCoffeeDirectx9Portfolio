@@ -121,9 +121,7 @@ void cMapManager::Init(int sceneID)
 	}
 	// << 
 
-
-
-	ASTAR->Setup(m_vecPosOfNode);
+	
 
 	// >> : 그림자 세팅
 
@@ -140,18 +138,18 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	bool test = false;
-	if (INPUT->IsKeyPress(VK_TAB))
-	{
-			test = true;
-	}
-	/*else if (INPUT->IsKeyUp(VK_TAB))
-	{
-		test = false;
-	}*/
+	//bool test = false;
+	//if (INPUT->IsKeyPress(VK_TAB))
+	//{
+	//		test = true;
+	//}
+	///*else if (INPUT->IsKeyUp(VK_TAB))
+	//{
+	//	test = false;
+	//}*/
 
-	if (test == false)
-	{
+	//if (test == false)
+	//{
 
 		if (m_pSkyBox) m_pSkyBox->Render();
 
@@ -165,8 +163,8 @@ void cMapManager::Render()
 		{
 			m_vecConstruct[i]->Render();
 		}
-	}
-	else { ASTAR->Render(); }
+	//}
+	//else { ASTAR->Render(); }
 }
 
 bool cMapManager::GetHeight(IN float x, OUT float & y, IN float z)
@@ -193,7 +191,7 @@ float cMapManager::GetMinX()
 
 void cMapManager::Destroy()
 {
-	ASTAR->Release();
+
 	m_vecPosOfNode.clear();
 	SAFE_DELETE(m_pSkyBox);
 	SAFE_DELETE(m_pMap);

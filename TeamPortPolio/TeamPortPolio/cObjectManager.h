@@ -47,10 +47,10 @@ public:
 	vector<IEntity*> GetEntities() { return m_vecEntity; }
 	vector<cLeader*> GetLeader() { return m_vecLeader; }
 	vector<cCharacter*> GetCharacter() { return m_vecCharacter; }
+	vector<cObject*> GetObjects() { return m_vecObject; }
 
 	cPlayer* GetPlayer() { return m_player; }
 
-	void DeleteArrows();
 
 
 	list<cBallisticArrow*> GetPlayerArrows();
@@ -70,5 +70,7 @@ public:
 	int GetPlayerID();
 
 	void ClearToChangeScene();
+
+	void SetCurrentLeader(LEADER_TYPE leaderType);
 };
 

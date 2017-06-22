@@ -28,11 +28,12 @@ public:
 	cStateMachine(T obj) { m_obj = obj; m_pCurrentState = NULL;}
 	~cStateMachine()
 	{
-		/*for each(auto s in m_stateMap)
+		m_pCurrentState = NULL;
+		for each(auto s in m_stateMap)
 		{
-			SAFE_DELETE(s);
+			SAFE_DELETE(s.second);
 		}
-		m_stateMap.clear();*/
+		m_stateMap.clear();
 	}
 	IState<T>* CurrentState() { return m_pCurrentState; }
 	int CurrentID() { return m_pCurrentState != NULL ? m_pCurrentState->ID() : -1; }

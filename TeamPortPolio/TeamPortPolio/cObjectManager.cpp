@@ -2,6 +2,7 @@
 #include "cObjectManager.h"
 #include "cTextureManager.h"
 #include "cBallisticArrow.h"
+#include "cCharacter.h"
 #include "cObject.h"
 #include "cPlayer.h"
 #include "cLeader.h"
@@ -72,11 +73,15 @@ void cObjectManager::Render()
 	//LPD3DXFRAME test = new D3DXFRAME;
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 	D3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
-	
+	int count = 0;
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
-		if(FRUSTUM->IsIn(m_vecObject[i]->GetCharacterEntity()->Pos()))m_vecObject[i]->Render();
+		if (FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
+		{
+			m_vecObject[i]->Render(); count++;
+		}
 	}	
+	cout << "renderCount : " << count << endl;
 
 	for each (auto p in OBJECT->GetPlayerArrows())
 	{
@@ -219,4 +224,21 @@ void cObjectManager::ClearToChangeScene()
 		else { SAFE_DELETE(c); }
 	}
 	m_vecObject.clear();
+}
+
+void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
+{
+	m_player->SetCurrentLeader(leaderType);
+	switch (leaderType)
+	{
+	case LEADER_MELEE:
+		cout << "보병" << endl;
+		break;
+	case LEADER_BOW:
+		cout << "궁병" << endl;
+		break;
+	case LEADER_CAVALRY:
+		cout << "기병" << endl;
+		break;
+	}
 }

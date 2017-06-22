@@ -56,10 +56,24 @@ void cTownScene_Human::OnUpdate()
 	switch (buttonIndex)
 	{
 	case TOWN_BTN_BATTLE_ORC:
-		SCENE->ChangeScene(SCENE_BATTLE_ORC);
+		m_nNextSceneID = SCENE_BATTLE_ORC;
+		UI->SetEvent(TOWN_MINIMAP_TROOPTYPE, false);
 		break;
 	case TOWN_BTN_BATTLE_HUMAN:
-		SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		m_nNextSceneID = SCENE_BATTLE_HUMAN;
+		UI->SetEvent(TOWN_MINIMAP_TROOPTYPE, false);
+		break;
+	case TOWN_BTN_MELEE:
+		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		SCENE->ChangeScene(m_nNextSceneID);
+		break;
+	case TOWN_BTN_BOW:
+		OBJECT->SetCurrentLeader(LEADER_BOW);
+		SCENE->ChangeScene(m_nNextSceneID);
+		break;
+	case TOWN_BTN_CARVALY:
+		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}
 	switch (eventIDTap)
@@ -86,7 +100,6 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
-
 		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
 		{
 			cout << "»ï!" << endl;
@@ -96,10 +109,9 @@ void cTownScene_Human::OnUpdate()
 			cout << "¸ø»ï!" << endl;
 		}
 		cout << "º´»ç¼ö : " << OBJECT->GetPlayer()->GetUnitLeader()->GetUnits().size() << endl;
-		//cout <<"º´Á¾ : "<< trooptype << endl;
 		break;
 	}
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
 		{

@@ -233,9 +233,6 @@
     <Filter Include="03. cScene\04. cBattleScene\Orc">
       <UniqueIdentifier>{c6747f9d-858d-4097-b5f1-72b2c8c63d06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Manager\02. cInputManager\03. cTextureManager">
-      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. cScene\05. cLoadingScene">
       <UniqueIdentifier>{76575df6-c18c-4fbd-8a42-bf45dd70131f}</UniqueIdentifier>
     </Filter>
@@ -259,6 +256,9 @@
     </Filter>
     <Filter Include="07. UI\09. cUIInventory">
       <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\03. cTextureManager">
+      <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -330,7 +330,7 @@
       <Filter>00. Manager\06. cAIManager\00. cStateMachine</Filter>
     </ClInclude>
     <ClInclude Include="cTextureManager.h">
-      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
+      <Filter>00. Manager\03. cTextureManager</Filter>
     </ClInclude>
     <ClInclude Include="cTimeManager.h">
       <Filter>00. Manager\08. cTimeManager</Filter>
@@ -585,7 +585,7 @@
       <Filter>04. Loader\00. xFileLoader</Filter>
     </ClCompile>
     <ClCompile Include="cTextureManager.cpp">
-      <Filter>00. Manager\02. cInputManager\03. cTextureManager</Filter>
+      <Filter>00. Manager\03. cTextureManager</Filter>
     </ClCompile>
     <ClCompile Include="cTimeManager.cpp">
       <Filter>00. Manager\08. cTimeManager</Filter>
