@@ -14,6 +14,22 @@ cNpcManager::~cNpcManager()
 {
 }
 
+void cNpcManager::FirstInit()
+{
+	m_vecSphere.clear();
+	m_vecNpc.clear();
+	m_pMesh = NULL;
+	m_mtrl = D3DMATERIAL9();
+	m_vecSkin.clear();
+	m_vecST.clear();
+	// >> : Font
+	m_lf = LOGFONT();
+	m_vechdc.clear();
+	m_vechFont.clear();
+	m_vechFontOld.clear();
+	m_vecFont.clear();
+}
+
 void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 {
 	m_vecNpc = vecNpc;

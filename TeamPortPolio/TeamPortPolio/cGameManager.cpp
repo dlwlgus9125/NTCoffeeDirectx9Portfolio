@@ -75,6 +75,8 @@ void cGameManager::Init()
 	SOUND->Setup();
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
+	NPC->FirstInit();
+	SHADOW->Init();
 	NPCDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
