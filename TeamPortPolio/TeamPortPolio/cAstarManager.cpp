@@ -145,7 +145,7 @@ void cAstarManager::Update()
 void cAstarManager::PathUpdate()
 {
 	SetLeaderPath();
-	THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
+	//THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
 }
 
 void cAstarManager::Release()
