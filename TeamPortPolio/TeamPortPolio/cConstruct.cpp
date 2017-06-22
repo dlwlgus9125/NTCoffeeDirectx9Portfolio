@@ -37,6 +37,10 @@ void cConstruct::Update()
 	D3DXMatrixRotationYawPitchRoll(&matR, m_fRotY, m_fRotX, m_fRotZ);
 	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	m_matWorld = matS *matR* matT;
+	if(FRUSTUM->IsIn(m_vPosition))
+	{
+
+	}
 
 	D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 
