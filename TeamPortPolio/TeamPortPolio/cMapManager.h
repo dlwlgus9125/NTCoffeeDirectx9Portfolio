@@ -42,6 +42,6 @@ public:
 	cHeightMap* GetMap() { return m_pMap; }
 
 	vector<D3DXVECTOR3>		m_vConstructVertex;
-
+	vector<D3DXVECTOR3>     GetVecPosOfNode() { return m_vecPosOfNode; }
 };
 

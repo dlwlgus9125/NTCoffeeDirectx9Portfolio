@@ -22,7 +22,7 @@ cLeader::~cLeader()
 {
 	for each(auto v in m_vectorUnit)
 	{
-		delete v;
+		SAFE_DELETE(v);
 	}
 	m_vectorUnit.clear();
 }
@@ -121,6 +121,7 @@ void cLeader::Update(float deltaTime)
 					break;
 				}
 			}
+			if (m_vectorUnit.size() <= 0)SetDeath(true);
 		}
 	}
 
@@ -176,6 +177,7 @@ bool cLeader::AddUnitInTown(C_C_ID ID)
 		pUnit->SetID(m_ID);
 		pUnit->Init();
 		pUnit->SetCamp(m_camp);
+		pUnit->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
 		m_vectorUnit.push_back(pUnit);
 		return true;
 	}

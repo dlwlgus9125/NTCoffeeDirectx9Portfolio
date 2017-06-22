@@ -125,7 +125,7 @@ void cMapManager::Init(int sceneID)
 	}
 	// << 
 
-	ASTAR->Setup(m_vecPosOfNode);
+	
 
 	// >> : 그림자 세팅
 
@@ -195,7 +195,7 @@ float cMapManager::GetMinX()
 
 void cMapManager::Destroy()
 {
-	ASTAR->Release();
+
 	m_vecPosOfNode.clear();
 	SAFE_DELETE(m_pSkyBox);
 	SAFE_DELETE(m_pMap);

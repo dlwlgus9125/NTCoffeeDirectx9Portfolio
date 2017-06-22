@@ -192,7 +192,7 @@ void cPlayer::Render()
 
 void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
-	if (m_currentLeader)
+	if (m_currentLeader&&0<=index&&index<=MAP->GetVecPosOfNode().size())
 	{
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())

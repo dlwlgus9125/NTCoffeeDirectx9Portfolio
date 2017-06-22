@@ -23,6 +23,9 @@ void cBattleScene_Human::OnEnter()
 	EFFECT->Init(m_stWeather);
 	Setup_DirLight();
 
+	ASTAR->Setup(MAP->GetVecPosOfNode());
+
+
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
 	OBJECT->GetPlayer()->SetCurrentLeader();
@@ -101,6 +104,7 @@ void cBattleScene_Human::OnExit()
 
 void cBattleScene_Human::OnRender()
 {
+	ASTAR->Release();
 	EFFECT->Render_Begin();
 	MAP->Render();
 	EFFECT->Render_End();

@@ -160,12 +160,14 @@ void cAstarManager::Release()
 	m_PathGraph = NULL;
 	if (m_graph)SAFE_DELETE(m_graph);
 	m_graph = NULL;
+	if (m_PathGraph)SAFE_DELETE(m_PathGraph);
+	m_PathGraph = NULL;
 	m_vecPosOfNode.clear();
 }
 
 void cAstarManager::Render()
 {
-	m_graph->Render();
+	if(m_graph)m_graph->Render();
 }
 
 bool cAstarManager::GetCursorIndex(int & TargetIndex)
