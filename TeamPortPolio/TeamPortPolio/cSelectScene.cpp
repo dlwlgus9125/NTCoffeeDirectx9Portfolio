@@ -82,7 +82,6 @@ void cSelectScene::OnUpdate()
 
 			SOUND->Stop("LoginBGM");
 			SCENE->SetIsSoundPlayed(false);
-			SOUND->Release();
 
 			// SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
 			if(m_nCurrentPlayer == SELECT_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);

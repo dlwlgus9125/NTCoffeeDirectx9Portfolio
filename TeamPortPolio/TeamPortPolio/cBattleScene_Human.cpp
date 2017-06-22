@@ -6,6 +6,7 @@
 cBattleScene_Human::cBattleScene_Human()
 	: m_pSprite(NULL)
 {
+	SOUND->LoadFile("Battle_Human_BGM", "Sound/BGM/BattleScene_Human/Joust.mp3", true);
 }
 
 
@@ -15,7 +16,6 @@ cBattleScene_Human::~cBattleScene_Human()
 
 void cBattleScene_Human::OnEnter()
 {
-	SOUND->LoadFile("Battle_Human_BGM", "Sound/BGM/BattleScene_Human/Joust.mp3", true);
 	SOUND->Play("Battle_Human_BGM");
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);

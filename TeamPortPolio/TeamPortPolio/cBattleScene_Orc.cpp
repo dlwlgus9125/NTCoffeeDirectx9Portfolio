@@ -6,6 +6,7 @@
 cBattleScene_Orc::cBattleScene_Orc()
 	: m_pSprite(NULL)
 {
+	SOUND->LoadFile("Battle_Orc_BGM", "Sound/BGM/BattleScene_Orc/TourneyBattle2.mp3", true);
 }
 
 
@@ -15,7 +16,6 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
-	SOUND->LoadFile("Battle_Orc_BGM", "Sound/BGM/BattleScene_Orc/TourneyBattle2.mp3", true);
 	SOUND->Play("Battle_Orc_BGM");
 
 	
