@@ -76,6 +76,7 @@ public:
 	float GetRotY() { return m_fRotY; }
 	//Scene에서 부대 이동을 관리할 겟함수
 	cLeader*       GetUnitLeader() { return m_currentLeader; }
+	void           SetCurrentLeader(LEADER_TYPE leaderTYPE) { m_currentLeaderType = leaderTYPE; m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
 	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
 
 	// 추가
@@ -102,7 +103,7 @@ public:
 
 	D3DXVECTOR3 SetUpAim() {
 		D3DXVECTOR3 vAim = CAMERA->GetLookAt() - CAMERA->GetEye();
-		vAim.y += 1;
+	
 		return	MATH->Nomalize(vAim);
 	}
 

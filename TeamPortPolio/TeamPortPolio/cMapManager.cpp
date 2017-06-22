@@ -101,10 +101,6 @@ void cMapManager::Init(int sceneID)
 	// >> : 포지션 좌표 넣어줌 -> 사용 그림자
 	m_vPositionVertex = vecVertex[0];
 
-	for (int i = 0; i < vecVertex.size(); i++)
-	{
-		m_vConstructVertex.push_back(vecVertex[i].p);
-	}
 	// << :
 
 	// >> 노드에 쓸 노드 중점의 위치 만드는 부분
@@ -125,7 +121,7 @@ void cMapManager::Init(int sceneID)
 	}
 	// << 
 
-	ASTAR->Setup(m_vecPosOfNode);
+	
 
 	// >> : 그림자 세팅
 
@@ -142,18 +138,18 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	bool test = false;
-	if (INPUT->IsKeyPress(VK_TAB))
-	{
-			test = true;
-	}
-	/*else if (INPUT->IsKeyUp(VK_TAB))
-	{
-		test = false;
-	}*/
+	//bool test = false;
+	//if (INPUT->IsKeyPress(VK_TAB))
+	//{
+	//		test = true;
+	//}
+	///*else if (INPUT->IsKeyUp(VK_TAB))
+	//{
+	//	test = false;
+	//}*/
 
-	if (test == false)
-	{
+	//if (test == false)
+	//{
 
 		if (m_pSkyBox) m_pSkyBox->Render();
 
@@ -167,8 +163,8 @@ void cMapManager::Render()
 		{
 			m_vecConstruct[i]->Render();
 		}
-	}
-	else { ASTAR->Render(); }
+	//}
+	//else { ASTAR->Render(); }
 }
 
 bool cMapManager::GetHeight(IN float x, OUT float & y, IN float z)
@@ -195,7 +191,7 @@ float cMapManager::GetMinX()
 
 void cMapManager::Destroy()
 {
-	ASTAR->Release();
+
 	m_vecPosOfNode.clear();
 	SAFE_DELETE(m_pSkyBox);
 	SAFE_DELETE(m_pMap);

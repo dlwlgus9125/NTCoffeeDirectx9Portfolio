@@ -36,7 +36,10 @@ cPlayer::~cPlayer()
 		SAFE_DELETE(c.second);
 	}
 	m_mapLeader.clear();
+	SAFE_DELETE(m_pSkinnedMesh);
 }
+	
+
 
 void cPlayer::Init()
 {
@@ -103,6 +106,11 @@ void cPlayer::Init()
 	m_isPull = false;
 	m_MeleeCollider.fRadius = 0.2f;
 	m_currentLeaderType = LEADER_MELEE;
+	SetCurrentLeader();
+
+	m_AttackType = ATTACK_MELEE;
+
+
 }
 
 void cPlayer::Update(float deltaTime)
@@ -121,7 +129,7 @@ void cPlayer::Update(float deltaTime)
 		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 		m_pFsm->Update(deltaTime);
 		D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
-		MAP->GetHeight(movePos.x, movePos.y, movePos.z);
+		//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 		m_CharacterEntity->SetPos(movePos);
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
@@ -133,10 +141,6 @@ void cPlayer::Update(float deltaTime)
 		{
 			m_fRotY += 0.06;
 		}
-
-		if (INPUT->IsKeyDown('4'))m_currentLeaderType = LEADER_MELEE;
-		if (INPUT->IsKeyDown('5'))m_currentLeaderType = LEADER_BOW;
-		if (INPUT->IsKeyDown('6'))m_currentLeaderType = LEADER_CAVALRY;
 
 		//화살처리
 
@@ -152,7 +156,18 @@ void cPlayer::Update(float deltaTime)
 
 
 	}
-	CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+	if (GetMesh()->GetIndex() != P_BOWATTACK1)
+	{
+		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+		CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.222);
+		if (CAMERA->GetCameraDitance() >4) CAMERA->SetCameraDistance(4);
+	}
+	else
+	{
+		CAMERA->SetLookAt(m_CharacterEntity->Pos()+D3DXVECTOR3(0,0.5,0), 0);
+		m_fRotY = CAMERA->GetCamRotAngle().y;
+	}
+
 
 }
 
@@ -181,7 +196,11 @@ void cPlayer::Render()
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+
+		
 	}
+
 }
 
 
@@ -189,15 +208,15 @@ void cPlayer::Render()
 
 void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
-	if (m_currentLeader)
+	if (m_currentLeader&&0<=index&&index<=MAP->GetVecPosOfNode().size())
 	{
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
 		{
+			cout << "here" << endl;
 			THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 			if (!THREAD->IsReCreateFindPathThread(HANDLE_ATSTAR_FINDPATH))
 			{
-
 				m_currentLeader->PathClear();
 				m_currentLeader->SetTargetIndex(index);
 			}

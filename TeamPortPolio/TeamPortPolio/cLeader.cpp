@@ -22,9 +22,11 @@ cLeader::~cLeader()
 {
 	for each(auto v in m_vectorUnit)
 	{
-		delete v;
+		SAFE_DELETE(v);
 	}
 	m_vectorUnit.clear();
+	SAFE_DELETE(m_unitLeader);
+	SAFE_DELETE(m_pFsm);
 }
 
 void cLeader::Init()
@@ -121,6 +123,7 @@ void cLeader::Update(float deltaTime)
 					break;
 				}
 			}
+			if (m_vectorUnit.size() <= 0)SetDeath(true);
 		}
 	}
 
@@ -176,6 +179,7 @@ bool cLeader::AddUnitInTown(C_C_ID ID)
 		pUnit->SetID(m_ID);
 		pUnit->Init();
 		pUnit->SetCamp(m_camp);
+		pUnit->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
 		m_vectorUnit.push_back(pUnit);
 		return true;
 	}
@@ -191,6 +195,7 @@ void cLeader::AddUnitInManager()
 		OBJECT->AddCharacter(c);
 		OBJECT->AddEntity(c->GetCharacterEntity());
 	}	
+	SetRectOffset();
 }
 
 void cLeader::DeleteDeathUnitInExitScene()
@@ -203,6 +208,7 @@ void cLeader::DeleteDeathUnitInExitScene()
 	}
 	m_vectorUnit.clear();
 	m_vectorUnit = n_vecUnit;
+	cout << "살아남은 병사 수 : "<<m_vectorUnit.size() << endl;
 }
 
 void cLeader::DeleteUnit(int key)
@@ -279,7 +285,7 @@ void cLeader::SetType()
 {
 	switch (m_ID)
 	{
-	case C_C_HUMAN_MALE: case C_C_ORC_MELEE: SetMeleeType(); break;
+	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType(); break;
 	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType(); break;
 	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); break;
 	}
@@ -289,7 +295,7 @@ void cLeader::ClickedButtonOne()
 {
 	switch (m_type)
 	{
-	case C_C_HUMAN_MALE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
+	case C_C_HUMAN_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}

@@ -207,3 +207,33 @@ int cObjectManager::GetPlayerID()
 { 
 	return m_player->GetID();
 }
+
+void cObjectManager::ClearToChangeScene()
+{
+	m_vecCharacter.clear();
+	m_vecEntity.clear();
+	m_vecLeader.clear();
+	for each(auto c in m_vecObject)
+	{
+		if (((cCharacter*)c)->GetCamp()== CAMP_PLAYER) { c = NULL; }
+		else { SAFE_DELETE(c); }
+	}
+	m_vecObject.clear();
+}
+
+void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
+{
+	m_player->SetCurrentLeader(leaderType);
+	switch (leaderType)
+	{
+	case LEADER_MELEE:
+		cout << "보병" << endl;
+		break;
+	case LEADER_BOW:
+		cout << "궁병" << endl;
+		break;
+	case LEADER_CAVALRY:
+		cout << "기병" << endl;
+		break;
+	}
+}

@@ -8,6 +8,8 @@ class cTownScene_Orc : public cIScene
 	vector<ST_SPHERE>		m_vecST_Sphere;
 
 	ST_WEATHER				m_stWeather;
+
+	int						m_nNextSceneID;
 public:
 	cTownScene_Orc();
 	~cTownScene_Orc();

@@ -78,12 +78,14 @@ void cSelectScene::OnUpdate()
 	case SELECT_BTN_CREATE:
 		if (m_nCurrentPlayer != SELECT_NONE)
 		{
-			OBJECT->AddCharacter(m_mapPlayer[m_nCurrentPlayer]);
-			OBJECT->AddObject(m_mapPlayer[m_nCurrentPlayer]);
+			/*OBJECT->AddCharacter(m_mapPlayer[m_nCurrentPlayer]);
+			OBJECT->AddObject(m_mapPlayer[m_nCurrentPlayer]);*/
 			OBJECT->SetPlayer(m_mapPlayer[m_nCurrentPlayer]);
 
 			SOUND->Stop("LoginBGM");
-			//SCENE->ChangeScene(SCENE_TOWN);
+			SCENE->SetIsSoundPlayed(false);
+
+			// SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
 			if(m_nCurrentPlayer == SELECT_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
 			else if (m_nCurrentPlayer == SELECT_ORC) SCENE->ChangeScene(SCENE_TOWN_ORC);
 		}

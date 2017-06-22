@@ -40,6 +40,7 @@ protected:
 	bool             m_isEquiped;
 	vector<cConstruct*>	m_vecNearConstruct;
 	cConstruct* m_pTargetConstruct;
+	
 public:
 	cCharacter();
 	virtual ~cCharacter();

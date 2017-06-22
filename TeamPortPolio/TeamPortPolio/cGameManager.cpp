@@ -13,6 +13,7 @@
 #include "cBattleScene_Human.h"
 #include "cBattleScene_Orc.h"
 #include "cSceneCamera.h"
+#include "cNpcDB.h"
 
 void cGameManager::Init()
 {
@@ -75,7 +76,6 @@ void cGameManager::Init()
 	ITEMDB->Setup();
 	CHARACTERDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
-	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
 	SCENE->Register(SCENE_HELP, new cHelpScene());
@@ -156,7 +156,24 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
+	ITEMDB->Destroy();
+	CHARACTERDB->Destroy();
+	OBJECTDB->Destroy();
+	NPCDB->Destroy();
+	NPC->Release();
 	SOUND->Release();
+	INPUT->Release();
+	OBJECT->Release();
+	TEXTURE->Destroy();
+	INPUT->Release();
+	UI->Release();
+	FONT->Destroy();
+	EFFECT->Release();
+	MAP->Destroy();
+	ASTAR->Release();
+	THREAD->Destroy();
+	DEVICE->Destroy();
+
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

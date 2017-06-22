@@ -6,6 +6,7 @@
 cTownScene_Orc::cTownScene_Orc()
 {
 	SOUND->LoadFile("Town_Orc_BGM", "Sound/BGM/TownScene_Orc/Orgrimmar.mp3", true);
+	m_nNextSceneID = -1;
 }
 
 
@@ -28,6 +29,8 @@ void cTownScene_Orc::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(5.5f, 0, -5.6f));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-0.5f, 0, -0.87f)));
 	SOUND->Play("Town_Orc_BGM", 1.0f);
+	OBJECT->AddCharacter(OBJECT->GetPlayer());
+	OBJECT->AddObject(OBJECT->GetPlayer());
 }
 
 void cTownScene_Orc::OnUpdate()
@@ -47,10 +50,24 @@ void cTownScene_Orc::OnUpdate()
 	switch (buttonIndex)
 	{
 	case TOWN_BTN_BATTLE_ORC:
-		SCENE->ChangeScene(SCENE_BATTLE_ORC);
+		m_nNextSceneID = SCENE_BATTLE_ORC;
+		UI->SetEvent(TOWN_MINIMAP_TROOPTYPE, false);
 		break;
 	case TOWN_BTN_BATTLE_HUMAN:
-		SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
+		m_nNextSceneID = SCENE_BATTLE_HUMAN;
+		UI->SetEvent(TOWN_MINIMAP_TROOPTYPE, false);
+		break;
+	case TOWN_BTN_MELEE:
+		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		SCENE->ChangeScene(m_nNextSceneID);
+		break;
+	case TOWN_BTN_BOW:
+		OBJECT->SetCurrentLeader(LEADER_BOW);
+		SCENE->ChangeScene(m_nNextSceneID);
+		break;
+	case TOWN_BTN_CARVALY:
+		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}
 	switch (eventIDTap)
@@ -77,14 +94,23 @@ void cTownScene_Orc::OnUpdate()
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
-		cout << "º´Á¾ : " << trooptype << endl;
+		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
+		{
+			cout << "»ï!" << endl;
+		}
+		else
+		{
+			cout << "¸ø»ï!" << endl;
+		}
+		cout << "º´»ç¼ö : " << OBJECT->GetPlayer()->GetUnitLeader()->GetUnits().size() << endl;
 		break;
 	}
-	if (INPUT->IsMouseDown(MOUSE_LEFT))
+	if (INPUT->IsMouseUp(MOUSE_LEFT))
 	{
 		for (int i = 0; i < m_vecST_Sphere.size(); i++)
 		{
-			m_vecST_Sphere[i].isPicked = cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]);
+			m_vecST_Sphere[i].isPicked = (cRay::IsPicked(INPUT->GetMousePosVector2(), &m_vecST_Sphere[i]) &&
+				MATH->SqrDistance(OBJECT->GetPlayer()->GetCharacterEntity()->Pos(), m_vecST_Sphere[i].vCenter) <= DIST_LIMITS);
 		}
 	}
 
@@ -112,6 +138,7 @@ void cTownScene_Orc::OnUpdate()
 
 void cTownScene_Orc::OnExit()
 {
+	OBJECT->ClearToChangeScene();
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
 	OBJECT->Release();
