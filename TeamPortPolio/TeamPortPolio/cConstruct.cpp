@@ -12,7 +12,7 @@ cConstruct::cConstruct()
 {
 }
 
-  
+
 cConstruct::~cConstruct()
 {
 }
@@ -20,13 +20,12 @@ cConstruct::~cConstruct()
 void cConstruct::Setup(char* szFolder, char* szFile, bool isChecked)
 {
 	cObjLoader	l;
-	if (isChecked == true)			m_pObjMesh = l.LoadMesh( m_vecObjMtlTex, szFolder, szFile, true);
-	else if (isChecked == false)	m_pObjMesh = l.LoadMesh( m_vecObjMtlTex, szFolder, szFile);
+	if (isChecked == true)			m_pObjMesh = l.LoadMesh(m_vecObjMtlTex, szFolder, szFile, true);
+	else if (isChecked == false)	m_pObjMesh = l.LoadMesh(m_vecObjMtlTex, szFolder, szFile);
 }
 
 void cConstruct::Update()
 {
-
 	D3DXMATRIXA16	matS, matR, matT;
 
 	D3DXMatrixIdentity(&m_matWorld);
@@ -39,50 +38,17 @@ void cConstruct::Update()
 	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	m_matWorld = matS *matR* matT;
 
-	for (int i = 0; i < vecVertex.size(); i++)
-	{
-		D3DXVECTOR3 vOut;
-		D3DXVec3TransformCoord(&vOut, &vecVertex[i].p, &m_matWorld);
-		m_vecTranslatedVertex.push_back(vOut);
-	}
-	
-
 	D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
+
 	
-		
-	for (int i = 1; i < m_vecTranslatedVertex.size(); i++)
-	{
-		m_vecLineVertex.push_back(ST_LINE_VERTEX(m_vecTranslatedVertex[i-1], m_vecTranslatedVertex[i]));
-	}
-
-
-	for (size_t i = 0; i <m_vecTranslatedVertex.size(); i++)
-	{
-		if (m_vecTranslatedVertex[i].x < m_vMin.x) m_vMin.x = m_vecTranslatedVertex[i].x;
-		if (m_vecTranslatedVertex[i].x > m_vMax.x) m_vMax.x = m_vecTranslatedVertex[i].x;
-		
-		if (m_vecTranslatedVertex[i].z < m_vMin.z) m_vMin.z = m_vecTranslatedVertex[i].z;
-		if (m_vecTranslatedVertex[i].z > m_vMax.z) m_vMax.z = m_vecTranslatedVertex[i].z;
-	}
-	m_vMin.y = 0;
-	m_vMax.y = 0;
-
-	m_stSphere.vCenter = m_vPosition;
-	m_stSphere.fRadius = MATH->Distance(m_vMin, m_vMax) / 1.41421f;//·çÆ®2
-
-	D3DXCreateSphere(D3DDevice, m_stSphere.fRadius, 10, 10, &m_pMeshSphere, NULL);
-
-	ZeroMemory(&m_stMtlSphere, sizeof(D3DMATERIAL9));
-	m_stMtlSphere.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-	m_stMtlSphere.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-	m_stMtlSphere.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-
-
 
 }
 
 void cConstruct::Render()
 {
+	
+
+
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -108,19 +74,6 @@ void cConstruct::Render()
 	D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-
-
-	D3DXMATRIXA16 mat;
-	D3DXMatrixIdentity(&mat);
-
-	D3DXMatrixTranslation(&mat, m_stSphere.vCenter.x, m_stSphere.vCenter.y, m_stSphere.vCenter.z);
-
-	D3DDevice->SetTransform(D3DTS_WORLD, &mat);
-	D3DDevice->SetMaterial(&m_stMtlSphere);
-
-	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pMeshSphere->DrawSubset(0);
-	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void cConstruct::Create(int sIndex)
@@ -147,4 +100,15 @@ void cConstruct::Destroy()
 	}
 
 	// delete this;
+}
+
+vector<ST_LINE_VERTEX> cConstruct::GetTranfromedVector(vector<D3DXVECTOR3> d)
+{
+	vector<ST_LINE_VERTEX>vecLineVertex;
+	for (int i = 1; i < d.size(); i++)
+	{
+		vecLineVertex.push_back(ST_LINE_VERTEX(d[i - 1], d[i]));
+	}
+
+	return vecLineVertex;
 }

@@ -101,10 +101,6 @@ void cMapManager::Init(int sceneID)
 	// >> : 포지션 좌표 넣어줌 -> 사용 그림자
 	m_vPositionVertex = vecVertex[0];
 
-	for (int i = 0; i < vecVertex.size(); i++)
-	{
-		m_vConstructVertex.push_back(vecVertex[i].p);
-	}
 	// << :
 
 	// >> 노드에 쓸 노드 중점의 위치 만드는 부분
@@ -124,6 +120,8 @@ void cMapManager::Init(int sceneID)
 		m_vecPosOfNode.push_back(pos);
 	}
 	// << 
+
+
 
 	ASTAR->Setup(m_vecPosOfNode);
 

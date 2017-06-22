@@ -33,14 +33,13 @@ void BallisticMotion::Update_with_targetpos()
 void BallisticMotion::Update_with_dir()
 {
 	D3DXVECTOR3 vDirtoTarget = Entity()->Forward();
-	float power = 100;
+	float power = 1000;
 	float fDistance = MATH->Distance(m_vOrigin, Entity()->Pos());
 	m_fGravity = 0.01 / GravityMultiPlier(fDistance);
 	vDirtoTarget.y -= m_fGravity*100/power;
 
 	Entity()->SetForward(vDirtoTarget);
 	Entity()->AddPos(vDirtoTarget);
-
 }
 
 float BallisticMotion::GravityMultiPlier(float distance)
