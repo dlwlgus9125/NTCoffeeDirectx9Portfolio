@@ -78,24 +78,15 @@ void cNpcManager::Update(std::vector<ST_NPC_INFO> vecNpc)
 
 void cNpcManager::Release()
 {
-	m_vecNpc.clear();
-	delete &m_vecNpc;
-	m_vecSphere.clear();
-	delete &m_vecSphere;
-	m_vecSkin.clear();
-	delete &m_vecSkin;
-	m_vecST.clear();
-	delete &m_vecST;
-	m_vecFont.clear();
-	delete &m_vecFont;
-	m_vechFont.clear();
-	delete &m_vechFont;
-	m_vechFontOld.clear();
-	delete &m_vechFontOld;
-	m_vechdc.clear();
-	delete &m_vechdc;
-
-	SAFE_RELEASE(m_pMesh);
+	//if(m_pMesh)SAFE_DELETE(m_pMesh);
+	for each(auto s in m_vecSkin)
+	{
+		SAFE_DELETE(s);
+	}
+	for each(auto f in m_vecFont)
+	{
+		SAFE_RELEASE(f);
+	}
 }
 
 void cNpcManager::SetMtrl()
@@ -111,7 +102,7 @@ void cNpcManager::LoadSkinnedMesh()
 	{
 
 		m_vecSkin[i] = new cSkinnedMesh(TEXTURE->GetCharacterResource(NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szPath, NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szFileName));
-	
+
 	}
 	//cSkinnedMesh* pSkinnedMesh = TEXTURE->GetCharacterResource(NPCDB->GetMapNpc(m_vecNpc[0].nSID)->m_szPath, NPCDB->GetMapNpc(m_vecNpc[0].nSID)->m_szFileName);
 	//pSkinnedMesh->SetPosition(D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 0, 1));   // >> : 업데이트
@@ -235,7 +226,7 @@ void cNpcManager::SetText()
 		SelectObject(m_vechdc[i], m_vechFontOld[i]);
 	}
 
-	
+
 }
 
 void cNpcManager::Render_Text()
@@ -246,7 +237,7 @@ void cNpcManager::Render_Text()
 	D3DXMatrixIdentity(&matT);
 
 	D3DXMatrixScaling(&matS, 0.1f, 0.1f, 0.1f);
-	
+
 	D3DXVECTOR3 c_pos = CAMERA->GetEye();
 
 	for (int i = 0; i < m_vecFont.size(); i++)
@@ -254,7 +245,7 @@ void cNpcManager::Render_Text()
 		D3DXVECTOR3 rot = c_pos - m_vecNpc[i].pos;
 		D3DXVec3Normalize(&rot, &rot);
 		float rotY = MATH->GetRotY(rot);
-		D3DXMatrixTranslation(&matT, m_vecNpc[i].pos.x  , m_vecNpc[i].pos.y + 1.0f, m_vecNpc[i].pos.z);
+		D3DXMatrixTranslation(&matT, m_vecNpc[i].pos.x, m_vecNpc[i].pos.y + 1.0f, m_vecNpc[i].pos.z);
 		D3DXMatrixRotationY(&matR, rotY);
 		matWorld = matS* matR* matT;
 		D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);

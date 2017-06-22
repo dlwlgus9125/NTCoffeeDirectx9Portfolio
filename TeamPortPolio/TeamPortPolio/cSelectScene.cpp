@@ -13,8 +13,6 @@ cSelectScene::cSelectScene()
 
 cSelectScene::~cSelectScene()
 {
-	SAFE_DELETE(m_pImage);
-	SAFE_DELETE(m_pSprite);
 }
 
 void cSelectScene::OnEnter()

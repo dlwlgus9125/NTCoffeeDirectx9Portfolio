@@ -27,7 +27,7 @@ void cGameManager::Init()
 	hr = CoInitialize(NULL);
 
 	if (FAILED(hr))
-		::MessageBox(0, "CoInitialize error", 0, 0);
+		::MessageBox(0, "CoInitialize error", 0, 0);;
 	
 	hr = CoCreateInstance(
 		CLSID_FilterGraph,
@@ -70,6 +70,7 @@ void cGameManager::Init()
 	TIME->Init(60);
 	UI->Setup();
 	INPUT->Init();
+	EFFECT->Init();
 	OBJECTDB->Setup();
 	OBJECT->Init();
 	SOUND->Setup();

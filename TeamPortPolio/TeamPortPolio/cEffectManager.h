@@ -16,8 +16,9 @@ class cEffectManager : public Singleton<cEffectManager>
 	ST_WEATHER	m_stWeather;
 
 public:
-	void Init(ST_WEATHER weather);
-	void Update();
+	void Init();
+	void OnEnter(ST_WEATHER weather);
+	void OnUpdate();
 	void Render_Begin();
 	void Render_End();
 	void Release();
