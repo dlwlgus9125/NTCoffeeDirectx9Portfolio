@@ -36,8 +36,6 @@ void cSceneManager::Register(int tag, cIScene * pScene)
 void cSceneManager::ChangeScene(int tag)
 {
 	m_current = tag;
-	//m_currentScene = GetScene(m_current);	// 지워야 할 것들
-	//m_currentScene->OnEnter();				// 지워야 할 것들
 }
 
 void cSceneManager::Update()
