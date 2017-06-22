@@ -59,6 +59,8 @@ void cLoginScene::OnUpdate()
 	int eventIDTap;
 	int itemID;
 
+	if (GetKeyState('P') && 0x8000) SOUND->Stop("LoginBGM");
+
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 
 	switch (buttonIndex)
