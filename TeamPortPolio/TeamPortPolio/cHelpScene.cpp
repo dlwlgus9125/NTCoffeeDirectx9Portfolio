@@ -34,8 +34,8 @@ void cHelpScene::OnEnter()
 	m_pImage->SetHidden(false);
 
 	m_pImage_Play = new cUIImage();
-	m_pImage_Play->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage_Play->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
+	m_pImage_Play->Setup(D3DXVECTOR3(380, 65, 0.0f), UI_IMAGE);
+	m_pImage_Play->Setup_Image("Image/UI/HelpScene/Image/TextBox_Play.png");
 	m_pImage_Play->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
 
 	m_pImage_Town1 = new cUIImage();
