@@ -131,6 +131,7 @@ void cGameManager::Update()
 			m_prevTime = m_currentTime;
 			FRUSTUM->Update();
 			INPUT->Update();
+			
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();
