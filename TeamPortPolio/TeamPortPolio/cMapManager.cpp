@@ -138,18 +138,18 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	//bool test = false;
-	//if (INPUT->IsKeyPress(VK_TAB))
-	//{
-	//		test = true;
-	//}
-	///*else if (INPUT->IsKeyUp(VK_TAB))
-	//{
-	//	test = false;
-	//}*/
+	bool test = false;
+	if (INPUT->IsKeyPress(VK_F1))
+	{
+			test = true;
+	}
+	/*else if (INPUT->IsKeyUp(VK_TAB))
+	{
+		test = false;
+	}*/
 
-	//if (test == false)
-	//{
+	if (test == false)
+	{
 
 		if (m_pSkyBox) m_pSkyBox->Render();
 
@@ -163,8 +163,8 @@ void cMapManager::Render()
 		{
 			m_vecConstruct[i]->Render();
 		}
-	//}
-	//else { ASTAR->Render(); }
+	}
+	else { ASTAR->Render(); }
 }
 
 bool cMapManager::GetHeight(IN float x, OUT float & y, IN float z)
@@ -192,7 +192,7 @@ float cMapManager::GetMinX()
 void cMapManager::Destroy()
 {
 	m_vecPosOfNode.clear();
-	SAFE_RELEASE(m_pSkyBox);
+	m_pSkyBox->Release();
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{

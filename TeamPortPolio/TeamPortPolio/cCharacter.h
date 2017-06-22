@@ -89,6 +89,13 @@ public:
 	bool isAnimDeath() {};
 
 	void UpdateNearConstruct();
+
+	virtual void SetSceneEnter()
+	{
+		m_Status->m_HP = m_Status->m_MaxHP;
+		m_CharacterEntity->SetDeath(false);
+		m_isDeath = false;
+	}
 	
 };
 
