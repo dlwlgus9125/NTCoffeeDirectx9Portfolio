@@ -14,11 +14,6 @@ enum SKYBOX_FACE
 	SKYBOX_FACE_BACK,
 };
 
-enum SKYBOX_TYPE
-{
-	SKYBOX_TYPE_A,
-};
-
 
 class cSkyBox
 {
@@ -38,16 +33,9 @@ public:
 	// Render
 	void Render();
 
-	// Type을 가지고 와서 태그값 변경
-	void SetSkyType(int type);
-
-	void Release();
-
 protected:
 	vector<ST_PT_VERTEX>	m_vecVertex;
 	vector<DWORD>			m_vecIndex;
 
 	map<SKYBOX_FACE, LPDIRECT3DTEXTURE9>			m_mapCurrentTexture;
-	map <int, map<SKYBOX_FACE, LPDIRECT3DTEXTURE9>> m_mapWholeTexture;
-
 };

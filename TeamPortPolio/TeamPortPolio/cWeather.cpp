@@ -72,18 +72,12 @@ void cWeather::Update(float fMove, float fSpeed)
 		if (m_vecParticleVertex[i].p.y < -5) m_vecParticleVertex[i].p.y = 50 + rand() % 50;
 		else m_vecParticleVertex[i].p.y -= fSpeed;
 
-		// if (m_vecParticleVertex[i].p.y < 5)
-		// {
-		// 	nAlpha += nDelta;
-		// 	m_vecParticleVertex[i].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
-		// }
-
 		if (m_vecParticleVertex[i].p.x < -m_nMapSizeX / 2) m_vecParticleVertex[i].p.x = m_nMapSizeX / 2;
 		else m_vecParticleVertex[i].p.x -= fMove;
 	}
 }
 
-void cWeather::Render(char* sFullPath)
+void cWeather::Render(char* sFullPath,bool isSnow)
 {
 	D3DXMATRIXA16	matWorld;
 	D3DXMatrixIdentity(&matWorld);

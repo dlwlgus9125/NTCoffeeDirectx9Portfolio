@@ -14,6 +14,7 @@
 #include "cSceneCamera.h"
 #include "cNpcDB.h"
 
+
 void cGameManager::Init()
 {
 	DEVICE->Init();
@@ -184,7 +185,6 @@ void cGameManager::Release()
 	ASTAR->Release();
 	THREAD->Destroy();
 	DEVICE->Destroy();
-
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

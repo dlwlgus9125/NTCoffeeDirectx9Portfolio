@@ -33,7 +33,7 @@ void cMapManager::Init(int sceneID)
 
 	case SCENE_TOWN_HUMAN:  
 		folderPath = "map";
-		filePath = strdup("TOWNHUMAN.txt");
+		filePath = strdup("TOWNHUMAN2.txt");
 		break;
 
 	case SCENE_TOWN_ORC:
@@ -138,33 +138,18 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	//bool test = false;
-	//if (INPUT->IsKeyPress(VK_TAB))
-	//{
-	//		test = true;
-	//}
-	///*else if (INPUT->IsKeyUp(VK_TAB))
-	//{
-	//	test = false;
-	//}*/
+	if (m_pSkyBox) m_pSkyBox->Render();
 
-	//if (test == false)
-	//{
+	if (m_pMap) m_pMap->Render();
+	
+	if (m_vecStNPC.size() > 0)
+		NPC->Render();
 
-		if (m_pSkyBox) m_pSkyBox->Render();
-
-		if (m_pMap) m_pMap->Render();
-		
-		if (m_vecStNPC.size() > 0)
-			NPC->Render();
-
-		SHADOW->Render();
-		for (int i = 0; i < m_vecConstruct.size(); i++)
-		{
-			m_vecConstruct[i]->Render();
-		}
-	//}
-	//else { ASTAR->Render(); }
+	SHADOW->Render();
+	for (int i = 0; i < m_vecConstruct.size(); i++)
+	{
+		m_vecConstruct[i]->Render();
+	}
 }
 
 bool cMapManager::GetHeight(IN float x, OUT float & y, IN float z)
@@ -192,7 +177,6 @@ float cMapManager::GetMinX()
 void cMapManager::Destroy()
 {
 	m_vecPosOfNode.clear();
-	m_pSkyBox->Release();
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{

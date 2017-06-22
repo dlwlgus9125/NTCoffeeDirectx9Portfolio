@@ -144,9 +144,7 @@ void cSkyBox::Setup_Texture(char* szFolder, char* szExtension)
 	mapTexture[SKYBOX_FACE_TOP] = TEXTURE->GetTexture(szFolder + (string)"/Top." + (string)szExtension);
 	mapTexture[SKYBOX_FACE_BOTTOM] = TEXTURE->GetTexture(szFolder + (string)"/Bottom." + (string)szExtension);
 
-	m_mapWholeTexture[SKYBOX_TYPE_A] = mapTexture;
-
-	m_mapCurrentTexture = m_mapWholeTexture[SKYBOX_TYPE_A];
+	m_mapCurrentTexture = mapTexture;
 }
 
 void cSkyBox::Update(cCamera* pCamera)
@@ -225,23 +223,4 @@ void cSkyBox::Render()
 
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	D3DDevice->EndScene();
-}
-
-void cSkyBox::SetSkyType(int type)
-{
-	m_mapCurrentTexture = m_mapWholeTexture[type];
-}
-
-void cSkyBox::Release()
-{
-	m_mapCurrentTexture.clear();
-
-	for (map <int, map<SKYBOX_FACE, LPDIRECT3DTEXTURE9>>::iterator it = m_mapWholeTexture.begin(); it != m_mapWholeTexture.end();it++)
-	{
-		map<SKYBOX_FACE, LPDIRECT3DTEXTURE9> mapTemp = (*it).second;
-		for each (auto p in mapTemp)
-		{
-			SAFE_RELEASE(p.second);
-		}
-	}
 }
