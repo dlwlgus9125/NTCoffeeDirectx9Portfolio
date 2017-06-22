@@ -15,6 +15,9 @@ cBattleScene_Human::~cBattleScene_Human()
 
 void cBattleScene_Human::OnEnter()
 {
+	SOUND->LoadFile("Battle_Human_BGM", "Sound/BGM/BattleScene_Human/Joust.mp3", true);
+	SOUND->Play("Battle_Human_BGM");
+
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);
 	UI->Change(SCENE_BATTLE_HUMAN);
@@ -96,6 +99,9 @@ void cBattleScene_Human::OnUpdate()
 
 void cBattleScene_Human::OnExit()
 {
+	SOUND->Stop("Battle_Scene_Human");
+	SOUND->Release();
+
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
 	ASTAR->Release();

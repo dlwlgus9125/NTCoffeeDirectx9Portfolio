@@ -13,8 +13,6 @@ cSelectScene::cSelectScene()
 
 cSelectScene::~cSelectScene()
 {
-	SAFE_DELETE(m_pImage);
-	SAFE_DELETE(m_pSprite);
 }
 
 void cSelectScene::OnEnter()
@@ -84,6 +82,7 @@ void cSelectScene::OnUpdate()
 
 			SOUND->Stop("LoginBGM");
 			SCENE->SetIsSoundPlayed(false);
+			SOUND->Release();
 
 			// SCENE->ChangeScene(SCENE_BATTLE_HUMAN);
 			if(m_nCurrentPlayer == SELECT_HUMAN) SCENE->ChangeScene(SCENE_TOWN_HUMAN);
@@ -113,6 +112,7 @@ void cSelectScene::OnExit()
 	}
 
 	UI->Release();
+	SAFE_DELETE(m_pSprite);
 }
 
 void cSelectScene::OnRender()

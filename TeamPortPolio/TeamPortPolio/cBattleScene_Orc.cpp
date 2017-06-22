@@ -15,6 +15,10 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
+	SOUND->LoadFile("Battle_Orc_BGM", "Sound/BGM/BattleScene_Orc/TourneyBattle2.mp3", true);
+	SOUND->Play("Battle_Orc_BGM");
+
+	
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_ORC);
 	UI->Change(SCENE_BATTLE_ORC);
@@ -118,6 +122,9 @@ void cBattleScene_Orc::OnUpdate()
 
 void cBattleScene_Orc::OnExit()
 {
+	SOUND->Stop("Battle_Orc_BGM");
+	SOUND->Release();
+
 	OBJECT->ClearToChangeScene();
 	OBJECT->GetPlayer()->GetUnitLeader()->DeleteDeathUnitInExitScene();
 	ASTAR->Release();
