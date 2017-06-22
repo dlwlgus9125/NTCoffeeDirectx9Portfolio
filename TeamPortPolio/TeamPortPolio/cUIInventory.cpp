@@ -153,6 +153,8 @@ HRESULT cUIInventory::GetClickedItemID(OUT int& eventID, OUT int& itemID)
 			D3DXVECTOR2 vPos = D3DXVECTOR2(m_vPosition.x, m_vPosition.y);
 			if (MATH->IsCollided(INPUT->GetMousePosVector2(), vPos + m_vecSlotInfo[i].LeftTop(), vPos + m_vecSlotInfo[i].RightBottom()))
 			{
+				if (!m_vecShownData[i]) return false;
+
 				eventID = m_eEventID;
 				itemID = m_vecShownData[i]->itemID;
 				return true;
