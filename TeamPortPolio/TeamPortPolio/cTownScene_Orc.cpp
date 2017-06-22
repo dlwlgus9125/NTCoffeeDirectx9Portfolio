@@ -141,7 +141,6 @@ void cTownScene_Orc::OnExit()
 	OBJECT->ClearToChangeScene();
 	SAFE_RELEASE(m_pSprite);
 	MAP->Destroy();
-	OBJECT->Release();
 	EFFECT->Release();
 	UI->Release();
 	SOUND->Stop("Town_Orc_BGM");
