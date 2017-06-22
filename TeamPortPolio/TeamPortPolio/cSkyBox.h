@@ -41,6 +41,8 @@ public:
 	// Type을 가지고 와서 태그값 변경
 	void SetSkyType(int type);
 
+	void Release();
+
 protected:
 	vector<ST_PT_VERTEX>	m_vecVertex;
 	vector<DWORD>			m_vecIndex;

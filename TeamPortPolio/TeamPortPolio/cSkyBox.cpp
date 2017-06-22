@@ -231,3 +231,17 @@ void cSkyBox::SetSkyType(int type)
 {
 	m_mapCurrentTexture = m_mapWholeTexture[type];
 }
+
+void cSkyBox::Release()
+{
+	m_mapCurrentTexture.clear();
+
+	for (map <int, map<SKYBOX_FACE, LPDIRECT3DTEXTURE9>>::iterator it = m_mapWholeTexture.begin(); it != m_mapWholeTexture.end();it++)
+	{
+		map<SKYBOX_FACE, LPDIRECT3DTEXTURE9> mapTemp = (*it).second;
+		for each (auto p in mapTemp)
+		{
+			SAFE_RELEASE(p.second);
+		}
+	}
+}

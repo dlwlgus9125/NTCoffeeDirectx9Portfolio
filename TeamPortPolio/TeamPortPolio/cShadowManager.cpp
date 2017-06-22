@@ -118,4 +118,12 @@ void cShadowManager::Destroy()
 
 }
 
+void cShadowManager::Init()
+{
+	m_vecConstruct.clear();
+	m_alpha = 0.0f;
+	m_shadowLight = D3DXVECTOR3(0,0,0);
+	D3DXMatrixIdentity(&m_matWorld);
+}
+
 

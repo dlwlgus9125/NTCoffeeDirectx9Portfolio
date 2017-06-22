@@ -8,7 +8,6 @@ void Player_BowAttack::OnBegin(cPlayer* pPlayer)
 	pPlayer->GetBowSkin()->SetAnimationIndexBlend(BOW_PULL);
 	pPlayer->GetMesh()->SetAnimationIndexBlend(P_BOWATTACK1);
 	m_fPrevCameraDist = CAMERA->GetCameraDitance();
-	m_vPrevview = CAMERA->GetCamRotAngle();
 	
 }
 
@@ -22,7 +21,7 @@ void Player_BowAttack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 	if ((P_STATE)pPlayer->GetMesh()->GetIndex() == P_BOWATTACK1)
 	{
 		CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - m_fPrevCameraDist/10);
-		if (CAMERA->GetCameraDitance() < 1.5) CAMERA->SetCameraDistance(1.5);
+		if (CAMERA->GetCameraDitance() < 2) CAMERA->SetCameraDistance(2);
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.1f)
 		{
 			pPlayer->IsPullBow(true);
@@ -42,7 +41,6 @@ void Player_BowAttack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		OBJECT->AddPlayerArrow(pPlayer->GetCharacterEntity(), pPlayer->SetUpAim());
 		
 		CAMERA->SetCameraDistance(m_fPrevCameraDist);
-		CAMERA->SetCameraRotateAngle(m_vPrevview);
 	}
 
 }
