@@ -6,6 +6,7 @@
 
 cNpcManager::cNpcManager()
 {
+	m_vecSphere = {};
 }
 
 
@@ -21,6 +22,7 @@ void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 	{
 		m_vecSphere[i].fRadius = 0.7f;
 		m_vecSphere[i].vCenter = m_vecNpc[i].pos;
+		m_vecSphere[i].isPicked = false;
 	}
 	D3DXCreateSphere(D3DDevice, 0.7f, 10, 10, &m_pMesh, NULL);
 	SetMtrl();
@@ -258,4 +260,9 @@ void cNpcManager::Render_Text()
 		D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		m_vecFont[i]->DrawSubset(0);
 	}
+}
+
+vector<ST_SPHERE>& cNpcManager::GetSphere()
+{
+	return m_vecSphere;
 }

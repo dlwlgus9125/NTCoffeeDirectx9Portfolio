@@ -18,14 +18,7 @@ private:
 	SYNTHESIZE(float, m_fRotY, RotationY);
 	SYNTHESIZE(float, m_fRotZ, RotationZ);
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
-	SYNTHESIZE(ST_SPHERE, m_stSphere, Sphere);
-	
-	SYNTHESIZE(vector<ST_PNT_VERTEX>, vecVertex,VecVertexOrigin);
-	vector<D3DXVECTOR3> m_vecTranslatedVertex;
-	vector<ST_LINE_VERTEX> m_vecLineVertex;
-
-	D3DXVECTOR3 m_vMin;
-	D3DXVECTOR3 m_vMax;
+	vector<D3DXVECTOR3> m_vecVertex;
 public:
 	cConstruct();
 	~cConstruct();
@@ -36,8 +29,8 @@ public:
 
 	void Create(int sIndex);
 	void Destroy();
-	vector<D3DXVECTOR3> GetVecVertex() { return m_vecTranslatedVertex; }
-	vector<ST_LINE_VERTEX> GetLineVertex() { return m_vecLineVertex; }
-	LPD3DXMESH      m_pMeshSphere;
-	D3DMATERIAL9    m_stMtlSphere;
+	void SetVertex(vector<D3DXVECTOR3> v) { m_vecVertex = v; }
+	vector<D3DXVECTOR3> GetVectorVertex() { return m_vecVertex; }
+	vector<ST_LINE_VERTEX> GetTranfromedVector(vector<D3DXVECTOR3> d);
+
 };

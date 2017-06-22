@@ -2,6 +2,7 @@
 #include "cGameManager.h"
 #include "cSceneManager.h"
 #include "TestMap.h"
+#include "cHelpScene.h"
 #include "cTitleScene.h"
 #include "cTownScene.h"
 #include "cLoginScene.h"
@@ -75,9 +76,9 @@ void cGameManager::Init()
 	CHARACTERDB->Setup();
 	NPCDB->Setup();
 	SCENE->Register(SCENE_TITLE, new cTitleScene());
-	SCENE->Register(SCENE_TOWN, new cTownScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
+	SCENE->Register(SCENE_HELP, new cHelpScene());
 	SCENE->Register(SCENE_TOWN_HUMAN, new cTownScene_Human());
 	SCENE->Register(SCENE_TOWN_ORC, new cTownScene_Orc());
 	SCENE->Register(SCENE_BATTLE_HUMAN, new cBattleScene_Human());
@@ -156,6 +157,18 @@ void cGameManager::Render()
 void cGameManager::Release()
 {
 	SOUND->Release();
+	INPUT->Release();
+	OBJECT->Release();
+	TEXTURE->Destroy();
+	INPUT->Release();
+	UI->Release();
+	FONT->Destroy();
+	EFFECT->Release();
+	MAP->Destroy();
+	ASTAR->Release();
+	THREAD->Destroy();
+	DEVICE->Destroy();
+
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

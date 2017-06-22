@@ -5,6 +5,7 @@ cSceneManager::cSceneManager()
 {
 	m_current = -1;
 	m_currentScene = NULL;
+	m_isSoundPlayed = false;
 }
 
 cSceneManager::~cSceneManager()

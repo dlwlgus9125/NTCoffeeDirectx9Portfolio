@@ -14,10 +14,10 @@ public:
 	cLoadingScene();
 	~cLoadingScene();
 
-	void OnEnter();
-	void OnUpdate();
-	void OnExit();
-	void OnRender();
-	void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	virtual void OnEnter();
+	virtual void OnUpdate();
+	virtual void OnExit();
+	virtual void OnRender();
+	virtual void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

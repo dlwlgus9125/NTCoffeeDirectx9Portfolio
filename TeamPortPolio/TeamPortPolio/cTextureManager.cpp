@@ -55,6 +55,17 @@ void cTextureManager::SetTexture(string & sFullPath)
 
 void cTextureManager::Destroy()
 {
+	for each(auto m in m_mapTexture)
+	{
+		SAFE_RELEASE(m.second);
+	}
+	m_mapTexture.clear();
+	for each(auto s in m_mapCharacterResource)
+	{
+		s.second->Destroy();
+		SAFE_DELETE(s.second);
+	}
+	m_mapCharacterResource.clear();
 
 }
 

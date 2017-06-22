@@ -34,5 +34,7 @@ public:
 	void SetText();
 	void Render_Text();
 
+	vector<ST_SPHERE>& GetSphere();
+
 };
 

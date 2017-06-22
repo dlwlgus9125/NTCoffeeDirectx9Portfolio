@@ -15,12 +15,11 @@ unsigned __stdcall Thread_Astar_Update(LPVOID lpParam)
 
 unsigned __stdcall Thread_Astar_FindPath(LPVOID lpParam)
 {
-	/*while (1)
-	{
-		EnterCriticalSection(&THREAD->GetCritical_Section());	*/	
-		if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
-		/*LeaveCriticalSection(&THREAD->GetCritical_Section());
-	}*/
+
+	EnterCriticalSection(&THREAD->GetCritical_Section());
+	if (OBJECT->GetPlayer() != NULL)ASTAR->PathUpdate();//OBJECT->AddArmy();
+	LeaveCriticalSection(&THREAD->GetCritical_Section());
+
 	return 0;
 }
 
@@ -59,7 +58,7 @@ void cThreadManager::TerminateThreadByKey(int key)
 	{
 		CloseHandle(m_mapHandle[key].m_handle);
 	}
-	
+
 }
 
 void cThreadManager::SuspendThreadByKey(int key)
@@ -104,7 +103,7 @@ void cThreadManager::CloseThreadManager()
 	for each(auto m in m_mapHandle)
 	{
 		handles[size++] = m.second.m_handle;
-	}	
+	}
 
 	WaitForMultipleObjects(size, handles, TRUE, INFINITE);
 

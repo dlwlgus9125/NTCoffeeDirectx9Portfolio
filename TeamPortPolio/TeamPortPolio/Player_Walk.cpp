@@ -79,7 +79,7 @@ void Player_Walk::Move(cPlayer * pPlayer)
 	float rotY = 0.0f;
 	if (INPUT->IsKeyPress(VK_W))
 	{
-		movePos += pPlayer->GetCharacterEntity()->Forward() * 0.03f;
+		movePos += pPlayer->GetCharacterEntity()->Forward() * 0.1f;
 		if (INPUT->IsKeyPress(VK_SHIFT))
 		{
 			movePos += pPlayer->GetCharacterEntity()->Forward() * 0.03f;
@@ -87,7 +87,7 @@ void Player_Walk::Move(cPlayer * pPlayer)
 	}
 	if (INPUT->IsKeyPress(VK_S))
 	{
-		movePos -= pPlayer->GetCharacterEntity()->Forward() * 0.03f;
+		movePos -= pPlayer->GetCharacterEntity()->Forward() * 0.06f;
 	}
 
 	pPlayer->GetCharacterEntity()->SetPos(movePos);

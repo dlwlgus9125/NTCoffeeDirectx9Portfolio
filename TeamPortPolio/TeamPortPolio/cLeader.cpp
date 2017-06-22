@@ -22,9 +22,11 @@ cLeader::~cLeader()
 {
 	for each(auto v in m_vectorUnit)
 	{
-		delete v;
+		SAFE_DELETE(v);
 	}
 	m_vectorUnit.clear();
+	SAFE_DELETE(m_unitLeader);
+	SAFE_DELETE(m_pFsm);
 }
 
 void cLeader::Init()
@@ -38,10 +40,6 @@ void cLeader::Init()
 	m_arrangeCollideSphere.fRadius = 20.0f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
 	cCharacter::Init();
-
-
-
-	//AddUnit(new cUnit(m_CharacterEntity, D3DXVECTOR3(2, 0, 2) * 3.0f));
 
 	for (float z = -2.0f; z <= 1.0f; z++)
 	{
@@ -125,10 +123,11 @@ void cLeader::Update(float deltaTime)
 					break;
 				}
 			}
+			if (m_vectorUnit.size() <= 0)SetDeath(true);
 		}
 	}
 
-	
+
 
 }
 
@@ -163,6 +162,53 @@ void cLeader::AddUnit(cUnit * pUnit)
 	OBJECT->AddObject(pUnit);
 	OBJECT->AddCharacter(pUnit);
 	OBJECT->AddEntity(pUnit->GetCharacterEntity());
+}
+
+bool cLeader::AddUnitInTown(C_C_ID ID)
+{
+	if (m_vectorUnit.size() < 20)
+	{
+		cUnit* pUnit;
+		switch (ID)
+		{
+		case C_C_HUMAN_MELEE:case C_C_ORC_MELEE: pUnit = new cMeleeUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)); break;
+		case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: pUnit = new cBowUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)); break;
+		case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: pUnit = new cCavalryUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)); break;
+		}
+
+		pUnit->SetID(m_ID);
+		pUnit->Init();
+		pUnit->SetCamp(m_camp);
+		pUnit->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
+		m_vectorUnit.push_back(pUnit);
+		return true;
+	}
+	return false;
+}
+
+void cLeader::AddUnitInManager()
+{
+	for each (auto c in m_vectorUnit)
+	{
+		c->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
+		OBJECT->AddObject(c);
+		OBJECT->AddCharacter(c);
+		OBJECT->AddEntity(c->GetCharacterEntity());
+	}	
+	SetRectOffset();
+}
+
+void cLeader::DeleteDeathUnitInExitScene()
+{
+	vector<cUnit*> n_vecUnit;
+	for each(auto c in m_vectorUnit)
+	{
+		if (c->IsDeath() == false) { n_vecUnit.push_back(c); }
+		else { SAFE_DELETE(c); }
+	}
+	m_vectorUnit.clear();
+	m_vectorUnit = n_vecUnit;
+	cout << "살아남은 병사 수 : "<<m_vectorUnit.size() << endl;
 }
 
 void cLeader::DeleteUnit(int key)
@@ -212,7 +258,7 @@ void cLeader::SetMeleeType()
 	m_pFsm->Register(LEADER_STATE_MELEE_BATTLE, new Leader_State_Melee_Battle());
 	m_pFsm->Register(LEADER_STATE_MELEE_DEFENCE, new Leader_State_Melee_Defence());
 	m_TypeStart = LEADER_STATE_MELEE_IDLE;
-	for (int i = 0; i < 20; i++)AddUnit(new cMeleeUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
+	//for (int i = 0; i < 20; i++)AddUnit(new cMeleeUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
 }
 
 void cLeader::SetBowType()
@@ -222,7 +268,7 @@ void cLeader::SetBowType()
 	m_pFsm->Register(LEADER_STATE_BOW_WALK, new Leader_State_Bowman_Walk());
 	m_pFsm->Register(LEADER_STATE_BOW_BATTLE, new Leader_State_Bowman_Battle());
 	m_TypeStart = LEADER_STATE_BOW_IDLE;
-	for (int i = 0; i < 20; i++)AddUnit(new cBowUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
+	//for (int i = 0; i < 20; i++)AddUnit(new cBowUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
 }
 
 void cLeader::SetCavalryType()
@@ -232,15 +278,15 @@ void cLeader::SetCavalryType()
 	m_pFsm->Register(LEADER_STATE_CAVALRY_WALK, new Leader_State_Cavalry_Walk());
 	m_pFsm->Register(LEADER_STATE_CAVALRY_BATTLE, new Leader_State_Cavalry_Battle());
 	m_TypeStart = LEADER_STATE_CAVALRY_IDLE;
-	for (int i = 0; i < 20; i++)AddUnit(new cCavalryUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
+	//for (int i = 0; i < 20; i++)AddUnit(new cCavalryUnit(m_CharacterEntity, D3DXVECTOR3(0, 0, 0)));
 }
 
 void cLeader::SetType()
 {
 	switch (m_ID)
 	{
-	case C_C_HUMAN_MALE: case C_C_ORC_MELEE: SetMeleeType();break;
-	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType();break;
+	case C_C_HUMAN_MELEE: case C_C_ORC_MELEE: SetMeleeType(); break;
+	case C_C_HUMAN_BOWMAN:case C_C_ORC_BOWMAN: SetBowType(); break;
 	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: SetCavalryType(); break;
 	}
 }
@@ -249,7 +295,7 @@ void cLeader::ClickedButtonOne()
 {
 	switch (m_type)
 	{
-	case C_C_HUMAN_MALE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
+	case C_C_HUMAN_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}

@@ -6,10 +6,10 @@ class cTownScene_Orc : public cIScene
 	LPD3DXSPRITE			m_pSprite;
 
 	vector<ST_SPHERE>		m_vecST_Sphere;
-	LPD3DXMESH				m_pMeshSphere;
-	vector<D3DMATERIAL9>	m_vecMtlSphere;
 
 	ST_WEATHER				m_stWeather;
+
+	int						m_nNextSceneID;
 public:
 	cTownScene_Orc();
 	~cTownScene_Orc();
@@ -21,5 +21,6 @@ public:
 	virtual void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Setup_DirLight();
+	void ConnectSpere();
 };
 

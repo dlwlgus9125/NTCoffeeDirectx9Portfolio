@@ -251,7 +251,10 @@
     <Filter Include="07. UI\02. cUIText">
       <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. UI\09. cInventory">
+    <Filter Include="03. cScene\06. cHelpScene">
+      <UniqueIdentifier>{471b3d7e-629c-42e9-8ffc-d630adc2f282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. UI\09. cUIInventory">
       <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\03. cTextureManager">
@@ -517,10 +520,13 @@
       <Filter>00. Manager\14. cThreadManager</Filter>
     </ClInclude>
     <ClInclude Include="cUIInventory.h">
-      <Filter>07. UI\09. cInventory</Filter>
+      <Filter>07. UI\09. cUIInventory</Filter>
     </ClInclude>
     <ClInclude Include="cLoginScene.h">
       <Filter>03. cScene\01. cLoginScene</Filter>
+    </ClInclude>
+    <ClInclude Include="cHelpScene.h">
+      <Filter>03. cScene\06. cHelpScene</Filter>
     </ClInclude>
     <ClInclude Include="cNpcManager.h" />
     <ClInclude Include="cNpcDB.h" />
@@ -849,13 +855,16 @@
       <Filter>00. Manager\14. cThreadManager</Filter>
     </ClCompile>
     <ClCompile Include="cUIInventory.cpp">
-      <Filter>07. UI\09. cInventory</Filter>
+      <Filter>07. UI\09. cUIInventory</Filter>
     </ClCompile>
     <ClCompile Include="Player_BowAttack.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="Player_Death.cpp">
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cHelpScene.cpp">
+      <Filter>03. cScene\06. cHelpScene</Filter>
     </ClCompile>
     <ClCompile Include="cNpcManager.cpp" />
     <ClCompile Include="cNpcDB.cpp" />

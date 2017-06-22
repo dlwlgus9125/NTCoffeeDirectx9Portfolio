@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "cUIMiniMap.h"
 
+#include "cUIButton.h"
 
-cUIMiniMap::cUIMiniMap() : m_pTexture(NULL), m_nCellPerRow(0), m_nAlpha(NULL)
+cUIMiniMap::cUIMiniMap() : m_pTexture(NULL), m_nCellPerRow(0), m_nAlpha(255), m_pBtn_Exit(NULL)
 {
 	SetSize(ST_SIZEN(500, 500));
 	m_isHidden = true;
@@ -15,6 +16,19 @@ cUIMiniMap::~cUIMiniMap()
 
 void cUIMiniMap::Update(float deltaTime)
 {
+	if (m_pBtn_Exit) m_pBtn_Exit->SetHidden(m_isHidden);
+	if (m_isHidden) return;
+	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
+	if (m_pBtn_Exit)
+	{
+		m_pBtn_Exit->Update(deltaTime);
+		if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED)
+		{
+			m_isHidden = true;
+		}
+	}	
+	// << 
+
 	cUIObject::Update(deltaTime);
 }
 
@@ -29,14 +43,16 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
 	pSprite->Draw(m_pTexture, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
-
 	pSprite->End();
+
+	m_pBtn_Exit->Render(pSprite);
 
 	cUIObject::Render(pSprite);
 }
 
 void cUIMiniMap::Destroy()
 {
+	m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 
@@ -65,4 +81,12 @@ int cUIMiniMap::GetIndex()
 	}
 	
 	return -1;
+}
+
+void cUIMiniMap::Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked)
+{
+	m_pBtn_Exit = new cUIButton;
+	m_vBtnPos = m_vPosition + btnPos;
+	m_pBtn_Exit->Setup(m_vBtnPos, UI_BUTTON);
+	m_pBtn_Exit->Setup_Button(sPath_idle, sPath_mouseover, sPath_clicked, TOWN_BTN_SHOPEXIT);
 }
