@@ -39,14 +39,18 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 	RECT rc;
 
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-	pSprite->SetTransform(&m_matWorld);
-
-	if (m_vBGPos)
+	
+	if (m_pTex_BG)
 	{
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		D3DXMatrixTranslation(&matWorld, m_vBGPos.x, m_vBGPos.y, m_vBGPos.z);
 		SetRect(&rc, 0, 0, m_stBGSize.nWidth, m_stBGSize.nHeight);
-		pSprite->Draw(m_pTex_BG, &rc, &D3DXVECTOR3(0, 0, 0), &m_vBGPos, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+		pSprite->SetTransform(&matWorld);
+		pSprite->Draw(m_pTex_BG, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 	}
 
+	pSprite->SetTransform(&m_matWorld);
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
 	pSprite->Draw(m_pTexture, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
 

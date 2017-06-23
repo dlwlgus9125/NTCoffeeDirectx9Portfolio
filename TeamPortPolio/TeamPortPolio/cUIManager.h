@@ -27,7 +27,6 @@ class cUIManager : public Singleton<cUIManager>
 	cUIMiniMap*					m_pTrooptype;
 	cUIMiniMap*					m_pResultMessage;
 
-	void Setup_TitleScene();
 	void Setup_TownScene();
 	void Setup_LoginScene();
 	void Setup_SelectScene();

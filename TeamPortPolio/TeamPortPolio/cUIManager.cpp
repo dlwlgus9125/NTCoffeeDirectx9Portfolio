@@ -1,52 +1,6 @@
 #include "stdafx.h"
 #include "cUIManager.h"
 
-// 타이틀씬에 대한 UI 설정
-void cUIManager::Setup_TitleScene()
-{
-	// 미니맵
-	m_pMiniMap = new cUIMiniMap;
-	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/titlescene/minimap/testmap.png", 150);
-	m_pMiniMap->SetAlpha(150);
-
-	// 미니맵버튼 1
-	cUIButton* pBtn_rect = new cUIButton;
-	pBtn_rect->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_rect->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
-		"Image/UI/titlescene/button/formation_rect/mouseover.png", 
-		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
-	m_vecEventBtn.push_back(pBtn_rect);
-	pBtn_rect->AddChild(pBtn_rect);
-
-	// 미니맵버튼 2
-	cUIButton* pBtn_tri = new cUIButton;
-	pBtn_tri->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_tri->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
-		"Image/UI/titlescene/button/formation_tri/mouseover.png",
-		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
-	m_vecEventBtn.push_back(pBtn_tri);
-	m_pMiniMap->AddChild(pBtn_tri);
-
-	// 미니맵버튼 3
-	cUIButton* pBtn_atk = new cUIButton;
-	pBtn_atk->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_atk->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
-		"Image/UI/titlescene/button/state_att/mouseover.png",
-		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
-	m_vecEventBtn.push_back(pBtn_atk);
-	m_pMiniMap->AddChild(pBtn_atk);
-
-	// 미니맵버튼 4
-	cUIButton* pBtn_def = new cUIButton;
-	pBtn_def->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
-	pBtn_def->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
-		"Image/UI/titlescene/button/state_def/mouseover.png",
-		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
-	m_vecEventBtn.push_back(pBtn_def);
-	m_pMiniMap->AddChild(pBtn_def);
-}
-
 void cUIManager::Setup_TownScene()
 {
 	// >> 인벤토리 셋팅 : 상점 구매용
@@ -251,7 +205,7 @@ void cUIManager::Setup_TownScene()
 	// >> 병종 상태 창
 	m_pTrooptype = new cUIMiniMap();
 	m_pTrooptype->Setup(D3DXVECTOR3(WND_WIDTH * 0.2f, WND_HEIGHT * 0.05f, 0), UI_MINIMAP);
-	m_pTrooptype->Setup_Image("image/UI/townscene/trooptype/bg.png", 150);
+	m_pTrooptype->Setup_Image("image/UI/townscene/trooptype/img_bg.png", 150);
 	m_pTrooptype->Setup_exitbtn(D3DXVECTOR3(740, 0, 0),
 		"image/ui/townscene/trooptype/btn_idle.png", "image/ui/townscene/trooptype/btn_mouseover.png", "image/ui/townscene/trooptype/btn_select.png");
 	m_pTrooptype->SetEventID(TOWN_MINIMAP_TROOPTYPE);
@@ -392,16 +346,16 @@ void cUIManager::Setup_BattleScene_Orc()
 
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
-	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
+	m_pMiniMap->Setup(D3DXVECTOR3(415, 185, 0), UI_MINIMAP);
 	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/minimap.png", 150);
 	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
 		"image/ui/BattleScene_Orc/minimap/btn_idle.png", "image/ui/BattleScene_Orc/minimap/btn_mouseover.png", "image/ui/BattleScene_Orc/minimap/btn_select.png");
-	m_pMiniMap->Setup_BG(D3DXVECTOR3(140, 100, 0), "image/ui/BattleScene_Human/minimap/BG.png");
-	m_pMiniMap->SetAlpha(150);
+	m_pMiniMap->Setup_BG(D3DXVECTOR3(265, 180, 0), "image/ui/BattleScene_Orc/minimap/img_bg.png");
+	m_pMiniMap->SetAlpha(200);
 
 	// 미니맵버튼 1
 	cUIButton* pBtn_start = new cUIButton;
-	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_start->Setup(D3DXVECTOR3(95, 139, 0), UI_BUTTON);
 	pBtn_start->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
 		"Image/UI/titlescene/button/formation_rect/mouseover.png",
 		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
@@ -410,7 +364,7 @@ void cUIManager::Setup_BattleScene_Orc()
 
 	// 미니맵버튼 2
 	cUIButton* pBtn_Help = new cUIButton;
-	pBtn_Help->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Help->Setup(D3DXVECTOR3(95, 245, 0), UI_BUTTON);
 	pBtn_Help->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
 		"Image/UI/titlescene/button/formation_tri/mouseover.png",
 		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
@@ -419,7 +373,7 @@ void cUIManager::Setup_BattleScene_Orc()
 
 	// 미니맵버튼 3
 	cUIButton* pBtn_Exit = new cUIButton;
-	pBtn_Exit->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Exit->Setup(D3DXVECTOR3(495, 139, 0), UI_BUTTON);
 	pBtn_Exit->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
 		"Image/UI/titlescene/button/state_att/mouseover.png",
 		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
@@ -428,7 +382,7 @@ void cUIManager::Setup_BattleScene_Orc()
 
 	// 미니맵버튼 4
 	cUIButton* pButton4 = new cUIButton;
-	pButton4->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pButton4->Setup(D3DXVECTOR3(495, 245, 0), UI_BUTTON);
 	pButton4->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
 		"Image/UI/titlescene/button/state_def/mouseover.png",
 		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
@@ -459,15 +413,16 @@ void cUIManager::Setup_BattleScene_Human()
 	// << 
 	// 미니맵
 	m_pMiniMap = new cUIMiniMap;
-	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/BattleScene_Human/minimap/ground3.png", 150);
+	m_pMiniMap->Setup(D3DXVECTOR3(415, 185, 0), UI_MINIMAP);
+	m_pMiniMap->Setup_Image("image/UI/BattleScene_Human/minimap/bg.png", 150);
+	m_pMiniMap->Setup_BG(D3DXVECTOR3(265, 180, 0), "image/ui/BattleScene_Human/minimap/BG.png");
 	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
 		"image/ui/BattleScene_Human/minimap/btn_idle.png", "image/ui/BattleScene_Human/minimap/btn_mouseover.png", "image/ui/BattleScene_Human/minimap/btn_select.png");
-	m_pMiniMap->SetAlpha(150);
+	m_pMiniMap->SetAlpha(200);
 
 	// 미니맵버튼 1
 	cUIButton* pBtn_start = new cUIButton;
-	pBtn_start->Setup(D3DXVECTOR3(50, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_start->Setup(D3DXVECTOR3(95, 139, 0), UI_BUTTON);
 	pBtn_start->Setup_Button("Image/UI/titlescene/button/formation_rect/idle.png",
 		"Image/UI/titlescene/button/formation_rect/mouseover.png",
 		"Image/UI/titlescene/button/formation_rect/selected.png", TITLE_BTN_FMT_RECT);
@@ -476,7 +431,7 @@ void cUIManager::Setup_BattleScene_Human()
 
 	// 미니맵버튼 2
 	cUIButton* pBtn_Help = new cUIButton;
-	pBtn_Help->Setup(D3DXVECTOR3(150, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Help->Setup(D3DXVECTOR3(95, 245, 0), UI_BUTTON);
 	pBtn_Help->Setup_Button("Image/UI/titlescene/button/formation_tri/idle.png",
 		"Image/UI/titlescene/button/formation_tri/mouseover.png",
 		"Image/UI/titlescene/button/formation_tri/selected.png", TITLE_BTN_FMT_TRI);
@@ -485,7 +440,7 @@ void cUIManager::Setup_BattleScene_Human()
 
 	// 미니맵버튼 3
 	cUIButton* pBtn_Exit = new cUIButton;
-	pBtn_Exit->Setup(D3DXVECTOR3(300, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pBtn_Exit->Setup(D3DXVECTOR3(495, 139, 0), UI_BUTTON);
 	pBtn_Exit->Setup_Button("Image/UI/titlescene/button/state_att/idle.png",
 		"Image/UI/titlescene/button/state_att/mouseover.png",
 		"Image/UI/titlescene/button/state_att/selected.png", TITLE_BTN_ATTSTATE);
@@ -494,7 +449,7 @@ void cUIManager::Setup_BattleScene_Human()
 
 	// 미니맵버튼 4
 	cUIButton* pButton4 = new cUIButton;
-	pButton4->Setup(D3DXVECTOR3(400, m_pMiniMap->GetSize().nHeight, 0), UI_BUTTON);
+	pButton4->Setup(D3DXVECTOR3(495, 245, 0), UI_BUTTON);
 	pButton4->Setup_Button("Image/UI/titlescene/button/state_def/idle.png",
 		"Image/UI/titlescene/button/state_def/mouseover.png",
 		"Image/UI/titlescene/button/state_def/selected.png", TITLE_BTN_DEFSTATE);
