@@ -303,41 +303,41 @@ void cMapManager::SetConstructSize()
 		m_vecConstruct[18]->SetRadius(5);
 		m_vecConstruct[19]->SetRadius(5);
 
-		m_vecConstruct[20]->SetRadius(6);
-		m_vecConstruct[21]->SetRadius(6);
-		m_vecConstruct[22]->SetRadius(6);
-		m_vecConstruct[23]->SetRadius(4);
-		m_vecConstruct[24]->SetRadius(4);
+		m_vecConstruct[20]->SetRadius(2);
+		m_vecConstruct[21]->SetRadius(2);
+		m_vecConstruct[22]->SetRadius(2);
+		m_vecConstruct[23]->SetRadius(2);
+		m_vecConstruct[24]->SetRadius(2);
 
-		m_vecConstruct[25]->SetRadius(6);
-		m_vecConstruct[26]->SetRadius(6);
-		m_vecConstruct[27]->SetRadius(4);
-		m_vecConstruct[28]->SetRadius(4);
-		m_vecConstruct[29]->SetRadius(4);
+		m_vecConstruct[25]->SetRadius(2);
+		m_vecConstruct[26]->SetRadius(2);
+		m_vecConstruct[27]->SetRadius(2);
+		m_vecConstruct[28]->SetRadius(2);
+		m_vecConstruct[29]->SetRadius(2);
 	
 	
-		m_vecConstruct[30]->SetRadius(6);
-		m_vecConstruct[31]->SetRadius(6);
-		m_vecConstruct[32]->SetRadius(6);
-		m_vecConstruct[33]->SetRadius(4);
-		m_vecConstruct[34]->SetRadius(4);
+		m_vecConstruct[30]->SetRadius(2);
+		m_vecConstruct[31]->SetRadius(2);
+		m_vecConstruct[32]->SetRadius(2);
+		m_vecConstruct[33]->SetRadius(2);
+		m_vecConstruct[34]->SetRadius(2);
 
-		m_vecConstruct[35]->SetRadius(6);
-		m_vecConstruct[36]->SetRadius(6);
-		m_vecConstruct[37]->SetRadius(4);
-		m_vecConstruct[38]->SetRadius(4);
-		m_vecConstruct[39]->SetRadius(4);
+		m_vecConstruct[35]->SetRadius(2);
+		m_vecConstruct[36]->SetRadius(2);
+		m_vecConstruct[37]->SetRadius(2);
+		m_vecConstruct[38]->SetRadius(2);
+		m_vecConstruct[39]->SetRadius(2);
 	
-		m_vecConstruct[40]->SetRadius(6);
-		m_vecConstruct[41]->SetRadius(6);
-		m_vecConstruct[42]->SetRadius(6);
-		m_vecConstruct[43]->SetRadius(4);
-		m_vecConstruct[44]->SetRadius(4);
+		m_vecConstruct[40]->SetRadius(2);
+		m_vecConstruct[41]->SetRadius(2);
+		m_vecConstruct[42]->SetRadius(2);
+		m_vecConstruct[43]->SetRadius(2);
+		m_vecConstruct[44]->SetRadius(2);
 
-		m_vecConstruct[45]->SetRadius(6);
-		m_vecConstruct[46]->SetRadius(6);
-		m_vecConstruct[47]->SetRadius(4);
-		m_vecConstruct[48]->SetRadius(4);
+		m_vecConstruct[45]->SetRadius(2);
+		m_vecConstruct[46]->SetRadius(2);
+		m_vecConstruct[47]->SetRadius(2);
+		m_vecConstruct[48]->SetRadius(2);
 
 	
 	}
@@ -400,9 +400,68 @@ void cMapManager::SetConstructSize()
 		m_vecConstruct[48]->SetRadius(3);
 		m_vecConstruct[49]->SetRadius(3);
 	
+		m_vecConstruct[50]->SetRadius(2);
+		m_vecConstruct[51]->SetRadius(2);
+		m_vecConstruct[52]->SetRadius(2);
+		m_vecConstruct[53]->SetRadius(2);
+		m_vecConstruct[54]->SetRadius(2);
+		m_vecConstruct[55]->SetRadius(2);
+		m_vecConstruct[56]->SetRadius(2);
+		m_vecConstruct[57]->SetRadius(2);
+		m_vecConstruct[58]->SetRadius(2);
+		m_vecConstruct[59]->SetRadius(2); 
+		m_vecConstruct[60]->SetRadius(3);
+		m_vecConstruct[61]->SetRadius(2);
+		m_vecConstruct[62]->SetRadius(2);
+		m_vecConstruct[63]->SetRadius(2);
+		m_vecConstruct[64]->SetRadius(2);
+		m_vecConstruct[65]->SetRadius(2);
+		m_vecConstruct[66]->SetRadius(2);
+		m_vecConstruct[67]->SetRadius(2);
+		m_vecConstruct[68]->SetRadius(2);
+		m_vecConstruct[69]->SetRadius(2); 
+		m_vecConstruct[70]->SetRadius(3);
+		m_vecConstruct[71]->SetRadius(2);
+		m_vecConstruct[72]->SetRadius(2);
+		m_vecConstruct[73]->SetRadius(2);
+		m_vecConstruct[74]->SetRadius(2);
+		m_vecConstruct[75]->SetRadius(2);
+		m_vecConstruct[76]->SetRadius(2);
+		m_vecConstruct[77]->SetRadius(2);
+		m_vecConstruct[78]->SetRadius(2);
+		m_vecConstruct[79]->SetRadius(2); 
+		m_vecConstruct[80]->SetRadius(3);
+		m_vecConstruct[81]->SetRadius(2);
+		m_vecConstruct[82]->SetRadius(2);
+		m_vecConstruct[83]->SetRadius(2);
+		m_vecConstruct[84]->SetRadius(2);
+		m_vecConstruct[85]->SetRadius(2);
+		m_vecConstruct[86]->SetRadius(2);
+		m_vecConstruct[87]->SetRadius(2);
+		m_vecConstruct[88]->SetRadius(2);
+		m_vecConstruct[89]->SetRadius(2); 
+		m_vecConstruct[90]->SetRadius(3);
+		m_vecConstruct[91]->SetRadius(2);
+		m_vecConstruct[92]->SetRadius(2);
+		m_vecConstruct[93]->SetRadius(2);
+		m_vecConstruct[94]->SetRadius(2);
+		m_vecConstruct[95]->SetRadius(2);
+		m_vecConstruct[96]->SetRadius(2);
+		m_vecConstruct[97]->SetRadius(2);
+		m_vecConstruct[98]->SetRadius(2);
+		m_vecConstruct[99]->SetRadius(2);
 	
 	
-	
+		m_vecConstruct[100]->SetRadius(3);
+		m_vecConstruct[101]->SetRadius(3);
+		m_vecConstruct[102]->SetRadius(3);
+		m_vecConstruct[103]->SetRadius(3);
+		m_vecConstruct[104]->SetRadius(3);
+		m_vecConstruct[105]->SetRadius(3);
+		m_vecConstruct[106]->SetRadius(3);
+		m_vecConstruct[107]->SetRadius(3);
+		m_vecConstruct[108]->SetRadius(3);
+		m_vecConstruct[109]->SetRadius(3);
 	
 
 	
