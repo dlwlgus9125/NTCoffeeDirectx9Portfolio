@@ -118,6 +118,7 @@ void cTownScene_Human::OnUpdate()
 			cout << "¸ø»ï!" << endl;
 		}
 		cout << "º´»ç¼ö : " << OBJECT->GetPlayer()->GetUnitLeader()->GetUnits().size() << endl;
+		//UI->SetEvent(TOWN_TAB_TROOPINFO, )
 		break;
 	}
 	if (INPUT->IsMouseUp(MOUSE_LEFT))
