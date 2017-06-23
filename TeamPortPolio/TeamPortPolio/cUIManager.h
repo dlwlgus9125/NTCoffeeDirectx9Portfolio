@@ -48,5 +48,6 @@ public:
 	void CreateResultMessage(int resultID);
 
 	void DrawAim(LPD3DXSPRITE pSprite);
+	void Update_MinimapPos(D3DXVECTOR2 pos);
 };
 

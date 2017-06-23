@@ -355,6 +355,15 @@ void cUIManager::Setup_BattleScene_Orc()
 	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(575, -25, 0),
 		"image/ui/BattleScene_Orc/minimap/btn_idle.png", "image/ui/BattleScene_Orc/minimap/btn_mouseover.png", "image/ui/BattleScene_Orc/minimap/btn_select.png");
 	m_pMiniMap->Setup_BG(D3DXVECTOR3(265, 110, 0), "image/ui/BattleScene_Orc/minimap/img_bg.png");
+	switch (OBJECT->GetPlayerID())
+	{
+	case C_C_ORC_MALE:
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		break;
+	case C_C_HUMAN_MALE:
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		break;
+	}	
 	m_pMiniMap->SetAlpha(200);
 
 	// �̴ϸʹ�ư 1
@@ -452,6 +461,15 @@ void cUIManager::Setup_BattleScene_Human()
 	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(575, -25, 0),
 		"image/ui/BattleScene_Human/minimap/btn_idle.png", "image/ui/BattleScene_Human/minimap/btn_mouseover.png", "image/ui/BattleScene_Human/minimap/btn_select.png");
 	m_pMiniMap->Setup_BG(D3DXVECTOR3(265, 110, 0), "image/ui/BattleScene_Human/minimap/img_bg.png");
+	switch (OBJECT->GetPlayerID())
+	{
+	case C_C_ORC_MALE:
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		break;
+	case C_C_HUMAN_MALE:
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		break;
+	}
 	m_pMiniMap->SetAlpha(200);
 
 	// �̴ϸʹ�ư 1
@@ -848,4 +866,12 @@ void cUIManager::CreateResultMessage(int resultID)
 	m_vecEventBtn.push_back(pBnt_Exit);
 	m_pResultMessage->AddChild(pBnt_Exit);
 	m_pResultMessage->SetHiddenAll(false);
+}
+
+void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos)
+{
+	if (!m_pMiniMap) return;
+
+	D3DXVECTOR2 uv = MAP->GetPlayerPos_RateBased(pos.x, pos.y);
+	m_pMiniMap->Update_Location(uv);
 }

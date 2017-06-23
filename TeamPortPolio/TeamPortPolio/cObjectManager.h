@@ -74,5 +74,6 @@ public:
 	void SetCurrentLeader(LEADER_TYPE leaderType);
 	int GetCurrentLeaderType();
 	float GetPlayerHPRate();
+	D3DXVECTOR2 GetPlayerPosV2();
 };
 
