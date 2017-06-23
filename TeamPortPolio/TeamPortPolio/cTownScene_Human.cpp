@@ -168,6 +168,10 @@ void cTownScene_Human::OnRender()
 	MAP->Render();
 	EFFECT->Render_End();
 	OBJECT->Render();
+	if ((P_STATE)OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
+	{
+		UI->DrawAim(m_pSprite);
+	}
 	UI->Render(m_pSprite);
 	/*if (OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
 	{

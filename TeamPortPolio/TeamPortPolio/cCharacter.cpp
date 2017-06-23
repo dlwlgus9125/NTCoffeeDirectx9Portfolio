@@ -41,12 +41,9 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
-	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
+	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
-
-	
-
 
 	if (m_Status->m_HP <= 0.0f&&m_isDeath == false)SetAnimDeath();
 }
@@ -110,9 +107,6 @@ void cCharacter::Render()
 		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 		D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-
-
-
 	}
 
 	RenderSphere();
@@ -151,7 +145,7 @@ void cCharacter::UpdateNearConstruct()
 {
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
 
-	cout << MAP->GetvecConstruct().size() << endl;
+	//cout << MAP->GetvecConstruct().size() << endl;
 	for each (cConstruct* p in MAP->GetvecConstruct())
 	{
 		if (MATH->Distance(movePos, p->GetPosition()) + m_CollideSphere.fRadius - p->GetRadius() < 0)
