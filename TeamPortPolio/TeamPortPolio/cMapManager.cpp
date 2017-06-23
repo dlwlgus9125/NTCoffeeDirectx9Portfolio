@@ -192,10 +192,11 @@ float cMapManager::GetMinX()
 void cMapManager::Destroy()
 {
 	m_vecPosOfNode.clear();
-	//m_pSkyBox->Release();
+	m_pSkyBox->Release();
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{
+		m_vecConstruct[i]->Destroy();
 		SAFE_DELETE(m_vecConstruct[i]);
 	}
 	m_vecConstruct.clear();

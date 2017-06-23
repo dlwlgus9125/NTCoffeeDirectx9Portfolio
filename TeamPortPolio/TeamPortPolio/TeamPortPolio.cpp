@@ -63,7 +63,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			if (msg.message == WM_QUIT)
 			{
 				exit(0);
-				
+				THREAD->CloseThreadManager();
+				GAMEMAIN->Release();
 				break;
 			}
 			else
@@ -81,7 +82,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 	
-
+	THREAD->CloseThreadManager();
+	GAMEMAIN->Release();
 	return (int)msg.wParam;
 }
 
@@ -167,8 +169,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
-			
-
+			THREAD->CloseThreadManager();
+			GAMEMAIN->Release();
 			DestroyWindow(hWnd);
 			break;
 		default:
@@ -186,7 +188,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_DESTROY:
 		THREAD->CloseThreadManager();
-
 		GAMEMAIN->Release();
 		PostQuitMessage(0);
 		break;

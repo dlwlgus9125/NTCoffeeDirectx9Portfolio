@@ -192,6 +192,7 @@ void cLeader::AddUnitInManager()
 	for each (auto c in m_vectorUnit)
 	{
 		c->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
+		c->SetIdleState();
 		OBJECT->AddObject(c);
 		OBJECT->AddCharacter(c);
 		OBJECT->AddEntity(c->GetCharacterEntity());

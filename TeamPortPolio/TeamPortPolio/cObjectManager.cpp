@@ -58,10 +58,11 @@ void cObjectManager::Render()
 	int count = 0;
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
-		if (FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
-		{
-			m_vecObject[i]->Render(); count++;
-		}
+		
+			/*if ((((cCharacter*)m_vecObject[i])->GetID() == C_C_HUMAN_MALE || ((cCharacter*)m_vecObject[i])->GetID() == C_C_ORC_MALE)||FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
+			{*/
+				m_vecObject[i]->Render(); count++;
+		//	}
 	}	
 
 	for each (auto p in OBJECT->GetPlayerArrows())
@@ -211,6 +212,7 @@ void cObjectManager::ClearToChangeScene()
 		else { SAFE_DELETE(c);  }
 	}
 	m_vecLeader.clear();
+	ClearArrow();
 }
 
 void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
