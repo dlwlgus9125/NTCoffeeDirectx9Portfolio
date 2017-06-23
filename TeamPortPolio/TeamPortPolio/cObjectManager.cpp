@@ -257,3 +257,10 @@ float cObjectManager::GetPlayerHPRate()
 	ST_Character* stat = m_player->GetStatus();
 	return  (stat->m_HP) / (stat->m_MaxHP);
 }
+
+D3DXVECTOR2 cObjectManager::GetPlayerPosV2()
+{
+	if (!m_player) return D3DXVECTOR2(0,0);
+
+	return D3DXVECTOR2(m_player->GetCharacterEntity()->Pos().x, m_player->GetCharacterEntity()->Pos().z);
+}

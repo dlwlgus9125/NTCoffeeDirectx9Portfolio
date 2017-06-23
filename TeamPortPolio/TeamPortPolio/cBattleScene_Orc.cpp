@@ -120,6 +120,8 @@ void cBattleScene_Orc::OnUpdate()
 			}
 		}
 	}
+
+	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
 }
 
 void cBattleScene_Orc::OnExit()
