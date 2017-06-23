@@ -6,6 +6,8 @@
 cTownScene_Orc::cTownScene_Orc()
 {
 	SOUND->LoadFile("Town_Orc_BGM", "Sound/BGM/TownScene_Orc/Orgrimmar.mp3", true);
+	SOUND->LoadFile("coin", "Sound/effect/coins_dropped_1.wav", false);
+	SOUND->LoadFile("putonoff", "Sound/effect/putonoff.mp3", false);
 	m_nNextSceneID = -1;
 }
 
@@ -74,28 +76,34 @@ void cTownScene_Orc::OnUpdate()
 	{
 	case TOWN_TAB_INVENTORY:
 		OBJECT->SellItem(itemID);
+		SOUND->Play("coin");
 		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_ATT:
 		OBJECT->BuyItem(itemID);
+		SOUND->Play("coin");
 		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_SHOP_DEF:
 		OBJECT->BuyItem(itemID);
+		SOUND->Play("coin");
 		UI->AddItem_Tab(TOWN_TAB_INVENTORY);
 		break;
 	case TOWN_TAB_INVENTORY_EQUIP:
 		OBJECT->PutOnItem(itemID);
+		SOUND->Play("putonoff", 3.0f);
 		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
 	case TOWN_INVENTORY:
 		OBJECT->PutOffItem(itemID);
+		SOUND->Play("putonoff", 3.0f);
 		UI->ResetEquipment(OBJECT->GetEquipment());
 		break;
 	case TOWN_TAB_RECRUIT:
 		int trooptype = itemID;
 		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
 		{
+			SOUND->Play("coin");
 			cout << "»ï!" << endl;
 		}
 		else
