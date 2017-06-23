@@ -62,6 +62,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (msg.message == WM_QUIT)
 			{
+				THREAD->CloseThreadManager();
+
+				GAMEMAIN->Release();
 				exit(0);
 				THREAD->CloseThreadManager();
 				GAMEMAIN->Release();

@@ -14,6 +14,7 @@
 #include "cSceneCamera.h"
 #include "cNpcDB.h"
 
+
 void cGameManager::Init()
 {
 	DEVICE->Init();
@@ -82,7 +83,6 @@ void cGameManager::Init()
 	FRUSTUM->Setup();
 	MAP->StartMain();
 	ASTAR->Init();
-	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
 	SCENE->Register(SCENE_HELP, new cHelpScene());
@@ -184,7 +184,6 @@ void cGameManager::Release()
 	ASTAR->Release();
 	THREAD->Destroy();
 	DEVICE->Destroy();
-
 }
 
 void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

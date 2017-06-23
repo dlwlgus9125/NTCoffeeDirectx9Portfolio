@@ -393,9 +393,10 @@ void cUIManager::Setup_BattleScene_Orc()
 	// ¹Ì´Ï¸Ê
 	m_pMiniMap = new cUIMiniMap;
 	m_pMiniMap->Setup(D3DXVECTOR3(WND_WIDTH * 0.25f, WND_HEIGHT * 0.10f, 0), UI_MINIMAP);
-	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/ground.png", 150);
+	m_pMiniMap->Setup_Image("image/UI/BattleScene_Orc/minimap/minimap.png", 150);
 	m_pMiniMap->Setup_exitbtn(D3DXVECTOR3(674, 0, 0),
 		"image/ui/BattleScene_Orc/minimap/btn_idle.png", "image/ui/BattleScene_Orc/minimap/btn_mouseover.png", "image/ui/BattleScene_Orc/minimap/btn_select.png");
+	m_pMiniMap->Setup_BG(D3DXVECTOR3(140, 100, 0), "image/ui/BattleScene_Human/minimap/BG.png");
 	m_pMiniMap->SetAlpha(150);
 
 	// ¹Ì´Ï¸Ê¹öÆ° 1
@@ -614,9 +615,6 @@ void cUIManager::Change(int sceneID)
 
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		Setup_TitleScene();
-		break;
 	case SCENE_LOGIN:
 		Setup_LoginScene();
 		break;

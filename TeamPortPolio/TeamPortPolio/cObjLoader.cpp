@@ -504,7 +504,7 @@ LPD3DXMESH cObjLoader::LoadMesh_Map(OUT vector<cMtlTex*> &vecMtlTex, OUT vector<
 			}
 			if (createMesh == true)		pConstruct->Create(nSID);
 
-
+			pConstruct->SetVecVertex(vecVertex);
 			vecConstruct.push_back(pConstruct);
 		}
 		else if (szTemp[0] == 'p')

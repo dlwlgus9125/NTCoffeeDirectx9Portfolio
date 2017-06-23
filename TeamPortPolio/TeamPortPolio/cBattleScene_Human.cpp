@@ -95,6 +95,8 @@ void cBattleScene_Human::OnUpdate()
 		break;
 	}
 	// <<
+	OBJECT->Update(TIME->DeltaTime());
+
 	if (TIME->UpdateOneSecond())
 	{
 		for each(auto L in OBJECT->GetLeader())
@@ -105,7 +107,7 @@ void cBattleScene_Human::OnUpdate()
 				{
 					UI->CreateResultMessage(BATTLE_MINIMAP_VICTORY);
 				}
-				else if (L->GetCamp() == CAMP_PLAYER&&OBJECT->GetPlayer()->IsDeath() == true)
+				else if (OBJECT->GetPlayer()->IsDeath() == true)
 				{
 					UI->CreateResultMessage(BATTLE_MINIMAP_DEFEAT);
 				}

@@ -128,9 +128,9 @@ void cPlayer::Update(float deltaTime)
 
 		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 		m_pFsm->Update(deltaTime);
-
-		//MAP->GetHeight(movePos.x, movePos.y, movePos.z);
+	
 		UpdateNearConstruct();
+	
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
 		if (INPUT->IsKeyPress(VK_A))

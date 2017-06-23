@@ -18,8 +18,8 @@ void cEffectManager::OnEnter(ST_WEATHER weather)
 	m_stWeather = weather;
 
 	int cellPerRow = MAP->GetMap()->GetCellPerRow();
-	int cellSpace = MAP->GetMap()->GetCellSpace();
-	int size = cellPerRow * cellSpace;
+	float cellSpace = MAP->GetMap()->GetCellSpace();
+	float size = (float)cellPerRow * cellSpace;
 
 	if (weather.GetFogOn())
 	{
@@ -72,11 +72,12 @@ void cEffectManager::Release()
 void cEffectManager::Render_Begin()
 {
 	if (m_pFog) m_pFog->Render_Begin(m_stWeather.GetFogPassIndex());
-	if (m_pSnow) m_pSnow->Render("obj/Effect/Snow/Snow.tga");
-	if (m_pRain) m_pRain->Render("obj/Effect/Rain/Rain.tga");
+
 }
 
 void cEffectManager::Render_End()
 {
+	if (m_pSnow) m_pSnow->Render("obj/Effect/Snow/Snow.tga", true);
+	if (m_pRain) m_pRain->Render("obj/Effect/Rain/Rain.tga", false);
 	if (m_pFog) m_pFog->Render_End();
 }

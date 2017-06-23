@@ -36,7 +36,7 @@ public:
 	LPD3DXMESH GetMesh();
 	float GetMaxX();
 	float GetMinX();
-
+	void SetConstructSize();
 	void Destroy();
 	vector<cConstruct*>	GetvecConstruct() { return m_vecConstruct; }
 	cHeightMap* GetMap() { return m_pMap; }
