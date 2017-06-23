@@ -76,10 +76,19 @@ bool cHeightMap::GetHeight(IN float x, OUT float&y, IN float z)
 	int nCol = nX + m_nCellPerRow / m_fCellSpace * 0.5f;
 	int nRow = nZ + m_nCellPerRow / m_fCellSpace * 0.5f;
 
-	int _0 = (nRow + 1) * m_nCellPerRow + nCol + 0;
-	int _1 = (nRow + 0) * m_nCellPerRow + nCol + 0;
-	int _2 = (nRow + 0) * m_nCellPerRow + nCol + 1;
-	int _3 = (nRow + 1) * m_nCellPerRow + nCol + 1;
+	int _0 = (nRow + 1) * m_nVertPerRow + nCol + 0;
+	int _1 = (nRow + 0) * m_nVertPerRow + nCol + 0;
+	int _2 = (nRow + 0) * m_nVertPerRow + nCol + 1;
+	int _3 = (nRow + 1) * m_nVertPerRow + nCol + 1;
+
+	if (_0 > m_vecVertex.size() ||
+		_1 > m_vecVertex.size() ||
+		_2 > m_vecVertex.size() ||
+		_3 > m_vecVertex.size())
+	{
+		y = 0.0f;
+		return false;
+	}
 
 	if (fDeltaZ - fDeltaX > 0.0f)
 	{

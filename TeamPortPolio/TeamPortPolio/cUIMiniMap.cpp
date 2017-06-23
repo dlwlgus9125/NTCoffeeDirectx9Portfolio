@@ -3,7 +3,7 @@
 
 #include "cUIButton.h"
 
-cUIMiniMap::cUIMiniMap() : m_pTexture(NULL), m_nCellPerRow(0), m_nAlpha(255), m_pBtn_Exit(NULL)
+cUIMiniMap::cUIMiniMap() : m_pTexture(NULL), m_nCellPerRow(0), m_nAlpha(255), m_pBtn_Exit(NULL), m_pTex_BG(NULL)
 {
 	SetSize(ST_SIZEN(500, 500));
 	m_isHidden = true;
@@ -41,8 +41,15 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
 	pSprite->SetTransform(&m_matWorld);
 
+	if (m_vBGPos)
+	{
+		SetRect(&rc, 0, 0, m_stBGSize.nWidth, m_stBGSize.nHeight);
+		pSprite->Draw(m_pTex_BG, &rc, &D3DXVECTOR3(0, 0, 0), &m_vBGPos, D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+	}
+
 	SetRect(&rc, 0, 0, m_stSize.nWidth, m_stSize.nHeight);
 	pSprite->Draw(m_pTexture, &rc, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(m_nAlpha, 255, 255, 255));
+
 	pSprite->End();
 
 	if(m_pBtn_Exit) m_pBtn_Exit->Render(pSprite);
@@ -89,4 +96,12 @@ void cUIMiniMap::Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPa
 	m_vBtnPos = m_vPosition + btnPos;
 	m_pBtn_Exit->Setup(m_vBtnPos, UI_BUTTON);
 	m_pBtn_Exit->Setup_Button(sPath_idle, sPath_mouseover, sPath_clicked, TOWN_BTN_SHOPEXIT);
+}
+
+void cUIMiniMap::Setup_BG(D3DXVECTOR3 bgPos, string sPath)
+{
+	m_vBGPos = bgPos;
+	D3DXIMAGE_INFO info;
+	m_pTex_BG = TEXTURE->GetTexture(sPath, info);
+	m_stBGSize  = ST_SIZEN(info.Width, info.Height);
 }
