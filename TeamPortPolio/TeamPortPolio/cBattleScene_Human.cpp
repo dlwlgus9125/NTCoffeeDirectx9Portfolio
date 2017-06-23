@@ -71,7 +71,7 @@ void cBattleScene_Human::OnUpdate()
 	int buttonIndex;
 	int eventIDTap;
 	int itemID;
-
+	OBJECT->Update(TIME->DeltaTime());
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
