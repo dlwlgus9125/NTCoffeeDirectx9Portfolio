@@ -165,12 +165,12 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
+	TEXTURE->Destroy();
 	ITEMDB->Destroy();
 	CHARACTERDB->Destroy();
 	OBJECTDB->Destroy();
 	NPCDB->Destroy();
 	OBJECT->Release();
-	TEXTURE->Destroy();
 	NPC->Release();
 	SOUND->Release();
 	INPUT->Release();
