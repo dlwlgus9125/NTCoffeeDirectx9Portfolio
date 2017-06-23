@@ -469,10 +469,6 @@ void cMapManager::SetConstructSize()
 
 		D3DDevice->SetTransform(D3DTS_WORLD, &m_vecConstruct[i]->m_matWorld);
 	}
-
-
-
-
 }
 
 void cMapManager::Destroy()
@@ -481,6 +477,7 @@ void cMapManager::Destroy()
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{
+		m_vecConstruct[i]->Destroy();
 		SAFE_DELETE(m_vecConstruct[i]);
 	}
 	m_vecConstruct.clear();
