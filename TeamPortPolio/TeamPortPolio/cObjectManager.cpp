@@ -26,7 +26,7 @@ void cObjectManager::UnitArrow(cBallisticArrow * pArrow)
 void cObjectManager::Init()
 {
 	
-	
+	m_player = NULL;
 	/*cLeader* pEnemy = new cLeader(D3DXVECTOR3(0, 0, 50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
 	pEnemy->Init();
 	m_vecObject.push_back(pEnemy);
@@ -245,6 +245,11 @@ void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
 		cout << "±âº´" << endl;
 		break;
 	}
+}
+
+int cObjectManager::GetCurrentLeaderType()
+{
+	return m_player->GetCurrentLeaderType();
 }
 
 float cObjectManager::GetPlayerHPRate()

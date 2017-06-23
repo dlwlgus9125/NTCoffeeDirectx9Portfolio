@@ -72,6 +72,7 @@ public:
 	void ClearToChangeScene();
 
 	void SetCurrentLeader(LEADER_TYPE leaderType);
+	int GetCurrentLeaderType();
 	float GetPlayerHPRate();
 };
 

@@ -158,12 +158,12 @@ void cPlayer::Update(float deltaTime)
 	}
 	if (GetMesh()->GetIndex() == P_BOWATTACK1)
 	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), 0);
+		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 1.5, 0), m_fRotY);
 		m_fRotY = CAMERA->GetCamRotAngle().y;
 	}
 	else
 	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
+		CAMERA->SetLookAt(m_CharacterEntity->Pos()+D3DXVECTOR3(0,0.5,0), m_fRotY);
 	}
 	if (INPUT->IsKeyDown(VK_F))
 	{
@@ -175,7 +175,7 @@ void cPlayer::Update(float deltaTime)
 void cPlayer::Render()
 {
 	cCharacter::Render();
-	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
+	if (FRUSTUM->IsIn(&m_CollideSphere))
 	{
 		m_pSkinnedMesh->UpdateAndRender(m_isPull);
 

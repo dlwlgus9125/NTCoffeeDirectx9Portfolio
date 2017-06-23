@@ -74,7 +74,7 @@ void cTownScene_Human::OnUpdate()
 		OBJECT->SetCurrentLeader(LEADER_BOW);
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
-	case TOWN_BTN_CARVALY:
+	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
@@ -168,6 +168,10 @@ void cTownScene_Human::OnRender()
 	MAP->Render();
 	EFFECT->Render_End();
 	OBJECT->Render();
+	if ((P_STATE)OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
+	{
+		UI->DrawAim(m_pSprite);
+	}
 	UI->Render(m_pSprite);
 	/*if (OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
 	{
