@@ -84,7 +84,10 @@ void cWeather::Render(char* sFullPath,bool isSnow)
 	D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
 	D3DDevice->SetRenderState(D3DRS_POINTSCALEENABLE, true);			// 점을 확대할지 말지 정하는것
-	D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(5.0f));			// 포인트 사이즈
+	
+	if(isSnow) D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(2.0f));	// 포인트 사이즈
+	else D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(5.0f));
+	
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_A, FtoDw(0.0f));
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.0f));
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(10.0f));		// 10.0f로 바꿔서 실험해보기

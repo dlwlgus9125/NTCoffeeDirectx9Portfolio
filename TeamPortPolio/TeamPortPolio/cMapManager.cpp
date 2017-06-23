@@ -443,7 +443,6 @@ void cMapManager::SetConstructSize()
 		m_vecConstruct[106]->SetRadius(3);
 		m_vecConstruct[107]->SetRadius(3);
 		m_vecConstruct[108]->SetRadius(3);
-		m_vecConstruct[109]->SetRadius(3);
 	
 
 	
