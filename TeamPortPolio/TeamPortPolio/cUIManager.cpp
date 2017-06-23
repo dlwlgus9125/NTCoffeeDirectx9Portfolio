@@ -611,9 +611,6 @@ void cUIManager::Change(int sceneID)
 
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		Setup_TitleScene();
-		break;
 	case SCENE_LOGIN:
 		Setup_LoginScene();
 		break;
