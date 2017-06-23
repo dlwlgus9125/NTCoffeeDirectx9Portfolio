@@ -247,6 +247,11 @@ void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
 	}
 }
 
+int cObjectManager::GetCurrentLeaderType()
+{
+	return m_player->GetCurrentLeaderType();
+}
+
 float cObjectManager::GetPlayerHPRate()
 {
 	ST_Character* stat = m_player->GetStatus();

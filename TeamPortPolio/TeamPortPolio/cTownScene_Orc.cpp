@@ -67,7 +67,7 @@ void cTownScene_Orc::OnUpdate()
 		OBJECT->SetCurrentLeader(LEADER_BOW);
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
-	case TOWN_BTN_CARVALY:
+	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
