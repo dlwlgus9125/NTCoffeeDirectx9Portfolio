@@ -5,7 +5,7 @@
 class cBallisticArrow :public cCharacter
 {
 public:
-	cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTOR3 forward, float radius = 10, float mass = 1, float maxSpeed = 1);
+	cBallisticArrow(D3DXVECTOR3 pos, D3DXVECTOR3 vtarget, D3DXVECTOR3 forward, float radius = 0.5, float mass = 1, float maxSpeed = 1);
 	~cBallisticArrow();
 	BallisticMotion* Shoot();
 	D3DXMATRIXA16 GetMatrix() { return m_pArrow->GetMatrix(); }

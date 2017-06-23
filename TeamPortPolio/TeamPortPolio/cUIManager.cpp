@@ -238,6 +238,10 @@ void cUIManager::Setup_TownScene()
 	m_pTrooptype->AddChild(pBtn_Battle_Carvaly);
 
 	// <<
+	m_pAim = new cUIImage();
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f-35, WND_HEIGHT * 0.5f-37.5, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/aim/aim.png");
+	m_pAim->SetHidden(false);
 
 }
 
@@ -391,8 +395,8 @@ void cUIManager::Setup_BattleScene_Orc()
 
 	// >> 활 쏠 때 쓰는 목표점
 	m_pAim = new cUIImage();
-	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
-	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f-35, WND_HEIGHT * 0.5f-37.5, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/aim/aim.png");
 	m_pAim->SetHidden(false);
 	// <<
 }
@@ -458,8 +462,8 @@ void cUIManager::Setup_BattleScene_Human()
 
 	// >> 활 쏠 때 쓰는 목표점
 	m_pAim = new cUIImage();
-	m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f, WND_HEIGHT * 0.5f, 0), UI_IMAGE);
-	m_pAim->Setup_Image("image/UI/townscene/aim/aim.png");
+	 m_pAim->Setup(D3DXVECTOR3(WND_WIDTH * 0.5f-35, WND_HEIGHT * 0.5f-37.5, 0), UI_IMAGE);
+	m_pAim->Setup_Image("image/UI/aim/aim.png");
 	m_pAim->SetHidden(false);
 	// <<
 }
