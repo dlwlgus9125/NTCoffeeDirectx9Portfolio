@@ -72,25 +72,22 @@ void cWeather::Update(float fMove, float fSpeed)
 		if (m_vecParticleVertex[i].p.y < -5) m_vecParticleVertex[i].p.y = 50 + rand() % 50;
 		else m_vecParticleVertex[i].p.y -= fSpeed;
 
-		// if (m_vecParticleVertex[i].p.y < 5)
-		// {
-		// 	nAlpha += nDelta;
-		// 	m_vecParticleVertex[i].c = D3DCOLOR_ARGB(nAlpha, 255, 255, 255);
-		// }
-
 		if (m_vecParticleVertex[i].p.x < -m_nMapSizeX / 2) m_vecParticleVertex[i].p.x = m_nMapSizeX / 2;
 		else m_vecParticleVertex[i].p.x -= fMove;
 	}
 }
 
-void cWeather::Render(char* sFullPath)
+void cWeather::Render(char* sFullPath,bool isSnow)
 {
 	D3DXMATRIXA16	matWorld;
 	D3DXMatrixIdentity(&matWorld);
 	D3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
 	D3DDevice->SetRenderState(D3DRS_POINTSCALEENABLE, true);			// 점을 확대할지 말지 정하는것
-	D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(5.0f));			// 포인트 사이즈
+	
+	if(isSnow) D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(2.0f));	// 포인트 사이즈
+	else D3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(5.0f));
+	
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_A, FtoDw(0.0f));
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.0f));
 	D3DDevice->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(10.0f));		// 10.0f로 바꿔서 실험해보기

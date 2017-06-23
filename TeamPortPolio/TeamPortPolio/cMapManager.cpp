@@ -21,16 +21,6 @@ void cMapManager::Init(int sceneID)
 	m_pSkyBox = new cSkyBox();
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		folderPath = "map";
-		filePath = strdup("TESTMAP3.txt");
-		break;
-
-	case SCENE_TOWN:
-		folderPath = "map";
-		filePath = strdup("TESTTOWN.txt");
-		break;
-
 	case SCENE_TOWN_HUMAN:  
 		folderPath = "map";
 		filePath = strdup("TOWNHUMAN.txt");
@@ -70,31 +60,25 @@ void cMapManager::Init(int sceneID)
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
+
+	int cellPerRow = nCellPerRow * fCellSpace;
 	
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
-		break;
-
-	case SCENE_TOWN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
-		break;
-
 	case SCENE_TOWN_HUMAN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Human", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Town_Human", "png");
 		break;
 
 	case SCENE_TOWN_ORC:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Town_Orc", "png");
 		break;
 
 	case SCENE_BATTLE_HUMAN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Battle_Human", "png");
 		break;
 
 	case SCENE_BATTLE_ORC:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
 		break;
 	}
 	// << 
@@ -127,8 +111,6 @@ void cMapManager::Init(int sceneID)
 	// >> : 그림자 세팅
 
 	SHADOW->Setup(m_vecConstruct);
-	
-	// << :
 }
 
 void cMapManager::Update()
@@ -139,33 +121,18 @@ void cMapManager::Update()
 
 void cMapManager::Render()
 {
-	//bool test = false;
-	//if (INPUT->IsKeyPress(VK_TAB))
-	//{
-	//		test = true;
-	//}
-	///*else if (INPUT->IsKeyUp(VK_TAB))
-	//{
-	//	test = false;
-	//}*/
+	if (m_pSkyBox) m_pSkyBox->Render();
 
-	//if (test == false)
-	//{
+	if (m_pMap) m_pMap->Render();
+	
+	if (m_vecStNPC.size() > 0)
+		NPC->Render();
 
-		if (m_pSkyBox) m_pSkyBox->Render();
-
-		if (m_pMap) m_pMap->Render();
-		
-		if (m_vecStNPC.size() > 0)
-			NPC->Render();
-
-		SHADOW->Render();
-		for (int i = 0; i < m_vecConstruct.size(); i++)
-		{
-			m_vecConstruct[i]->Render();
-		}
-	//}
-	//else { ASTAR->Render(); }
+	SHADOW->Render();
+	for (int i = 0; i < m_vecConstruct.size(); i++)
+	{
+		m_vecConstruct[i]->Render();
+	}
 }
 
 bool cMapManager::GetHeight(IN float x, OUT float & y, IN float z)
@@ -476,7 +443,20 @@ void cMapManager::SetConstructSize()
 		m_vecConstruct[106]->SetRadius(3);
 		m_vecConstruct[107]->SetRadius(3);
 		m_vecConstruct[108]->SetRadius(3);
-		m_vecConstruct[109]->SetRadius(3);
+	
+
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+
 	}
 
 	for (int i = 0; i < m_vecConstruct.size(); i++)
@@ -489,19 +469,15 @@ void cMapManager::SetConstructSize()
 
 		D3DDevice->SetTransform(D3DTS_WORLD, &m_vecConstruct[i]->m_matWorld);
 	}
-
-
-
-
 }
 
 void cMapManager::Destroy()
 {
 	m_vecPosOfNode.clear();
-	m_pSkyBox->Release();
 	SAFE_DELETE(m_pMap);
 	for (int i = 0; i < m_vecConstruct.size(); i++)
 	{
+		m_vecConstruct[i]->Destroy();
 		SAFE_DELETE(m_vecConstruct[i]);
 	}
 	m_vecConstruct.clear();
