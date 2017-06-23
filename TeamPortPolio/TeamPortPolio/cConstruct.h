@@ -7,7 +7,6 @@ class cObjLoader;
 class cConstruct : public cObject
 {
 private:
-	D3DXMATRIXA16		m_matWorld;
 
 	SYNTHESIZE(LPD3DXMESH, m_pObjMesh, ObjMesh);
 	SYNTHESIZE(vector<cMtlTex*>, m_vecObjMtlTex, VecObjMtlTex);
@@ -18,7 +17,8 @@ private:
 	SYNTHESIZE(float, m_fRotY, RotationY);
 	SYNTHESIZE(float, m_fRotZ, RotationZ);
 	SYNTHESIZE(D3DXVECTOR3, m_vPosition, Position);
-	vector<D3DXVECTOR3> m_vecVertex;
+
+	SYNTHESIZE(vector<ST_PNT_VERTEX>, m_vecVertex,VecVertex);
 	SYNTHESIZE(float, m_fRadius, Radius);
 
 public:
@@ -31,6 +31,9 @@ public:
 
 	void Create(int sIndex);
 	void Destroy();
-	vector<D3DXVECTOR3> GetVectorVertex() { return m_vecVertex; }
+
+	D3DXMATRIXA16		m_matWorld;
+	LPD3DXMESH       m_pMeshSphere;
+	D3DMATERIAL9    m_stMtlSphere;
 
 };

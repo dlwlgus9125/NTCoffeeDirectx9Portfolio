@@ -54,7 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	THREAD->TerminateThreadByKey(HANDLE_ASTAR_FINDINDEX);
 	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_crtBreakAlloc = 308;
+	_crtBreakAlloc = 308;
 	// 기본 메시지 루프입니다.
 	while (true)
 	{
@@ -62,6 +62,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (msg.message == WM_QUIT)
 			{
+				THREAD->CloseThreadManager();
+
+				GAMEMAIN->Release();
 				exit(0);
 				
 				break;
@@ -81,6 +84,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 	
+	THREAD->CloseThreadManager();
+
+	GAMEMAIN->Release();
 
 	return (int)msg.wParam;
 }

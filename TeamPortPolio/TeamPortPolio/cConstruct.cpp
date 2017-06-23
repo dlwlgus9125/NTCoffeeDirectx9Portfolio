@@ -9,13 +9,14 @@ cConstruct::cConstruct()
 	, m_vScale(0.5f, 0.5f, 0.5f)
 	, m_fRotX(0.0f), m_fRotY(0.0f), m_fRotZ(0.0f)
 	, m_vPosition(0.0f, 0.0f, 0.0f)
-	, m_fRadius(4.45454545)
+	, m_fRadius(0)
 {
 }
 
 
 cConstruct::~cConstruct()
 {
+	SAFE_RELEASE(m_pMeshSphere);
 }
 
 void cConstruct::Setup(char* szFolder, char* szFile, bool isChecked)
@@ -43,16 +44,7 @@ void cConstruct::Update()
 
 	}
 
-	D3DDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
-
-
-	for (int i = 0; i < m_vecObjMtlTex.size(); i++)
-	{
-	D3DXVECTOR3 vOut;
-	D3DXVec3TransformCoord(&vOut, &vOut, &m_matWorld);
-	m_vecVertex.push_back(vOut);
-	}
-
+	
 }
 
 void cConstruct::Render()
@@ -84,6 +76,19 @@ void cConstruct::Render()
 	D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+
+
+	D3DXMATRIXA16 matT;
+	D3DXMatrixIdentity(&matT);
+
+	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+
+	D3DDevice->SetTransform(D3DTS_WORLD, &matT);
+	D3DDevice->SetMaterial(&m_stMtlSphere);
+
+	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	m_pMeshSphere->DrawSubset(0);
+	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void cConstruct::Create(int sIndex)
@@ -104,10 +109,4 @@ void cConstruct::Create(int sIndex)
 void cConstruct::Destroy()
 {
 	SAFE_RELEASE(m_pObjMesh);
-	for each(auto p in m_vecObjMtlTex)
-	{
-		SAFE_RELEASE(p);
-	}
-
-	// delete this;
 }

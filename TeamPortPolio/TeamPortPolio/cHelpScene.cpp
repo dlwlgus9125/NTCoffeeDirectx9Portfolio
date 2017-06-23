@@ -49,8 +49,8 @@ void cHelpScene::OnEnter()
 	m_pImage_Town2->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
 
 	m_pImage_Battle = new cUIImage();
-	m_pImage_Battle->Setup(D3DXVECTOR3(0, 0, 0.0f), UI_IMAGE);
-	m_pImage_Battle->Setup_Image("Image/UI/HelpScene/Bg/BG.png");
+	m_pImage_Battle->Setup(D3DXVECTOR3(380,65, 0.0f), UI_IMAGE);
+	m_pImage_Battle->Setup_Image("Image/UI/HelpScene/Image/TextBox_Battle.png");
 	m_pImage_Battle->SetSize(ST_SIZEN(m_pImage->GetSize().nWidth, m_pImage->GetSize().nHeight));
 
 

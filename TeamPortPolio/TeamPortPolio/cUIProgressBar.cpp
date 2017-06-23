@@ -122,5 +122,5 @@ void cUIProgressBar::AddProgressBar(char* cFillLine_Path, D3DXVECTOR3 fillLine_P
 
 void cUIProgressBar::ResetBarLength(int index, float scale)
 {
-
+	m_vecScaleFillLine[index] = scale;
 }

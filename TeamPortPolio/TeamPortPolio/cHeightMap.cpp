@@ -81,6 +81,15 @@ bool cHeightMap::GetHeight(IN float x, OUT float&y, IN float z)
 	int _2 = (nRow + 0) * m_nVertPerRow + nCol + 1;
 	int _3 = (nRow + 1) * m_nVertPerRow + nCol + 1;
 
+	if (_0 > m_vecVertex.size() ||
+		_1 > m_vecVertex.size() ||
+		_2 > m_vecVertex.size() ||
+		_3 > m_vecVertex.size())
+	{
+		y = 0.0f;
+		return false;
+	}
+
 	if (fDeltaZ - fDeltaX > 0.0f)
 	{
 		D3DXVECTOR3   v10 = m_vecVertex[_0].p - m_vecVertex[_1].p;
