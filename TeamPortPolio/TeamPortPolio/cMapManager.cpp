@@ -21,19 +21,9 @@ void cMapManager::Init(int sceneID)
 	m_pSkyBox = new cSkyBox();
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		folderPath = "map";
-		filePath = strdup("TESTMAP3.txt");
-		break;
-
-	case SCENE_TOWN:
-		folderPath = "map";
-		filePath = strdup("TESTTOWN.txt");
-		break;
-
 	case SCENE_TOWN_HUMAN:  
 		folderPath = "map";
-		filePath = strdup("TOWNHUMAN2.txt");
+		filePath = strdup("TOWNHUMAN.txt");
 		break;
 
 	case SCENE_TOWN_ORC:
@@ -70,31 +60,25 @@ void cMapManager::Init(int sceneID)
 	m_pMap->Setup(nCellPerRow, fCellSpace, vecVertex, vecIndex);
 	m_pMap->SetMesh(pMesh);
 	m_pMap->SetVecMtlTex(vecMtlTex);
+
+	int cellPerRow = nCellPerRow * fCellSpace;
 	
 	switch (sceneID)
 	{
-	case SCENE_TITLE:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
-		break;
-
-	case SCENE_TOWN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Basic", "bmp");
-		break;
-
 	case SCENE_TOWN_HUMAN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Human", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Town_Human", "png");
 		break;
 
 	case SCENE_TOWN_ORC:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Town_Orc", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Town_Orc", "png");
 		break;
 
 	case SCENE_BATTLE_HUMAN:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Human", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Battle_Human", "png");
 		break;
 
 	case SCENE_BATTLE_ORC:
-		m_pSkyBox->Setup(nCellPerRow / 2, nCellPerRow / 2, nCellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
+		m_pSkyBox->Setup(cellPerRow / 2, cellPerRow / 2, cellPerRow / 2, "map/SkyBox/Battle_Orc", "png");
 		break;
 	}
 	// << 
@@ -127,8 +111,6 @@ void cMapManager::Init(int sceneID)
 	// >> : 그림자 세팅
 
 	SHADOW->Setup(m_vecConstruct);
-	
-	// << :
 }
 
 void cMapManager::Update()

@@ -140,18 +140,6 @@
     <Filter Include="01. cObject\03. cParticle">
       <UniqueIdentifier>{38c5c6c9-362b-41d3-9d09-d3430e551230}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. cScene\00. cTitleScene">
-      <UniqueIdentifier>{d208f0ed-a1e4-4bf4-a008-de67667491e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. cScene\01. cLoginScene">
-      <UniqueIdentifier>{70402f8b-1349-49ef-8009-450e9d643802}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. cScene\02. cSelectScene">
-      <UniqueIdentifier>{a978e296-74a7-4f38-a55f-255cbaefc945}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. cScene\03. cTownScene">
-      <UniqueIdentifier>{7625283c-81ec-4bab-b1b3-993eeb0cddd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Database\03. cCharacterDB">
       <UniqueIdentifier>{6a762b01-59dc-4edf-a60b-af5e0b32f0f1}</UniqueIdentifier>
     </Filter>
@@ -239,26 +227,35 @@
     <Filter Include="07. UI\08. cUIProgressBar">
       <UniqueIdentifier>{3dd28048-469c-4a24-b313-0e505f38890a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. cScene\03. cTownScene\Orc">
-      <UniqueIdentifier>{529f369e-c9f8-459c-917d-e99eef3b980c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. cScene\03. cTownScene\Human">
-      <UniqueIdentifier>{0662adf5-8ea6-4dc9-82a3-df5f98f5a4fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Manager\14. cThreadManager">
       <UniqueIdentifier>{7ff44b9c-1a68-4b89-967d-78c6225897b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. UI\02. cUIText">
       <UniqueIdentifier>{0ba9ec17-2177-47dc-b75b-5c0818ee5a19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. cScene\06. cHelpScene">
-      <UniqueIdentifier>{471b3d7e-629c-42e9-8ffc-d630adc2f282}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. UI\09. cUIInventory">
       <UniqueIdentifier>{4db5323b-b976-463b-b484-0f3f95af1c90}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\03. cTextureManager">
       <UniqueIdentifier>{212a8f8f-cf43-43d6-b4d1-a811a9131eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\00. cLoginScene">
+      <UniqueIdentifier>{70402f8b-1349-49ef-8009-450e9d643802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene">
+      <UniqueIdentifier>{7625283c-81ec-4bab-b1b3-993eeb0cddd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Orc">
+      <UniqueIdentifier>{529f369e-c9f8-459c-917d-e99eef3b980c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\03. cTownScene\Human">
+      <UniqueIdentifier>{0662adf5-8ea6-4dc9-82a3-df5f98f5a4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\02. cSelectScene">
+      <UniqueIdentifier>{a978e296-74a7-4f38-a55f-255cbaefc945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. cScene\01. cHelpScene">
+      <UniqueIdentifier>{471b3d7e-629c-42e9-8ffc-d630adc2f282}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -396,9 +393,6 @@
     <ClInclude Include="cMapManager.h">
       <Filter>00. Manager\10. cMapManager</Filter>
     </ClInclude>
-    <ClInclude Include="cTitleScene.h">
-      <Filter>03. cScene\00. cTitleScene</Filter>
-    </ClInclude>
     <ClInclude Include="cUIManager.h">
       <Filter>00. Manager\07. cUIManager</Filter>
     </ClInclude>
@@ -520,10 +514,10 @@
       <Filter>07. UI\09. cUIInventory</Filter>
     </ClInclude>
     <ClInclude Include="cLoginScene.h">
-      <Filter>03. cScene\01. cLoginScene</Filter>
+      <Filter>03. cScene\00. cLoginScene</Filter>
     </ClInclude>
     <ClInclude Include="cHelpScene.h">
-      <Filter>03. cScene\06. cHelpScene</Filter>
+      <Filter>03. cScene\01. cHelpScene</Filter>
     </ClInclude>
     <ClInclude Include="cNpcManager.h" />
     <ClInclude Include="cNpcDB.h" />
@@ -638,9 +632,6 @@
     <ClCompile Include="cMapManager.cpp">
       <Filter>00. Manager\10. cMapManager</Filter>
     </ClCompile>
-    <ClCompile Include="cTitleScene.cpp">
-      <Filter>03. cScene\00. cTitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="cUIManager.cpp">
       <Filter>00. Manager\07. cUIManager</Filter>
     </ClCompile>
@@ -675,7 +666,7 @@
       <Filter>00. Manager\13. cShadowManager</Filter>
     </ClCompile>
     <ClCompile Include="cLoginScene.cpp">
-      <Filter>03. cScene\01. cLoginScene</Filter>
+      <Filter>03. cScene\00. cLoginScene</Filter>
     </ClCompile>
     <ClCompile Include="cSelectScene.cpp">
       <Filter>03. cScene\02. cSelectScene</Filter>
@@ -858,7 +849,7 @@
       <Filter>02. cCharacter\01. cPlayer\00. PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="cHelpScene.cpp">
-      <Filter>03. cScene\06. cHelpScene</Filter>
+      <Filter>03. cScene\01. cHelpScene</Filter>
     </ClCompile>
     <ClCompile Include="cNpcManager.cpp" />
     <ClCompile Include="cNpcDB.cpp" />

@@ -82,7 +82,6 @@ void cGameManager::Init()
 	CAMERA->Setup();
 	FRUSTUM->Setup();
 	ASTAR->Init();
-	SCENE->Register(SCENE_TITLE, new cTitleScene());
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
 	SCENE->Register(SCENE_HELP, new cHelpScene());
