@@ -111,8 +111,9 @@ void cTownScene_Human::OnUpdate()
 		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
 		{
 			SOUND->Play("coin");
+			int unitSize = OBJECT->GetPlayer()->GetAllUnitSize();
+			UI->SetEvent(TOWN_TAB_TROOPINFO, unitSize);
 			cout << "»ï!" << endl;;
-			cout << "ºÎ´ëÀÎ¿ø : " << OBJECT->GetPlayer()->GetAllUnitSize() << endl;
 		}
 		else
 		{

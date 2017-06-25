@@ -75,7 +75,7 @@ void cConstruct::Render()
 	D3DDevice->SetMaterial(&m_stMtlSphere);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pMeshSphere->DrawSubset(0);
+	if (g_showColider)	m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 

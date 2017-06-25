@@ -801,6 +801,14 @@ void cUIManager::SetEvent(int uiID, int order)
 			m_pMiniMap->SetHiddenAll(!order);
 		}
 		break;
+	case TOWN_TAB_TROOPINFO:
+	{
+		int melee = order / 10000;
+		int bow = (order - melee) / 100;
+		int cavalry = (order - melee - bow);
+		m_vecTab[5]->UpdateTroopCount(melee, bow, cavalry);
+	}
+		break;
 	}
 
 }

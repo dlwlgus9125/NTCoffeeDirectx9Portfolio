@@ -529,6 +529,8 @@ struct ST_NPC_INFO
 
 };
 
+
+extern bool g_showColider;
 //>>include
 #include "cEffectManager.h"
 #include "cThreadManager.h"
