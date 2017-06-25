@@ -646,6 +646,8 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 {
 	if(m_pStatus) m_pStatus->Render(pSprite);
 
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Render(pSprite);
+
 	for (int i = 0; i < m_vecTab.size(); i++)
 	{
 		m_vecTab[i]->Render(pSprite);
@@ -668,8 +670,6 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	}
 
 	if (m_pResultMessage) m_pResultMessage->Render(pSprite);
-
-	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Render(pSprite);
 }
 
 // 씬 변경에 따른 UI 전체 변경시키는 함수
