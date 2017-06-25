@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ #include "StdAfx.h"
 #include "cSkinnedMesh.h"
 #include "cAllocateHierarchy.h"
 
@@ -476,6 +476,7 @@ void cSkinnedMesh::Destroy()
 {
 	cAllocateHierarchy ah;
 	D3DXFrameDestroy((LPD3DXFRAME)m_pRootFrame, &ah);
+
 	SAFE_DELETE_ARRAY(m_pmWorkingPalette);
 	SAFE_RELEASE(m_pEffect);
 }

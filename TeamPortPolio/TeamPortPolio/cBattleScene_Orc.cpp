@@ -16,7 +16,7 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
-	SOUND->Play("Battle_Orc_BGM");
+	SOUND->Play("Battle_Orc_BGM", 0.5f);
 
 	
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
@@ -31,6 +31,7 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
 	OBJECT->GetPlayer()->SetCurrentLeader();
+	OBJECT->GetPlayer()->GetUnitLeader()->SetSceneEnter();
 	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(30, 0, -50));
 	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.35, 0, 0.9));
 
@@ -77,8 +78,8 @@ void cBattleScene_Orc::OnUpdate()
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
-		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
-		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
+		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
 	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
@@ -98,6 +99,7 @@ void cBattleScene_Orc::OnUpdate()
 		break;
 	case BATTLE_MINIMAP_RESULT:
 		UI->Update(0);
+
 		SCENE->ChangeScene((OBJECT->GetPlayerID() == C_C_HUMAN_MALE) ? SCENE_TOWN_HUMAN : SCENE_TOWN_ORC);
 		break;
 	}
@@ -121,7 +123,7 @@ void cBattleScene_Orc::OnUpdate()
 		}
 	}
 
-	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
+	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2(), OBJECT->GetUnitLeaderPosV2(), OBJECT->GetEnemyLeaderPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
 }
 
 void cBattleScene_Orc::OnExit()

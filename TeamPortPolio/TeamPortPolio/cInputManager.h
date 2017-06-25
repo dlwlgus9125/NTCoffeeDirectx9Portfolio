@@ -29,7 +29,7 @@ class cInputManager :
 	HWND m_hWnd;
 	KEY_STATE m_keyStates[KEY_COUNT];
 	MOUSE_STATE m_mouseStates[MOUSE_COUNT];
-
+	
 	POINT m_mousePrevPos;
 	POINT m_mouseBgPos;
 	POINT m_mouseCurrentPos;

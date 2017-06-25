@@ -20,6 +20,7 @@ protected:
 	std::vector<HFONT>         m_vechFont;
 	std::vector<HFONT>         m_vechFontOld;
 	std::vector<ID3DXMesh*>    m_vecFont;
+
 public:
 	cNpcManager();
 	~cNpcManager();

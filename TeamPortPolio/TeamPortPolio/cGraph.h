@@ -8,7 +8,7 @@ class GraphNode
 	ST_SPHERE   m_sphere;
 
 public:
-	GraphNode(int id = 0) { m_sphere.fRadius = 0.1f; }
+	GraphNode(int id = 0) { m_sphere.fRadius = 0.5f; }
 	bool Active() { return m_active; }
 	int Id() { return m_id; }
 	void SetID(int id) { m_id = id; }

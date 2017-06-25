@@ -153,21 +153,20 @@ void cUIManager::Setup_TownScene()
 
 
 	// >> 병사 정보
-	cUITab* pTab_TroopInfo = new cUITab();
-	pTab_TroopInfo->Setup(D3DXVECTOR3(960,  0, 0), UI_TAB);
-	pTab_TroopInfo->Setup_Tap("image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", D3DXVECTOR3(0, 0, 0));
-	pTab_TroopInfo->AddTitle("병사 목록", D3DXVECTOR3(0, 0, 0));
+	m_pTab_TroopInfo = new cUITab();
+	m_pTab_TroopInfo->Setup(D3DXVECTOR3(960,  0, 0), UI_TAB);
+	m_pTab_TroopInfo->Setup_Tap("image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", D3DXVECTOR3(0, 0, 0));
+	m_pTab_TroopInfo->AddTitle("병사 목록", D3DXVECTOR3(0, 0, 0));
 	/// 병사 정보
-	pTab_TroopInfo->Setup_Slot(D3DXVECTOR3(22, 6, 0), 3, 3, D3DXVECTOR3(0, 0, 0), ST_SIZEN(97, 68),
-		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 40, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
-	pTab_TroopInfo->AddSlotData(0,0, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->AddSlotData(0,1, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->AddSlotData(0,2, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->SetDef();
-	m_vecTab.push_back(pTab_TroopInfo);
-	pTab_TroopInfo->SetHidden(false);
-	pTab_TroopInfo->SetShownData(0, 0);
-	pTab_TroopInfo->SetEventID(TOWN_TAB_TROOPINFO);
+	m_pTab_TroopInfo->Setup_Slot(D3DXVECTOR3(22, 6, 0), 3, 3, D3DXVECTOR3(0, 0, 0), ST_SIZEN(97, 68),
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 38, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
+	m_pTab_TroopInfo->AddSlotData(0,0, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->AddSlotData(0,1, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->AddSlotData(0,2, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->SetDef();
+	m_pTab_TroopInfo->SetHidden(false);
+	m_pTab_TroopInfo->SetShownData(0, 0);
+	m_pTab_TroopInfo->SetEventID(TOWN_TAB_TROOPINFO);
 	// <<
 
 	// >> 장비창
@@ -377,10 +376,10 @@ void cUIManager::Setup_BattleScene_Orc()
 	switch (OBJECT->GetPlayerID())
 	{
 	case C_C_ORC_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png", "image/ui/BattleScene_Orc/minimap/unit.png", "image/ui/BattleScene_Orc/minimap/enemy.png");
 		break;
 	case C_C_HUMAN_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png", "image/ui/BattleScene_Human/minimap/unit.png", "image/ui/BattleScene_Human/minimap/enemy.png");
 		break;
 	}	
 	m_pMiniMap->SetAlpha(200);
@@ -483,10 +482,10 @@ void cUIManager::Setup_BattleScene_Human()
 	switch (OBJECT->GetPlayerID())
 	{
 	case C_C_ORC_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png", "image/ui/BattleScene_Orc/minimap/unit.png", "image/ui/BattleScene_Orc/minimap/enemy.png");
 		break;
 	case C_C_HUMAN_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png", "image/ui/BattleScene_Human/minimap/unit.png", "image/ui/BattleScene_Human/minimap/enemy.png");
 		break;
 	}
 	m_pMiniMap->SetAlpha(200);
@@ -573,16 +572,17 @@ void cUIManager::Setup()
 	m_pTrooptype = NULL;
 	m_pResultMessage = NULL;
 	m_pAim = NULL;
+	m_pTab_TroopInfo = NULL;
 }
+
+			
 
 void cUIManager::Release()
 {	
-	m_vecShownBtn.clear();
-	for each(auto p in m_vecEventBtn)
-	{
-		p->Destroy();
-	}
-	m_vecEventBtn.clear();
+	m_vecShownBtn.clear();	//	m_vecEventBtn의 일부분이므로 비우기만.
+	m_vecEventBtn.clear();	//	AddChild된 버튼은 각자 부모의 Destroy에서 지워주므로 비우기만,
+							//  또한, 로그인씬, 셀렉씬에서의 버튼은 다른 함수를 통해 미리 삭제하므로 비우기만.
+
 	for each(auto p in m_vecTab)
 	{
 		p->Destroy();
@@ -594,11 +594,19 @@ void cUIManager::Release()
 	}
 	m_vecMsg.clear();
 	
-	SAFE_DELETE(m_pMiniMap);
-	SAFE_DELETE(m_pAim);
-	SAFE_DELETE(m_pStatus);
-	SAFE_DELETE(m_pTrooptype);
-	SAFE_DELETE(m_pResultMessage);
+	if (m_pInven) m_pInven->Destroy();
+	
+	if (m_pMiniMap)m_pMiniMap->Destroy();
+	
+	if (m_pAim)m_pAim->Destroy();
+	
+	if (m_pStatus)m_pStatus->Destroy();
+	
+	if (m_pTrooptype)m_pTrooptype->Destroy();
+	
+	if (m_pResultMessage)m_pResultMessage->Destroy();
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Destroy();
 }
 
 void cUIManager::Update(float deltaTime)
@@ -630,6 +638,8 @@ void cUIManager::Update(float deltaTime)
 	}
 
 	if (m_pInven) m_pInven->Update(deltaTime);
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Update(deltaTime);
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
@@ -658,12 +668,14 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 	}
 
 	if (m_pResultMessage) m_pResultMessage->Render(pSprite);
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Render(pSprite);
 }
 
 // 씬 변경에 따른 UI 전체 변경시키는 함수
 void cUIManager::Change(int sceneID)
 {
-	Release();
+	Setup();
 
 	switch (sceneID)
 	{
@@ -795,6 +807,14 @@ void cUIManager::SetEvent(int uiID, int order)
 			m_pMiniMap->SetHiddenAll(!order);
 		}
 		break;
+	case TOWN_TAB_TROOPINFO:
+	{
+		int melee = order / 10000;
+		int bow = (order - melee * 10000) / 100;
+		int cavalry = (order - melee * 10000 - bow * 100);
+		m_pTab_TroopInfo->UpdateTroopCount(melee, bow, cavalry);
+	}
+		break;
 	}
 
 }
@@ -887,10 +907,20 @@ void cUIManager::CreateResultMessage(int resultID)
 	m_pResultMessage->SetHiddenAll(false);
 }
 
-void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos)
+void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos, D3DXVECTOR2 pos_unit, D3DXVECTOR2 pos_enemy)
 {
 	if (!m_pMiniMap) return;
 
 	D3DXVECTOR2 uv = MAP->GetPlayerPos_RateBased(pos.x, pos.y);
-	m_pMiniMap->Update_Location(uv);
+	D3DXVECTOR2 uv_unit = MAP->GetPlayerPos_RateBased(pos_unit.x, pos_unit.y);
+	D3DXVECTOR2 uv_enemy = MAP->GetPlayerPos_RateBased(pos_enemy.x, pos_enemy.y);
+	m_pMiniMap->Update_Location(uv, uv_unit, uv_enemy);
+}
+
+void cUIManager::DestroyEventButton()
+{
+	for each(auto p in m_vecEventBtn)
+	{
+		p->Destroy();
+	}
 }

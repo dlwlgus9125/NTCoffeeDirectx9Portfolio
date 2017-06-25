@@ -30,7 +30,9 @@ void cTownScene_Orc::OnEnter()
 	
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(5.5f, 0, -5.6f));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-0.5f, 0, -0.87f)));
-	SOUND->Play("Town_Orc_BGM", 1.0f);
+	OBJECT->GetPlayer()->SetSceneEnter();
+	
+	SOUND->Play("Town_Orc_BGM", 0.5f);
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer());
 }
@@ -61,14 +63,17 @@ void cTownScene_Orc::OnUpdate()
 		break;
 	case TOWN_BTN_MELEE:
 		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		if (SOUND->FindChannel("OrcInitBattleScene") == NULL)SOUND->Play("OrcInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_BOW:
 		OBJECT->SetCurrentLeader(LEADER_BOW);
+		if (SOUND->FindChannel("OrcInitBattleScene") == NULL)SOUND->Play("OrcInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		if (SOUND->FindChannel("OrcInitBattleScene") == NULL)SOUND->Play("OrcInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}
@@ -104,6 +109,8 @@ void cTownScene_Orc::OnUpdate()
 		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
 		{
 			SOUND->Play("coin");
+			int unitSize = OBJECT->GetPlayer()->GetAllUnitSize();
+			UI->SetEvent(TOWN_TAB_TROOPINFO, unitSize);
 			cout << "»ï!" << endl;
 		}
 		else

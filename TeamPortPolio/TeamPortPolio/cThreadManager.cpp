@@ -100,19 +100,8 @@ void cThreadManager::CloseThreadManager()
 	HANDLE* handles;
 	int size = 0;
 
-	/*for each(auto m in m_mapHandle)
-	{
-		handles[size++] = m.second.m_handle;
-	}
-
-	WaitForMultipleObjects(size, handles, TRUE, INFINITE);*/
-
-	for each(auto m in m_mapHandle)
-	{
-		CloseHandle(m.second.m_handle);
-	}
-
-	//SAFE_DELETE(handles);
+	THREAD->TerminateThreadByKey(HANDLE_ASTAR_FINDINDEX);
+	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 }
 
 DWORD cThreadManager::GetStillThread(int key)

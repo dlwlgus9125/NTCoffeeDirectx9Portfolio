@@ -27,25 +27,7 @@ void cObjectManager::Init()
 {
 	
 	m_player = NULL;
-	/*cLeader* pEnemy = new cLeader(D3DXVECTOR3(0, 0, 50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy->Init();
-	m_vecObject.push_back(pEnemy);
-	m_vecEnemyLeader.push_back(pEnemy);
-
-	cLeader* pEnemy1 = new cLeader(D3DXVECTOR3(50, 0, 0), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy1->Init();
-	m_vecObject.push_back(pEnemy1);
-	m_vecEnemyLeader.push_back(pEnemy1);
-
-	cLeader* pEnemy2 = new cLeader(D3DXVECTOR3(-50, 0, 0), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy2->Init();
-	m_vecObject.push_back(pEnemy2);
-	m_vecEnemyLeader.push_back(pEnemy2);
-
-	cLeader* pEnemy3 = new cLeader(D3DXVECTOR3(0, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pEnemy3->Init();
-	m_vecObject.push_back(pEnemy3);
-	m_vecEnemyLeader.push_back(pEnemy3);*/
+	
 	for each (auto p in OBJECT->GetPlayerArrows())
 	{
 		p->Init();
@@ -76,10 +58,11 @@ void cObjectManager::Render()
 	int count = 0;
 	for (int i = 0; i < m_vecObject.size(); i++)
 	{
-		if (FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
-		{
-			m_vecObject[i]->Render(); count++;
-		}
+		
+			/*if ((((cCharacter*)m_vecObject[i])->GetID() == C_C_HUMAN_MALE || ((cCharacter*)m_vecObject[i])->GetID() == C_C_ORC_MALE)||FRUSTUM->IsIn(&((cCharacter*)m_vecObject[i])->GetSphere()))
+			{*/
+				m_vecObject[i]->Render(); count++;
+		//	}
 	}	
 
 	for each (auto p in OBJECT->GetPlayerArrows())
@@ -106,6 +89,7 @@ void cObjectManager::Release()
 	}
 	m_vecLeader.clear();
 	SAFE_DELETE(m_player);
+	m_player = NULL;
 	ClearArrow();
 }
 
@@ -228,6 +212,7 @@ void cObjectManager::ClearToChangeScene()
 		else { SAFE_DELETE(c);  }
 	}
 	m_vecLeader.clear();
+	ClearArrow();
 }
 
 void cObjectManager::SetCurrentLeader(LEADER_TYPE leaderType)
@@ -260,7 +245,39 @@ float cObjectManager::GetPlayerHPRate()
 
 D3DXVECTOR2 cObjectManager::GetPlayerPosV2()
 {
-	if (!m_player) return D3DXVECTOR2(0,0);
+	if (!m_player) return D3DXVECTOR2(-2000, -2000);
 
 	return D3DXVECTOR2(m_player->GetCharacterEntity()->Pos().x, m_player->GetCharacterEntity()->Pos().z);
+}
+
+D3DXVECTOR2 cObjectManager::GetUnitLeaderPosV2()
+{
+	D3DXVECTOR2 pos = D3DXVECTOR2(-2000, -2000);
+
+	vector<cLeader*> vecLeader = GetLeader();
+	for (int i = 0; i < vecLeader.size(); i++)
+	{
+		if (vecLeader[i]->GetCamp() == CAMP_PLAYER)
+		{
+			pos = D3DXVECTOR2(vecLeader[i]->GetCharacterEntity()->Pos().x, vecLeader[i]->GetCharacterEntity()->Pos().z);
+		}
+	}
+
+	return pos;
+}
+
+D3DXVECTOR2 cObjectManager::GetEnemyLeaderPosV2()
+{
+	D3DXVECTOR2 pos = D3DXVECTOR2(-2000, -2000);
+
+	vector<cLeader*> vecLeader = GetLeader();
+	for (int i = 0; i < vecLeader.size(); i++)
+	{
+		if (vecLeader[i]->GetCamp() == CAMP_ENEMY1)
+		{
+			pos = D3DXVECTOR2(vecLeader[i]->GetCharacterEntity()->Pos().x, vecLeader[i]->GetCharacterEntity()->Pos().z);
+		}
+	}
+
+	return pos;
 }

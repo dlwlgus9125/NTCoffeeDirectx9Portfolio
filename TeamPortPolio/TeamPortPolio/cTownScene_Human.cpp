@@ -35,8 +35,8 @@ void cTownScene_Human::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-6, 0, 0));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
-
-	SOUND->Play("Town_Human_BGM", 1.0f);
+	OBJECT->GetPlayer()->SetSceneEnter();
+	SOUND->Play("Town_Human_BGM", 0.5f);
 
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer());
@@ -68,14 +68,17 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_BTN_MELEE:
 		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_BOW:
 		OBJECT->SetCurrentLeader(LEADER_BOW);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}
@@ -111,6 +114,8 @@ void cTownScene_Human::OnUpdate()
 		if (OBJECT->GetPlayer()->AddUnitInTown((C_C_ID)trooptype))
 		{
 			SOUND->Play("coin");
+			int unitSize = OBJECT->GetPlayer()->GetAllUnitSize();
+			UI->SetEvent(TOWN_TAB_TROOPINFO, unitSize);
 			cout << "»ï!" << endl;;
 		}
 		else

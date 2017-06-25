@@ -20,6 +20,7 @@ cLeader::cLeader(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 cLeader::~cLeader()
 {
+	SAFE_RELEASE(m_meshSphere.m_pMeshSphere);
 	for each(auto v in m_vectorUnit)
 	{
 		SAFE_DELETE(v);
@@ -191,6 +192,7 @@ void cLeader::AddUnitInManager()
 	for each (auto c in m_vectorUnit)
 	{
 		c->GetCharacterEntity()->SetPos(m_CharacterEntity->Pos());
+		c->SetIdleState();
 		OBJECT->AddObject(c);
 		OBJECT->AddCharacter(c);
 		OBJECT->AddEntity(c->GetCharacterEntity());

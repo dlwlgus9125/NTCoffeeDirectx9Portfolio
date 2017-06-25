@@ -30,7 +30,7 @@ void Leader_State_Cavalry_Walk::OnUpdate(cLeader * pLeader, float deltaTime)
 
 		float distance = MATH->Distance(LeaderPos, targetPos);
 
-		if (distance > 0.01f)
+		if (distance > 0.1f)
 		{
 
 			pLeader->GetCharacterEntity()->Steering()->CavalryLeaderArrive(targetPos, pLeader->GetVelocity());
