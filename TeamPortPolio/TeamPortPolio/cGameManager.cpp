@@ -118,6 +118,7 @@ void cGameManager::Update()
 				// 윈도우 부모 윈도우 설정 해제.
 				pWindow->put_Owner(NULL);
 				pGraph->Release();
+				pWindow->Release();
 				CoUninitialize();
 			}
 		}

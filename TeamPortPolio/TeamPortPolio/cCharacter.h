@@ -89,6 +89,8 @@ public:
 	bool isAnimDeath() {};
 
 	void UpdateNearConstruct();
+
+	D3DMATERIAL9 m_mtrl;
 	
 };
 

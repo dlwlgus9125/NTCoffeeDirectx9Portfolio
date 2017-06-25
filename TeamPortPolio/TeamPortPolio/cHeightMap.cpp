@@ -10,6 +10,7 @@ cHeightMap::cHeightMap() : m_pMesh(NULL)
 
 
 cHeightMap::~cHeightMap()
+
 {
 	SAFE_RELEASE(m_pMesh);
 	for each(auto p in m_vecMtlTex)
