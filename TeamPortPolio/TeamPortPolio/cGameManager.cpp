@@ -111,9 +111,8 @@ void cGameManager::Update()
 		{
 			if (EventCode == EC_COMPLETE)
 			{
-				//pPosition->put_CurrentPosition(0);
 				isOkView = true;
-
+				//pPosition->put_CurrentPosition(0);
 				pControl->Release();
 				pEvent->Release();
 				pPosition->Release();
@@ -121,6 +120,7 @@ void cGameManager::Update()
 				// 윈도우 부모 윈도우 설정 해제.
 				pWindow->put_Owner(NULL);
 				pGraph->Release();
+				pWindow->Release();
 				CoUninitialize();
 			}
 		}
