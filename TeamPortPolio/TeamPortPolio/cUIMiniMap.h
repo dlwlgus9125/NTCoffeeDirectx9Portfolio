@@ -18,6 +18,10 @@ class cUIMiniMap :
 	ST_SIZEN m_stBGSize;
 	D3DXVECTOR3 m_vBGPos;
 	LPDIRECT3DTEXTURE9 m_pTex_BG;
+
+	ST_SIZEN m_stLocationSize;				// 미니맵 상에서 케릭터 위치 나타내는 녀석
+	D3DXVECTOR3 m_vLocationPos;
+	LPDIRECT3DTEXTURE9 m_pTex_Location;
 public:
 	cUIMiniMap();
 	~cUIMiniMap();
@@ -31,5 +35,7 @@ public:
 
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 	void Setup_BG(D3DXVECTOR3 bgPos, string sPath);
+	void Setup_Location(string sPath);
+	void Update_Location(D3DXVECTOR2 pos_uv);
 };
 

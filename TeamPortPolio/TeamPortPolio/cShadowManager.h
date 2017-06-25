@@ -23,5 +23,16 @@ public:
 	void SetAlpha(float alpha);
 	void Destroy();
 	void Init();
+
+	void SetAlphaBlendRenderState();
+	void UnSetAlphaBlendRenderState();
+
+	void SetAlphaTestingState();
+	void UnSetAlphaTestingState();
+
+	D3DMATERIAL9 CharacterMtrl();
+	D3DXVECTOR4  CharacterLight();
+	D3DXPLANE    CharacterPlane(float fY);
+
 };
 

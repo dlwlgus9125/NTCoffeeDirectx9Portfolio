@@ -10,6 +10,7 @@ cHeightMap::cHeightMap() : m_pMesh(NULL)
 
 
 cHeightMap::~cHeightMap()
+
 {
 	SAFE_RELEASE(m_pMesh);
 	for each(auto p in m_vecMtlTex)
@@ -151,4 +152,12 @@ void cHeightMap::Render()
 	m_pMesh->DrawSubset(0);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+}
+
+D3DXVECTOR2 cHeightMap::GetPlayerPos_RateBased(float x, float z)
+{
+	float fX = (x - m_fMinX) / (m_fMaxX - m_fMinX);
+	float fZ = (z - m_fMinZ) / (m_fMaxZ - m_fMinZ);
+
+	return D3DXVECTOR2(fX, fZ);
 }

@@ -97,5 +97,8 @@ public:
 		m_isDeath = false;
 	}
 	
+
+	D3DMATERIAL9 m_mtrl;
+	
 };
 

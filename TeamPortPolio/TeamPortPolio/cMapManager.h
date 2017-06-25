@@ -43,5 +43,6 @@ public:
 
 
 	vector<D3DXVECTOR3>     GetVecPosOfNode() { return m_vecPosOfNode; }
+	D3DXVECTOR2 GetPlayerPos_RateBased(float x, float z);
 };
 
