@@ -50,7 +50,7 @@ void cGameManager::Init()
 	pGraph->RenderFile(L"Videos/NT_Coffee.avi", NULL); // 폴더경로 변경 및 불필요 자료 삭제 (변경자: 김윤중)
 
 	hr = pGraph->QueryInterface(IID_IVideoWindow, (LPVOID*)&pWindow);
-
+	
 	if (SUCCEEDED(hr))
 	{
 		pWindow->put_Owner((OAHWND)g_hWnd);
@@ -194,21 +194,20 @@ void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam
 {
 	CAMERA->WndProc(hwnd, message, wParam, lParam);
 	SCENE->WndProc(hwnd, message, wParam, lParam);
-
-	//switch (message)
-	//{
-	//case WM_LBUTTONDOWN:
-	//{
-
-	//}
-	//break;
-
-	//case WM_RBUTTONDOWN:
-	//{
-
-	//}
-	//break;
-	//}
+	switch (message)
+	{
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			REFTIME endTime;
+			pPosition->get_Duration(&endTime);
+			double d_Time = endTime;
+			pPosition->put_CurrentPosition(d_Time);
+			break;
+		}
+		
+	}
 }
 
 
