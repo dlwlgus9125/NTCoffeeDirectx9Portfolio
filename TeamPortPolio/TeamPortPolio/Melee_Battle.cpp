@@ -6,6 +6,7 @@ void Melee_Battle::OnBegin(cMeleeUnit * pUnit)
 {
 	//FindTarget(pUnit);
 	pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLERUN);
+	m_isShoutCharge = false;
 }
 
 void Melee_Battle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
@@ -13,6 +14,13 @@ void Melee_Battle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
 	if (BattleTarget == NULL)
 	{
 		Charge(pUnit);
+		if (m_isShoutCharge == false)
+		{
+			if (SOUND->FindChannel("Melee_Charge1") == NULL)SOUND->Play("Melee_Charge1");
+			if (SOUND->FindChannel("Melee_Charge2") == NULL)SOUND->Play("Melee_Charge2");
+			if (SOUND->FindChannel("Melee_Charge3") == NULL)SOUND->Play("Melee_Charge3");
+			m_isShoutCharge = true;
+		}
 	}
 	else
 	{
@@ -55,6 +63,7 @@ void Melee_Battle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
 void Melee_Battle::OnEnd(cMeleeUnit * pUnit)
 {
 	pUnit->SetTargetObject(NULL);
+	m_isShoutCharge = false;
 }
 
 void Melee_Battle::StateChanger(cMeleeUnit * pUnit)

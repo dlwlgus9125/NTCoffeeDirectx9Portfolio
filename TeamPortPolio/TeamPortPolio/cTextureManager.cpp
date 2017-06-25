@@ -12,6 +12,7 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(char * szFullPath)
 	{
 		D3DXCreateTextureFromFile(D3DDevice, szFullPath,
 			&m_mapTexture[szFullPath]);
+		g_pLog->AddLog(szFullPath);
 	}
 	return m_mapTexture[szFullPath];
 }
@@ -26,7 +27,7 @@ cSkinnedMesh* cTextureManager::GetCharacterResource(char * folder, char* filenam
 {
 	if (m_mapCharacterResource.find(filename) == m_mapCharacterResource.end())
 	{
-		
+
 		cSkinnedMesh* pSkinnedMesh = new cSkinnedMesh();
 		pSkinnedMesh->Load(folder, filename);
 		m_mapCharacterResource[filename] = pSkinnedMesh;
@@ -57,9 +58,13 @@ void cTextureManager::Destroy()
 {
 	for each(auto m in m_mapTexture)
 	{
+		g_pLog->DeleteLog(m.first);
 		SAFE_RELEASE(m.second);
 	}
 	m_mapTexture.clear();
+
+	m_mapImageInfo.clear();
+
 	for each(auto s in m_mapCharacterResource)
 	{
 		s.second->Destroy();

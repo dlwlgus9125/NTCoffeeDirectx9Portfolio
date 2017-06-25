@@ -139,7 +139,8 @@ enum LEADER_TYPE
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;
-extern LPD3DXSPRITE g_Sprite;
+#include "cLog.h"
+extern cLog* g_pLog;
 #define SAFE_RELEASE(p) { if(p) p->Release(); p = NULL; }
 #define SAFE_DELETE(p) { if(p) delete p; p = NULL; }	// << :
 #define SAFE_ADD_REF(p) { if(p) p->AddRef() ; }
@@ -554,7 +555,8 @@ struct ST_NPC_INFO
 #include "cShadowManager.h"
 #include "cNpcDB.h"
 #include "cNpcManager.h"
-//<<
+
 #include "cRay.h"
+//<<
 
 

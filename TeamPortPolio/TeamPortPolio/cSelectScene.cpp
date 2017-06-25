@@ -110,6 +110,7 @@ void cSelectScene::OnExit()
 		break;
 	}
 
+	UI->DestroyEventButton();
 	UI->Release();
 }
 

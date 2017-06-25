@@ -29,11 +29,12 @@ void cBattleScene_Human::OnEnter()
 	ASTAR->Setup(MAP->GetVecPosOfNode());
 
 
-	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(40, 0, -50));
-	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(0.7, 0, -0.7)));
+	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-49.0f, 0, -6.0f));
+	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1.0f, 0, -0.2f)));
 	OBJECT->GetPlayer()->SetCurrentLeader();
-	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(30, 0, -50));
-	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0.35, 0, 0.9));
+	OBJECT->GetPlayer()->GetUnitLeader()->SetSceneEnter();
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-31.0f, 0, -5.3f));
+	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(1.0f, 0, 0.01f));
 
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer());
@@ -44,20 +45,16 @@ void cBattleScene_Human::OnEnter()
 	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
 
 
-	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(50, 0, -50), 1.0f, D3DXVECTOR3(0, 0, 1), 0.5f, 200);
-	pLeader->SetID(C_C_ORC_MELEE);
+	cLeader* pLeader = new cLeader(D3DXVECTOR3(27.0f, 0, -1.6f), 1.0f, D3DXVECTOR3(1.0f, 0, -0.12f), 0.5f, 200);
+	pLeader->SetID(C_C_HUMAN_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
 	pLeader->SetTargetIndex(11581);
+	for (int i = 0; i < 20; i++)pLeader->AddUnitInTown(C_C_HUMAN_MELEE);
+	pLeader->AddUnitInManager();
+	pLeader->SetRectOffset();
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);*/
-
-
-
-
-
-	//OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-50, 0, -5));
-	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
+	OBJECT->AddLeader(pLeader);
 }
 
 void cBattleScene_Human::OnUpdate()
@@ -136,9 +133,9 @@ void cBattleScene_Human::OnExit()
 
 void cBattleScene_Human::OnRender()
 {
-	EFFECT->Render_Begin();
+	//EFFECT->Render_Begin();
 	MAP->Render();
-	EFFECT->Render_End();
+	//EFFECT->Render_End();
 	OBJECT->Render();
 	if ((P_STATE)OBJECT->GetPlayer()->GetMesh()->GetIndex() == P_BOWATTACK1)
 	{

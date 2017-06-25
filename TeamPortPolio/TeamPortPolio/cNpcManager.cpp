@@ -111,14 +111,13 @@ void cNpcManager::Update(std::vector<ST_NPC_INFO> vecNpc)
 
 void cNpcManager::Release()
 {
-	if (m_pMesh)
-		SAFE_RELEASE(m_pMesh);
+	SAFE_RELEASE(m_pMesh);
+
 	for each(auto s in m_vecSkin)
 	{
 		SAFE_DELETE(s);
 	}
 	m_vecSkin.clear();
-
 	for each(auto f in m_vecFont)
 	{
 		SAFE_RELEASE(f);

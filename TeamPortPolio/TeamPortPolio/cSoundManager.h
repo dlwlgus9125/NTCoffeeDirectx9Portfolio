@@ -4,7 +4,7 @@
 using namespace FMOD;
 
 #define	SOUND					cSoundManager::Instance()
-#define SOUND_MAX_CHANNEL	10
+#define SOUND_MAX_CHANNEL	20
 
 class cSoundManager : public Singleton<cSoundManager>
 {

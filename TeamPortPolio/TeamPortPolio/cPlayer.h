@@ -119,5 +119,14 @@ public:
 	void SetAnimHit() { m_pSkinnedMesh->SetAnimationIndexBlend(P_HIT); };
 	void SetAnimDeath() { m_pFsm->Play(PLAYER_STATE_DEFEAT); };
 	
+	virtual void SetSceneEnter()
+	{
+		cCharacter::SetSceneEnter();
+		m_pFsm->Play(PLAYER_STATE_IDLE);
+		SetMode(IDLE_PLAYER_MODE);
+		m_isPull = false;
+	}
+
+	int GetAllUnitSize();
 };
 

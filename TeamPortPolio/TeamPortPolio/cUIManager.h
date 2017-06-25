@@ -49,5 +49,6 @@ public:
 
 	void DrawAim(LPD3DXSPRITE pSprite);
 	void Update_MinimapPos(D3DXVECTOR2 pos);
+	void DestroyEventButton();	//	로그인신, 셀렉신에서 사용하는 이벤트버튼 지우는 함수
 };
 

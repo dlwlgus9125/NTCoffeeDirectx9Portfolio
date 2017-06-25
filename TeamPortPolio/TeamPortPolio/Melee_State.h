@@ -34,6 +34,7 @@ public:
 class Melee_Battle : public IState<cMeleeUnit*>
 {
 	cObject* BattleTarget;
+	bool  m_isShoutCharge;
 public:
 	void OnBegin(cMeleeUnit* pUnit);
 
