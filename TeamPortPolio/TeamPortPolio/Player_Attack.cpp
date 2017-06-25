@@ -17,6 +17,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 
 	if (INPUT->IsMouseDown(MOUSE_LEFT))
 	{
+		
 		if ((P_STATE)pPlayer->GetMesh()->GetIndex() == P_ATTACK1)
 		{
 			state = P_ATTACK2;
@@ -35,6 +36,7 @@ void Player_Attack::OnUpdate(cPlayer* pPlayer, float deltaTime)
 		}
 		if (pPlayer->GetMesh()->GetPassedTime() > pPlayer->GetMesh()->GetCurrentAnim()->GetPeriod() - 0.4f)
 		{
+			SOUND->Play("SwingSword");
 			pPlayer->GetMesh()->SetAnimationIndexBlend(state);
 			if (BattleTarget && ((cCharacter*)BattleTarget)->GetCharacterEntity()->IsDeath() == false
 				&& ((cCharacter*)BattleTarget)->GetCharacterEntity()->IsDeath() == false)

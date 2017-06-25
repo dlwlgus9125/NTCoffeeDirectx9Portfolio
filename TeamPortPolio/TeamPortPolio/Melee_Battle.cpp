@@ -165,7 +165,7 @@ void Melee_Battle::BattleWithTarget(cMeleeUnit * pUnit)
 			D3DXVECTOR3 dir = BattleTarget->GetCharacterEntity()->Pos() - pUnit->GetCharacterEntity()->Pos();
 			D3DXVec3Normalize(&dir, &dir);
 			pUnit->GetCharacterEntity()->SetForward(dir);
-
+			SOUND->Play("SwingSword");
 			switch (pUnit->GetMesh()->GetIndex())
 			{
 			case FG_ATTACK1:

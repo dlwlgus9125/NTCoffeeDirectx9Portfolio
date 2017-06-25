@@ -72,7 +72,7 @@ void cCharacter::Render()
 		D3DDevice->SetMaterial(&mtrl);
 		D3DDevice->SetTexture(0, 0);
 
-		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+		//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 
 		SHADOW->UnSetAlphaBlendRenderState();
 	}

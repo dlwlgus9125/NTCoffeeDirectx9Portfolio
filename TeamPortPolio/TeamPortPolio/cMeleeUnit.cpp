@@ -81,7 +81,7 @@ void cMeleeUnit::Render()
 		D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
 
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+		//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 }

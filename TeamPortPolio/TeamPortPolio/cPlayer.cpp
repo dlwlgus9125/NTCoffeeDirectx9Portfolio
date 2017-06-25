@@ -21,7 +21,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 
 
-	FLYPos = D3DXVECTOR3(0, 0, 0);
+	FLYPos = D3DXVECTOR3(0, 2.0f, 0);
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -185,12 +185,14 @@ void cPlayer::Update(float deltaTime)
 
 	if (FLY)
 	{
-		if (INPUT->IsKeyPress(VK_W))FLYPos.z++;
-		if (INPUT->IsKeyPress(VK_S))FLYPos.z--;
-		if (INPUT->IsKeyPress(VK_A))FLYPos.x--;
-		if (INPUT->IsKeyPress(VK_D))FLYPos.x++;
-		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 1);
-		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 1);
+		float shift = 1.0f;
+		if (INPUT->IsKeyPress(VK_SHIFT))shift = 5.0f;
+		if (INPUT->IsKeyPress(VK_W))FLYPos.z+=0.02f*shift;
+		if (INPUT->IsKeyPress(VK_S))FLYPos.z-=0.02f*shift;
+		if (INPUT->IsKeyPress(VK_A))FLYPos.x-=0.02f*shift;
+		if (INPUT->IsKeyPress(VK_D))FLYPos.x+=0.02f*shift;
+		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.1f);
+		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 0.1f);
 
 		CAMERA->SetLookAt(FLYPos, m_fRotY);
 	}
@@ -219,7 +221,7 @@ void cPlayer::Render()
 	D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+	//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 

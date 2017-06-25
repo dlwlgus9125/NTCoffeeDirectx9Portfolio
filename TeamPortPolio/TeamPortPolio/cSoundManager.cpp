@@ -29,6 +29,9 @@ void cSoundManager::Setup()
 	
 	SOUND->LoadFile("ArrowHit", "Sound/FightEffect/ArrowHit.ogg", false);
 	SOUND->LoadFile("ArrowHitGround", "Sound/FightEffect/ArrowHitGround.ogg", false);
+
+
+	SOUND->LoadFile("SwingSword", "Sound/FightEffect/swordSwing.ogg", false);
 	SOUND->LoadFile("DamagedBySword", "Sound/FightEffect/DamagedBySword.ogg", false);
 	SOUND->LoadFile("Defenced", "Sound/FightEffect/Defenced.ogg", false);
 
