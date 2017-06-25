@@ -10,10 +10,6 @@ cMeleeUnit::cMeleeUnit(IEntity * pLeader, D3DXVECTOR3 offset) :cUnit::cUnit()
 		pLeader->Forward(), pLeader->Mass(), pLeader->MaxSpeed() * 3);
 	m_pLeader = pLeader;
 	m_offset = offset;
-	
-	SOUND->LoadFile("Melee_Charge1", "Sound/Voice/MeleeUnit/Melee_Charge1.wav", false);
-	SOUND->LoadFile("Melee_Charge2", "Sound/Voice/MeleeUnit/Melee_Charge2.wav", false);
-	SOUND->LoadFile("Melee_Charge3", "Sound/Voice/MeleeUnit/Melee_Charge3.wav", false);
 }
 
 cMeleeUnit::~cMeleeUnit()

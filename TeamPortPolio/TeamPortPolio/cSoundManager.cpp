@@ -5,6 +5,14 @@ void cSoundManager::Setup()
 {
 	System_Create(&m_pSystem);
 	m_pSystem->init(SOUND_MAX_CHANNEL, FMOD_INIT_NORMAL, 0);
+
+
+	SOUND->LoadFile("Melee_Charge1", "Sound/Voice/MeleeUnit/Melee_Charge1.wav", false);
+	SOUND->LoadFile("Melee_Charge2", "Sound/Voice/MeleeUnit/Melee_Charge2.wav", false);
+	SOUND->LoadFile("Melee_Charge3", "Sound/Voice/MeleeUnit/Melee_Charge3.wav", false);
+
+	SOUND->LoadFile("PullBow", "Sound/FightEffect/pull_bow.ogg", false);
+	SOUND->LoadFile("ShootBow", "Sound/FightEffect/Shoot_Bow.ogg", false);
 }
 
 void cSoundManager::Release()

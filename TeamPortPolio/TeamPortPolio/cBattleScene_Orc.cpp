@@ -78,8 +78,8 @@ void cBattleScene_Orc::OnUpdate()
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
-		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
-		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
+		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
 	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;

@@ -43,6 +43,6 @@ void cCharacterDB::Destroy()
 	{
 		SAFE_DELETE(it.second);
 	}
-
+	m_mapCharacter.clear();
 	delete this;
 }
