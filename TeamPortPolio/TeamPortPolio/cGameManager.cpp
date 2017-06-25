@@ -108,9 +108,8 @@ void cGameManager::Update()
 		{
 			if (EventCode == EC_COMPLETE)
 			{
-				//pPosition->put_CurrentPosition(0);
 				isOkView = true;
-
+				//pPosition->put_CurrentPosition(0);
 				pControl->Release();
 				pEvent->Release();
 				pPosition->Release();
