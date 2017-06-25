@@ -26,6 +26,7 @@ class cUIManager : public Singleton<cUIManager>
 	cUIProgressBar*				m_pStatus;
 	cUIMiniMap*					m_pTrooptype;
 	cUIMiniMap*					m_pResultMessage;
+	cUITab*						m_pTab_TroopInfo;
 
 	void Setup_TownScene();
 	void Setup_LoginScene();
