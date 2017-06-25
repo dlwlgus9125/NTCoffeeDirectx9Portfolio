@@ -78,6 +78,7 @@ public:
 	cLeader*       GetUnitLeader() { return m_currentLeader; }
 	void           SetCurrentLeader(LEADER_TYPE leaderTYPE) { m_currentLeaderType = leaderTYPE; m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
 	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
+	int			GetCurrentLeaderType() { return m_currentLeaderType;}
 
 	// Ãß°¡
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }

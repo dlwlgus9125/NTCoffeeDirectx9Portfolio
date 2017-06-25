@@ -29,6 +29,8 @@ class cUITab :
 	D3DXVECTOR3					m_vBtnPos;
 	cUIButton*					m_pBtn_Exit;
 	// <<
+
+	bool						m_isNormal;
 public:
 	cUITab();
 	~cUITab();
@@ -44,7 +46,7 @@ public:
 
 	// >> ½½·Ô
 	void Setup_Slot(D3DXVECTOR3	vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
-		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF);
+		D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont = FONT_DEF, bool isNormal = true);
 	void AddSlotData(int itemMId, int itemSID, string name, string imagePath, string info, int cost);
 	void SetShownData(int itemMID, int startIndex);
 	HRESULT GetClickedItemID(OUT int& eventID, OUT int& itemID);
@@ -53,5 +55,6 @@ public:
 	void Setup_exitbtn(D3DXVECTOR3 btnPos, string sPath_idle, string sPath_mouseover, string sPath_clicked);
 
 	void ClearShownData();
+	void UpdateTroopCount(int melee, int bow, int cavalry);
 };
 
