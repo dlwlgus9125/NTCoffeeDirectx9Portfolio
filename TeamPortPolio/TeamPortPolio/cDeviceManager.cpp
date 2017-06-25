@@ -50,7 +50,7 @@ void cDeviceManager::Destroy()
 
 	ULONG error = m_pD3DDevice->Release();
 
-#ifdef _DEBUG 
-	assert(error == 0 && "생성된 객체중 해제되지 않은것이 있슴");
-#endif
+//#ifdef _DEBUG 
+//	assert(error == 0 && "생성된 객체중 해제되지 않은것이 있슴");
+//#endif
 }
