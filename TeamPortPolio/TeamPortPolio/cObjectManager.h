@@ -75,5 +75,7 @@ public:
 	int GetCurrentLeaderType();
 	float GetPlayerHPRate();
 	D3DXVECTOR2 GetPlayerPosV2();
+	D3DXVECTOR2 GetUnitLeaderPosV2();
+	D3DXVECTOR2 GetEnemyLeaderPosV2();
 };
 

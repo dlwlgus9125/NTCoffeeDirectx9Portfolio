@@ -377,10 +377,10 @@ void cUIManager::Setup_BattleScene_Orc()
 	switch (OBJECT->GetPlayerID())
 	{
 	case C_C_ORC_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png", "image/ui/BattleScene_Orc/minimap/unit.png", "image/ui/BattleScene_Orc/minimap/enemy.png");
 		break;
 	case C_C_HUMAN_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png", "image/ui/BattleScene_Human/minimap/unit.png", "image/ui/BattleScene_Human/minimap/enemy.png");
 		break;
 	}	
 	m_pMiniMap->SetAlpha(200);
@@ -483,10 +483,10 @@ void cUIManager::Setup_BattleScene_Human()
 	switch (OBJECT->GetPlayerID())
 	{
 	case C_C_ORC_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Orc/minimap/position.png", "image/ui/BattleScene_Orc/minimap/unit.png", "image/ui/BattleScene_Orc/minimap/enemy.png");
 		break;
 	case C_C_HUMAN_MALE:
-		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png");
+		m_pMiniMap->Setup_Location("image/ui/BattleScene_Human/minimap/position.png", "image/ui/BattleScene_Human/minimap/unit.png", "image/ui/BattleScene_Human/minimap/enemy.png");
 		break;
 	}
 	m_pMiniMap->SetAlpha(200);
@@ -893,12 +893,14 @@ void cUIManager::CreateResultMessage(int resultID)
 	m_pResultMessage->SetHiddenAll(false);
 }
 
-void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos)
+void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos, D3DXVECTOR2 pos_unit, D3DXVECTOR2 pos_enemy)
 {
 	if (!m_pMiniMap) return;
 
 	D3DXVECTOR2 uv = MAP->GetPlayerPos_RateBased(pos.x, pos.y);
-	m_pMiniMap->Update_Location(uv);
+	D3DXVECTOR2 uv_unit = MAP->GetPlayerPos_RateBased(pos_unit.x, pos_unit.y);
+	D3DXVECTOR2 uv_enemy = MAP->GetPlayerPos_RateBased(pos_enemy.x, pos_enemy.y);
+	m_pMiniMap->Update_Location(uv, uv_unit, uv_enemy);
 }
 
 void cUIManager::DestroyEventButton()

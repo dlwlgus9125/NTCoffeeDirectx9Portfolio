@@ -245,7 +245,39 @@ float cObjectManager::GetPlayerHPRate()
 
 D3DXVECTOR2 cObjectManager::GetPlayerPosV2()
 {
-	if (!m_player) return D3DXVECTOR2(0,0);
+	if (!m_player) return D3DXVECTOR2(-2000, -2000);
 
 	return D3DXVECTOR2(m_player->GetCharacterEntity()->Pos().x, m_player->GetCharacterEntity()->Pos().z);
+}
+
+D3DXVECTOR2 cObjectManager::GetUnitLeaderPosV2()
+{
+	D3DXVECTOR2 pos = D3DXVECTOR2(-2000, -2000);
+
+	vector<cLeader*> vecLeader = GetLeader();
+	for (int i = 0; i < vecLeader.size(); i++)
+	{
+		if (vecLeader[i]->GetCamp() == CAMP_PLAYER)
+		{
+			pos = D3DXVECTOR2(vecLeader[i]->GetCharacterEntity()->Pos().x, vecLeader[i]->GetCharacterEntity()->Pos().z);
+		}
+	}
+
+	return pos;
+}
+
+D3DXVECTOR2 cObjectManager::GetEnemyLeaderPosV2()
+{
+	D3DXVECTOR2 pos = D3DXVECTOR2(-2000, -2000);
+
+	vector<cLeader*> vecLeader = GetLeader();
+	for (int i = 0; i < vecLeader.size(); i++)
+	{
+		if (vecLeader[i]->GetCamp() == CAMP_ENEMY1)
+		{
+			pos = D3DXVECTOR2(vecLeader[i]->GetCharacterEntity()->Pos().x, vecLeader[i]->GetCharacterEntity()->Pos().z);
+		}
+	}
+
+	return pos;
 }
