@@ -131,6 +131,7 @@ void cPlayer::Update(float deltaTime)
 		cout << "getindex : " << GetIndex() << endl;
 	
 	}
+
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
 	{
@@ -188,6 +189,8 @@ void cPlayer::Update(float deltaTime)
 		if (INPUT->IsKeyPress(VK_S))FLYPos.z--;
 		if (INPUT->IsKeyPress(VK_A))FLYPos.x--;
 		if (INPUT->IsKeyPress(VK_D))FLYPos.x++;
+		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 1);
+		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 1);
 
 		CAMERA->SetLookAt(FLYPos, m_fRotY);
 	}
