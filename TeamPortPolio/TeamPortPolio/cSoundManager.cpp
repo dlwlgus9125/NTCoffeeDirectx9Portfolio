@@ -13,6 +13,8 @@ void cSoundManager::Setup()
 
 	SOUND->LoadFile("PullBow", "Sound/FightEffect/pull_bow.ogg", false);
 	SOUND->LoadFile("ShootBow", "Sound/FightEffect/Shoot_Bow.ogg", false);
+
+	SOUND->LoadFile("OrcInitBattleScene", "Sound/Voice/InitBattleField/OrcInit.wav", false);
 }
 
 void cSoundManager::Release()
