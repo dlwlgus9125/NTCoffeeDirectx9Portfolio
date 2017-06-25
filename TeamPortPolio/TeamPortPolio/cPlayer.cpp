@@ -21,7 +21,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 
 
-
+	FLYPos = D3DXVECTOR3(0, 0, 0);
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -109,12 +109,20 @@ void cPlayer::Init()
 	SetCurrentLeader();
 
 	m_AttackType = ATTACK_MELEE;
-
-
+	//
+	FLY = false;
 }
 
 void cPlayer::Update(float deltaTime)
 {
+	if (INPUT->IsKeyDown(VK_0))
+	{
+		FLYPos=	m_CharacterEntity->Pos();
+		FLY = true;
+	}
+	if (INPUT->IsKeyDown(VK_9))FLY = false;
+
+
 	if (INPUT->IsKeyDown(VK_SPACE))
 	{
 		cout << "pos : " << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
@@ -123,6 +131,7 @@ void cPlayer::Update(float deltaTime)
 		cout << "getindex : " << GetIndex() << endl;
 	
 	}
+
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
 	{
@@ -135,43 +144,57 @@ void cPlayer::Update(float deltaTime)
 
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
-		if (INPUT->IsKeyPress(VK_A))
+		
+		if (!FLY)
 		{
-			m_fRotY -= 0.06;
+			if (INPUT->IsKeyPress(VK_A))
+			{
+				m_fRotY -= 0.06;
+			}
+			if (INPUT->IsKeyPress(VK_D))
+			{
+				m_fRotY += 0.06;
+			}
+	
+			D3DXMATRIXA16 matR;
+			D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+			D3DXMatrixIdentity(&matR);
+			D3DXMatrixRotationY(&matR, m_fRotY);
+
+			D3DXVec3TransformCoord(&forward, &forward, &matR);
+			m_CharacterEntity->SetForward(forward);
+	
+			m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+
+
 		}
-		if (INPUT->IsKeyPress(VK_D))
+		if (GetMesh()->GetIndex() == P_BOWATTACK1)
 		{
-			m_fRotY += 0.06;
+			CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 1.5, 0), m_fRotY);
+			m_fRotY = CAMERA->GetCamRotAngle().y;
 		}
-
-		//화살처리
-
-		D3DXMATRIXA16 matR;
-		D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
-		D3DXMatrixIdentity(&matR);
-		D3DXMatrixRotationY(&matR, m_fRotY);
-
-		D3DXVec3TransformCoord(&forward, &forward, &matR);
-		m_CharacterEntity->SetForward(forward);
-
-		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-
-
+		else
+		{
+				CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), m_fRotY);
+		}
+		if (INPUT->IsKeyDown(VK_F))
+		{
+			m_fRotY += D3DX_PI;
+		}
 	}
-	if (GetMesh()->GetIndex() == P_BOWATTACK1)
+
+	if (FLY)
 	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 1.5, 0), m_fRotY);
-		m_fRotY = CAMERA->GetCamRotAngle().y;
-	}
-	else
-	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), m_fRotY);
-	}
-	if (INPUT->IsKeyDown(VK_F))
-	{
-		m_fRotY += D3DX_PI;
-	}
+		if (INPUT->IsKeyPress(VK_W))FLYPos.z++;
+		if (INPUT->IsKeyPress(VK_S))FLYPos.z--;
+		if (INPUT->IsKeyPress(VK_A))FLYPos.x--;
+		if (INPUT->IsKeyPress(VK_D))FLYPos.x++;
+		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 1);
+		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 1);
 
+		CAMERA->SetLookAt(FLYPos, m_fRotY);
+	}
+	
 }
 
 void cPlayer::Render()

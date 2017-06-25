@@ -50,7 +50,7 @@ void cGameManager::Init()
 	pGraph->RenderFile(L"Videos/NT_Coffee.avi", NULL); // 폴더경로 변경 및 불필요 자료 삭제 (변경자: 김윤중)
 
 	hr = pGraph->QueryInterface(IID_IVideoWindow, (LPVOID*)&pWindow);
-
+	
 	if (SUCCEEDED(hr))
 	{
 		pWindow->put_Owner((OAHWND)g_hWnd);
@@ -134,11 +134,14 @@ void cGameManager::Update()
 		if (TIME->Update())
 		{
 			//cout << m_player->GetCharacterEntity()->Pos().x << ", " << m_player->GetCharacterEntity()->Pos().y << ", " << m_player->GetCharacterEntity()->Pos().z << endl;
-
+		
 			m_prevTime = m_currentTime;
 			FRUSTUM->Update();
 			INPUT->Update();
-			
+
+			if (INPUT->IsKeyDown(VK_V))g_showColider = true;
+			if (INPUT->IsKeyDown(VK_B))g_showColider = false;
+
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();
@@ -195,20 +198,23 @@ void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam
 	CAMERA->WndProc(hwnd, message, wParam, lParam);
 	SCENE->WndProc(hwnd, message, wParam, lParam);
 
-	//switch (message)
-	//{
-	//case WM_LBUTTONDOWN:
-	//{
+	if (!isOkView)
+	{
+		switch (message)
+		{
+		case WM_KEYDOWN:
+			switch (wParam)
+			{
+			case VK_ESCAPE:
+				REFTIME endTime;
+				pPosition->get_Duration(&endTime);
+				double d_Time = endTime;
+				pPosition->put_CurrentPosition(d_Time);
+				break;
+			}
 
-	//}
-	//break;
-
-	//case WM_RBUTTONDOWN:
-	//{
-
-	//}
-	//break;
-	//}
+		}
+	}
 }
 
 

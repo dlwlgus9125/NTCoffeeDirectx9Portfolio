@@ -21,6 +21,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+bool g_showColider;
 HCURSOR g_Cursor;
 HWND			g_hWnd;
 cLog*			g_pLog;
@@ -140,6 +141,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 	g_hWnd = hWnd;
+	g_showColider = false;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 	
