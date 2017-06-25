@@ -148,7 +148,7 @@ void cUIManager::Setup_TownScene()
 	pTab_Recruit->Setup_exitbtn(D3DXVECTOR3(382, 17, 0),
 		"image/ui/townscene/tab_recruit/btn_idle.png", "image/ui/townscene/tab_recruit/btn_mouseover.png", "image/ui/townscene/tab_recruit/btn_select.png");
 	pTab_Recruit->SetEventID(TOWN_TAB_RECRUIT);
-	m_vecTab.push_back(pTab_Recruit);
+	m_vecTab.push_back(pTab_Recruit);;
 	// <<
 
 
