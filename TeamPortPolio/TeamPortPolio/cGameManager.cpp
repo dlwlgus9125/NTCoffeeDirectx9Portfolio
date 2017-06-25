@@ -84,6 +84,7 @@ void cGameManager::Init()
 	NPCDB->Setup();
 	CAMERA->Setup();
 	FRUSTUM->Setup();
+	MAP->StartMain();
 	ASTAR->Init();
 	SCENE->Register(SCENE_LOGIN, new cLoginScene());
 	SCENE->Register(SCENE_SELECT, new cSelectScene());
@@ -178,7 +179,6 @@ void cGameManager::Release()
 	INPUT->Release();
 	
 	
-	INPUT->Release();
 	UI->Release();
 	FONT->Destroy();
 	EFFECT->Release();

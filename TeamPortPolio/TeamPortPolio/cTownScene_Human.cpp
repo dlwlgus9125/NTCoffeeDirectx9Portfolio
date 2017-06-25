@@ -35,7 +35,7 @@ void cTownScene_Human::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-6, 0, 0));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
-
+	OBJECT->GetPlayer()->SetSceneEnter();
 	SOUND->Play("Town_Human_BGM", 1.0f);
 
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
@@ -112,6 +112,7 @@ void cTownScene_Human::OnUpdate()
 		{
 			SOUND->Play("coin");
 			cout << "»ï!" << endl;;
+			cout << "ºÎ´ëÀÎ¿ø : " << OBJECT->GetPlayer()->GetAllUnitSize() << endl;
 		}
 		else
 		{

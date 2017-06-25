@@ -53,16 +53,19 @@ void cEffectManager::Release()
 	{
 		m_pFog->Destroy();
 		SAFE_DELETE(m_pFog);
+		m_pFog = NULL;
 	}
 	if (m_pSnow)
 	{
 		m_pSnow->DeleteParticle(m_pSnow->GetVerParticleVertex().size());
 		SAFE_DELETE(m_pSnow);
+		m_pSnow = NULL;
 	}
 	if (m_pRain)
 	{
 		m_pRain->DeleteParticle(m_pRain->GetVerParticleVertex().size());
 		SAFE_DELETE(m_pRain);
+		m_pRain = NULL;
 	}
 }
 

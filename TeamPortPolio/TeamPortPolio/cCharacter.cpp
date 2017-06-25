@@ -12,6 +12,7 @@ cCharacter::~cCharacter()
 {
 	SAFE_DELETE(m_pSkinnedMesh);
 	SAFE_DELETE(m_Status);
+	SAFE_RELEASE(m_MeshSphere.m_pMeshSphere);
 }
 
 void cCharacter::Init()
