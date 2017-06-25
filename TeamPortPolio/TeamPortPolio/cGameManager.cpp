@@ -177,7 +177,6 @@ void cGameManager::Release()
 	OBJECTDB->Destroy();
 	NPCDB->Destroy();
 	OBJECT->Release();
-	NPC->Release();
 	SOUND->Release();
 	INPUT->Release();
 	
@@ -186,6 +185,7 @@ void cGameManager::Release()
 	FONT->Destroy();
 	EFFECT->Release();
 	MAP->Destroy();
+	SHADOW->Destroy();
 	ASTAR->Release();
 	THREAD->Destroy();
 	TEXTURE->Destroy();

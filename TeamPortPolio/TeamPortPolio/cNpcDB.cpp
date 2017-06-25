@@ -31,5 +31,6 @@ void cNpcDB::Destroy()
 	{
 		SAFE_DELETE(p.second);
 	}
-	delete this;
+	m_mapNpc.clear();
+	//delete this;
 }
