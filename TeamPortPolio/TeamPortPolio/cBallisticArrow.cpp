@@ -69,7 +69,11 @@ void cBallisticArrow::ArrowUpdate()
 		float y = 0.0f;
 		MAP->GetHeight(m_CharacterEntity->Pos().x, y, m_CharacterEntity->Pos().z);
 
-		if(m_CharacterEntity->Pos().y<=y)this->SetDeath(true);
+		if (m_CharacterEntity->Pos().y <= y)
+		{
+			SOUND->Play("ArrowHitGround");
+			this->SetDeath(true);
+		}
 
 		m_pSkinnedMesh->SetPosition(m_pArrow->Entity()->Pos(), m_pArrow->Entity()->Forward());
 		for (int i = 0; i < OBJECT->GetCharacter().size(); i++)

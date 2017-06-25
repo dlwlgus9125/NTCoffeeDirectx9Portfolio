@@ -95,7 +95,6 @@ void cBattleScene_Human::OnUpdate()
 		break;
 	}
 	// <<
-	OBJECT->Update(TIME->DeltaTime());
 
 	if (TIME->UpdateOneSecond())
 	{

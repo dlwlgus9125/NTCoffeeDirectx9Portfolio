@@ -6,6 +6,14 @@ void Bow_Death::OnBegin(cBowUnit * pUnit)
 {
 	pUnit->GetMesh()->SetAnimationIndexBlend(B_DEATH);
 	pUnit->GetCharacterEntity()->SetDeath(true);
+	if (CHARACTERDB->GetMapCharacter(pUnit->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanDeath");
+	}
+	else
+	{
+		SOUND->Play("OrcDeath");
+	}
 }
 
 void Bow_Death::OnUpdate(cBowUnit * pUnit, float deltaTime)
