@@ -55,7 +55,7 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 
-
+	//
 
 
 	ASTAR->Setup(MAP->GetVecPosOfNode());

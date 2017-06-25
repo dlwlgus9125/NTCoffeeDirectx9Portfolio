@@ -16,9 +16,18 @@ void Melee_Battle::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
 		Charge(pUnit);
 		if (m_isShoutCharge == false)
 		{
-			if (SOUND->FindChannel("Melee_Charge1") == NULL)SOUND->Play("Melee_Charge1");
-			if (SOUND->FindChannel("Melee_Charge2") == NULL)SOUND->Play("Melee_Charge2");
-			if (SOUND->FindChannel("Melee_Charge3") == NULL)SOUND->Play("Melee_Charge3");
+			if (CHARACTERDB->GetMapCharacter(pUnit->GetID())->m_raceID == C_R_HUMAN)
+			{
+				if (SOUND->FindChannel("Human_Charge1") == NULL)SOUND->Play("Human_Charge1");
+				if (SOUND->FindChannel("Human_Charge2") == NULL)SOUND->Play("Human_Charge2");
+				if (SOUND->FindChannel("Human_Charge3") == NULL)SOUND->Play("Human_Charge3");
+			}
+			else
+			{
+				if (SOUND->FindChannel("Orc_Charge1") == NULL)SOUND->Play("Orc_Charge1");
+				if (SOUND->FindChannel("Orc_Charge2") == NULL)SOUND->Play("Orc_Charge2");
+				if (SOUND->FindChannel("Orc_Charge3") == NULL)SOUND->Play("Orc_Charge3");
+			}
 			m_isShoutCharge = true;
 		}
 	}
@@ -156,7 +165,7 @@ void Melee_Battle::BattleWithTarget(cMeleeUnit * pUnit)
 			D3DXVECTOR3 dir = BattleTarget->GetCharacterEntity()->Pos() - pUnit->GetCharacterEntity()->Pos();
 			D3DXVec3Normalize(&dir, &dir);
 			pUnit->GetCharacterEntity()->SetForward(dir);
-
+			SOUND->Play("SwingSword");
 			switch (pUnit->GetMesh()->GetIndex())
 			{
 			case FG_ATTACK1:

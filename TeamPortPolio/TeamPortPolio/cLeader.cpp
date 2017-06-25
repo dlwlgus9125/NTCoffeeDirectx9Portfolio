@@ -150,7 +150,7 @@ void cLeader::Render()
 	//g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, D3DFILL_SOLID);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_meshSphere.m_pMeshSphere->DrawSubset(0);
+	//m_meshSphere.m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
@@ -297,7 +297,7 @@ void cLeader::ClickedButtonOne()
 {
 	switch (m_type)
 	{
-	case C_C_HUMAN_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
+	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_IDLE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_IDLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_IDLE);  break;
 	}
@@ -307,7 +307,7 @@ void cLeader::ClickedButtonTwo()
 {
 	switch (m_type)
 	{
-	case C_C_HUMAN_MALE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
+	case LEADER_MELEE: m_pFsm->Play(LEADER_STATE_MELEE_DEFENCE); break;
 	case LEADER_BOW:  m_pFsm->Play(LEADER_STATE_BOW_BATTLE); break;
 	case LEADER_CAVALRY: m_pFsm->Play(LEADER_STATE_CAVALRY_BATTLE); break;
 	}

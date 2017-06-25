@@ -34,14 +34,14 @@ void Leader_State_Cavalry_Battle::OnUpdate(cLeader * pLeader, float deltaTime)
 			pLeader->GetCharacterEntity()->Steering()->CavalryLeaderArrive(targetPos, pLeader->GetVelocity());
 		}
 
-		if (distance > 5)
+		/*if (distance > 5)
 		{
 			pLeader->AddVelocity(-deltaTime*0.05f);
 		}
 		else
 		{
 			pLeader->AddVelocity(deltaTime*0.01f);
-		}
+		}*/
 	}
 	//else if (MATH->IsCollided(pLeader->GetSphere(), ASTAR->GetGraph()->GetNode(pLeader->GetTargetIndex())->GetSphere()))
 	//{
