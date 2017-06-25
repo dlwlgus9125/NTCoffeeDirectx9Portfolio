@@ -41,10 +41,10 @@ void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 	}
 	D3DXCreateSphere(D3DDevice, 0.7f, 10, 10, &m_pMesh, NULL);
 
-	m_vecSkin.resize(m_vecNpc.size());
-	LoadSkinnedMesh();
-	SetupFont();
-	SetMtrl();
+m_vecSkin.resize(m_vecNpc.size());
+LoadSkinnedMesh();
+SetupFont();
+SetMtrl();
 }
 
 void cNpcManager::Render()
@@ -111,15 +111,37 @@ void cNpcManager::Update(std::vector<ST_NPC_INFO> vecNpc)
 
 void cNpcManager::Release()
 {
-	//if(m_pMesh)SAFE_DELETE(m_pMesh);
+	if (m_pMesh)
+		SAFE_RELEASE(m_pMesh);
 	for each(auto s in m_vecSkin)
 	{
 		SAFE_DELETE(s);
 	}
+	m_vecSkin.clear();
+
 	for each(auto f in m_vecFont)
 	{
 		SAFE_RELEASE(f);
 	}
+	m_vecFont.clear();
+
+	for (int i = 0; i < m_vechdc.size(); i++)
+	{
+		m_vechdc.pop_back();
+	}
+	m_vechdc.clear();
+
+	for (int i = 0; i < m_vechFont.size(); i++)
+	{
+		m_vechFont.pop_back();
+	}
+	m_vecFont.clear();
+
+	for (int i = 0; i < m_vechFontOld.size(); i++)
+	{
+		m_vechFontOld.pop_back();	
+	}
+	m_vechFontOld.clear();
 }
 
 void cNpcManager::SetMtrl()
