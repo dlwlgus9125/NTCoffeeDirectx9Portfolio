@@ -479,17 +479,6 @@ void cSkinnedMesh::Destroy()
 
 	SAFE_DELETE_ARRAY(m_pmWorkingPalette);
 	SAFE_RELEASE(m_pEffect);
-
-	// >> 
-	//D3DXFrameDestroy((LPD3DXFRAME)m_AttackBone, &ah);
-	//D3DXFrameDestroy((LPD3DXFRAME)m_RightHand, &ah);
-	//D3DXFrameDestroy((LPD3DXFRAME)m_leftHand, &ah);
-	//SAFE_DELETE(m_pRootFrame);
-	//SAFE_DELETE(m_AttackBone);
-	//SAFE_DELETE(m_RightHand);
-	//SAFE_DELETE(m_leftHand);
-	//m_currentAnim
-	// <<
 }
 
 void cSkinnedMesh::FindAttackBone(char* BoneName)
