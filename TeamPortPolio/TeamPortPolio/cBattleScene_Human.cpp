@@ -16,7 +16,7 @@ cBattleScene_Human::~cBattleScene_Human()
 
 void cBattleScene_Human::OnEnter()
 {
-	SOUND->Play("Battle_Human_BGM");
+	SOUND->Play("Battle_Human_BGM",0.5f);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);

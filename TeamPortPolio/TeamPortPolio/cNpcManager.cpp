@@ -117,7 +117,8 @@ void cNpcManager::Release()
 	m_vecSkin.clear();
 	for each(auto f in m_vecFont)
 	{
-		SAFE_DELETE(f);
+		f->Release();
+		//SAFE_DELETE(f);
 	}
 	m_vecFont.clear();
 
