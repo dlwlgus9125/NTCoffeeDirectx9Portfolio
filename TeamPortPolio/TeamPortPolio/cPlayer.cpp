@@ -109,7 +109,7 @@ void cPlayer::Init()
 	SetCurrentLeader();
 
 	m_AttackType = ATTACK_MELEE;
-
+	//
 	FLY = false;
 }
 
