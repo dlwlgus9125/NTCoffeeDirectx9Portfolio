@@ -68,14 +68,17 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_BTN_MELEE:
 		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_BOW:
 		OBJECT->SetCurrentLeader(LEADER_BOW);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}
