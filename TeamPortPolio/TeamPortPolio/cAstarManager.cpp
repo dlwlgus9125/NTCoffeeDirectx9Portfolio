@@ -60,7 +60,7 @@ void cAstarManager::Setup(vector<D3DXVECTOR3> vecPosOfNode)
 
 void cAstarManager::DestroyForChangeScene()
 {
-	THREAD->SuspendThreadByKey(HANDLE_ASTAR_FINDINDEX);
+	THREAD->TerminateThreadByKey(HANDLE_ASTAR_FINDINDEX);
 	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 	//
 }
@@ -167,7 +167,7 @@ void cAstarManager::Update()
 void cAstarManager::PathUpdate()
 {
 	SetLeaderPath();
-	//THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
+	THREAD->SuspendThreadByKey(HANDLE_ATSTAR_FINDPATH);
 }
 
 void cAstarManager::Release()
@@ -230,7 +230,7 @@ void cAstarManager::SetLeaderPath()
 		{
 			OBJECT->GetLeader()[i]->PathClear();
 			OBJECT->GetLeader()[i]->SetPath(this->GetPath(OBJECT->GetLeader()[i]->GetIndex(), OBJECT->GetLeader()[i]->GetTargetIndex()));
-			cout << "path size : " << OBJECT->GetLeader()[i]->GetPath().size() << endl;
+		//	cout << "path size : " << OBJECT->GetLeader()[i]->GetPath().size() << endl;
 		}
 	}
 }

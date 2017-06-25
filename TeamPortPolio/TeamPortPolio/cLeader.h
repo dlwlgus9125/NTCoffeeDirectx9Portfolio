@@ -70,7 +70,7 @@ public:
 	vector<cUnit*> GetUnits() { return m_vectorUnit; }
 
 	
-	void             SetPath(vector<int> path) { if (!path.empty()) { m_path.clear(); cout << "start : " << path.back() << " end : " << path.front() << endl;  m_path = path; } }
+	void             SetPath(vector<int> path) { if (!path.empty()) { m_path.clear();  m_path = path; } }
 	vector<int>      GetPath() { return m_path; }
 	void             SetTargetIndex(int i) { m_targetIndex = i; }
 	int              GetTargetIndex() { return m_targetIndex; }
@@ -95,6 +95,12 @@ public:
 	float            GetVelocity() { return m_velocity; }
 	void             AddVelocity(float force) { m_velocity += force; m_velocity=MATH->Clamp(m_velocity, 0.0f, 0.05f); }
 	void             SetVelocity(float velocity) { m_velocity = velocity; m_velocity= MATH->Clamp(m_velocity, 0.0f, 0.05f);
+	}
+
+	void SetSceneEnter()
+	{
+		cCharacter::SetSceneEnter();
+		m_pFsm->Play(m_TypeStart);
 	}
 };
 

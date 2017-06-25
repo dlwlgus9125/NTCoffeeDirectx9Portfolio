@@ -78,8 +78,8 @@ void cBattleScene_Orc::OnUpdate()
 	UI->GetEvent(indexInMiniMap, buttonIndex, eventIDTap, itemID);
 	if (indexInMiniMap > 0)
 	{
-		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
-		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
+		OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(indexInMiniMap);
+		//OBJECT->GetPlayer()->SetUnitLeaderTargetIndex(OBJECT->GetPlayer()->GetIndex());
 		cout << "UI Index : " << indexInMiniMap << endl;
 	}
 	//cout << "player index : " <<OBJECT->GetPlayer()->GetIndex()<< endl;
@@ -122,7 +122,7 @@ void cBattleScene_Orc::OnUpdate()
 		}
 	}
 
-	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
+	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2(), OBJECT->GetUnitLeaderPosV2(), OBJECT->GetEnemyLeaderPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
 }
 
 void cBattleScene_Orc::OnExit()
