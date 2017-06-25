@@ -14,6 +14,7 @@ void cNpcDB::Setup()
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_RECRUIT, "obj/NPC/Orc/Recruit/", "rexxar.X"));
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_STUFF, "obj/NPC/Orc/Stuff/", "orcmalekidgruntling.X"));
 	Add(new ST_Npc(N_R_ORC, N_C_ORC_INN, "obj/NPC/Orc/Inn/", "orcmalemerchantlight.X"));
+
 }
 
 void cNpcDB::Add(ST_Npc * pData)
