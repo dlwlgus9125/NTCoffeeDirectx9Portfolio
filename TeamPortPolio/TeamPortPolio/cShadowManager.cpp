@@ -115,7 +115,11 @@ void cShadowManager::SetAlpha(float alpha)
 
 void cShadowManager::Destroy()
 {
-	
+	for each(auto p in m_vecConstruct)
+	{
+		SAFE_RELEASE(p);
+	}
+	m_vecConstruct.clear();
 }
 
 void cShadowManager::Init()
