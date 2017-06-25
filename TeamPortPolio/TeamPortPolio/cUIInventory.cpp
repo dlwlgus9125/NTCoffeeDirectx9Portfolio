@@ -74,6 +74,7 @@ void cUIInventory::Destroy()
 	}
 
 	m_pBtn_Exit->Destroy();
+	cUIObject::Destroy();
 }
 
 void cUIInventory::Setup_Tap(string sPath_body, D3DXVECTOR3 pos_body)

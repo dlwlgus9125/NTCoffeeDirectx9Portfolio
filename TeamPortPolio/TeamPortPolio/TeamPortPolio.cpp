@@ -22,8 +22,8 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 HCURSOR g_Cursor;
-LPD3DXSPRITE g_Sprite;
 HWND			g_hWnd;
+cLog*			g_pLog;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

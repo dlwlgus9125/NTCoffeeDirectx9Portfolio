@@ -77,7 +77,7 @@ void cUIMiniMap::Render(LPD3DXSPRITE pSprite)
 
 void cUIMiniMap::Destroy()
 {
-	m_pBtn_Exit->Destroy();
+	if(m_pBtn_Exit) m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 

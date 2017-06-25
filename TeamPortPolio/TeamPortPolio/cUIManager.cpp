@@ -575,14 +575,14 @@ void cUIManager::Setup()
 	m_pAim = NULL;
 }
 
+			
+
 void cUIManager::Release()
 {	
-	m_vecShownBtn.clear();
-	for each(auto p in m_vecEventBtn)
-	{
-		p->Destroy();
-	}
-	m_vecEventBtn.clear();
+	m_vecShownBtn.clear();	//	m_vecEventBtn의 일부분이므로 비우기만.
+	m_vecEventBtn.clear();	//	AddChild된 버튼은 각자 부모의 Destroy에서 지워주므로 비우기만,
+							//  또한, 로그인씬, 셀렉씬에서의 버튼은 다른 함수를 통해 미리 삭제하므로 비우기만.
+
 	for each(auto p in m_vecTab)
 	{
 		p->Destroy();
@@ -594,11 +594,17 @@ void cUIManager::Release()
 	}
 	m_vecMsg.clear();
 	
-	SAFE_DELETE(m_pMiniMap);
-	SAFE_DELETE(m_pAim);
-	SAFE_DELETE(m_pStatus);
-	SAFE_DELETE(m_pTrooptype);
-	SAFE_DELETE(m_pResultMessage);
+	if (m_pInven) m_pInven->Destroy();
+	
+	if (m_pMiniMap)m_pMiniMap->Destroy();
+	
+	if (m_pAim)m_pAim->Destroy();
+	
+	if (m_pStatus)m_pStatus->Destroy();
+	
+	if (m_pTrooptype)m_pTrooptype->Destroy();
+	
+	if (m_pResultMessage)m_pResultMessage->Destroy();
 }
 
 void cUIManager::Update(float deltaTime)
@@ -663,7 +669,7 @@ void cUIManager::Render(LPD3DXSPRITE pSprite)
 // 씬 변경에 따른 UI 전체 변경시키는 함수
 void cUIManager::Change(int sceneID)
 {
-	Release();
+	Setup();
 
 	switch (sceneID)
 	{
@@ -893,4 +899,12 @@ void cUIManager::Update_MinimapPos(D3DXVECTOR2 pos)
 
 	D3DXVECTOR2 uv = MAP->GetPlayerPos_RateBased(pos.x, pos.y);
 	m_pMiniMap->Update_Location(uv);
+}
+
+void cUIManager::DestroyEventButton()
+{
+	for each(auto p in m_vecEventBtn)
+	{
+		p->Destroy();
+	}
 }

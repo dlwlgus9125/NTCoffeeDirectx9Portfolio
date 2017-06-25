@@ -38,6 +38,9 @@ void cGameManager::Init()
 
 	if (FAILED(hr))
 		::MessageBox(0, "CoCreateInstance error", 0, 0);
+	
+	g_pLog = new cLog();
+	g_pLog->Setup();
 
 	hr = pGraph->QueryInterface(IID_IMediaControl, (LPVOID*)&pControl);
 	hr = pGraph->QueryInterface(IID_IMediaEvent, (LPVOID*)&pEvent);
@@ -165,7 +168,6 @@ void cGameManager::Render()
 
 void cGameManager::Release()
 {
-	TEXTURE->Destroy();
 	ITEMDB->Destroy();
 	CHARACTERDB->Destroy();
 	OBJECTDB->Destroy();
@@ -183,6 +185,8 @@ void cGameManager::Release()
 	MAP->Destroy();
 	ASTAR->Release();
 	THREAD->Destroy();
+	TEXTURE->Destroy();
+	g_pLog->Render();
 	DEVICE->Destroy();
 }
 

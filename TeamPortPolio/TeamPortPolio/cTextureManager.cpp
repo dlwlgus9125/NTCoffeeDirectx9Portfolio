@@ -12,6 +12,7 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(char * szFullPath)
 	{
 		D3DXCreateTextureFromFile(D3DDevice, szFullPath,
 			&m_mapTexture[szFullPath]);
+		g_pLog->AddLog(szFullPath);
 	}
 	return m_mapTexture[szFullPath];
 }
@@ -57,6 +58,7 @@ void cTextureManager::Destroy()
 {
 	for each(auto m in m_mapTexture)
 	{
+		g_pLog->DeleteLog(m.first);
 		SAFE_RELEASE(m.second);
 	}
 	m_mapTexture.clear();

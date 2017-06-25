@@ -92,6 +92,7 @@ void cLoginScene::OnExit()
 	m_pImage_Icon_Age->Destroy();
 	m_pImage_Icon_Violence->Destroy();
 
+	UI->DestroyEventButton();
 	UI->Release();
 }
 
