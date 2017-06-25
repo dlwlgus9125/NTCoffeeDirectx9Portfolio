@@ -110,7 +110,7 @@ void cPlayer::Init()
 
 	m_AttackType = ATTACK_MELEE;
 
-
+	FLY = false;
 }
 
 void cPlayer::Update(float deltaTime)
