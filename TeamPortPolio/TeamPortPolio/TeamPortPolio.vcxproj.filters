@@ -260,6 +260,12 @@
     <Filter Include="98. UTIL\06. cLog">
       <UniqueIdentifier>{b1a52a23-aa48-4381-9316-e1ed0e94a39d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\15. cNpcManager">
+      <UniqueIdentifier>{edf7aea4-77ac-4682-8d5f-26dc25d04b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Database\04. cNpcDB">
+      <UniqueIdentifier>{014b07c6-8234-49e8-a165-3e23e684e35d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -522,9 +528,13 @@
     <ClInclude Include="cHelpScene.h">
       <Filter>03. cScene\01. cHelpScene</Filter>
     </ClInclude>
-    <ClInclude Include="cNpcManager.h" />
-    <ClInclude Include="cNpcDB.h" />
     <ClInclude Include="cLog.h" />
+    <ClInclude Include="cNpcManager.h">
+      <Filter>00. Manager\15. cNpcManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cNpcDB.h">
+      <Filter>06. Database\04. cNpcDB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TeamPortPolio.cpp" />
@@ -855,9 +865,13 @@
     <ClCompile Include="cHelpScene.cpp">
       <Filter>03. cScene\01. cHelpScene</Filter>
     </ClCompile>
-    <ClCompile Include="cNpcManager.cpp" />
-    <ClCompile Include="cNpcDB.cpp" />
     <ClCompile Include="cLog.cpp" />
+    <ClCompile Include="cNpcManager.cpp">
+      <Filter>00. Manager\15. cNpcManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cNpcDB.cpp">
+      <Filter>06. Database\04. cNpcDB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TeamPortPolio.rc">
