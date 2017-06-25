@@ -65,6 +65,6 @@ void cItemDB::Destroy()
 	{
 		SAFE_DELETE(it.second);
 	}
-
+	m_mapObject.clear();
 	delete this;
 }
