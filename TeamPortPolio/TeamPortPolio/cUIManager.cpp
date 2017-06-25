@@ -159,7 +159,7 @@ void cUIManager::Setup_TownScene()
 	m_pTab_TroopInfo->AddTitle("병사 목록", D3DXVECTOR3(0, 0, 0));
 	/// 병사 정보
 	m_pTab_TroopInfo->Setup_Slot(D3DXVECTOR3(22, 6, 0), 3, 3, D3DXVECTOR3(0, 0, 0), ST_SIZEN(97, 68),
-		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 40, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 38, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
 	m_pTab_TroopInfo->AddSlotData(0,0, "0", "image/dump.png", "", 0);
 	m_pTab_TroopInfo->AddSlotData(0,1, "0", "image/dump.png", "", 0);
 	m_pTab_TroopInfo->AddSlotData(0,2, "0", "image/dump.png", "", 0);
@@ -810,8 +810,8 @@ void cUIManager::SetEvent(int uiID, int order)
 	case TOWN_TAB_TROOPINFO:
 	{
 		int melee = order / 10000;
-		int bow = (order - melee) / 100;
-		int cavalry = (order - melee - bow);
+		int bow = (order - melee * 10000) / 100;
+		int cavalry = (order - melee * 10000 - bow * 100);
 		m_pTab_TroopInfo->UpdateTroopCount(melee, bow, cavalry);
 	}
 		break;
