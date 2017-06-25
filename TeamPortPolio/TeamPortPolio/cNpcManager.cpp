@@ -286,8 +286,3 @@ vector<ST_SPHERE>& cNpcManager::GetSphere()
 {
 	return m_vecSphere;
 }
-
-bool cNpcManager::IsClicked(bool b)
-{
-	return b;
-}
