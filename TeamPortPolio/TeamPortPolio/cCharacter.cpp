@@ -72,7 +72,7 @@ void cCharacter::Render()
 		D3DDevice->SetMaterial(&mtrl);
 		D3DDevice->SetTexture(0, 0);
 
-		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+		//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 
 		SHADOW->UnSetAlphaBlendRenderState();
 	}
@@ -102,7 +102,18 @@ FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 
 	if (randCount <= defender->m_Status->m_defence)
 	{
+		SOUND->Play("Defenced");
 		return FIGHT_BLOCK;
+	}
+	if (attacker->GetID() == C_C_ARROW_ARROW) { SOUND->Play("ArrowHit"); }
+	else { SOUND->Play("DamagedBySword"); }
+	if (CHARACTERDB->GetMapCharacter(defender->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanHit");
+	}
+	else
+	{
+		SOUND->Play("OrcHit");
 	}
 
 	defender->m_Status->SetHP(-attacker->m_Status->m_Damage);

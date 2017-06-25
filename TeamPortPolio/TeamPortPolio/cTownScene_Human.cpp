@@ -36,7 +36,7 @@ void cTownScene_Human::OnEnter()
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1,0,-0.03)));
 	//OBJECT->GetPlayer()->GetCharacterEntity()->SetForward(D3DXVECTOR3(0, 0, 1));
 	OBJECT->GetPlayer()->SetSceneEnter();
-	SOUND->Play("Town_Human_BGM", 1.0f);
+	SOUND->Play("Town_Human_BGM", 0.5f);
 
 	OBJECT->AddCharacter(OBJECT->GetPlayer());
 	OBJECT->AddObject(OBJECT->GetPlayer());
@@ -68,14 +68,17 @@ void cTownScene_Human::OnUpdate()
 		break;
 	case TOWN_BTN_MELEE:
 		OBJECT->SetCurrentLeader(LEADER_MELEE);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_BOW:
 		OBJECT->SetCurrentLeader(LEADER_BOW);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	case TOWN_BTN_CAVALRY:
 		OBJECT->SetCurrentLeader(LEADER_CAVALRY);
+		if (SOUND->FindChannel("HumanInitBattleScene") == NULL)SOUND->Play("HumanInitBattleScene");
 		SCENE->ChangeScene(m_nNextSceneID);
 		break;
 	}

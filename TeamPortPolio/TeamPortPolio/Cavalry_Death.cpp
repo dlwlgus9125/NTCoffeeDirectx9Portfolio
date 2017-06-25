@@ -6,6 +6,14 @@ void Cavalry_Death::OnBegin(cCavalryUnit * pUnit)
 {
 	pUnit->GetMesh()->SetAnimationIndexBlend(K_DEATH);
 	pUnit->GetCharacterEntity()->SetDeath(true);
+	if (CHARACTERDB->GetMapCharacter(pUnit->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanDeath");
+	}
+	else
+	{
+		SOUND->Play("OrcDeath");
+	}
 }
 
 void Cavalry_Death::OnUpdate(cCavalryUnit * pUnit, float deltaTime)

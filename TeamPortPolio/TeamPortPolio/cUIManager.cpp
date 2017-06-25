@@ -148,26 +148,25 @@ void cUIManager::Setup_TownScene()
 	pTab_Recruit->Setup_exitbtn(D3DXVECTOR3(382, 17, 0),
 		"image/ui/townscene/tab_recruit/btn_idle.png", "image/ui/townscene/tab_recruit/btn_mouseover.png", "image/ui/townscene/tab_recruit/btn_select.png");
 	pTab_Recruit->SetEventID(TOWN_TAB_RECRUIT);
-	m_vecTab.push_back(pTab_Recruit);
+	m_vecTab.push_back(pTab_Recruit);;
 	// <<
 
 
 	// >> 병사 정보
-	cUITab* pTab_TroopInfo = new cUITab();
-	pTab_TroopInfo->Setup(D3DXVECTOR3(960,  0, 0), UI_TAB);
-	pTab_TroopInfo->Setup_Tap("image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", D3DXVECTOR3(0, 0, 0));
-	pTab_TroopInfo->AddTitle("병사 목록", D3DXVECTOR3(0, 0, 0));
+	m_pTab_TroopInfo = new cUITab();
+	m_pTab_TroopInfo->Setup(D3DXVECTOR3(960,  0, 0), UI_TAB);
+	m_pTab_TroopInfo->Setup_Tap("image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", "image/ui/townscene/troopinfo/troopinfo.png", D3DXVECTOR3(0, 0, 0));
+	m_pTab_TroopInfo->AddTitle("병사 목록", D3DXVECTOR3(0, 0, 0));
 	/// 병사 정보
-	pTab_TroopInfo->Setup_Slot(D3DXVECTOR3(22, 6, 0), 3, 3, D3DXVECTOR3(0, 0, 0), ST_SIZEN(97, 68),
-		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 40, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
-	pTab_TroopInfo->AddSlotData(0,0, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->AddSlotData(0,1, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->AddSlotData(0,2, "0", "image/dump.png", "", 0);
-	pTab_TroopInfo->SetDef();
-	m_vecTab.push_back(pTab_TroopInfo);
-	pTab_TroopInfo->SetHidden(false);
-	pTab_TroopInfo->SetShownData(0, 0);
-	pTab_TroopInfo->SetEventID(TOWN_TAB_TROOPINFO);
+	m_pTab_TroopInfo->Setup_Slot(D3DXVECTOR3(22, 6, 0), 3, 3, D3DXVECTOR3(0, 0, 0), ST_SIZEN(97, 68),
+		D3DXVECTOR3(0, 0, 0), ST_SIZEN(68, 68), D3DXVECTOR3(48, 38, 0), ST_SIZEN(25, 25), FONT_SHOP, false);
+	m_pTab_TroopInfo->AddSlotData(0,0, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->AddSlotData(0,1, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->AddSlotData(0,2, "0", "image/dump.png", "", 0);
+	m_pTab_TroopInfo->SetDef();
+	m_pTab_TroopInfo->SetHidden(false);
+	m_pTab_TroopInfo->SetShownData(0, 0);
+	m_pTab_TroopInfo->SetEventID(TOWN_TAB_TROOPINFO);
 	// <<
 
 	// >> 장비창
@@ -435,17 +434,17 @@ void cUIManager::Setup_BattleScene_Orc()
 	case LEADER_MELEE:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_melee.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_melee.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_melee.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_melee.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_BOW:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_bow.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_bow.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_bow.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_bow.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_CAVALRY:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_cavalry.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_cavalry.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_cavalry.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_cavalry.png", TITLE_BTN_DEFSTATE);
 		break;
 	}
 	m_vecEventBtn.push_back(pBtn_Def);
@@ -541,17 +540,17 @@ void cUIManager::Setup_BattleScene_Human()
 	case LEADER_MELEE:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_melee.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_melee.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_melee.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_melee.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_BOW:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_bow.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_bow.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_bow.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_bow.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_CAVALRY:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_cavalry.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_cavalry.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_cavalry.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_cavalry.png", TITLE_BTN_DEFSTATE);
 		break;
 	}
 	m_vecEventBtn.push_back(pBtn_Def);
@@ -573,6 +572,7 @@ void cUIManager::Setup()
 	m_pTrooptype = NULL;
 	m_pResultMessage = NULL;
 	m_pAim = NULL;
+	m_pTab_TroopInfo = NULL;
 }
 
 			
@@ -605,6 +605,8 @@ void cUIManager::Release()
 	if (m_pTrooptype)m_pTrooptype->Destroy();
 	
 	if (m_pResultMessage)m_pResultMessage->Destroy();
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Destroy();
 }
 
 void cUIManager::Update(float deltaTime)
@@ -636,11 +638,15 @@ void cUIManager::Update(float deltaTime)
 	}
 
 	if (m_pInven) m_pInven->Update(deltaTime);
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Update(deltaTime);
 }
 
 void cUIManager::Render(LPD3DXSPRITE pSprite)
 {
 	if(m_pStatus) m_pStatus->Render(pSprite);
+
+	if (m_pTab_TroopInfo) m_pTab_TroopInfo->Render(pSprite);
 
 	for (int i = 0; i < m_vecTab.size(); i++)
 	{
@@ -804,9 +810,9 @@ void cUIManager::SetEvent(int uiID, int order)
 	case TOWN_TAB_TROOPINFO:
 	{
 		int melee = order / 10000;
-		int bow = (order - melee) / 100;
-		int cavalry = (order - melee - bow);
-		m_vecTab[5]->UpdateTroopCount(melee, bow, cavalry);
+		int bow = (order - melee * 10000) / 100;
+		int cavalry = (order - melee * 10000 - bow * 100);
+		m_pTab_TroopInfo->UpdateTroopCount(melee, bow, cavalry);
 	}
 		break;
 	}

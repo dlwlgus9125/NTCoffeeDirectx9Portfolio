@@ -7,12 +7,34 @@ void cSoundManager::Setup()
 	m_pSystem->init(SOUND_MAX_CHANNEL, FMOD_INIT_NORMAL, 0);
 
 
-	SOUND->LoadFile("Melee_Charge1", "Sound/Voice/MeleeUnit/Melee_Charge1.wav", false);
-	SOUND->LoadFile("Melee_Charge2", "Sound/Voice/MeleeUnit/Melee_Charge2.wav", false);
-	SOUND->LoadFile("Melee_Charge3", "Sound/Voice/MeleeUnit/Melee_Charge3.wav", false);
+	SOUND->LoadFile("Human_Charge1", "Sound/Voice/MeleeUnit/Human_Charge1.wav", false);
+	SOUND->LoadFile("Human_Charge2", "Sound/Voice/MeleeUnit/Human_Charge2.wav", false);
+	SOUND->LoadFile("Human_Charge3", "Sound/Voice/MeleeUnit/Human_Charge3.wav", false);
+
+	SOUND->LoadFile("Orc_Charge1", "Sound/Voice/MeleeUnit/Orc_Charge1.wav", false);
+	SOUND->LoadFile("Orc_Charge2", "Sound/Voice/MeleeUnit/Orc_Charge2.wav", false);
+	SOUND->LoadFile("Orc_Charge3", "Sound/Voice/MeleeUnit/Orc_Charge3.wav", false);
 
 	SOUND->LoadFile("PullBow", "Sound/FightEffect/pull_bow.ogg", false);
 	SOUND->LoadFile("ShootBow", "Sound/FightEffect/Shoot_Bow.ogg", false);
+
+	SOUND->LoadFile("OrcInitBattleScene", "Sound/Voice/InitBattleField/OrcInit.wav", false);
+	SOUND->LoadFile("HumanInitBattleScene", "Sound/Voice/InitBattleField/HumanInit.wav", false);
+
+	SOUND->LoadFile("HumanHit", "Sound/FightEffect/Voice/HumanHit.ogg", false);
+	SOUND->LoadFile("HumanDeath", "Sound/FightEffect/Voice/HumanDeath.ogg", false);
+
+	SOUND->LoadFile("OrcHit", "Sound/FightEffect/Voice/OrcHit.ogg", false);
+	SOUND->LoadFile("OrcDeath", "Sound/FightEffect/Voice/OrcDeath.ogg", false);
+	
+	SOUND->LoadFile("ArrowHit", "Sound/FightEffect/ArrowHit.ogg", false);
+	SOUND->LoadFile("ArrowHitGround", "Sound/FightEffect/ArrowHitGround.ogg", false);
+
+
+	SOUND->LoadFile("SwingSword", "Sound/FightEffect/swordSwing.ogg", false);
+	SOUND->LoadFile("DamagedBySword", "Sound/FightEffect/DamagedBySword.ogg", false);
+	SOUND->LoadFile("Defenced", "Sound/FightEffect/Defenced.ogg", false);
+
 }
 
 void cSoundManager::Release()

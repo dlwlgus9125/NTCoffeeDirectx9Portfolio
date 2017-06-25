@@ -6,6 +6,14 @@ void Melee_Death::OnBegin(cMeleeUnit * pUnit)
 {
 	pUnit->GetMesh()->SetAnimationIndexBlend(FG_DEATH);
 	pUnit->GetCharacterEntity()->SetDeath(true);
+	if (CHARACTERDB->GetMapCharacter(pUnit->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanDeath");
+	}
+	else
+	{
+		SOUND->Play("OrcDeath");
+	}
 }
 
 void Melee_Death::OnUpdate(cMeleeUnit * pUnit, float deltaTime)

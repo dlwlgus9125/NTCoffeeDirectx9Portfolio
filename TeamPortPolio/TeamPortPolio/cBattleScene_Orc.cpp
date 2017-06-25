@@ -16,7 +16,7 @@ cBattleScene_Orc::~cBattleScene_Orc()
 
 void cBattleScene_Orc::OnEnter()
 {
-	SOUND->Play("Battle_Orc_BGM");
+	SOUND->Play("Battle_Orc_BGM", 0.5f);
 
 	
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
@@ -55,7 +55,7 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->AddObject(pLeader);
 	OBJECT->AddLeader(pLeader);
 
-
+	//
 
 
 	ASTAR->Setup(MAP->GetVecPosOfNode());
@@ -99,6 +99,7 @@ void cBattleScene_Orc::OnUpdate()
 		break;
 	case BATTLE_MINIMAP_RESULT:
 		UI->Update(0);
+
 		SCENE->ChangeScene((OBJECT->GetPlayerID() == C_C_HUMAN_MALE) ? SCENE_TOWN_HUMAN : SCENE_TOWN_ORC);
 		break;
 	}

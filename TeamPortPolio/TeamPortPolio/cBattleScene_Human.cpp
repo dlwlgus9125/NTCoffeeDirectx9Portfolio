@@ -16,7 +16,7 @@ cBattleScene_Human::~cBattleScene_Human()
 
 void cBattleScene_Human::OnEnter()
 {
-	SOUND->Play("Battle_Human_BGM");
+	SOUND->Play("Battle_Human_BGM",0.5f);
 
 	D3DXCreateSprite(D3DDevice, &m_pSprite);
 	MAP->Init(SCENE_BATTLE_HUMAN);
@@ -32,6 +32,7 @@ void cBattleScene_Human::OnEnter()
 	OBJECT->GetPlayer()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-49.0f, 0, -6.0f));
 	OBJECT->GetPlayer()->SetRotY(MATH->GetRotY(D3DXVECTOR3(-1.0f, 0, -0.2f)));
 	OBJECT->GetPlayer()->SetCurrentLeader();
+	OBJECT->GetPlayer()->GetUnitLeader()->SetTargetObject(NULL);
 	OBJECT->GetPlayer()->GetUnitLeader()->SetSceneEnter();
 	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetPos(D3DXVECTOR3(-31.0f, 0, -5.3f));
 	OBJECT->GetPlayer()->GetUnitLeader()->GetCharacterEntity()->SetForward(D3DXVECTOR3(1.0f, 0, 0.01f));
@@ -95,7 +96,6 @@ void cBattleScene_Human::OnUpdate()
 		break;
 	}
 	// <<
-	OBJECT->Update(TIME->DeltaTime());
 
 	if (TIME->UpdateOneSecond())
 	{
@@ -130,7 +130,7 @@ void cBattleScene_Human::OnExit()
 	MAP->Destroy();
 	EFFECT->Release();
 }
-
+bool istab2 = false;
 void cBattleScene_Human::OnRender()
 {
 	//EFFECT->Render_Begin();
@@ -141,7 +141,9 @@ void cBattleScene_Human::OnRender()
 	{
 		UI->DrawAim(m_pSprite);
 	}
-	UI->Render(m_pSprite);
+	if (INPUT->IsKeyDown(VK_F1))istab2 = true;
+	if (INPUT->IsKeyDown(VK_SPACE))istab2 = false;
+	if (istab2 != true)UI->Render(m_pSprite);
 }
 void cBattleScene_Human::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
