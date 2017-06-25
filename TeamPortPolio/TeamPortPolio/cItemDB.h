@@ -102,6 +102,7 @@ struct ST_ITEM
 		this->szTextureFileName = szTextureFileName;
 		this->szColliderBoneName = szColliderBoneName;
 	}
+	~ST_ITEM() {}
 };
 
 class cItemDB : public Singleton<cItemDB>
