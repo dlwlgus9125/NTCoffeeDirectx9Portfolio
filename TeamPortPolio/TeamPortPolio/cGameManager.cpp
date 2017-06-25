@@ -134,11 +134,14 @@ void cGameManager::Update()
 		if (TIME->Update())
 		{
 			//cout << m_player->GetCharacterEntity()->Pos().x << ", " << m_player->GetCharacterEntity()->Pos().y << ", " << m_player->GetCharacterEntity()->Pos().z << endl;
-
+		
 			m_prevTime = m_currentTime;
 			FRUSTUM->Update();
 			INPUT->Update();
-			
+
+			if (INPUT->IsKeyDown(VK_V))g_showColider = true;
+			if (INPUT->IsKeyDown(VK_B))g_showColider = false;
+
 			if (SCENE->Current() == SCENE_SELECT) SCENE_CAMERA->Update();
 			else CAMERA->Update();
 			SCENE->Update();

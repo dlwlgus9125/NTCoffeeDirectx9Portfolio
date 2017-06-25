@@ -64,6 +64,9 @@ private:
 
 	ST_SPHERE m_MeleeCollider;
 
+
+	bool FLY;// 영상찍을라고 카메라 날릴라는 변수
+	D3DXVECTOR3 FLYPos;
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cPlayer();
