@@ -126,5 +126,7 @@ public:
 		SetMode(IDLE_PLAYER_MODE);
 		m_isPull = false;
 	}
+
+	int GetAllUnitSize();
 };
 

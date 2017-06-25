@@ -112,6 +112,7 @@ void cTownScene_Human::OnUpdate()
 		{
 			SOUND->Play("coin");
 			cout << "»ï!" << endl;;
+			cout << "ºÎ´ëÀÎ¿ø : " << OBJECT->GetPlayer()->GetAllUnitSize() << endl;
 		}
 		else
 		{
