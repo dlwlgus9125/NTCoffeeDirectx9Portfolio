@@ -67,8 +67,8 @@ void cMeleeUnit::Update(float deltaTime)
 void cMeleeUnit::Render()
 {
 	cUnit::Render();
-	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
-	{
+	/*if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
+	{*/
 		m_pSkinnedMesh->UpdateAndRender(m_isDeath);
 
 		SetAttackColliderPos();
@@ -83,5 +83,5 @@ void cMeleeUnit::Render()
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	}
+	//}
 }

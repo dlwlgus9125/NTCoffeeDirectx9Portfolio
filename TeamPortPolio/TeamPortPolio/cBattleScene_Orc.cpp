@@ -44,7 +44,7 @@ void cBattleScene_Orc::OnEnter()
 	OBJECT->GetPlayer()->GetUnitLeader()->AddUnitInManager();
 
 
-	/*cLeader* pLeader = new cLeader(D3DXVECTOR3(-33.5f, 0, 23.5f), 1.0f, D3DXVECTOR3(0.35f, 0,0.94f), 0.5f, 200);
+	cLeader* pLeader = new cLeader(D3DXVECTOR3(-33.5f, 0, 23.5f), 1.0f, D3DXVECTOR3(0.35f, 0,0.94f), 0.5f, 200);
 	pLeader->SetID(C_C_ORC_MELEE);
 	pLeader->Init();
 	pLeader->SetCamp(CAMP_ENEMY1);
@@ -53,7 +53,7 @@ void cBattleScene_Orc::OnEnter()
 	pLeader->AddUnitInManager();
 	pLeader->SetRectOffset();
 	OBJECT->AddObject(pLeader);
-	OBJECT->AddLeader(pLeader);*/
+	OBJECT->AddLeader(pLeader);
 
 
 
@@ -105,7 +105,7 @@ void cBattleScene_Orc::OnUpdate()
 	}
 	// <<
 	
-	/*if (TIME->UpdateOneSecond())
+	if (TIME->UpdateOneSecond())
 	{
 		for each(auto L in OBJECT->GetLeader())
 		{
@@ -121,7 +121,7 @@ void cBattleScene_Orc::OnUpdate()
 				}
 			}
 		}
-	}*/
+	}
 
 	UI->Update_MinimapPos(OBJECT->GetPlayerPosV2(), OBJECT->GetUnitLeaderPosV2(), OBJECT->GetEnemyLeaderPosV2());	// 미니맵 상의 플레이어 위치 표시 위한 업데이트
 }
@@ -141,7 +141,6 @@ void cBattleScene_Orc::OnExit()
 
 void cBattleScene_Orc::OnRender()
 {
-	static bool istab = false;
 	EFFECT->Render_Begin();
 	MAP->Render();
 	EFFECT->Render_End();
@@ -150,8 +149,7 @@ void cBattleScene_Orc::OnRender()
 	{
 		UI->DrawAim(m_pSprite);
 	}
-	if (INPUT->IsKeyDown(VK_F1))istab = true;
-	if(istab!=true)UI->Render(m_pSprite);
+	UI->Render(m_pSprite);
 }
 
 void cBattleScene_Orc::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

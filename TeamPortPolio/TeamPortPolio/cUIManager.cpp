@@ -434,17 +434,17 @@ void cUIManager::Setup_BattleScene_Orc()
 	case LEADER_MELEE:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_melee.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_melee.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_melee.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_melee.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_BOW:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_bow.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_bow.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_bow.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_bow.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_CAVALRY:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Orc/minimap/state_def/idle_cavalry.png",
 			"Image/UI/BattleScene_Orc/minimap/state_def/mouseover_cavalry.png",
-			"Image/UI/BattleScene_Orc/minimap/state_def/selected_cavalry.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Orc/minimap/state_def/selected_cavalry.png", TITLE_BTN_DEFSTATE);
 		break;
 	}
 	m_vecEventBtn.push_back(pBtn_Def);
@@ -540,17 +540,17 @@ void cUIManager::Setup_BattleScene_Human()
 	case LEADER_MELEE:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_melee.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_melee.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_melee.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_melee.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_BOW:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_bow.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_bow.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_bow.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_bow.png", TITLE_BTN_DEFSTATE);
 		break;
 	case LEADER_CAVALRY:
 		pBtn_Def->Setup_Button("Image/UI/BattleScene_Human/minimap/state_def/idle_cavalry.png",
 			"Image/UI/BattleScene_Human/minimap/state_def/mouseover_cavalry.png",
-			"Image/UI/BattleScene_Human/minimap/state_def/selected_cavalry.png", TITLE_BTN_ATTSTATE);
+			"Image/UI/BattleScene_Human/minimap/state_def/selected_cavalry.png", TITLE_BTN_DEFSTATE);
 		break;
 	}
 	m_vecEventBtn.push_back(pBtn_Def);
