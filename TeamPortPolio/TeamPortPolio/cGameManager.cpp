@@ -194,19 +194,23 @@ void cGameManager::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam
 {
 	CAMERA->WndProc(hwnd, message, wParam, lParam);
 	SCENE->WndProc(hwnd, message, wParam, lParam);
-	switch (message)
+
+	if (!isOkView)
 	{
-	case WM_KEYDOWN:
-		switch (wParam)
+		switch (message)
 		{
-		case VK_ESCAPE:
-			REFTIME endTime;
-			pPosition->get_Duration(&endTime);
-			double d_Time = endTime;
-			pPosition->put_CurrentPosition(d_Time);
-			break;
+		case WM_KEYDOWN:
+			switch (wParam)
+			{
+			case VK_ESCAPE:
+				REFTIME endTime;
+				pPosition->get_Duration(&endTime);
+				double d_Time = endTime;
+				pPosition->put_CurrentPosition(d_Time);
+				break;
+			}
+
 		}
-		
 	}
 }
 
