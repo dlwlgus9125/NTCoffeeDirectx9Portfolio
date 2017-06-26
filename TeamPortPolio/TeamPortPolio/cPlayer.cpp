@@ -185,15 +185,30 @@ void cPlayer::Update(float deltaTime)
 	if (FLY)
 	{
 		float shift = 1.0f;
+		D3DXVECTOR3 forWard(0, 0, 1);
+		D3DXVECTOR3 left(-1, 0, 0);
+		D3DXVECTOR3 right(1, 0, 0);
+
+		D3DXMATRIXA16 matR,matLEFT,matRIGHT;
+		D3DXMatrixIdentity(&matR);
+		D3DXMatrixRotationYawPitchRoll(&matR, CAMERA->GetCamRotAngle().y, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
+		D3DXMatrixRotationYawPitchRoll(&matRIGHT, CAMERA->GetCamRotAngle().y+ D3DX_PI, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
+		D3DXMatrixRotationYawPitchRoll(&matLEFT, CAMERA->GetCamRotAngle().y-D3DX_PI, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
+
+		D3DXVec3TransformCoord(&forWard, &forWard, &matR);
+		D3DXVec3TransformCoord(&left, &left, &matR);
+		D3DXVec3TransformCoord(&right, &right, &matR);
+
 		if (INPUT->IsKeyPress(VK_SHIFT))shift = 5.0f;
-		if (INPUT->IsKeyPress(VK_W))FLYPos.z+=0.02f*shift;
-		if (INPUT->IsKeyPress(VK_S))FLYPos.z-=0.02f*shift;
-		if (INPUT->IsKeyPress(VK_A))FLYPos.x-=0.02f*shift;
-		if (INPUT->IsKeyPress(VK_D))FLYPos.x+=0.02f*shift;
+		if (INPUT->IsKeyPress(VK_W)) FLYPos += forWard*0.2*shift;
+		if (INPUT->IsKeyPress(VK_S)) FLYPos -= forWard*0.2*shift;
+		if (INPUT->IsKeyPress(VK_A))FLYPos+= left*0.2*shift;
+		if (INPUT->IsKeyPress(VK_D))FLYPos += right*0.2*shift;
 		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.1f);
 		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 0.1f);
-
-		CAMERA->SetLookAt(FLYPos, m_fRotY);
+		float rot = MATH->GetRotY(FLYPos);
+		m_fRotY = CAMERA->GetCamRotAngle().y;
+		CAMERA->SetLookAt(FLYPos, CAMERA->GetCamRotAngle().y);
 	}
 	
 }
