@@ -8,7 +8,6 @@
 #include "cLeader.h"
 #include "cUnit.h"
 #include "BallisticMotion.h"
-//#include "IEntity.h"
 
 
 

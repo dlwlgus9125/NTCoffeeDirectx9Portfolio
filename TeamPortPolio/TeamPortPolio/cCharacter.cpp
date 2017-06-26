@@ -41,6 +41,8 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
+		UpdateNearConstruct();
+
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
 	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
@@ -134,6 +136,7 @@ void cCharacter::UpdateNearConstruct()
 			movePos -= dir*(MATH->Distance(movePos, p->GetPosition()) + m_CollideSphere.fRadius - p->GetRadius());
 		}
 	}
+	if (m_ID != C_C_ARROW_ARROW)
 	MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 
 

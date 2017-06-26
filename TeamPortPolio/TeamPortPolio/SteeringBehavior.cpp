@@ -25,7 +25,7 @@ void SteeringBehavior::Arrive(D3DXVECTOR3 targetPos)
 
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
-		Entity()->SetSpeed(speed * 2);
+		Entity()->SetSpeed(speed);
 
 	}
 }
@@ -54,7 +54,7 @@ void SteeringBehavior::CavalryLeaderArrive(D3DXVECTOR3 targetPos, float velocity
 	if (distance > EPSILON)
 	{
 		float speed = (distance / TIME->FPS())*speedMultiplier;
-		if (speed > 0.12)speed = 0.12;
+		if (speed > 0.16)speed = 0.16;
 
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*(speed ));
@@ -73,7 +73,7 @@ void SteeringBehavior::UnitArrive(D3DXVECTOR3 targetPos)
 		if (speed > 0.12)speed = 0.12;
 		Entity()->SetForward(vToTarget);
 		Entity()->AddPos(Entity()->Forward()*speed);
-		Entity()->SetSpeed(speed * 2);
+		Entity()->SetSpeed(speed);
 
 	}
 }
@@ -89,8 +89,8 @@ void SteeringBehavior::CavalryUnitArrive(D3DXVECTOR3 targetPos, float velocity)
 		if (speed > 0.12f)speed = 0.12f;
 
 		Entity()->SetForward(vToTarget);
-		Entity()->AddPos(Entity()->Forward()*(speed ));
-		Entity()->SetSpeed(speed );
+		Entity()->AddPos(Entity()->Forward()*(speed));
+		Entity()->SetSpeed(speed);
 	}
 }
 
@@ -177,16 +177,8 @@ void SteeringBehavior::ConstrainOverlap(vector<IEntity*> targets)
 void SteeringBehavior::OffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset)
 {
 	D3DXVECTOR3 forward;
-	static int count = 0;
-	D3DXVECTOR3 prevPos = pLeader->Pos();
-
-	D3DXVECTOR3 currentPos = pLeader->Pos();
-
-
+	
 	forward = pLeader->Forward();
-
-
-
 
 	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, forward);
 	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
@@ -200,35 +192,7 @@ void SteeringBehavior::CavalryOffsetPursuit(IEntity* pLeader, D3DXVECTOR3 offset
 {
 	D3DXVECTOR3 forward = pLeader->Forward();
 
-	if (forward.x > 0)
-	{
-		if (forward.z > 0)
-		{
-			forward = MATH->Nomalize(D3DXVECTOR3(1, 0, 1));
-		}
-		if (forward.z < 0)
-		{
-			forward = MATH->Nomalize(D3DXVECTOR3(1, 0, -1));
-		}
-	}
-	if (forward.x < 0)
-	{
-		if (forward.z > 0)
-		{
-			forward = MATH->Nomalize(D3DXVECTOR3(-1, 0, 1));
-		}
-		if (forward.z < 0)
-		{
-			forward = MATH->Nomalize(D3DXVECTOR3(-1, 0, -1));
-		}
-	}
-
-
-
 	D3DXVECTOR3 worldOffset = MATH->LocalToWorld(offset, forward);
 	D3DXVECTOR3 targetPos = pLeader->Pos() + worldOffset;
-	targetPos.y = 0;
-	float distance = MATH->Distance(Entity()->Pos(), targetPos);
-	float arrivalTime = distance / Entity()->MaxSpeed();
 	CavalryUnitArrive(targetPos, (pLeader->Speed()*0.8f));
 }
