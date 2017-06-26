@@ -38,11 +38,11 @@ void Melee_Walk::OnEnd(cMeleeUnit * pUnit)
 
 void Melee_Walk::StateChanger(cMeleeUnit * pUnit)
 {
-	if (pUnit->GetMesh()->GetIndex() != FG_BATTLEWALK&&0.002f <= pUnit->GetCharacterEntity()->Speed() && pUnit->GetCharacterEntity()->Speed() <= 0.05f)
+	if (pUnit->GetMesh()->GetIndex() != FG_BATTLEWALK&& pUnit->GetCharacterEntity()->Speed() <= 0.04f)
 	{
 		pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLEWALK);
 	}
-	else if (pUnit->GetMesh()->GetIndex() != FG_BATTLERUN&&0.05f < pUnit->GetCharacterEntity()->Speed())
+	else if (pUnit->GetMesh()->GetIndex() != FG_BATTLERUN&&0.04f < pUnit->GetCharacterEntity()->Speed())
 	{
 		pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLERUN);
 	}/*
