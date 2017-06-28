@@ -41,10 +41,10 @@ void cNpcManager::Init(std::vector<ST_NPC_INFO> vecNpc)
 	}
 	D3DXCreateSphere(D3DDevice, 0.7f, 10, 10, &m_pMesh, NULL);
 
-	m_vecSkin.resize(m_vecNpc.size());
-	LoadSkinnedMesh();
-	SetupFont();
-	SetMtrl();
+m_vecSkin.resize(m_vecNpc.size());
+LoadSkinnedMesh();
+SetupFont();
+SetMtrl();
 }
 
 void cNpcManager::Render()
@@ -66,22 +66,79 @@ void cNpcManager::Update(std::vector<ST_NPC_INFO> vecNpc)
 	}
 
 	for (int i = 0; i < m_vecNpc.size(); i++)
-	{
-		m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, 1));
+	{	
+		switch (m_vecNpc[i].nSID)
+		{
+		case N_C_HUMAN_WEAPON:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));
+			break;
+		case N_C_HUMAN_ARMOR:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));
+			break;
+		case N_C_HUMAN_STUFF:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0.548698f, 0, 0.836021f));
+			break;
+		case N_C_HUMAN_INN:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, 1));
+			break;
+		case N_C_HUMAN_RECRUIT:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));
+			break;
+		case N_C_ORC_WEAPON:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(-0.746783f, 0, -0.665067f));
+			break;
+		case N_C_ORC_ARMOR:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));;
+			break;
+		case N_C_ORC_STUFF:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));
+			break;
+		case N_C_ORC_INN:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(-1, 0, 0.5));
+			break;
+		case N_C_ORC_RECRUIT:
+			m_vecSkin[i]->SetPosition(m_vecNpc[i].pos, D3DXVECTOR3(0, 0, -1));;
+			break;
+		default:
+			::MessageBox(0, 0, 0, 0);
+			break;
+		}
 	}
 }
 
 void cNpcManager::Release()
 {
-	//if(m_pMesh)SAFE_DELETE(m_pMesh);
+	SAFE_RELEASE(m_pMesh);
+
 	for each(auto s in m_vecSkin)
 	{
 		SAFE_DELETE(s);
 	}
+	m_vecSkin.clear();
 	for each(auto f in m_vecFont)
 	{
-		SAFE_RELEASE(f);
+		f->Release();
+		//SAFE_DELETE(f);
 	}
+	m_vecFont.clear();
+
+	for (int i = 0; i < m_vechdc.size(); i++)
+	{
+		m_vechdc.pop_back();
+	}
+	m_vechdc.clear();
+
+	for (int i = 0; i < m_vechFont.size(); i++)
+	{
+		m_vechFont.pop_back();
+	}
+	m_vechFont.clear();
+
+	for (int i = 0; i < m_vechFontOld.size(); i++)
+	{
+		m_vechFontOld.pop_back();	
+	}
+	m_vechFontOld.clear();
 }
 
 void cNpcManager::SetMtrl()
@@ -98,16 +155,13 @@ void cNpcManager::LoadSkinnedMesh()
 {
 	for (int i = 0; i < m_vecNpc.size(); i++)
 	{
-
 		m_vecSkin[i] = new cSkinnedMesh(TEXTURE->GetCharacterResource(NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szPath, NPCDB->GetMapNpc(m_vecNpc[i].nSID)->m_szFileName));
 	}
-	
 }
 
 void cNpcManager::SetupFont()
 {
 	m_vechdc.resize(m_vecNpc.size());
-
 	m_vecFont.resize(m_vecNpc.size());
 	m_vechFont.resize(m_vecNpc.size());
 	m_vechFontOld.resize(m_vecNpc.size());
@@ -140,79 +194,50 @@ void cNpcManager::SetupFont()
 
 void cNpcManager::SetText()
 {
-
 	for (int i = 0; i < m_vechFont.size(); i++)
 	{
 		switch (m_vecNpc[i].nSID)
 		{
-		case 117:
+		case N_C_HUMAN_WEAPON:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"weapon", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Claude", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 118:
+		case N_C_HUMAN_ARMOR:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Armor", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Alex", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 119:
+		case N_C_HUMAN_STUFF:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Stuff", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Aime", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 120:
+		case N_C_HUMAN_INN:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Inn", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Bella", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 121:
+		case N_C_HUMAN_RECRUIT:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Recruit", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 122:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident1", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 123:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident2", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 124:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident3", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 125:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident4", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Daniel", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
 
-		case 128:
+		case N_C_ORC_WEAPON:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Weapon", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Adken", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 129:
+		case N_C_ORC_ARMOR:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Armor", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Braddock", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 130:
+		case N_C_ORC_STUFF:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Stuff", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Ackerman", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 131:
+		case N_C_ORC_INN:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Inn", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Oakden", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
-		case 132:
+		case N_C_ORC_RECRUIT:
 			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Recruit", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 133:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident1", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 134:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident2", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
-			break;
-		case 135:
-			D3DXCreateText(D3DDevice, m_vechdc[i],
-				"Resident2", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
+				"Daron", 0.001f, 0.01f, &m_vecFont[i], 0, 0);
 			break;
 		default:
 			D3DXCreateText(D3DDevice, m_vechdc[i],

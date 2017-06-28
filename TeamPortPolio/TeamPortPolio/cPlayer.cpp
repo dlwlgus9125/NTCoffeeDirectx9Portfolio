@@ -21,7 +21,7 @@ cPlayer::cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass,
 
 
 
-
+	FLYPos = D3DXVECTOR3(0, 2.0f, 0);
 	m_fRotY = 0.0f;
 	m_isAiming = false;
 	m_AttackType = ATTACK_MELEE;
@@ -38,7 +38,7 @@ cPlayer::~cPlayer()
 	m_mapLeader.clear();
 	SAFE_DELETE(m_pSkinnedMesh);
 }
-	
+
 
 
 void cPlayer::Init()
@@ -109,18 +109,29 @@ void cPlayer::Init()
 	SetCurrentLeader();
 
 	m_AttackType = ATTACK_MELEE;
-
-
+	//
+	FLY = false;
 }
 
 void cPlayer::Update(float deltaTime)
 {
+	if (INPUT->IsKeyDown(VK_0))
+	{
+		FLYPos=	m_CharacterEntity->Pos();
+		FLY = true;
+	}
+	if (INPUT->IsKeyDown(VK_9))FLY = false;
+
+
 	if (INPUT->IsKeyDown(VK_SPACE))
 	{
 		cout << "pos : " << m_CharacterEntity->Pos().x << " " << m_CharacterEntity->Pos().y << " " << m_CharacterEntity->Pos().z << endl;
 		cout << "RotY : " << MATH->GetRotY(OBJECT->GetPlayer()->GetCharacterEntity()->Forward()) << endl;
 		cout << "Forward : " << m_CharacterEntity->Forward().x << " " << m_CharacterEntity->Forward().y << " " << m_CharacterEntity->Forward().z << endl;
+		cout << "getindex : " << GetIndex() << endl;
+	
 	}
+
 	if (m_isDeath == true && m_isPull == false)m_isPull = true;
 	if (m_isDeath == false)
 	{
@@ -128,80 +139,101 @@ void cPlayer::Update(float deltaTime)
 
 		m_CollideSphere.vCenter.y += 0.5f; // 충돌판 높이값 조절
 		m_pFsm->Update(deltaTime);
-	
-		UpdateNearConstruct();
-	
+
+
 		m_MeleeCollider.vCenter = m_CharacterEntity->Pos() + (m_CharacterEntity->Forward()*0.8f);
 		m_MeleeCollider.vCenter.y += 0.5f;
-		if (INPUT->IsKeyPress(VK_A))
+		
+		if (!FLY)
 		{
-			m_fRotY -= 0.06;
+			if (INPUT->IsKeyPress(VK_A))
+			{
+				m_fRotY -= 0.06;
+			}
+			if (INPUT->IsKeyPress(VK_D))
+			{
+				m_fRotY += 0.06;
+			}
+	
+			D3DXMATRIXA16 matR;
+			D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+			D3DXMatrixIdentity(&matR);
+			D3DXMatrixRotationY(&matR, m_fRotY);
+
+			D3DXVec3TransformCoord(&forward, &forward, &matR);
+			m_CharacterEntity->SetForward(forward);
+	
+			m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
+
+
 		}
-		if (INPUT->IsKeyPress(VK_D))
+		if (GetMesh()->GetIndex() == P_BOWATTACK1)
 		{
-			m_fRotY += 0.06;
+			CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 1.5, 0), m_fRotY);
+			m_fRotY = CAMERA->GetCamRotAngle().y;
 		}
+		else
+		{
+				CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), m_fRotY);
+		}
+		if (INPUT->IsKeyDown(VK_F))
+		{
+			m_fRotY += D3DX_PI;
+		}
+	}
 
-		//화살처리
+	if (FLY)
+	{
+		float shift = 1.0f;
+		D3DXVECTOR3 forWard(0, 0, 1);
+		D3DXVECTOR3 left(-1, 0, 0);
+		D3DXVECTOR3 right(1, 0, 0);
 
-		D3DXMATRIXA16 matR;
-		D3DXVECTOR3 forward = D3DXVECTOR3(0, 0, 1);
+		D3DXMATRIXA16 matR,matLEFT,matRIGHT;
 		D3DXMatrixIdentity(&matR);
-		D3DXMatrixRotationY(&matR, m_fRotY);
+		D3DXMatrixRotationYawPitchRoll(&matR, CAMERA->GetCamRotAngle().y, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
+		D3DXMatrixRotationYawPitchRoll(&matRIGHT, CAMERA->GetCamRotAngle().y+ D3DX_PI, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
+		D3DXMatrixRotationYawPitchRoll(&matLEFT, CAMERA->GetCamRotAngle().y-D3DX_PI, CAMERA->GetCamRotAngle().x, CAMERA->GetCamRotAngle().z);
 
-		D3DXVec3TransformCoord(&forward, &forward, &matR);
-		m_CharacterEntity->SetForward(forward);
+		D3DXVec3TransformCoord(&forWard, &forWard, &matR);
+		D3DXVec3TransformCoord(&left, &left, &matR);
+		D3DXVec3TransformCoord(&right, &right, &matR);
 
-		m_pSkinnedMesh->SetPosition(m_CharacterEntity->Pos(), m_CharacterEntity->Forward());
-
-
-	}
-	if (GetMesh()->GetIndex() == P_BOWATTACK1)
-	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos() + D3DXVECTOR3(0, 0.5, 0), 0);
+		if (INPUT->IsKeyPress(VK_SHIFT))shift = 5.0f;
+		if (INPUT->IsKeyPress(VK_W)) FLYPos += forWard*0.2*shift;
+		if (INPUT->IsKeyPress(VK_S)) FLYPos -= forWard*0.2*shift;
+		if (INPUT->IsKeyPress(VK_A))FLYPos+= left*0.2*shift;
+		if (INPUT->IsKeyPress(VK_D))FLYPos += right*0.2*shift;
+		float rot = MATH->GetRotY(FLYPos);
 		m_fRotY = CAMERA->GetCamRotAngle().y;
+		CAMERA->SetLookAt(FLYPos, CAMERA->GetCamRotAngle().y);
 	}
-	else
-	{
-		CAMERA->SetLookAt(m_CharacterEntity->Pos(), m_fRotY);
-	}
-	if (INPUT->IsKeyDown(VK_F))
-	{
-		m_fRotY += D3DX_PI;
-	}
-
+	
 }
 
 void cPlayer::Render()
 {
 	cCharacter::Render();
-	if (FRUSTUM->IsIn(m_pSkinnedMesh->GetBoundingSphere()))
-	{
-		m_pSkinnedMesh->UpdateAndRender(m_isPull);
 
-		//>>아이템착용 출력단
-		if (m_RightWeaponMesh != NULL)m_RightWeaponMesh->UpdateAndRenderForItem(m_isDeath, m_rightHand->CombinedTransformationMatrix);
-		if (m_LeftWeaponMesh != NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
-		//<<
+	m_pSkinnedMesh->UpdateAndRender(m_isPull);
 
+	//>>아이템착용 출력단
+	if (m_RightWeaponMesh != NULL)m_RightWeaponMesh->UpdateAndRenderForItem(m_isDeath, m_rightHand->CombinedTransformationMatrix);
+	if (m_LeftWeaponMesh != NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
+	//<<
 
-		//SetAttackColliderPos();
-		D3DXMATRIXA16 matT;
-		D3DXMatrixIdentity(&matT);
+	//SetAttackColliderPos();
+	D3DXMATRIXA16 matT;
+	D3DXMatrixIdentity(&matT);
 
-		D3DXMatrixTranslation(&matT, m_MeleeCollider.vCenter.x, m_MeleeCollider.vCenter.y, m_MeleeCollider.vCenter.z);
+	D3DXMatrixTranslation(&matT, m_MeleeCollider.vCenter.x, m_MeleeCollider.vCenter.y, m_MeleeCollider.vCenter.z);
 
-		D3DDevice->SetTransform(D3DTS_WORLD, &matT);
-		D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
+	D3DDevice->SetTransform(D3DTS_WORLD, &matT);
+	D3DDevice->SetMaterial(&m_MeshSphere.m_stMtlSphere);
 
-		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
-		D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-
-		
-	}
-
+	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 
@@ -209,7 +241,7 @@ void cPlayer::Render()
 
 void cPlayer::SetUnitLeaderTargetIndex(int index)
 {
-	if (m_currentLeader&&0<=index&&index<=MAP->GetVecPosOfNode().size())
+	if (m_currentLeader && 0 <= index&&index <= MAP->GetVecPosOfNode().size())
 	{
 
 		if (ASTAR->GetGraph()->GetNode(index)->Active())
@@ -416,4 +448,11 @@ bool cPlayer::AddUnitInTown(C_C_ID ID)
 	case C_C_HUMAN_CAVALRY:case C_C_ORC_CAVALRY: if (m_mapLeader[LEADER_CAVALRY]->AddUnitInTown(ID))return true;  break;
 	}
 	return false;
+}
+
+int cPlayer::GetAllUnitSize()
+{
+	return ((m_mapLeader[LEADER_MELEE]->GetUnits().size() * 10000)
+		+ (m_mapLeader[LEADER_BOW]->GetUnits().size() * 100)
+		+ (m_mapLeader[LEADER_CAVALRY]->GetUnits().size()));
 }

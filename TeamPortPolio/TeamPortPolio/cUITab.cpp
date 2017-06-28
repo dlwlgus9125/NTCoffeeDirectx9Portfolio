@@ -3,7 +3,7 @@
 #include "cUIButton.h"
 
 
-cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL), m_nFirstKeyInMap(-1)
+cUITab::cUITab() : m_pTexture_Body(NULL), m_pBtn_Exit(NULL), m_nFirstKeyInMap(-1), m_isNormal(true)
 {
 }
 
@@ -48,7 +48,7 @@ void cUITab::SetDef()
 
 void cUITab::Update(float deltaTime)
 {
-	m_pBtn_Exit->SetHidden(m_isHidden);
+	if(m_pBtn_Exit) m_pBtn_Exit->SetHidden(m_isHidden);
 	if (m_isHidden) return;
 
 	// >> 탭의 타이틀 클릭 시 모든 탭 타이틀의 상태 바꿔주는 부분
@@ -74,8 +74,11 @@ void cUITab::Update(float deltaTime)
 	// <<
 
 	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
-	m_pBtn_Exit->Update(deltaTime);
-	if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
+	if (m_pBtn_Exit)
+	{
+		m_pBtn_Exit->Update(deltaTime);
+		if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
+	}	
 	// << 
 
 	cUIObject::Update(deltaTime);
@@ -107,10 +110,13 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	// << 	
 
 	// 종료 버튼 렌더
-	pSprite->SetTransform(&m_matWorld);
-	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-	m_pBtn_Exit->Render(pSprite);
-	pSprite->End();
+	if (m_pBtn_Exit)
+	{
+		pSprite->SetTransform(&m_matWorld);
+		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+		m_pBtn_Exit->Render(pSprite);
+		pSprite->End();
+	}
 
 	// >> 슬롯 이미지	
 	for (int i = 0; i < m_vecShownData.size(); i++)
@@ -145,17 +151,34 @@ void cUITab::Render(LPD3DXSPRITE pSprite)
 	// << 
 
 	// >> 품명, 설명 인쇄
-	for (int i = 0; i < m_vecShownData.size(); i++)
+	if (m_isNormal)
 	{
-		pSprite->SetTransform(&m_matWorld);
-		LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
-		SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
-			m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
+		for (int i = 0; i < m_vecShownData.size(); i++)
+		{
+			pSprite->SetTransform(&m_matWorld);
+			LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
+			SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
+				m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
 
-		string text = m_vecShownData[i]->name + "\n\n가격 : " + to_string(m_vecShownData[i]->cost) + " 골드";
-		pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
+			string text = m_vecShownData[i]->name + "\n\n가격 : " + to_string(m_vecShownData[i]->cost) + " 골드";
+			pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
+		}
 	}
 	// << 
+	// 보통의 품명, 설명이 아니면 이거 인쇄
+	else
+	{
+		for (int i = 0; i < m_vecShownData.size(); i++)
+		{
+			pSprite->SetTransform(&m_matWorld);
+			LPD3DXFONT pFont = FONT->GetFont(m_eFont_Slot);
+			SetRect(&rc, m_vPosition.x + m_vecSlotInfo[i].textPos.x, m_vPosition.y + m_vecSlotInfo[i].textPos.y,
+				m_vPosition.x + m_vecSlotInfo[i].textPos.x + m_vecSlotInfo[i].textSize.nWidth, m_vPosition.y + m_vecSlotInfo[i].textPos.y + m_vecSlotInfo[i].textSize.nHeight);
+
+			string text = m_vecShownData[i]->name;
+			pFont->DrawText(NULL, text.c_str(), text.length(), &rc, DT_LEFT | DT_VCENTER, D3DCOLOR_XRGB(255, 255, 255));
+		}
+	}
 
 	cUIObject::Render(pSprite);
 }
@@ -171,12 +194,12 @@ void cUITab::Destroy()
 			SAFE_DELETE(vecSlotData[i]);
 		}
 	}
-	m_pBtn_Exit->Destroy();
+	if(m_pBtn_Exit) m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 
 void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXVECTOR3 rectPos, ST_SIZEN rectSize,
-	D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont)
+	D3DXVECTOR3 imagePos, ST_SIZEN imageSize, D3DXVECTOR3 textPos, ST_SIZEN textSize, FONT_TAG eFont, bool isNormal)
 {
 	m_vSlotStartPos = vSlotStartPos;
 
@@ -192,6 +215,7 @@ void cUITab::Setup_Slot(D3DXVECTOR3 vSlotStartPos, int col, int slotCount, D3DXV
 		}
 	}
 	m_eFont_Slot = eFont;
+	m_isNormal = isNormal;
 }
 
 void cUITab::AddSlotData(int itemMID, int itemSID, string name, string imagePath, string info, int cost)
@@ -273,4 +297,16 @@ void cUITab::ClearShownData()
 		}
 		(*it).second.clear();
 	}
+}
+
+void cUITab::UpdateTroopCount(int melee, int bow, int cavalry)
+{
+	if (m_mapVecSlotData.size() < 1) return;
+	if (m_mapVecSlotData[0].size() < 3) return;
+
+	m_mapVecSlotData[0][0]->name = to_string(melee);
+	m_mapVecSlotData[0][1]->name = to_string(bow);
+	m_mapVecSlotData[0][2]->name = to_string(cavalry);
+
+	SetShownData(0, 0);
 }

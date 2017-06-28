@@ -39,12 +39,6 @@ void cConstruct::Update()
 	D3DXMatrixRotationYawPitchRoll(&matR, m_fRotY, m_fRotX, m_fRotZ);
 	D3DXMatrixTranslation(&matT, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	m_matWorld = matS *matR* matT;
-	if(FRUSTUM->IsIn(m_vPosition))
-	{
-
-	}
-
-	
 }
 
 void cConstruct::Render()
@@ -55,10 +49,7 @@ void cConstruct::Render()
 	if (m_nSObjID >= E_S_OBJECTID_H_DW_START && m_nSObjID <= E_S_OBJECTID_H_DW_END ||
 		m_nSObjID >= E_S_OBJECTID_P_DW_START && m_nSObjID <= E_S_OBJECTID_P_ETC_END)
 	{
-		D3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_ALPHAREF, 0x00000088);
-		D3DDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-		D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		SHADOW->SetAlphaTestingState();
 	}
 
 	if (FRUSTUM->IsIn(m_vPosition))
@@ -72,10 +63,7 @@ void cConstruct::Render()
 		}
 	}
 
-	D3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-	D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	SHADOW->UnSetAlphaTestingState();
 
 
 	D3DXMATRIXA16 matT;
@@ -87,7 +75,7 @@ void cConstruct::Render()
 	D3DDevice->SetMaterial(&m_stMtlSphere);
 
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pMeshSphere->DrawSubset(0);
+	if (g_showColider)	m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 

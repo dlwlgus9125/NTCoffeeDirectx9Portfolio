@@ -21,9 +21,10 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+bool g_showColider;
 HCURSOR g_Cursor;
-LPD3DXSPRITE g_Sprite;
 HWND			g_hWnd;
+cLog*			g_pLog;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -54,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	THREAD->TerminateThreadByKey(HANDLE_ASTAR_FINDINDEX);
 	THREAD->TerminateThreadByKey(HANDLE_ATSTAR_FINDPATH);
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_crtBreakAlloc = 308;
+	//_crtBreakAlloc = 4411;
 	// 기본 메시지 루프입니다.
 	while (true)
 	{
@@ -66,7 +67,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 				GAMEMAIN->Release();
 				exit(0);
-				
+				THREAD->CloseThreadManager();
+				GAMEMAIN->Release();
 				break;
 			}
 			else
@@ -85,9 +87,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 	
 	THREAD->CloseThreadManager();
-
 	GAMEMAIN->Release();
-
 	return (int)msg.wParam;
 }
 
@@ -141,6 +141,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 	g_hWnd = hWnd;
+	g_showColider = false;
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 	
@@ -173,8 +174,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
-			
-
+			THREAD->CloseThreadManager();
+			GAMEMAIN->Release();
 			DestroyWindow(hWnd);
 			break;
 		default:
@@ -192,7 +193,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_DESTROY:
 		THREAD->CloseThreadManager();
-
 		GAMEMAIN->Release();
 		PostQuitMessage(0);
 		break;

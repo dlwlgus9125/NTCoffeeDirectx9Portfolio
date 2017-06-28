@@ -44,5 +44,4 @@ public:
 	
 	// Á¤·Ä
 	void BubbleSort(IN OUT vector<int>& vecInven);
-
 };

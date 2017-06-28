@@ -481,6 +481,10 @@ void cMapManager::Destroy()
 		SAFE_DELETE(m_vecConstruct[i]);
 	}
 	m_vecConstruct.clear();
-	
+	NPC->Release();
 }
 
+D3DXVECTOR2 cMapManager::GetPlayerPos_RateBased(float x, float z)
+{
+	return m_pMap->GetPlayerPos_RateBased(x, z);
+}

@@ -5,6 +5,7 @@
 void Bow_Battle::OnBegin(cBowUnit * pUnit)
 {
 	pUnit->GetMesh()->SetAnimationIndexBlend(B_READYATTACK);
+	if (SOUND->FindChannel("PullBow") == NULL)SOUND->Play("PullBow", 2.0f);
 }
 
 void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
@@ -19,10 +20,11 @@ void Bow_Battle::OnUpdate(cBowUnit * pUnit, float deltaTime)
 			case B_BOWATTACK1:
 				pUnit->GetMesh()->SetAnimationIndexBlend(B_BOWATTACK2);
 				OBJECT->AddUnitArrow(pUnit->GetCharacterEntity()->Pos() , pUnit->GetTargetObject()->GetCharacterEntity()->Pos(), pUnit->GetCamp());
-				
+				if (SOUND->FindChannel("ShootBow") == NULL)SOUND->Play("ShootBow", 2.0f);
 				break;
 			default:
 				pUnit->GetMesh()->SetAnimationIndexBlend(B_BOWATTACK1);
+				if (SOUND->FindChannel("PullBow") == NULL)SOUND->Play("PullBow", 2.0f);
 				break;
 			}
 		}

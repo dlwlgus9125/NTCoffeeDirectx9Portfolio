@@ -6,6 +6,14 @@ void Player_Death::OnBegin(cPlayer* pPlayer)
 {
 	pPlayer->GetMesh()->SetAnimationIndexBlend(P_DEATH);
 	pPlayer->GetCharacterEntity()->SetDeath(true);
+	if (CHARACTERDB->GetMapCharacter(pPlayer->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanDeath");
+	}
+	else
+	{
+		SOUND->Play("OrcDeath");
+	}
 }
 
 void Player_Death::OnUpdate(cPlayer* pPlayer, float deltaTime)

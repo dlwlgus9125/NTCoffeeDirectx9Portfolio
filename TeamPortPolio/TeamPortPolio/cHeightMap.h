@@ -28,5 +28,6 @@ public:
 	virtual bool GetHeight(IN float x, OUT float&y, IN float z) override;
 	bool GetIndex(IN float x, IN float z, OUT int& index);
 	virtual void Render() override;
+	D3DXVECTOR2 GetPlayerPos_RateBased(float x, float z);
 };
 

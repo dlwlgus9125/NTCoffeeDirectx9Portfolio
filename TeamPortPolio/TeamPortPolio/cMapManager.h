@@ -27,7 +27,7 @@ class cMapManager : public Singleton<cMapManager>
 public:
 	cMapManager();
 	~cMapManager();
-
+	void StartMain() { m_pSkyBox = NULL; m_pMap = NULL; }
 	void Init(int sceneID);
 	void Update();
 	void Render();
@@ -43,5 +43,6 @@ public:
 
 
 	vector<D3DXVECTOR3>     GetVecPosOfNode() { return m_vecPosOfNode; }
+	D3DXVECTOR2 GetPlayerPos_RateBased(float x, float z);
 };
 

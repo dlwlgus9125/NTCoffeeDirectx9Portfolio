@@ -64,6 +64,9 @@ private:
 
 	ST_SPHERE m_MeleeCollider;
 
+
+	bool FLY;// 영상찍을라고 카메라 날릴라는 변수
+	D3DXVECTOR3 FLYPos;
 public:
 	cPlayer(D3DXVECTOR3 pos, float radius, D3DXVECTOR3 forward, float mass, float maxSpeed);
 	~cPlayer();
@@ -78,6 +81,7 @@ public:
 	cLeader*       GetUnitLeader() { return m_currentLeader; }
 	void           SetCurrentLeader(LEADER_TYPE leaderTYPE) { m_currentLeaderType = leaderTYPE; m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
 	void           SetCurrentLeader() { m_currentLeader = m_mapLeader[(int)m_currentLeaderType]; }
+	int			GetCurrentLeaderType() { return m_currentLeaderType;}
 
 	// 추가
 	cStateMachine<cPlayer*>* FSM() { return m_pFsm; }
@@ -118,5 +122,14 @@ public:
 	void SetAnimHit() { m_pSkinnedMesh->SetAnimationIndexBlend(P_HIT); };
 	void SetAnimDeath() { m_pFsm->Play(PLAYER_STATE_DEFEAT); };
 	
+	virtual void SetSceneEnter()
+	{
+		cCharacter::SetSceneEnter();
+		m_pFsm->Play(PLAYER_STATE_IDLE);
+		SetMode(IDLE_PLAYER_MODE);
+		m_isPull = false;
+	}
+
+	int GetAllUnitSize();
 };
 

@@ -12,6 +12,7 @@ cCharacter::~cCharacter()
 {
 	SAFE_DELETE(m_pSkinnedMesh);
 	SAFE_DELETE(m_Status);
+	SAFE_RELEASE(m_MeshSphere.m_pMeshSphere);
 }
 
 void cCharacter::Init()
@@ -40,12 +41,11 @@ void cCharacter::Init()
 
 void cCharacter::Update(float deltaTime)
 {
-	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
+		UpdateNearConstruct();
+
 	m_CollideSphere.vCenter = m_CharacterEntity->Pos();
+	m_CollideSphere.vCenter.y = m_CharacterEntity->Pos().y + 0.5f;
 	m_arrangeCollideSphere.vCenter = m_CharacterEntity->Pos();
-
-	
-
 
 	if (m_Status->m_HP <= 0.0f&&m_isDeath == false)SetAnimDeath();
 }
@@ -54,64 +54,29 @@ void cCharacter::Render()
 {
 	if (m_pSkinnedMesh)
 	{
+		SHADOW->SetAlphaBlendRenderState();
 
-		D3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
-		D3DDevice->SetRenderState(D3DRS_STENCILREF, 0x0);
-		D3DDevice->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
-		D3DDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
-		D3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
-		D3DDevice->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
-		D3DDevice->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
+		D3DXPLANE groundPlane = SHADOW->CharacterPlane(GetCharacterEntity()->Pos().y + 0.001f);
 
-		D3DXPLANE groundPlane(0.0f, -1.0f, 0.0f, GetCharacterEntity()->Pos().y + 0.001f);
+		D3DXVECTOR4 light = SHADOW->CharacterLight();
 
-		D3DXVECTOR4 lightTest(0.707f, -0.707f, 0.707f, 0.0f);
+		D3DXMATRIX W ,S, T, matS;
+		D3DXMatrixShadow(&S, &light, &groundPlane);
 
-		D3DXMATRIX S;
-		D3DXMatrixShadow(
-			&S,
-			&lightTest,
-			&groundPlane);
+		D3DXMatrixTranslation(&T, GetCharacterEntity()->Pos().x, GetCharacterEntity()->Pos().y, GetCharacterEntity()->Pos().z);
 
-		D3DXMATRIX T;
-		D3DXMatrixTranslation(
-			&T,
-			GetCharacterEntity()->Pos().x, GetCharacterEntity()->Pos().y, GetCharacterEntity()->Pos().z);
+		D3DXMatrixScaling(&matS, 1.0f, 0.6f, 1.0f);
 
-		D3DXMATRIXA16 matS;
+		W = matS *T * S;
 
-		D3DXMatrixScaling(&matS, 0.4f, 0.2f, 0.4f);
-
-		D3DXMATRIX W = matS *T * S;
-
-		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 		D3DDevice->SetTransform(D3DTS_WORLD, &W);
-		D3DMATERIAL9 mtrl;
-		mtrl.Ambient.r = 0; mtrl.Ambient.g = 0; mtrl.Ambient.b = 0;
-		mtrl.Diffuse.r = 0; mtrl.Diffuse.g = 0; mtrl.Diffuse.b = 0;
-		mtrl.Specular.r = 0; mtrl.Specular.g = 0; mtrl.Diffuse.b = 0;
-		mtrl.Emissive.r = 0; mtrl.Emissive.g = 0; mtrl.Emissive.b = 0;
-		mtrl.Power = 0.0f;
-		mtrl.Diffuse.a = 0.3f;
+		D3DMATERIAL9 mtrl = SHADOW->CharacterMtrl();
 		D3DDevice->SetMaterial(&mtrl);
 		D3DDevice->SetTexture(0, 0);
 
-		m_MeshSphere.m_pMeshSphere->DrawSubset(0);
+		//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 
-		D3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-		D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-		D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-
-
-
+		SHADOW->UnSetAlphaBlendRenderState();
 	}
 
 	RenderSphere();
@@ -139,7 +104,18 @@ FIGHT_STATE cCharacter::Fight(cCharacter * attacker, cCharacter * defender)
 
 	if (randCount <= defender->m_Status->m_defence)
 	{
+		SOUND->Play("Defenced");
 		return FIGHT_BLOCK;
+	}
+	if (attacker->GetID() == C_C_ARROW_ARROW) { SOUND->Play("ArrowHit"); }
+	else { SOUND->Play("DamagedBySword"); }
+	if (CHARACTERDB->GetMapCharacter(defender->GetID())->m_raceID == C_R_HUMAN)
+	{
+		SOUND->Play("HumanHit");
+	}
+	else
+	{
+		SOUND->Play("OrcHit");
 	}
 
 	defender->m_Status->SetHP(-attacker->m_Status->m_Damage);
@@ -150,7 +126,7 @@ void cCharacter::UpdateNearConstruct()
 {
 	D3DXVECTOR3 movePos = m_CharacterEntity->Pos();
 
-	cout << MAP->GetvecConstruct().size() << endl;
+	//cout << MAP->GetvecConstruct().size() << endl;
 	for each (cConstruct* p in MAP->GetvecConstruct())
 	{
 		if (MATH->Distance(movePos, p->GetPosition()) + m_CollideSphere.fRadius - p->GetRadius() < 0)
@@ -160,6 +136,7 @@ void cCharacter::UpdateNearConstruct()
 			movePos -= dir*(MATH->Distance(movePos, p->GetPosition()) + m_CollideSphere.fRadius - p->GetRadius());
 		}
 	}
+	if (m_ID != C_C_ARROW_ARROW)
 	MAP->GetHeight(movePos.x, movePos.y, movePos.z);
 
 

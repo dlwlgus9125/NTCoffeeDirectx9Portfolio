@@ -49,7 +49,6 @@ void cUIObject::Destroy()
 		child->Destroy();
 	}
 
-	delete this;
 }
 
 void cUIObject::AddChild(cUIObject* pChild)

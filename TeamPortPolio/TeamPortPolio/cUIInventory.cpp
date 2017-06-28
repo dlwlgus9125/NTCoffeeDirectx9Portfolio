@@ -68,12 +68,16 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 
 void cUIInventory::Destroy()
 {
-	for (int i = 0; i < m_vecShownData.size(); i++)
+	if (m_vecShownData[0] &&
+		ITEMDB->GetItem(m_vecShownData[0]->itemID)->eMiddleID == I_M_BOW) m_vecShownData[1] = NULL;
+
+	for each(auto p in  m_vecShownData)
 	{
-		SAFE_DELETE(m_vecShownData[i]);
-	}
+		SAFE_DELETE(p);
+	} 
 
 	m_pBtn_Exit->Destroy();
+	cUIObject::Destroy();
 }
 
 void cUIInventory::Setup_Tap(string sPath_body, D3DXVECTOR3 pos_body)

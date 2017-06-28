@@ -139,7 +139,8 @@ enum LEADER_TYPE
 //>> define 및 구조체
 extern HWND	g_hWnd;
 extern HCURSOR g_Cursor;
-extern LPD3DXSPRITE g_Sprite;
+#include "cLog.h"
+extern cLog* g_pLog;
 #define SAFE_RELEASE(p) { if(p) p->Release(); p = NULL; }
 #define SAFE_DELETE(p) { if(p) delete p; p = NULL; }	// << :
 #define SAFE_ADD_REF(p) { if(p) p->AddRef() ; }
@@ -438,7 +439,7 @@ enum EVENTID
 	TITLE_BTN_FMT_RECT = 100, TITLE_BTN_FMT_TRI, TITLE_BTN_ATTSTATE, TITLE_BTN_DEFSTATE,
 
 	TOWN_TAB_SHOP_ATT = 200, TOWN_TAB_SHOP_DEF, TOWN_TAB_RECRUIT, TOWN_BTN_SHOPEXIT, TOWN_TAB_INVENTORY, TOWN_TAB_INVENTORY_EQUIP, TOWN_INVENTORY, TOWN_MINIMAP, TOWN_BTN_BATTLE_ORC, TOWN_BTN_BATTLE_HUMAN,
-	TOWN_MINIMAP_TROOPTYPE, TOWN_BTN_MELEE, TOWN_BTN_BOW, TOWN_BTN_CARVALY,
+	TOWN_MINIMAP_TROOPTYPE, TOWN_BTN_MELEE, TOWN_BTN_BOW, TOWN_BTN_CAVALRY, TOWN_TAB_TROOPINFO,
 
 	SELECT_BTN_ORC = 300, SELECT_BTN_HUMAN, SELECT_BTN_CREATE, SELECT_BTN_BACK, SELECT_MSGBOX_ORC, SELECT_MSGBOX_HUMAN,
 
@@ -528,6 +529,8 @@ struct ST_NPC_INFO
 
 };
 
+
+extern bool g_showColider;
 //>>include
 #include "cEffectManager.h"
 #include "cThreadManager.h"
@@ -554,7 +557,8 @@ struct ST_NPC_INFO
 #include "cShadowManager.h"
 #include "cNpcDB.h"
 #include "cNpcManager.h"
-//<<
+
 #include "cRay.h"
+//<<
 
 
