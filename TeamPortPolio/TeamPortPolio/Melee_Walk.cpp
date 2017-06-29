@@ -16,7 +16,7 @@ void Melee_Walk::OnUpdate(cMeleeUnit * pUnit, float deltaTime)
 	vTotarget.y = 0;
 	float distance = MATH->Magnitude(vTotarget);
 
-	if (distance > 0.1f)
+	if (distance >0.1)
 	{
 		pUnit->GetCharacterEntity()->Steering()->OffsetPursuit(pUnit->GetLeader(), pUnit->GetOffset());
 		pUnit->GetCharacterEntity()->Steering()->ConstrainOverlap(OBJECT->GetEntities());
@@ -38,11 +38,11 @@ void Melee_Walk::OnEnd(cMeleeUnit * pUnit)
 
 void Melee_Walk::StateChanger(cMeleeUnit * pUnit)
 {
-	if (pUnit->GetMesh()->GetIndex() != FG_BATTLEWALK&& pUnit->GetCharacterEntity()->Speed() <= 0.04f)
+	if (pUnit->GetMesh()->GetIndex() != FG_BATTLEWALK&& pUnit->GetCharacterEntity()->Speed() <= 0.06f)
 	{
 		pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLEWALK);
 	}
-	else if (pUnit->GetMesh()->GetIndex() != FG_BATTLERUN&&0.04f < pUnit->GetCharacterEntity()->Speed())
+	else if (pUnit->GetMesh()->GetIndex() != FG_BATTLERUN&&0.06f < pUnit->GetCharacterEntity()->Speed())
 	{
 		pUnit->GetMesh()->SetAnimationIndexBlend(FG_BATTLERUN);
 	}/*

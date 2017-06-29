@@ -204,8 +204,6 @@ void cPlayer::Update(float deltaTime)
 		if (INPUT->IsKeyPress(VK_S)) FLYPos -= forWard*0.2*shift;
 		if (INPUT->IsKeyPress(VK_A))FLYPos+= left*0.2*shift;
 		if (INPUT->IsKeyPress(VK_D))FLYPos += right*0.2*shift;
-		if (INPUT->IsKeyPress(VK_8))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() + 0.1f);
-		if (INPUT->IsKeyPress(VK_7))CAMERA->SetCameraDistance(CAMERA->GetCameraDitance() - 0.1f);
 		float rot = MATH->GetRotY(FLYPos);
 		m_fRotY = CAMERA->GetCamRotAngle().y;
 		CAMERA->SetLookAt(FLYPos, CAMERA->GetCamRotAngle().y);
@@ -224,7 +222,6 @@ void cPlayer::Render()
 	if (m_LeftWeaponMesh != NULL)m_LeftWeaponMesh->UpdateAndRenderForItem(m_isPull, m_leftHand->CombinedTransformationMatrix);
 	//<<
 
-
 	//SetAttackColliderPos();
 	D3DXMATRIXA16 matT;
 	D3DXMatrixIdentity(&matT);
@@ -237,11 +234,6 @@ void cPlayer::Render()
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//m_MeshSphere.m_pMeshSphere->DrawSubset(0);
 	D3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-
-
-
-
 }
 
 
