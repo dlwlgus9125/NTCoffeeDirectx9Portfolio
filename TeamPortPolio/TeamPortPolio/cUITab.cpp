@@ -194,6 +194,7 @@ void cUITab::Destroy()
 			SAFE_DELETE(vecSlotData[i]);
 		}
 	}
+	m_mapVecSlotData.clear();
 	if(m_pBtn_Exit) m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }

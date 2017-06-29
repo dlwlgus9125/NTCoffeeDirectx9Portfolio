@@ -2,7 +2,7 @@
 #include "cUIInventory.h"
 
 
-cUIInventory::cUIInventory()
+cUIInventory::cUIInventory() : m_pBtn_Exit(NULL)
 {
 	m_vecShownData.resize(3, 0);
 }
@@ -14,11 +14,11 @@ cUIInventory::~cUIInventory()
 
 void cUIInventory::Update(float deltaTime)
 {
-	m_pBtn_Exit->SetHidden(m_isHidden);
+	if(m_pBtn_Exit) m_pBtn_Exit->SetHidden(m_isHidden);
 	if (m_isHidden) return;
 
 	// >> 종료버튼 업데이트 및 클릭 시 hidden되도록
-	m_pBtn_Exit->Update(deltaTime);
+	if (m_pBtn_Exit) m_pBtn_Exit->Update(deltaTime);
 	if (m_pBtn_Exit->GetCurrentState() == UI_CLICKED) m_isHidden = true;
 	// << 
 
@@ -40,10 +40,13 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 	// << 
 
 	// 종료 버튼 렌더
-	pSprite->SetTransform(&m_matWorld);
-	pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
-	m_pBtn_Exit->Render(pSprite);
-	pSprite->End();
+	if (m_pBtn_Exit)
+	{
+		pSprite->SetTransform(&m_matWorld);
+		pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+		m_pBtn_Exit->Render(pSprite);
+		pSprite->End();
+	}
 
 	// >> 슬롯 이미지	
 	for (int i = 0; i < m_vecShownData.size(); i++)
@@ -68,15 +71,19 @@ void cUIInventory::Render(LPD3DXSPRITE pSprite)
 
 void cUIInventory::Destroy()
 {
-	if (m_vecShownData[0] &&
-		ITEMDB->GetItem(m_vecShownData[0]->itemID)->eMiddleID == I_M_BOW) m_vecShownData[1] = NULL;
-
-	for each(auto p in  m_vecShownData)
+	if (m_vecShownData.size() > 0)
 	{
-		SAFE_DELETE(p);
-	} 
+		if (m_vecShownData[0] &&
+			ITEMDB->GetItem(m_vecShownData[0]->itemID)->eMiddleID == I_M_BOW) m_vecShownData[1] = NULL;
 
-	m_pBtn_Exit->Destroy();
+		for each(auto p in  m_vecShownData)
+		{
+			SAFE_DELETE(p);
+		}
+		m_vecShownData.clear();
+	}
+
+	if(m_pBtn_Exit) m_pBtn_Exit->Destroy();
 	cUIObject::Destroy();
 }
 

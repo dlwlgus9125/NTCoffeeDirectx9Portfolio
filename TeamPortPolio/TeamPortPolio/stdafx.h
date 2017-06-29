@@ -343,6 +343,8 @@ struct ST_SLOTDATA
 		this->info = info;
 		this->cost = cost;
 	}
+
+	~ST_SLOTDATA() {}
 };
 
 

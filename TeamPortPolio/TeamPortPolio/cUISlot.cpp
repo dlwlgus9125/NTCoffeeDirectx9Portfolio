@@ -60,6 +60,7 @@ void cUISlot::Destroy()
 	{
 		SAFE_DELETE(p);
 	}
+	m_vecSlotData.clear();
 
 	cUIObject::Destroy();
 }
