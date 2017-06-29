@@ -11,7 +11,7 @@ public:
 
 	void Setup(int posX, int posY, int posZ, int count);
 	void Update(float fMove, float fSpeed);
-	void Render(char* sFullPath, bool isSnow);
+	void Render(char* sFullPath, bool isSnow); 
 
 	void AddParticle(int count);
 	void DeleteParticle(int count);
