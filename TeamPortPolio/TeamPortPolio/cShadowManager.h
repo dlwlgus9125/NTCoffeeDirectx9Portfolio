@@ -33,6 +33,7 @@ public:
 	D3DMATERIAL9 CharacterMtrl();
 	D3DXVECTOR4  CharacterLight();
 	D3DXPLANE    CharacterPlane(float fY);
+	void CharacterShadow(D3DXVECTOR3 pos, LPD3DXMESH mesh, D3DXVECTOR3 rot ,int count);
 
 };
 

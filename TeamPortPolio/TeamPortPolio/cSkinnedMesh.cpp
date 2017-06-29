@@ -128,6 +128,7 @@ void cSkinnedMesh::UpdateAndRender(bool isStop)
 		Update(m_pRootFrame, &mat);
 		Render(m_pRootFrame);
 	}
+
 }
 
 void cSkinnedMesh::UpdateAndRenderForItem(bool isStop, D3DXMATRIXA16& handMat)
@@ -280,7 +281,6 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 
 			UINT uiPasses, uiPass;
 
-
 			// run through each pass and draw
 			m_pEffect->Begin(&uiPasses, 0);
 			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
@@ -291,6 +291,7 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			}
 			m_pEffect->End();
 		}
+
 	}
 
 	//재귀적으로 모든 프레임에 대해서 실행.
@@ -303,6 +304,7 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 	{
 		Render((ST_BONE*)pBone->pFrameFirstChild);
 	}
+	//SHADOW->CharacterShadow(m_vPosition, pBone->pMeshContainer, m_vForward, uiPasses);
 }
 
 LPD3DXEFFECT cSkinnedMesh::LoadEffect(char* szFilename)

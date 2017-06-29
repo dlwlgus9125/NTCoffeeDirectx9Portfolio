@@ -196,4 +196,40 @@ D3DXPLANE cShadowManager::CharacterPlane(float fY)
 	return D3DXPLANE(0, -1, 0, fY + 0.001f);
 }
 
+void cShadowManager::CharacterShadow(D3DXVECTOR3 pos, LPD3DXMESH mesh, D3DXVECTOR3 rot,int count)
+{
+	SetAlphaBlendRenderState();
+
+	D3DXPLANE plane = CharacterPlane(pos.y);
+
+	D3DXVECTOR4 light = CharacterLight();
+
+	D3DXMATRIX S;
+	D3DXMatrixShadow(&S,&light,&plane);
+
+	D3DXMATRIXA16 matRY;
+	D3DXMatrixRotationY(&matRY, MATH->GetRotY(rot));
+
+	D3DXMATRIX T;
+	D3DXMatrixTranslation(&T, pos.x, pos.y, pos.z);
+
+	D3DXMATRIXA16 matS;
+	D3DXMatrixScaling(&matS, 1.0f, 1.0f, 1.0f);
+
+	D3DXMATRIX W = matS * matRY * T * S;
+
+	D3DMATERIAL9 mtrl = CharacterMtrl();
+
+	D3DDevice->SetTransform(D3DTS_WORLD, &W);
+
+	for (int i = 0; i < count; i++)
+	{
+		D3DDevice->SetMaterial(&mtrl);
+		D3DDevice->SetTexture(0, 0);
+		mesh->DrawSubset(i);
+	}
+
+	UnSetAlphaBlendRenderState();
+}
+
 
